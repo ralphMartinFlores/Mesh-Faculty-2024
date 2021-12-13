@@ -1,0 +1,71 @@
+<div *ngIf="data.type === 'Subtopic'">
+  <header class="forumtopic_header">
+    <button class="icon" mat-icon-button>
+      <mat-icon>assignment</mat-icon>
+    </button>
+    <strong>Add Discussion</strong>
+    <span style="flex: 1 1 auto;"></span>
+    <button [mat-dialog-close]="undefined" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+
+  <section>
+    <form [formGroup]="ForumsFormGroup" (ngSubmit)="addSubForum()">
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input class="inputtitle" placeholder="Activity Title" formControlName="topic_title" required matInput>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="topic_desc" placeholder="Instructions" matInput
+          style="overflow-x: hidden; white-space: pre-wrap;" matInput cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="20"></textarea>
+      </mat-form-field>
+
+      <div class="d-flex justify-content-end">
+        <button mat-flat-button [mat-dialog-close]="undefined" class="btn-cancel">Cancel</button>
+        <button type="submit" mat-flat-button class="btn-default " style="margin-left: 10px;">Add</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+
+
+<div *ngIf="data.type === 'editsubtopic'">
+  <header class="forumtopic_header">
+    <button class="icon" mat-icon-button>
+      <mat-icon>assignment</mat-icon>
+    </button>
+    <strong>Edit Discussion</strong>
+    <span style="flex: 1 1 auto;"></span>
+    <button [mat-dialog-close]="undefined" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+
+  <section>
+    <form [formGroup]="ForumsFormGroup" (ngSubmit)="saveSubForum()">
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input class="inputtitle" placeholder="Activity Title" formControlName="topic_title" required matInput>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="topic_desc" placeholder="Instructions" matInput
+          style="overflow-x: hidden; white-space: pre-wrap;" matInput cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="20"></textarea>
+      </mat-form-field>
+
+      <div class="d-flex justify-content-end">
+        <button mat-flat-button [mat-dialog-close]="undefined" class="btn-cancel">Cancel</button>
+        <button type="submit" mat-flat-button class="btn-default" style="margin-left: 10px;">Save</button>
+      </div>
+    </form>
+  </section>
+</div>

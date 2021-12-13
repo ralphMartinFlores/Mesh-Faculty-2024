@@ -1,0 +1,205 @@
+<div class="questcontain">
+  <div class="formcontain">
+      <header>
+        <button class="btn-default" type="button" mat-icon-button
+        [routerLink]="['../classes/', _user.getClassroomInfo().classcode_fld]">
+        <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <h4>Quiz Creator</h4>
+      </header>
+
+      <form [formGroup]="QuizBasicDetails" class="formcontain__box">
+        <h6>Basic Details</h6>
+        <div class="formcontain__matforms">
+          <div class="div1">
+            <mat-form-field style="width: 100%; margin-bottom: 1rem;" appearance="fill">
+              <mat-label>Title</mat-label>
+              <input required formControlName="quiz_title" placeholder="Quiz Title" matInput>
+              <mat-error *ngIf="QuizBasicDetails.controls.quiz_title.invalid">{{ getErrorMessage() }}</mat-error>
+            </mat-form-field>
+  
+            <mat-form-field style="width: 100%;" appearance="fill">
+              <mat-label>Instructions</mat-label>
+              <textarea formControlName="quiz_instruction" style="overflow: hidden;" placeholder="Instruction" matInput
+                cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="11"
+                cdkAutosizeMaxRows="10"></textarea>
+            </mat-form-field>
+          </div>
+  
+          <div class="div2">
+  
+            <mat-form-field style="width: 100% !important;  margin-bottom: 1rem;" appearance="fill">
+              <mat-label>Select a Label</mat-label>
+              <mat-select formControlName="selected_topic">
+                <mat-option value="0">None</mat-option>
+                <mat-option *ngFor=" let topic of topicObject" [value]="topic.topiccode_fld">
+                  {{ topic.topicname_fld }}
+                </mat-option>
+              </mat-select>
+              <mat-hint align="start">Choose a <strong>LABEL</strong> to organize your class work.</mat-hint>
+            </mat-form-field>
+  
+            <mat-form-field style="width: 100%;" appearance="fill" class="Activity__input">
+              <mat-label>Select Student</mat-label>
+              <mat-select required multiple formControlName="student_selected">
+                <mat-select-trigger>
+                  <ng-container
+                    *ngIf="studentObject.length < QuizBasicDetails.controls.student_selected.value.length; else notAllSelected">
+                    All Students
+                  </ng-container>
+                  <ng-template #notAllSelected>
+                    {{ QuizBasicDetails.controls.student_selected.value.length }} Students
+                  </ng-template>
+                </mat-select-trigger>
+                <mat-option #allSelected (click)="toggleAllSelection()" [value]="'0'" class="mat-option">
+                  <span><strong>All Students</strong></span>
+                </mat-option>
+                <mat-optgroup label="Student list">
+                  <mat-option *ngFor="let item of studentObject" [value]="item.studnum_fld" (click)="tosslePerOne()"
+                    class="mat-option">
+                    <span><strong>{{item.lname_fld }},</strong> {{ item.fname_fld }} {{ item.mname_fld }}
+                      {{ item.extname_fld }}</span>
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+              <mat-error *ngIf="QuizBasicDetails.controls.student_selected.invalid">
+                {{ getSelectStudentErrorMessage() }}
+              </mat-error>
+            </mat-form-field>
+            <!-- {{ checkIfDateSchedulehasValue(QuizBasicDetails.controls.quiz_scheduledate.invalid) }} -->
+            <div class="formcontain__forms">
+              <mat-form-field style="width: 60%;" appearance="fill" class="Activity__input">
+                <mat-label>Quiz schedule</mat-label>
+                <input required [min]="minDate" (dateInput)="scheduleDateOnChange($event)" matInput
+                [matDatepicker]="scheduledate" formControlName="quiz_scheduledate">
+                <mat-datepicker-toggle style="font-size: .9rem;" matSuffix [for]="scheduledate"></mat-datepicker-toggle>
+                <mat-datepicker #scheduledate></mat-datepicker>
+                <mat-error *ngIf="QuizBasicDetails.controls.quiz_scheduledate.invalid">
+                  {{ getScheduleDateErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Time schedule</mat-label>
+                <input formControlName="quiz_scheduletime" name="due" matInput required placeholder="Due" type="time">
+                <mat-error *ngIf="QuizBasicDetails.controls.quiz_scheduletime.invalid">
+                  {{ getScheduleTimeErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+  
+            <div class="formcontain__forms">
+              <mat-form-field style="width: 60%;" appearance="fill" class="Activity__input">
+                <mat-label>Due</mat-label>
+                <input required [min]="dueDateMin" matInput [matDatepicker]="duedate" formControlName="quiz_duedate">
+                <mat-datepicker-toggle style="font-size: .9rem;" matSuffix [for]="duedate"></mat-datepicker-toggle>
+                <mat-datepicker #duedate></mat-datepicker>
+                <mat-error *ngIf="QuizBasicDetails.controls.quiz_duedate.invalid">
+                  {{ getDueDateErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Time</mat-label>
+                <input name="schedtime" matInput required placeholder="Due" formControlName="quiz_duetime" type="time">
+                <mat-error *ngIf="QuizBasicDetails.controls.quiz_duetime.invalid">
+                  {{ getDueDateTimeErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+  
+  
+        <div class="title">
+          <div class="title__header">
+            <mat-icon>question_answer</mat-icon>
+            <h5>Questions</h5>
+          </div>
+        </div>
+  
+  
+        <table class="table table-hover align-middle">
+          <thead>
+            <th style="width: 5%;">#</th>
+            <th>Question</th>
+            <th>Question Type</th>
+            <th>Answer</th>
+            <th>Score</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+  
+            <tr *ngIf="quizContent.length == 0; else data">
+              <td colspan='8' style="text-align: center;">
+                <h6>No question added</h6>
+              </td>
+            </tr>
+  
+            <ng-template #data>
+              <tr *ngFor="let item of quizContent; let i = index">
+                <td data-label="#">{{ i + 1 }}</td>
+                <td data-label="Question" style="width: 40%;">{{ item.question }}</td>
+  
+                <td data-label="Description">
+                  <ng-container *ngIf="item.questiontype == 0">Multiple Choice</ng-container>
+                  <ng-container *ngIf="item.questiontype == 1">Identification</ng-container>
+                  <ng-container *ngIf="item.questiontype == 2">True or False</ng-container>
+                  <ng-container *ngIf="item.questiontype == 3">Essay</ng-container>
+                </td>
+  
+                <td data-label="Day" class="day">{{ answerkey[i].answer }}</td>
+                <td data-label="Time" style="width: 10%;">{{ answerkey[i].score }}</td>
+  
+  
+                <td data-label="Action" style="width: 10%;">
+  
+                  <button mat-icon-button (click)="newQuestion(1, i)">
+                    <mat-icon class="edits">edit</mat-icon>
+                  </button>
+  
+                  <button mat-icon-button (click)="deleteQuestion(i)" color="warn">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+  
+                </td>
+              </tr>
+  
+              <tr class="total">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="total__score" style="text-align: right; padding: 1em 1.5em;" colspan="2">
+                  <span>Total question: <strong>{{ quizContent.length }}</strong> </span>
+                  <span>Total score: <strong>{{ quizTotalScore }}</strong></span>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+  
+        </table>
+  
+        <div class="foot">
+          <button type="button" class="btn-default"
+           style="background: #fff; color: #222; margin-right: 10px; border: 1px solid #bbb9b9;" mat-flat-button
+            (click)="importquiz.click()">Import Questions</button>
+         <input style="display: none" type="file" accept=".json" #importquiz (change)="loadQuiz($event)" id="quizload">
+
+          <button type="submit" class="btn-default"
+            style="background: #fff; color: #222; margin-right: 10px; border: 1px solid #bbb9b9;" mat-flat-button #target
+            (click)="newQuestion(0, null)">Add Question</button>
+          <button *ngIf="dataEdit.length == 0" (click)="saveQuiz()" type="submit" class="btn-default" mat-flat-button>
+            <span *ngIf="!_user.isLoading()">Create</span>
+            <span *ngIf="_user.isLoading()">Creating...</span>
+          </button>
+          <button *ngIf="dataEdit.istoedit_fld == 1" (click)="saveEditQuiz()" type="button" class="btn-default"
+            mat-flat-button>
+            <span *ngIf="!_user.isLoading()">Save Quiz</span>
+            <span *ngIf="_user.isLoading()">Saving Quiz...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+</div>

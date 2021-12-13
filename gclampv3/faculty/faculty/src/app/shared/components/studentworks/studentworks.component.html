@@ -1,0 +1,159 @@
+<header>
+  <h4> {{data.data.fname_fld}} {{data.data.mname_fld}} {{data.data.lname_fld}}</h4>
+  <button [mat-dialog-close]="undefined" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<section>
+
+  <ng-container>
+    <div class="head">
+      <strong>{{ filteredObj.length }} activities </strong>
+      <mat-form-field appearance="outline">
+        <mat-label>Filter</mat-label>
+        <mat-select [(value)]="default" (selectionChange)="filterByKeys($event)">
+          <mat-option value="allworks"><span>All</span></mat-option>
+          <mat-option value="turnedinworks"><span>Turned-in</span></mat-option>
+          <mat-option value="lateworks"><span>Late</span></mat-option>
+          <mat-option value="missingworks"><span>Missing</span></mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <ng-container *ngIf="filteredObj.length == 0">
+      <hr>
+      <h5 class="text-center">No Activities...</h5>
+    </ng-container>
+
+    <table *ngIf="filteredObj.length > 0">
+      <thead>
+        <th>Activity</th>
+        <th>Date Submitted</th>
+        <th>Status</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredObj">
+          <td>{{ item.title_fld }}</td>
+          <td>
+            {{ item.issubmitted_fld == 0 ? 'Not Submitted' : item.datesubmitted_fld | date: "MMM dd, yyyy h:mm a" }}
+          </td>
+          <td>
+            <ng-container *ngIf="item.issubmitted_fld == 0">
+              <div class="text-danger"><strong>Missing</strong></div>
+            </ng-container>
+
+            <ng-container *ngIf="item.issubmitted_fld == 1">
+              <div class="text-success"><strong>Turned-in</strong></div>
+              <div class="text-success" *ngIf="item.isscored_fld == 1"> Score: {{item.score_fld}}</div>
+              <div class="text-success" *ngIf="item.isscored_fld == 0">Not Scored yet.</div>
+            </ng-container>
+
+            <ng-container *ngIf="item.issubmitted_fld == 2">
+              <div class="text-muted"><strong>Turned-in Late</strong></div>
+              <div class="text-muted" *ngIf="item.isscored_fld == 1">Score: {{item.score_fld}}</div>
+              <div class="text-muted" *ngIf="item.isscored_fld == 0">Not Scored yet.</div>
+            </ng-container>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <ng-container *ngIf="!item.issubmitted_fld">
+  <div class="text-danger" style="font-weight: 500;">Missing</div>
+</ng-container>
+
+<ng-container *ngIf="item.issubmitted_fld">
+  <div class="text-success" style="font-weight: 500;">Turned-in
+    <ng-container *ngIf="item.datesubmitted_fld != ''">
+      <ng-container *ngIf="item.datesubmitted_fld > item.deadline_fld">
+        <span class="text-success">(Late)</span>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>
+</td>
+</tr>
+</ng-container>
+
+<ng-container *ngIf="!item.issubmitted_fld  && filter  == 3">
+  <tr>
+    <td>{{item.title_fld}}</td>
+    <td>
+      <ng-container *ngIf="!item.issubmitted_fld">
+        <div class="text-danger">Not Submitted</div>
+      </ng-container>
+
+      <ng-container *ngIf="item.issubmitted_fld">
+        {{ item.datesubmitted_fld | date: "MMM dd, yyyy h:mm a" }}
+      </ng-container>
+    </td>
+    <td>
+
+      <ng-container *ngIf="!item.issubmitted_fld">
+        <div class="text-danger" style="font-weight: 500;">Missing</div>
+      </ng-container>
+
+      <ng-container *ngIf="item.issubmitted_fld">
+        <div class="text-success" style="font-weight: 500;">Turned-in
+          <ng-container *ngIf="item.datesubmitted_fld != ''">
+            <ng-container *ngIf="item.datesubmitted_fld > item.deadline_fld">
+              <span class="text-success">(Late)</span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </td>
+  </tr>
+</ng-container>
+<ng-container *ngIf="item.issubmitted_fld  && filter  == 1">
+  <tr>
+    <td>{{item.title_fld}}</td>
+    <td>
+      <ng-container *ngIf="!item.issubmitted_fld">
+        <div class="text-danger">Not Submitted</div>
+      </ng-container>
+
+      <ng-container *ngIf="item.issubmitted_fld">
+        {{ item.datesubmitted_fld | date: "MMM dd, yyyy h:mm a" }}
+      </ng-container>
+    </td>
+    <td>
+
+      <ng-container *ngIf="!item.issubmitted_fld">
+        <div class="text-danger" style="font-weight: 500;">Missing</div>
+      </ng-container>
+
+      <ng-container *ngIf="item.issubmitted_fld">
+        <div class="text-success" style="font-weight: 500;">Turned-in
+          <ng-container *ngIf="item.datesubmitted_fld != ''">
+            <ng-container *ngIf="item.datesubmitted_fld > item.deadline_fld">
+              <span class="text-success">(Late)</span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </td>
+  </tr> -->

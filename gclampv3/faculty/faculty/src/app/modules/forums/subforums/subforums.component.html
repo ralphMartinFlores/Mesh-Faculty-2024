@@ -1,0 +1,68 @@
+<div class="main-container">
+  <div class="heads">
+    <div class="heads__back-action">
+      <button mat-icon-button routerLink="/main/forums">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <a>Back to Main forum</a>
+    </div>
+  </div>
+  <div class="subcontainer">
+    <header class="subheader">
+      <ng-container *ngFor="let item of selectedForums">
+        <h4 class="subheader__title">{{ item['forumtitle_fld'] }}</h4>
+        <p class="subheader__desc">{{ item['forumdesc_fld'] }}</p>
+        <div class="subheader__author-post">
+          <div class="d-flex align-items-center">
+            <!-- <mat-icon>watch_later</mat-icon> -->
+            <small class="subheader__date"><span style="font-weight: 500;">Date Created:</span>
+              {{ item['datetime_fld'] | date: 'MMM dd, yyyy h:mm a' }}
+            </small>
+          </div>
+        </div>
+      </ng-container>
+
+    </header>
+
+    <button class="btn-default mt-3" (click)="AddSubforums()" mat-flat-button>
+      <mat-icon>add</mat-icon>Add New Discussion
+    </button>
+    <hr>
+    <header class="topic">
+      <mat-icon class="topic__icons">forum</mat-icon>
+      <strong>Topics</strong>
+    </header>
+
+    <section class="subforum">
+      <div class="subforum__card" *ngFor="let item of SubForumsObject let i = index">
+        <div class="subforum__header">
+          <h5 class="subforum__title">{{item.subtitle_fld}} </h5>
+          <!-- *ngIf="item.authorid_fld === _user.getUserID()" -->
+          <button (click)="$event.stopPropagation();" [matMenuTriggerFor]="forumsmenu" mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #forumsmenu="matMenu">
+            <button mat-menu-item (click)="editSubforum(item, i)"><span>Edit</span></button>
+            <button mat-menu-item (click)="deleteRecords('subforums', item, i)"><span>Delete</span></button>
+          </mat-menu>
+        </div>
+
+        <p class="subforum__desc">{{item.subdesc_fld}}</p>
+
+        <small class="subforum__date">Posted: {{ item.datetime_fld | date : 'medium' }}</small>
+        <hr>
+        <div class="subforum__footer">
+          <div class="subforum__comments">
+            <small>{{ item.messages }}</small>
+            <mat-icon class="subforum__icon">chat_bubble_outline</mat-icon>
+          </div>
+
+          <button mat-flat-button class="subforum__enter btn-default" (click)="showforumscomments(item)"
+            [routerLink]="['./', item.subcode_fld ]">Check the
+            comments</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

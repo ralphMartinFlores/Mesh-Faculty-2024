@@ -1,0 +1,204 @@
+<header class="assign">
+  <div class="assign__header">
+    <div class="assign__contain">
+      <mat-icon>assignment</mat-icon>
+    </div>
+    <h5>{{ this.data.type == 'edit_act' ? 'Edit' : 'Create' }} Assignment</h5>
+  </div>
+
+  <button [disabled]="_user.isLoading()" (click)="closeDialog(undefined)" [mat-dialog-close]="undefined"
+    mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="firstFormGroup" errorMessage="Please complete all necessary fields.">
+    <form [formGroup]="firstFormGroup" class="Activity">
+      <h6 class="Activity__title">Basic Details</h6>
+      <div class="Activity__name">
+        <mat-form-field appearance="fill" class="Activity__input mb-3">
+          <mat-label>Activity Title</mat-label>
+          <input formControlName="act_title" required matInput>
+          <mat-error *ngIf="this.firstFormGroup.controls.act_title.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="Activity__input mb-3">
+          <mat-label>Instructions</mat-label>
+          <textarea formControlName="act_desc" matInput
+            style="overflow-x: hidden; white-space: pre-wrap; font-size: 1rem; line-height: 1.4;" matInput
+            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="20"></textarea>
+          <mat-hint align="start">Provide detailed and excellent instructions.</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="Activity__others">
+        <mat-form-field appearance="fill" class="Activity__input">
+          <mat-label>Points</mat-label>
+          <input min="0" required type="number" placeholder="Set Points" formControlName="act_pts" matInput>
+          <mat-error *ngIf="this.firstFormGroup.controls.act_pts.invalid">{{ getErrorMessage() }}</mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="Activity__input">
+          <mat-label>Select Student</mat-label>
+          <mat-select required multiple formControlName="selected">
+            <mat-select-trigger>
+              <ng-container
+                *ngIf="students.length < firstFormGroup.controls.selected.value.length; else notAllSelected">
+                All Students
+              </ng-container>
+              <ng-template #notAllSelected>
+                {{ firstFormGroup.controls.selected.value.length }} Students
+              </ng-template>
+            </mat-select-trigger>
+            <mat-option #allSelected (click)="toggleAllSelection()" [value]="'0'" class="mat-option">
+              <span><strong>All Students</strong></span>
+            </mat-option>
+            <mat-optgroup label="Student list">
+              <mat-option *ngFor="let item of students" [value]="item.studnum_fld" (click)="tosslePerOne()"
+                class="mat-option">
+                <span><strong>{{item.lname_fld }},</strong> {{ item.fname_fld }} {{ item.mname_fld }}
+                  {{ item.extname_fld }}</span>
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <mat-error *ngIf="firstFormGroup.controls.selected.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+
+
+
+        <mat-form-field appearance="fill" class="Activity__input">
+          <mat-label>Select a Label</mat-label>
+          <mat-select formControlName="act_topic">
+            <mat-option value="0" class="mat-option">No Label</mat-option>
+            <mat-option [value]="item.topiccode_fld" *ngFor="let item of this.data.topicdata" class="mat-option">
+              {{ item.topicname_fld }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="start">Choose a <strong>LABEL</strong> to organize your class work.</mat-hint>
+        </mat-form-field>
+
+        <div>
+          <mat-form-field style="width: 60%;" appearance="fill" class="Activity__input">
+            <mat-label>Due</mat-label>
+            <input required [min]="minDate" matInput [matDatepicker]="duedate" (ngModelChange)="act_due = $event"
+              [ngModelOptions]="{standalone: true}" [ngModel]="act_due">
+            <mat-datepicker-toggle matSuffix [for]="duedate"></mat-datepicker-toggle>
+            <mat-datepicker #duedate></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field style="width: 40%;" appearance="fill">
+            <mat-label>Time</mat-label>
+            <input name="due" matInput required placeholder="Due" (ngModelChange)="dueDatetime = $event"
+              [ngModelOptions]="{standalone: true}" [ngModel]="dueDatetime" type="time">
+          </mat-form-field>
+        </div>
+
+      </div>
+    </form>
+    <footer>
+      <button mat-flat-button class="btn-default" matStepperNext>Next</button>
+    </footer>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <div class="material">
+      <form [formGroup]="secondFormGroup" class="file">
+        <div class="file__upload" (click)="uploadfile.click()">
+          <div class="file__imgcon">
+            <!-- <img src="assets/images/document.png"> -->
+            <mat-icon>description</mat-icon>
+          </div>
+          <p> Click here to Upload files</p>
+        </div>
+
+        <input id="addfiles" #uploadfile style="display: none;" (change)="getFile($event)" type="file" name="file[]"
+          multiple>
+
+        <div class="file__container" *ngIf="this.data.type != 'edit_act'">
+          <h6>Upload file</h6>
+
+          <div class="file__nofile" *ngIf="filePreviewAndUpload.length == 0 && editFiles.length == 0">
+            <p>No file attached</p>
+          </div>
+
+
+          <div class="limit">
+
+            <div class="limit__container" *ngFor="let item of filePreviewAndUpload; let i = index;">
+              <div class="name">
+                <!-- <img src="{{ getFileExtension(item.name) }}" alt="" class="limit__img"> -->
+                <mat-icon>description</mat-icon>
+                <p>{{ item.name }} </p>
+              </div>
+
+              <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <button *ngIf="!_user.isLoading()" (click)="removeFilePreviews(i)" mat-icon-button>
+                <mat-icon class="close">close</mat-icon>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <ng-container *ngIf="data.type == 'edit_act'">
+          <div class="file__container">
+            <h6>Upload file</h6>
+            <div class="limit">
+              <div class="limit__container" *ngFor="let item of editFiles; let i = index;">
+                <div class="name">
+                  <mat-icon>description</mat-icon>
+                  <p>{{ item.name }} </p>
+                </div>
+                <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <button *ngIf="!_user.isLoading()" (click)="deleteFiles(i, item.path)" mat-icon-button>
+                  <mat-icon class="close">close</mat-icon>
+                </button>
+              </div>
+
+
+              <div class="limit__container" *ngFor="let item of filePreviewAndUpload; let i = index;">
+                <div class="name">
+                  <mat-icon>description</mat-icon>
+                  <p>{{ item.name }}</p>
+                </div>
+                <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <button *ngIf="!_user.isLoading()" (click)="removeFilePreviews(i)" mat-icon-button>
+                  <mat-icon class="close">close</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+
+
+    </div>
+    <footer>
+      <button *ngIf="!_user.isLoading()" mat-button matStepperPrevious class="btn-cancel">Back</button>
+      <ng-container *ngIf="this.data.type != 'edit_act'">
+        <button [disabled]="_user.isLoading()" (click)="addActivity()" class="btn-default" mat-flat-button>
+          <span *ngIf="!_user.isLoading()">Assign</span>
+          <span *ngIf="_user.isLoading()">Assigning...</span>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="this.data.type == 'edit_act'">
+        <button [disabled]="firstFormGroup.invalid || _user.isLoading()" (click)="saveActivity()" class="btn-default"
+          mat-flat-button>
+          <span *ngIf="!_user.isLoading()">Save</span>
+          <span *ngIf="_user.isLoading()">Saving...</span>
+        </button>
+      </ng-container>
+    </footer>
+  </mat-step>
+
+
+</mat-horizontal-stepper>

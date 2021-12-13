@@ -1,0 +1,222 @@
+@import "src/app/scss/__mixin.scss";
+
+::ng-deep .mat-horizontal-stepper-header-container {
+  display: none !important;
+}
+
+.mat-option {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.resources {
+  @include flex(row, space-between, center);
+  padding: 1.5em 2em;
+  // background: var(--clr-primary);
+  // color: var(--clr-white);
+  color: var(--clr-primary);
+  border-bottom: 1px solid #dbdbdb;
+
+  &__header {
+    @include flex(row, flex-start, center);
+  }
+
+  &__contain {
+    @include flex(row, center, center);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #b8defc;
+    color: var(--clr-primary);
+    margin-right: 10px;
+  }
+  h5 {
+    font-weight: 700;
+    color: var(--clr-neutral);
+  }
+  button {
+    color: var(--clr-neutral);
+  }
+}
+
+.Details {
+  display: grid;
+  grid-template-columns: 100%;
+  padding: 1.5em 1em 1em;
+  font-family: "Poppins", sans-serif;
+  &__input {
+    width: 100%;
+    mat-label {
+      font-size: 1rem;
+    }
+    input {
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+
+  &__title {
+    margin-bottom: 1em;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  mat-select {
+    font-family: "Poppins", sans-serif !important;
+    mat-option {
+      --font-family: "Poppins", sans-serif !important;
+    }
+  }
+}
+
+footer {
+  @include flex(row, flex-end, center);
+  padding: 0 1em;
+  .btn-default,
+  .btn-cancel {
+    padding: 0.2em 2em;
+    margin-left: 10px;
+  }
+}
+
+.material {
+  padding: 1.5em 1em 1em;
+  &__title {
+    margin-bottom: 1em;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+.file {
+  @include grid(2, 50%);
+
+  &__upload {
+    @include flex(column, center, center);
+    width: 100%;
+    height: 300px;
+    cursor: pointer;
+    // border: 1px dotted var(--clr-primary);
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23333' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='5' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 10px;
+
+    p {
+      color: #9b9b9b;
+    }
+  }
+
+  &__imgcon {
+    @include flex(row, center, center);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #eef0f1;
+    margin-bottom: 0.6em;
+
+    img {
+      height: 60px;
+      display: block;
+    }
+
+    mat-icon {
+      transform: scale(2);
+      color: var(--clr-primary);
+    }
+  }
+
+  &__container {
+    padding: 0 0 0 1em;
+    h6 {
+      margin-bottom: 0.7em;
+      font-weight: 700;
+    }
+  }
+
+  &__nofile {
+    width: 100%;
+    border-radius: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+    background: #f5f5f5;
+  }
+}
+
+.limit {
+  width: 100%;
+  padding: 0 0.5em;
+  max-height: 27vh;
+  cursor: pointer;
+  overflow-y: auto;
+
+  &__img {
+    max-width: 100%;
+    height: 45px;
+  }
+
+  &__container {
+    @include flex(row, space-between, center);
+    padding: 0.8em 0;
+    border-bottom: 1px solid #9b9b9b;
+    .name {
+      @include flex(row, flex-start, center);
+      p {
+        width: 300px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin: 0 0 0 10px;
+        white-space: pre-wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+      mat-icon {
+        transform: scale(1.5);
+        color: var(--clr-primary);
+      }
+    }
+
+    .close {
+      color: crimson;
+    }
+  }
+
+  strong {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .text-primary {
+    transform: scale(1.5);
+  }
+}
+
+.shake {
+  // animation: shake 150ms 2 linear;
+  animation: shake 6s infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-26px);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(-7px);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}

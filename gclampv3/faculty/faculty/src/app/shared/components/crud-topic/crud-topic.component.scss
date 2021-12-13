@@ -1,0 +1,80 @@
+@import "src/app/scss/__mixin.scss";
+
+::ng-deep .mat-horizontal-stepper-header-container {
+  display: none !important;
+}
+
+.mat-option{
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.resources{ 
+  @include flex(row, space-between, center);
+  padding: 1.5em;
+  // background: var(--clr-primary);
+  // color: var(--clr-white);
+  color: var(--clr-primary);
+  border-bottom: 1px solid #dbdbdb;
+
+  &__header{
+    @include flex(row, flex-start, center);
+  }
+
+  &__contain{
+    @include flex(row, center, center);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #dfbeec;
+    color: #9b59b6;
+    margin-right: 10px;
+  }
+  h5{ font-weight: 700; color: var(--clr-neutral); }
+  button{ color: var(--clr-neutral) }
+}
+
+
+
+.Details{
+  display: grid;
+  grid-template-columns: 100%;
+  padding: 1.5em 1.5em 1em;
+  font-family: 'Poppins', sans-serif;
+  &__input{
+    width: 100%;
+    mat-label{
+      font-size: 1rem;
+    }
+    input{
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+
+  &__title{
+    margin-bottom: 1em;
+    font-weight: 600;
+  }
+
+  mat-select{
+    font-family: 'Poppins', sans-serif !important;
+    mat-option{
+      --font-family: 'Poppins', sans-serif !important;
+    }
+  }
+}
+
+
+footer{
+  @include flex(row, flex-end, center);
+  padding: 0 1em 1em;
+  .btn-default, .btn-cancel{
+    padding: .2em 1.5em;
+    margin-left:10px;
+  }
+}
+
+
+
+
+

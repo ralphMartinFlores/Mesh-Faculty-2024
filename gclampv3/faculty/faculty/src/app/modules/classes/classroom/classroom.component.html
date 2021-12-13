@@ -1,0 +1,88 @@
+<div class="main-container">
+  <header>
+    <h2>{{ this._user.getClassroomInfo().subjdesc_fld }}</h2>
+    <p>Classcode:
+      {{ this._user.getClassroomInfo().classcode_fld }} / {{this._user.getClassroomInfo().subjcode_fld }}
+    </p>
+    <img appLazyLoad draggable="false" src="assets/images/Human.svg" alt="" class="human">
+
+
+    <div class="action">
+      <a type="button" class="action__meet" mat-raised-button
+        matTooltip="View/Set Online Meeting Schedule using Google Calendar (for multiple schedules)"
+        href='https://calendar.google.com/calendar/u/0/r?pli=1' target="_blank">
+        <div class="buttons">
+          <img src="assets/images/calendar.png" alt=""><span>Google Calendar</span>
+        </div>
+      </a>
+
+      <a type="button" class="action__meet " mat-raised-button matTooltip="Schedule a single Meeting using Google Meet"
+        href='https://calendar.google.com/calendar/r/eventedit?vcon=meet&amp;dates=now&amp;hl=en' target="_blank">
+        <div class="buttons">
+          <img src="assets/images/google-meet.png" alt=""> <span>Google Meet</span>
+        </div>
+      </a>
+
+      <!-- GC FLASH BUTTON -->
+      <a type="button" class="action__meet " (click)="scheduleMeetingRoute()" mat-raised-button matTooltip="Schedule a single Meeting using GC Flash">
+      <div class="buttons">
+        <img src="assets/images/gc-flash.png" alt=""> <span>GC Flash</span>
+      </div>
+    </a>
+    </div>
+
+  </header>
+  <section>
+
+    <mat-tab-group (selectedIndexChange)="setIndex($event)" [selectedIndex]="_user.getSelectedTabIndex()"
+      mat-stretch-tabs class="example-stretched-tabs mat-elevation-z1">
+      <!-- CLASS FEED  -->
+      <mat-tab label="Class Feed">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-classfeed></app-classfeed>
+          </div>
+        </ng-template>
+
+      </mat-tab>
+      <!-- ACTIVITIES  -->
+      <mat-tab label="Creative Panel">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-activities></app-activities>
+          </div>
+        </ng-template>
+
+      </mat-tab>
+      <!-- MEMBERS  -->
+      <mat-tab label="Class List">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-members></app-members>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <!--  SUMMARY OF SCORES  -->
+      <mat-tab label="Summary of Scores">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-summary></app-summary>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span [matBadge]="_user.getMessageBadge()" matBadgeOverlap="false" matBadgeColor="warn">Messaging</span>
+        </ng-template>
+
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-messaging></app-messaging>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+
+
+</div>

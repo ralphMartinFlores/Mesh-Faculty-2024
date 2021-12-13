@@ -1,0 +1,109 @@
+<div class="main-container">
+  <div class="message-container">
+    <div class="chat-group">
+      <header><strong>Messaging </strong>
+        <!-- <br>
+        <label for="search">Search: </label>
+        <input name="search" type="text" placeholder="Enter name or student number"> -->
+      </header>
+      
+      <section class="poeple-container">
+        <!-- <div class="message-container">
+                    <div class="img-container">
+                        <img src="assets/images/profile.jpg" alt="" />
+                    </div>
+                    <div class="fullname">
+                        <strong>I.T. Elective 4</strong><br />
+
+                    </div>
+                </div> -->
+
+        <div class="message-container" *ngFor="let room of rooms;  let i = index" (click)="chatBody(room, i)"
+          [class.active]="room === activeMessage">
+          <div class="img-container" [matBadge]="room.unread>0?room.unread:''" matBadgeOverlap="false" matBadgeColor="warn" matBadgeSize="small">
+            <img  [src]="ds.imageURL + room.image" alt="" onerror="this.onerror=null;this.src='assets/images/profile.jpg';" />
+          </div>
+          <div class="fullname">
+            <!-- <strong>{{ room.fullname }} </strong><br /> -->
+            <!-- <span class="dot" *ngIf="room.unread > '0'"></span> -->
+            <strong >{{room.fullname}}</strong>
+          </div>
+
+          <!-- <div class="notif">
+            <span *ngIf="room.unread>0" [matBadge]="room.unread" matBadgeOverlap="false"></span>
+          </div> -->
+
+        </div>
+      </section>
+      <!-- <button class="btn-add" mat-icon-button>
+                <mat-icon>add</mat-icon>
+            </button> -->
+    </div>
+
+
+
+    <div class="chat-box">
+
+
+      <ng-container *ngIf="roomMessages && selectedRoom == ''">
+        <div class="text-center mt-5 p-5">
+          <h1 class="mb-3">🙊📧</h1>
+          <div class="small text-muted">There was no contact chosen. Choose one to begin the conversation.</div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedRoom != ''">
+        <header>
+          <strong>{{selectedRoom['fullname']}}</strong>
+
+        </header>
+        <mat-progress-bar *ngIf="user.isLoading()" mode="indeterminate"></mat-progress-bar>
+
+        <div class="comment-content" #target>
+          <div class="white"></div>
+          <div class="messages" *ngFor="let item of roomMessages">
+            <div class="buff" *ngIf="item.authorid_fld!=user.getUserID()" id="myPageId">
+              <!-- <small class="stimestamp">{{ item.fullname_fld }}</small> -->
+              <div class="d-flex align-items-center">
+                <!-- <img src="ds.imageURL + item.profilepic_fld" alt="" class="pro-img"> -->
+                <div class="recievermessage">
+                  <span>{{item.content_fld}}</span>
+                </div>
+              </div>
+              <p class="stimestamp">{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</p>
+            </div>
+            <div class="buff sender" *ngIf="item.authorid_fld==user.getUserID()" id="myPageId">
+              <!-- <p class="timestamp">{{ item.fullname_fld }}</p> -->
+              <div class="sendermessage">
+                <span>{{ item.content_fld }}</span>
+              </div>
+              <p class="timestamp">{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <form [formGroup]="messageForms">
+          <div class="commnent-box">
+            <div class="comment-input">
+              <div class="other-buttons">
+                <!-- <mat-icon>description</mat-icon> -->
+                <!-- <mat-icon>insert_photo</mat-icon> -->
+                <!-- <mat-icon>insert_emoticon</mat-icon> -->
+              </div>
+              <input formControlName="usermassage" type="text" placeholder="Send a message..." />
+              <button type="submit" mat-icon-button (click)="sendChat(target)">
+                <mat-icon>send</mat-icon>
+              </button>
+              <!-- <button type="button">
+                <mat-icon>send</mat-icon>
+              </button> -->
+              <!-- <button (click)="scrollToElement(target)">Click</button> -->
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,415 @@
+<div class="class-container">
+  <div class="row">
+    <div class="col-lg-7 mb-3">
+
+      <form class="forms-container" (submit)="onSubmit($event)" ngNativeValidate>
+        <div class="formheader">
+          <span>Create Post</span>
+        </div>
+
+        <div class="formbody">
+          <img mat-card-avatar draggable="false" [src]="_ds.imageURL + _user.getUserImage()" alt=""
+            class="profile-img" onerror="this.onerror=null;this.src='assets/images/profile.jpg';">
+          <textarea [(ngModel)]="postcontent" name="content_fld" class="example-full-width"
+            [placeholder]="pollToggle == true ? 'What is the topic of your poll?' : 'Write something here…'"></textarea>
+        </div>
+
+        <div class="poll pb-2" *ngIf="pollToggle">
+          <form (submit)="addOption($event)" ngNativeValidate>
+
+            <div matRipple class="poll__area" *ngFor="let item of pollOptions; let i = index">
+              <strong>{{ item }}</strong>
+              <button (click)="removePollOption(i)" type="button" mat-icon-button>
+                <mat-icon class="close">close</mat-icon>
+              </button>
+            </div>
+
+            <mat-form-field style="width: 100%; " appearance="outline">
+              <mat-label>Options</mat-label>
+              <input required name="option_name" matInput placeholder="Add option">
+            </mat-form-field>
+
+            <div class="text-end">
+              <button align="end" type="submit" mat-stroked-button>
+                <mat-icon>add</mat-icon><span> Add option</span>
+              </button>
+            </div>
+
+          </form>
+
+          <hr>
+
+        </div>
+
+        <div class="action-button">
+
+          <input id="imagefiles" #uploadimage style="display: none;" (change)="getFile($event, 1)" type="file"
+            name="file[]" multiple accept="image/*">
+
+          <input id="docfiles" #uploadfile style="display: none;" (change)="getFile($event, 5)" type="file"
+            name="file[]" multiple [accept]="acceptedFiles">
+
+          <input type="videofile" style="display: none;" #uploadvideo (change)="getFile($event, 2)" id="vidfiles"
+            type="file" name="file[]" multiple accept="video/*">
+
+          <div class="icon-container">
+            <button matTooltip="Add images or photos" class="img-icon"
+              *ngIf="!(pollToggle || filetype != 1 && filetype != 0)" type="button" (click)="uploadimage.click()"
+              mat-icon-button>
+              <mat-icon>image</mat-icon>
+            </button>
+
+            <button matTooltip="Add files" class="file-icon" *ngIf="!(pollToggle || filetype !== 5 && filetype != 0)"
+              (click)="uploadfile.click()" type="button" mat-icon-button>
+              <mat-icon>attach_file</mat-icon>
+            </button>
+
+            <button matTooltip="Add video" *ngIf="!(pollToggle || filetype !== 2 && filetype != 0)"
+              (click)="uploadvideo.click()" type="button" class="video-icon" mat-icon-button>
+              <mat-icon>videocam</mat-icon>
+            </button>
+
+            <button class="poll-icon" matTooltip="Create poll" (click)="togglePoll()"
+              *ngIf="!(filePreviewAndUpload.length != 0 || pollToggle)" type="button" mat-icon-button>
+              <mat-icon>poll</mat-icon>
+            </button>
+
+          </div>
+
+          <div>
+            <button *ngIf="pollToggle" (click)="togglePoll()" mat-flat-button class="post-btn"
+              style="background-color: white; color: black; width: auto; margin-right: 0.9rem;">
+              <span>Cancel</span>
+            </button>
+            <button [disabled]="postcontent == '' && filePreviewAndUpload.length <= 0 || _user.isLoading()"
+              mat-raised-button class="post-btn" style="width: auto;" type="submit">
+
+              <ng-container *ngIf="!_user.isLoading(); else notLoading">
+                {{ pollToggle ? 'Create poll' : 'Post' }}
+              </ng-container>
+              <ng-template #notLoading>
+                {{ pollToggle ? 'Creating poll...' : 'Posting...' }}
+              </ng-template>
+
+            </button>
+          </div>
+
+        </div>
+
+
+        <div *ngFor="let item of filePreviewAndUpload; let i = index;">
+          <mat-list>
+            <mat-list-item>{{ item.name }} <button align="end" type="button" mat-icon-button
+                (click)="removeFilePreviews(i)">
+                <mat-icon>close</mat-icon>
+              </button></mat-list-item>
+          </mat-list>
+        </div>
+      </form>
+
+
+      <div class="p-4" *ngIf="loadingclassfeed">
+        <ngx-skeleton-loader appearance="circle" [theme]="{ width: '48px', height: '48px' }"></ngx-skeleton-loader>
+        <ngx-skeleton-loader appearance="line" count="4"></ngx-skeleton-loader>
+      </div>
+      <ng-container *ngIf="postobject.length != 0 && !loadingclassfeed">
+        <div class="postcontainer  mt-4" *ngFor="let item of postobject; let i = index">
+          <div class="postheader d-flex  py-2 mb-1">
+            <img appLazyLoad draggable="false"
+              [src]="_ds.imageURL + item.profilepic_fld || 'assets/images/profile.jpg'" alt="" class="postimg mr-3"
+              onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+            <div class="sendername">
+              <p class="m-0  mt-1" style="font-weight: bold;"> {{ item.fullname_fld }}</p>
+              <small class="text-muted">
+                {{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a'}}
+              </small>
+            </div>
+            <span style="flex: 1 1 auto"></span>
+            <button (click)="$event.stopPropagation();" mat-icon-button [matMenuTriggerFor]="del"
+              aria-label="button menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #del="matMenu">
+
+              <ng-container *ngIf="item.withfile_fld == 3 || item.withfile_fld == 4 ; else notPoll">
+                <button *ngIf="item.withfile_fld == 4 || item.withfile_fld == 3" mat-menu-item class="nooutline" (click)="viewPoll(item.pollresponse_fld)">
+                  <span>View poll</span>
+                </button>
+                <button *ngIf="item.withfile_fld == 3" mat-menu-item class="nooutline" (click)="editpoll(item, 4, i)">
+                  <span>Close poll</span>
+                </button>
+                <button *ngIf="item.withfile_fld == 4" mat-menu-item class="nooutline" (click)="editpoll(item, 3, i)">
+                  <span>Open poll</span>
+                </button>
+              </ng-container>
+              <ng-template #notPoll>
+                <button [hidden]="!item.author_owner" mat-menu-item class="nooutline" (click)="editPost(item, i)">
+                  <span>Edit</span>
+                </button>
+              </ng-template>
+              <button (click)="deleteRecords('post', item,i)" mat-menu-item class="nooutline">
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </div>
+
+          <p *ngIf="item.content_fld" class="content" [innerHtml]="item.content_fld | linkify"> </p>
+
+          <div *ngIf="item.pollchoices_fld != []" class="displaypoll">
+            <div matRipple class="displaypoll__area" *ngFor="let poll of item.pollresponse_fld">
+              <div class="displaypoll__header">
+                <strong>{{ poll.choice }}</strong>
+                <!-- <mat-radio-button class="mr-4" color="primary">
+                </mat-radio-button> -->
+                <pre></pre>
+                <div class="displaypoll__count">
+                  <div class="me-3"> <small>{{ poll.votes }} vote{{ poll.votes > 1 ? 's' : '' }}</small></div>
+                  <div class="displaypoll__displayimage" *ngFor="let item of poll.respondents.slice(0,3)">
+                    <img [src]="_ds.imageURL + item.profilepic_fld || 'assets/images/profile.jpg'" alt=""
+                      onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+                  </div>
+                </div>
+              </div>
+              <mat-progress-bar mode="determinate" [matTooltip]="poll.tooltip" [value]="poll.votes">
+              </mat-progress-bar>
+            </div>
+          </div>
+<!-- 
+          <div *ngIf="item.withfile_fld" class="p-3 small text-muted">Attachments
+            <mat-divider></mat-divider>
+          </div> -->
+
+          <div *ngIf="item.images_fld != []" class="image_grid ps-2">
+            <img *ngFor="let item of item.images_fld" class="images" [src]="item.link" alt="" width="auto">
+          </div>
+
+          <ng-container *ngIf="item.attachment_fld != []">
+            <mat-nav-list *ngFor="let item of item.attachment_fld">
+              <mat-list-item style="font-size: smaller;">
+                <a matLine [download]="item.name" target="_blank" [href]="item.link" style="font-weight:500;">
+                  {{ item.name }}</a>
+                <button mat-icon-button type="button" (click)="_ds.downloadFile(item.path, item.name)">
+                  <mat-icon style="color: #0166b3;">download</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-nav-list>
+          </ng-container>
+
+          <div *ngIf="item.video_fld != []">
+            <ng-container *ngFor="let item of item.video_fld">
+              <video width="100%" height="100%" controls>
+                <source [src]="item.link" type="video/mp4">
+              </video>
+            </ng-container>
+          </div>
+
+          <ng-container *ngIf="item.embedvideo_fld != []">
+            <div class="video-container" *ngFor="let item of item.embedvideo_fld">
+              <iframe class="responsive-iframe" loading="lazy" [src]="item"></iframe><br>
+            </div>
+          </ng-container>
+
+          <div class="comments">
+            <button (click)="Commentdialog(item.postcode_fld , i)">
+              <mat-icon>chat</mat-icon>
+              <small>
+                {{ item.commentcount == 1
+                ? item.commentcount + ' comment'
+                : item.commentcount >= 1
+                ? item.commentcount + ' comments' : 'No comments yet'}}
+              </small>
+            </button>
+          </div>
+        </div>
+
+        <!-- <button class="btn-load mt-3" *ngIf="postobject.length >= 5;" mat-flat-button>
+          load more ...
+        </button> -->
+      </ng-container>
+
+
+      <ng-container *ngIf="postobject.length == 0">
+        <div class="text-center mt-5">
+          <div><strong>No posts found! 🐱‍👤</strong></div>
+          <div class="p-3">
+            <span style="color: var(--clr-neutral); font-size: smaller;">Tell something to your class.</span>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+    <div class="col-lg-5">
+      <div class="material-container">
+        <div class="d-flex" style="justify-content: space-between; align-items: center;">
+          <strong class="subtitle">Activities & Quizzes</strong>
+
+          <button mat-button [matMenuTriggerFor]="menu" matTooltip="Add Activities" class="mat-elevation-z0 menuact"
+            color="primary" mat-mini-fab>
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="createAssignmentDialog()">Assignment</button>
+            <button mat-menu-item (click)="createQuiz()" routerLinkActive="router-link-active">
+              Quiz</button>
+          </mat-menu>
+        </div>
+        <hr>
+
+
+        <div class="p-3" *ngIf="loadmaterials">
+          <ngx-skeleton-loader count="4" appearance="line" animation="pulse"></ngx-skeleton-loader>
+        </div>
+
+        <ng-container *ngIf="activities.length != 0 && !loadmaterials">
+          <div *ngFor="let item of activities; let i = index">
+            <div class="activities-container" [routerLink]="['./', item.actcode_fld ]" (click)="viewActivity(item)">
+              <span class="line"></span>
+              <div class="icon-container">
+                <ng-container *ngIf="item.type_fld == 0">
+                  <mat-icon class="legend" style="color: #2ecc71;">assignments</mat-icon>
+                </ng-container>
+                <ng-container *ngIf="item.type_fld == 1">
+                  <mat-icon class="legend" style="color: #e67e22;">quiz</mat-icon>
+                </ng-container>
+              </div>
+
+              <div class="details d-flex justify-content-between">
+                <div>
+                  <strong style="font-size: initial; color: var(--clr-neutral);">{{item.title_fld | titlecase
+                    }}</strong>
+                  <br>
+                  <span style="font-size: small;color: var(--clr-neutral); opacity: 65%;">
+                    <span style="font-weight: 500; ">Due Date:</span>
+                    {{ item.deadline_fld == '0000-00-00 00:00:00' || null ?
+                    item.deadline_fld : (item.deadline_fld | date : 'MMM dd, yyyy h:mm a') }}
+                  </span>
+                </div>
+                <button *ngIf="item.type_fld == 0" (click)="$event.stopPropagation();" mat-icon-button
+                  aria-label="Example icon-button with a menu" [matMenuTriggerFor]="actmenu">
+                  <mat-icon style="color: var(--clr-neutral);">more_vert</mat-icon>
+                </button>
+
+                <button *ngIf="item.type_fld == 1" (click)="$event.stopPropagation();" mat-icon-button
+                  aria-label="Example icon-button with a menu" [matMenuTriggerFor]="quizmenu">
+                  <mat-icon style="color: var(--clr-neutral);">more_vert</mat-icon>
+                </button>
+
+                <mat-menu #quizmenu="matMenu">
+                  <button (click)="editQuiz(item, i)" mat-menu-item>
+                    <span>Edit</span>
+                  </button>
+                  <button (click)="deleteAct('activity', item , i)" mat-menu-item>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+
+
+                <mat-menu #actmenu="matMenu">
+                  <button (click)="editActivity(item, i)" mat-menu-item>
+                    <span>Edit</span>
+                  </button>
+                  <button (click)="deleteAct('activity', item , i)" mat-menu-item>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+
+            <mat-menu #menu="matMenu">
+              <button (click)="editActivity(item , i)" mat-menu-item>Edit</button>
+              <button (click)="deleteAct('activity', item , i)" mat-menu-item>Delete</button>
+            </mat-menu>
+          </div>
+
+          <!-- <button class="btn-load" mat-flat-button>
+            load more ...
+          </button> -->
+        </ng-container>
+
+        <ng-container *ngIf="activities.length == 0 && !loadmaterials">
+          <div class="text-center">
+            <div><strong>No activities/quizzes posted! 🥱</strong></div>
+            <div class="p-3">
+              <span style="color: var(--clr-neutral); font-size: smaller;">By clicking the Add button above, you may add
+                new
+                activities.</span>
+            </div>
+            <!-- <button (click)="createAssignmentDialog()" matTooltip="Add Activities" class="mat-elevation-z0"
+              color="primary" mat-mini-fab>
+              <mat-icon>add</mat-icon>
+            </button> -->
+          </div>
+        </ng-container>
+
+        <br>
+
+        <div class="d-flex " style="justify-content: space-between; align-items: center;">
+          <strong class="subtitle">Resources</strong>
+
+          <button (click)="createResourcesDialog()" matTooltip="Add Resources" class="mat-elevation-z0 menuact"
+            color="primary" mat-mini-fab>
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <hr>
+
+
+
+        <div class="p-3" *ngIf="loadmaterials">
+          <ngx-skeleton-loader count="4" appearance="line" animation="pulse"></ngx-skeleton-loader>
+        </div>
+
+        <ng-container *ngIf="resourcesObj.length != 0 && !loadmaterials">
+          <div *ngFor="let item of resourcesObj; let i = index" (click)="ViewResource(item)">
+            <div class="resources-container">
+              <span class="line"></span>
+              <mat-icon class="file">book</mat-icon>
+              <div class="details d-flex justify-content-between">
+                <div>
+                  <strong style="color: var(--clr-neutral);">{{ item.title_fld | titlecase }}</strong>
+                  <br>
+                  <small style="color: var(--clr-neutral); opacity: 65%;">
+                    {{ item.datetime_fld | date : 'MMM dd, yyyy h:mm a'}}</small>
+                  <!-- <mat-icon>shared</mat-icon> -->
+                </div>
+
+                <button (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu" mat-icon-button>
+                  <mat-icon style="color: var(--clr-neutral);">more_vert</mat-icon>
+                </button>
+              </div>
+
+            </div>
+
+            <mat-menu #menu="matMenu">
+              <button (click)="editResources(item , i)" mat-menu-item>Edit</button>
+              <button (click)="deleteRes('res', item ,i)" mat-menu-item>Delete</button>
+            </mat-menu>
+          </div>
+          <!-- <button class="btn-load" *ngIf="resourcesObj.length >= 5;" mat-flat-button>
+            load more ...
+          </button> -->
+
+        </ng-container>
+
+        <ng-container *ngIf="resourcesObj.length == 0 && !loadmaterials">
+          <div class="text-center">
+            <div><strong>No resources posted! 🧐</strong></div>
+            <div class="p-3">
+              <span style="color: var(--clr-neutral); font-size: smaller;">By clicking the Add button above, you may add
+                new
+                resources.</span>
+            </div>
+            <!-- <button (click)="createResourcesDialog()" matTooltip="Add Resources" class="mat-elevation-z0"
+              color="primary" mat-mini-fab>
+              <mat-icon>add</mat-icon>
+            </button> -->
+          </div>
+        </ng-container>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+:root {
+    /* DEFAULT COLOR SCHEME */
+    --color-scheme-default: #0166b3;
+    --color-scheme-light: rgb(197, 231, 255);
+
+    --clr-primary: #0166b3;
+
+    --clr-third: #167ac7;
+    --clr-secondary: #E4EFFA;
+    --clr-white: #fff;
+    --clr-bg: #f5f5f5;
+    --clr-neutral: #222C2A;
+
+    /* BODY BACKGROUND */
+    --body-background: #fff;
+    
+    /* TEXT COLOR */
+    --txt-white: #fff;
+    --txt-dark: #41474d;
+    --foreground-default: #08090a;  
+    --foreground-secondary: #41474d; 
+    --foreground-tertiary: #797c80;
+    --foreground-quaternary: #f4faff;
+    --foreground-light: #41474d;
+    
+      /* BACKGROUND COLOR */
+    --background-default: #f5f5f5; 
+    --background-secondary: #797c80; 
+    --background-tertiary: #6d6d6d;
+    --background-light: #ffffff;
+    --background-light-gray: #ebebeb;
+
+      /* BUTTON COLOR USE */
+    --btn-save: #2ecc71;
+    --btn-edit: #0984e3;
+    --btn-close: crimson;
+    --btn-normal: #f5f5f5;
+
+  
+      /* SHADOWS */
+    --background-shadow: 5px 5px 20px #cbced1, -5px -5px 20px #fff;
+    --background-default-shadow: 8px 5px 15px rgba(0, 0, 0, 0.1);;
+    --background-tertiary-shadow: 0 1px 3px 0 rgba(92, 125, 153, 0.5);
+  
+
+  
+    --error-default: #ef3e36;
+    --error-dark: #800600;
+    --error-light: #ffcecc;
+  
+  }

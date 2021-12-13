@@ -1,0 +1,39 @@
+<header class="resources">
+  <div class="resources__header">
+    <div class="resources__contain">
+      <mat-icon>topic</mat-icon>
+    </div>
+    <h5>{{ data.type == 'edit_topic' ? 'Edit' : 'Create'}} Label</h5>
+  </div>
+
+  <button [disabled]="_user.isLoading()" [mat-dialog-close]="undefined" [mat-dialog-close]="undefined" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<form [formGroup]="Topicformgroup">
+
+  <div class="Details">
+    <mat-form-field appearance="fill" class="Details__input">
+      <mat-label>Label Name</mat-label>
+      <input required formControlName="topicname" placeholder="Label name" matInput>
+      <mat-error *ngIf="this.Topicformgroup.controls.topicname.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <footer>
+    <button *ngIf="!_user.isLoading()" mat-button [mat-dialog-close]="undefined" class="btn-cancel">Cancel</button>
+    <ng-container *ngIf="data.type != 'edit_topic'">
+      <button type="submit" (click)="addTopic()" class="btn-default" mat-flat-button>
+        <span *ngIf="!_user.isLoading()">Add</span>
+        <span *ngIf="_user.isLoading()">Adding...</span>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="data.type == 'edit_topic'">
+      <button type="submit" (click)="saveTopic()" class="btn-default" mat-flat-button>
+        <span *ngIf="!_user.isLoading()">Save</span>
+        <span *ngIf="_user.isLoading()">Saving...</span>
+      </button>
+    </ng-container>
+  </footer>
+</form>

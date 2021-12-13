@@ -1,0 +1,24 @@
+@mixin grid($col, $size){
+    display: grid;
+    grid-template-columns: repeat($col, minmax($size, 1fr))
+}
+
+
+@mixin flex($direct, $content, $align){
+    display: flex;
+    flex-direction: $direct;
+    justify-content: $content;
+    align-items: $align;
+}
+  
+@mixin font($size, $weight, $color){
+    font-size: $size;
+    font-weight: $weight;
+    color: $color;
+}
+
+@mixin box($width, $height, $back){
+    width: $width;
+    height: $height;
+    background: $back;
+}

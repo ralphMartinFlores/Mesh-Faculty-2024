@@ -1,0 +1,105 @@
+<div style="width:100%;padding:30px" *ngIf="data.type=='post'">
+  <strong mat-dialog-title>Delete post?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button (click)="deletePost()" class="btn-delete button" mat-button cdkFocusInitial>Delete</button>
+  </div>
+</div>
+
+
+<div style="width:100%;padding:30px" *ngIf="data.type=='comment'">
+  <strong mat-dialog-title>Delete comment?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn-delete button" (click)="deleteComments()" mat-button [mat-dialog-close]="true"
+      cdkFocusInitial>Delete</button>
+  </div>
+</div>
+
+<div style="width:100%;padding:30px" *ngIf="data.type=='reply'">
+  <strong mat-dialog-title>Delete reply?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn-delete button" (click)="deleteComments()" mat-button [mat-dialog-close]="true"
+      cdkFocusInitial>Delete</button>
+  </div>
+</div>
+
+<div style="width:100%;padding:30px" *ngIf="data.type=='activity'">
+  <strong mat-dialog-title>Delete activity?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn-delete button" (click)="deleteAct()" mat-button [mat-dialog-close]="true"
+      cdkFocusInitial>Delete</button>
+  </div>
+</div>
+
+<div style="width:100%;padding:30px" *ngIf="data.type=='res'">
+  <strong mat-dialog-title>Delete resources?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn-delete button" (click)="deleteRes()" mat-button [mat-dialog-close]="true"
+      cdkFocusInitial>Delete</button>
+  </div>
+</div>
+
+<div style="width:100%;padding:30px" *ngIf="data.type=='forums'">
+  <strong mat-dialog-title>Delete forums?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn-delete button" (click)="deleteForums()" mat-button [mat-dialog-close]="true"
+      cdkFocusInitial>Delete</button>
+  </div>
+</div>
+
+<div style="width:100%;padding:30px" *ngIf="data.type=='subforums'">
+  <strong mat-dialog-title>Delete subforums?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn-delete button" (click)="deleteSubForums()" mat-button [mat-dialog-close]="true"
+      cdkFocusInitial>Delete</button>
+  </div>
+</div>
+
+
+
+<div style="width:100%;padding:30px" *ngIf="data.type=='forumcontent'">
+  <strong mat-dialog-title>Delete reply?</strong>
+  <div mat-dialog-content class="mb-1">This is an irreversible action.
+  </div>
+
+  <div mat-dialog-actions style="font-weight: 500;">
+    <span style="flex: 1 1 auto"></span>
+    <button class="btn-cancel button" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn-delete button" (click)="deleteReply()" mat-button [mat-dialog-close]="true"
+      cdkFocusInitial>Delete</button>
+  </div>
+</div>

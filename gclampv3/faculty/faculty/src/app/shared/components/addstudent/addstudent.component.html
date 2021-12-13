@@ -1,0 +1,50 @@
+<header>
+  <span>Add Student</span>
+</header>
+
+<form (submit)="search($event)" ngNativeValidate>
+  <section>
+    <label for="id">Search Student</label>
+    <div class="input-box">
+      <input type="text" name="id" placeholder="Student ID">
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <ng-container *ngIf="studentlist.length != 0">
+      <div class="selected">
+        <div class="stud" *ngFor="let item of studentlist; let i = index">
+          <div class="bullet"></div>
+          <strong>{{item.fname_fld}} {{item.mname_fld}} {{item.lname_fld}}</strong>
+          <button type="button" (click)="remove(i)" mat-icon-button>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <hr>
+    <ng-container *ngIf="studentinfo.length != 0">
+      <strong>Search Result</strong>
+      <ng-container *ngFor="let item of studentinfo; let i = index">
+        <div class="student" (click)="addtolist(item, i)">
+          <img [src]="item.profilepic_fld || 'assets/images/profile.jpg'" alt="">
+          <div class="info">
+            <strong>{{item.fname_fld}} {{item.mname_fld}} {{item.lname_fld}}</strong><br>
+            <small>{{ item.studnum_fld }}</small>
+          </div>
+
+          <button (click)="$event.stopPropagation()" type="button" (click)="removequery(i)" mat-icon-button>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <footer>
+      <button class="btn-cancel cancel" [mat-dialog-close]="undefined" mat-flat-button>cancel</button>
+      <button mat-flat-button color="primary" type="button" class="add-btn" (click)="addStudents()">Add student</button>
+    </footer>
+  </section>
+</form>

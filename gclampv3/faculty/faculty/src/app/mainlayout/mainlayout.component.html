@@ -1,0 +1,138 @@
+<div class="lamp-container">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false"
+      (click)="closeSideNav()">
+
+
+      <!-- <img appLazyLoad draggable="false" src="assets/School logo/GC.png" class="list-logo"  alt="logo" class ="logo"> -->
+      <img appLazyLoad draggable="false" src="assets/images/logo.png" class="list-logo" height="60px" alt="logo"
+        class="logo">
+
+
+      <strong class="faculty">Faculty Portal</strong>
+
+
+
+      <div class="lines"></div>
+
+      <mat-nav-list class="list">
+        <div class="list__menu" routerLink="classes" routerLinkActive="is-active">
+          <div class="list__icon-container">
+            <mat-icon class="list__icon">laptop</mat-icon>
+            <small class="list__text">Classes</small>
+          </div>
+        </div>
+
+        <div class="list__menu" routerLink="news" routerLinkActive="is-active">
+          <div class="list__icon-container">
+            <mat-icon class="list__icon">campaign</mat-icon>
+            <small class="list__text">News</small>
+          </div>
+        </div>
+
+        <div class="list__menu" routerLink="forums" routerLinkActive="is-active">
+          <div class="list__icon-container">
+            <mat-icon class="list__icon">layers</mat-icon>
+            <small class="list__text">Forums</small>
+          </div>
+        </div>
+
+        <div class="list__menu" routerLink="facultyloading" routerLinkActive="is-active">
+          <div class="list__icon-container">
+            <mat-icon class="list__icon">class</mat-icon>
+            <small class="list__text">Faculty Loading</small>
+          </div>
+        </div>
+
+        <!-- <div class="list__menu" routerLink="evaluation" routerLinkActive="is-active">
+          <div class="list__icon-container">
+            <mat-icon class="list__icon">class</mat-icon>
+            <small class="list__text">Faculty Evaluation</small>
+          </div>
+        </div> -->
+
+        <div class="list__menu" routerLink="downloads" routerLinkActive="is-active">
+          <div class="list__icon-container">
+            <mat-icon class="list__icon">get_app</mat-icon>
+            <small class="list__text">Downloads</small>
+          </div>
+        </div>
+
+        <div class="list__menu" routerLink="elibrary" routerLinkActive="is-active">
+          <div class="list__icon-container">
+            <mat-icon class="list__icon">local_library</mat-icon>
+            <small class="list__text">eLibrary</small>
+          </div>
+        </div>
+
+        <div class="list-logout list-menu" routerLinkActive="is-active">
+          <div class="lines"></div>
+          <div class="log-list-icon">
+            <button mat-icon-button (click)="userLogout()">
+              <mat-icon>logout</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-nav-list>
+
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+      <mat-toolbar>
+        <button type="button" class="header-btn" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon" class="menu-icon">menu</mat-icon>
+        </button>
+
+        <span style="flex: 1 1 auto;"></span>
+
+
+
+        <!-- <div class="dropdown">
+        <button type="button" class=" header-btn notification-btn " id="dropdownMenuButton1" data-bs-toggle="dropdown"
+            aria-expanded="false" mat-icon-button>
+            <mat-icon class="right-icon-spacer">notifications_none</mat-icon>
+            <span class="count" style="color: #fff;">{{ notif.length }}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+            <div class="notification-header">
+              <small>Notifications ({{ notif.length }})</small>
+            </div>
+            <section class="notification-body">
+              <div class="noti-content" *ngFor="let n of notif">
+                <div class="d-flex align-items-center">
+                  <div class="img-container">
+                    <img src="assets/images/profile.jpg" alt="">
+                  </div>
+                  <div class="info">
+                    <p>{{n.notification}}</p>
+                    <small>{{ n.datetime | date : 'MMM dd, yyyy h:mm a' }}</small>
+                  </div>
+                </div>
+                <div class="read"></div>
+              </div>
+
+            </section>
+
+          </ul>
+        </div>  -->
+
+        <div class="fullname" routerLink="profile" style="cursor: pointer;">
+          <strong>{{ this._user.getUserFullname() }}</strong>
+          <small>{{ this._user.getUserEmail() }}</small>
+        </div>
+
+        <img draggable="false" [src]="_ds.imageURL + _user.getUserImage()" alt="avatar" class="profile-pic"
+          routerLink="profile" onerror="this.onerror=null;this.src='assets/images/profile.jpg'"
+          style="cursor: pointer;">
+      </mat-toolbar>
+
+
+      <div class="gc-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

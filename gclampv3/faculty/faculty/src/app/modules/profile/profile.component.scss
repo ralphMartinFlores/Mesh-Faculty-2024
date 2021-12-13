@@ -1,0 +1,247 @@
+@import 'src/app/scss/__mixin.scss';
+
+
+.bg{
+  width: 100%;
+  position: absolute; 
+  color: #fff;
+  height: 30vh;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle at center center,
+    rgb(26, 117, 187),
+    rgb(2, 78, 132)
+  );
+  // border-radius: .5em;
+}
+
+
+
+
+.wrap{
+  width: 95%;
+  max-width: 80rem;
+  margin-inline: auto;
+  z-index: 1;
+  margin-top: 1em;
+  // padding: 1em;
+  // margin-top: -11em;
+  position: relative;
+}
+
+.profile{
+    @include flex(column, flex-start, center);
+    // padding: 1.5em;
+    padding: 1em;
+    border-radius: .5em;
+    background: var(--clr-white);
+    margin-bottom: 2em;
+    text-align: center;
+    // box-shadow: 2px 8px 12px rgba(0,0,0,0.05);
+    box-shadow:
+    0 -1.4px 2.2px rgba(0, 0, 0, 0.033),
+    0 -1.1px 5.3px rgba(0, 0, 0, 0.042),
+    0 1.8px 10px rgba(0, 0, 0, 0.049),
+    0 8.7px 17.9px rgba(0, 0, 0, 0.056),
+    0 23.5px 33.4px rgba(0, 0, 0, 0.063),
+    0 100px 80px rgba(0, 0, 0, 0.07)
+  ;
+}
+
+.info{
+      @include flex(column, flex-start, flex-start);
+      gap: 1em;
+
+      &__square{
+        position: relative;
+        margin-inline: auto;
+      }
+      &__img{
+        height: 120px;
+      }
+
+      &__name{
+        font-size: 1rem;
+      }
+
+      span{
+        font-size: .9rem;
+      }
+
+      button{
+        position: absolute;
+        bottom: 1em;
+        background-color: var(--clr-primary);
+        color: var(--clr-white);
+        right: 1em;
+      }
+}
+
+.action{
+    @include flex(column, center, center);
+    gap: 10px;
+    width: 100%;
+    margin-top: .5em;
+    &__btn{
+      width: 100%;
+      padding: .2em 1em;
+      background: var(--clr-primary);
+      margin-inline: 10px;
+      color: var(--clr-white);
+
+      &:last-child{
+        background: #1C3D50;
+      }
+    }
+}
+
+.information{
+  
+   h6{
+     font-weight: 600;
+     margin-left: 1.5em;
+     margin-bottom: 1em;
+   }
+}
+
+
+section{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  gap: 1em;
+  background: var(--clr-white);
+  // box-shadow: 2px 8px 12px rgba(0,0,0,0.05);
+  box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07)
+  ;
+  padding: 1em;
+  border-radius: .5em;
+
+  .info-group{
+      position: relative;
+      label{
+        font-weight: 600;
+        font-size: .9rem;
+      }
+      p{
+        background: var(--clr-bg);
+        word-wrap: break-word;
+        padding: .5em;
+        font-size: .9rem;
+      }
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .action{
+    @include flex(row, space-between, center);
+    flex-wrap: wrap;
+    margin-top: 1em;
+    &__btn{
+      width: 44%;
+    }
+  }
+}
+
+
+
+@media screen and (min-width: 786px) {
+
+  .action{
+    margin-top: 1em;
+    &__btn{
+      width: 45%;
+    }
+  }
+
+  .wrap{
+    max-width: 40rem;
+    margin-inline: auto;
+    z-index: 1;
+  }
+  section{
+    display: grid;
+    padding: 1.5em;
+  
+    .info-group{
+        p{
+          padding: 1em;
+        }
+    }
+  }
+}
+
+
+@media screen and (min-width: 1200px) {
+  .wrap{
+    max-width: 60rem;
+    margin-inline: auto;
+    z-index: 1;
+  }
+
+  .profile{
+    @include flex(row, space-between, center);
+    margin-top: 3em;
+    margin-bottom: 2em;
+    text-align: left;
+  }
+
+
+  .info{
+    @include flex(row, flex-start, center);
+    gap: 1em;
+
+  
+    &__img{
+      height: 140px;
+    }
+
+    &__name{
+      font-size: 1.2  rem;
+    }
+
+    span{
+      font-size: 1rem;
+    }
+  }
+
+  .action{
+    @include flex(row, flex-start, flex-start);
+    gap: 1em;
+    width: auto;
+    margin-top: 0;
+    &__btn{
+      width: auto;
+      margin-inline: 10px;
+    }
+  }
+
+  section{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(40%, 1fr));
+    gap: 1em;
+    width: auto;
+  }
+
+}
+
+
+// @media screen and (min-width: 1600px) {
+//   .wrap{
+//     max-width: 80rem;
+//     margin-inline: auto;
+//     z-index: 1;
+//   }
+
+//   section{
+//     display: grid;
+//     grid-template-columns: repeat(3, minmax(30%, 1fr));
+//     gap: 1em;
+//   }
+
+// }

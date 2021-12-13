@@ -1,0 +1,130 @@
+<div class="background">
+  <div class="wrapper">
+    <div class="header">
+      <div class="header__contain">
+        <img draggable="false" src="assets/images/logo.png" alt="Gordon College">
+        <img draggable="false" src="assets/School logo/GC.png" alt="lamp-logo">
+      </div>
+      <h2>Welcome to <strong style="color: var(--clr-third)"> {{ _ds.prefix + "LAMP"}} </strong></h2>
+    </div>
+
+    <section>
+      <div class="login">
+        <p class="login__headertitle">Faculty Portal</p>
+        <small class="login__headersub">Log in your credentials:</small>
+
+        <form class="login__form" [formGroup]="LoginFormGroup">
+          <mat-form-field appearance="fill" class="login__input">
+            <mat-label>Enter your email</mat-label>
+            <input formControlName="user_email" autocomplete="email" type="email" matInput
+              placeholder="ex. juandelacruz@gordoncollege.edu.ph" required>
+            <mat-error *ngIf="LoginFormGroup.controls.user_email.invalid">{{ getErrorMessage() }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="login__input">
+            <mat-label>Enter your password</mat-label>
+            <input placeholder="Password" formControlName="user_pass" autocomplete="current-password" id="password"
+              name="param2" matInput [type]="hide ? 'password' : 'text'" required>
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="LoginFormGroup.controls.user_pass.invalid">{{ getPassErrorMessage() }}</mat-error>
+          </mat-form-field>
+
+
+          <p *ngIf="errMsg != ''" class="text-danger text-center">
+            <strong>{{ errMsg }}</strong>
+          </p>
+          <!-- <mat-progress-bar *ngIf="_user.isLoading()" mode="indeterminate"></mat-progress-bar> -->
+          <button type="submit" [disabled]="_user.isLoading()" (click)="onSubmit()" class="btn-default" mat-flat-button>
+            <span *ngIf="!_user.isLoading()">Login</span>
+            <span *ngIf="_user.isLoading()">Logging in...</span>
+          </button>
+
+        </form>
+
+
+
+
+
+        <div class="text-center">
+          <small>Forgot Password?</small>
+          <small style="color: var(--btn-primary); margin-left: 5px; font-weight: 600; cursor: pointer;"
+            data-bs-toggle="modal" data-bs-target="#forgotPassModal">Click
+            here</small>
+        </div>
+      </div>
+
+      <article>
+        <div class="line"></div>
+        <p><strong>LEARNERS' ACADEMIC MANAGEMENT PORTAL</strong> (LAMP) - provides tools and features to be able
+          to simulate experience and activities of face-to-face classes.
+        </p><br>
+        <small style="color: var(--clr-white)">Version {{version}}</small>
+      </article>
+    </section>
+
+
+
+
+  </div>
+  <footer>
+    <span>© Copyright 2021 Gordon College. All rights reserved.</span>
+  </footer>
+
+  <ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+
+
+<div class="modal fade" id="forgotPassModal" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-body modals">
+        <div class="modals__header">
+          <strong class="modals__title  " id="exampleModalLabel">Forgot password?</strong>
+          <button type="button" data-bs-dismiss="modal" aria-label="Close" mat-icon-button>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <p> Provide the following information and we'll send you a link to reset your password</p>
+
+        <form class="form " (submit)="forgotPassword($event)" ngNativeValidate>
+          <mat-form-field appearance="fill" class="forms__input">
+            <mat-label>Faculty ID</mat-label>
+            <input matInput type="text" id="param1" name="param1" matInput required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="forms__input">
+            <mat-label>Email Address</mat-label>
+            <input matInput id="param3" name="param3" type="email" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="forms__input">
+            <mat-label>Birthdate</mat-label>
+            <input matInput id="param2" name="param2" type="date" required>
+          </mat-form-field>
+
+
+          <button type="submit" class="btn-default submit" mat-flat-button>Submit</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

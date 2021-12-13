@@ -1,0 +1,136 @@
+<header class="resources">
+  <div class="resources__header">
+    <div class="resources__contain">
+      <mat-icon>book</mat-icon>
+    </div>
+    <h5>{{data.type == 'edit_resources' ? 'Edit' : 'Create' }} Resources</h5>
+  </div>
+
+  <button [disabled]="_user.isLoading() " [mat-dialog-close]="undefined" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+
+<mat-horizontal-stepper linear="true" #stepper>
+  <mat-step [stepControl]="ResourceFormGroup" errorMessage="Please complete all necessary fields.">
+    <form [formGroup]="ResourceFormGroup" class="Details">
+      <h6 class="Details__title">Basic Details</h6>
+      <mat-form-field appearance="fill" class="Details__input mb-3">
+        <mat-label>Select a Label</mat-label>
+        <mat-select formControlName="res_topic">
+          <mat-option value="0">No Label</mat-option>
+          <mat-option [value]="item.topiccode_fld" *ngFor="let item of this.data.topicdata">
+            {{ item.topicname_fld }}
+          </mat-option>
+        </mat-select>
+        <mat-hint align="start">Choose a <strong>LABEL</strong> to organize your class resource.</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="Details__input mb-3">
+        <mat-label>Resource Name</mat-label>
+        <input required formControlName="res_title" placeholder="Resource name" matInput>
+        <mat-error *ngIf="this.ResourceFormGroup.controls.res_title.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="Details__input">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="res_desc" placeholder="Description"
+          style="overflow-x: hidden; white-space: pre-wrap; font-size: 1rem; line-height: 1.4;" matInput
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="20"></textarea>
+        <mat-hint align="start">Provide detailed and excellent description.</mat-hint>
+      </mat-form-field>
+
+    </form>
+
+    <footer>
+      <button mat-flat-button class="btn-default" matStepperNext>Next</button>
+    </footer>
+  </mat-step>
+
+  <mat-step>
+    <div class="material">
+      <h6 class="material__title">Upload file</h6>
+      <form class="file">
+
+        <div class="file__upload" (click)="uploadfile.click()">
+
+          <!-- [class]="'file__imgcon' { filePreviewAndUpload.length == 0 ? 'shake' :}" -->
+          <div [ngClass]="filePreviewAndUpload.length == 0 ? 'shake file__imgcon' : 'file__imgcon'">
+            <!-- <img src="assets/images/document.png"> -->
+            <mat-icon>description</mat-icon>
+          </div>
+          <p><strong>Click here to Upload files</strong></p>
+        </div>
+
+        <input id="addfiles" #uploadfile style="display: none;" (change)="getFile($event)" type="file" name="file[]"
+          multiple>
+
+
+
+        <div class="file__container">
+
+          <div class="file__nofile" *ngIf="filePreviewAndUpload.length == 0 && editFiles.length == 0">
+            <p>No file(s) attached</p>
+          </div>
+
+          <div class="limit">
+            <div class="limit__container" *ngFor="let item of editFiles; let i = index;">
+              <div class="name">
+                <!-- <img draggable="false" src="{{ getFileExtension(item.name) }}" alt="" class="limit__img"> -->
+                <mat-icon>description</mat-icon>
+                <p>{{ item.name }} </p>
+              </div>
+
+              <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+
+              <button [disabled]="_user.isLoading()" *ngIf="!_user.isLoading()" (click)="deleteFiles(i, item.path)"
+                mat-icon-button>
+                <mat-icon class="close">close</mat-icon>
+              </button>
+            </div>
+
+            <div class="limit__container" *ngFor="let item of filePreviewAndUpload; let i = index;">
+              <div class="name">
+                <!-- <img src="{{ getFileExtension(item.name) }}" alt="" class="limit__img"> -->
+                <mat-icon>description</mat-icon>
+                <p>{{ item.name }} </p>
+              </div>
+
+              <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <button *ngIf="!_user.isLoading()" (click)="removeFilePreviews(i)" mat-icon-button>
+                <mat-icon class="close">close</mat-icon>
+              </button>
+            </div>
+
+
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+
+    <footer>
+      <button *ngIf="!_user.isLoading()" mat-button matStepperPrevious class="btn-cancel">Back</button>
+      <ng-container *ngIf="this.data.type != 'edit_resources'" type="submit">
+        <button [disabled]="this.filePreviewAndUpload.length == 0" (click)="addResources()" class="btn-default"
+          mat-flat-button>
+          <span *ngIf="!_user.isLoading()">Add</span>
+          <span *ngIf="_user.isLoading()">Adding...</span>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="this.data.type == 'edit_resources'">
+        <button [disabled]="this.filePreviewAndUpload.length == 0 && editFiles.length == 0" (click)="saveResources()"
+          class="btn-default" mat-flat-button>
+          <span *ngIf="!_user.isLoading()">Save</span>
+          <span *ngIf="_user.isLoading()">Saving...</span>
+        </button>
+      </ng-container>
+    </footer>
+  </mat-step>
+</mat-horizontal-stepper>

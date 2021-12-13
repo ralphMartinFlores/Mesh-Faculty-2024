@@ -1,0 +1,103 @@
+<div class="commentscontain">
+
+  <!-- <ng-container *ngFor="let item of this.data.data"> -->
+
+  <section>
+    <header>
+      <!-- <h3>{{ item.subtitle_fld }}</h3> -->
+      <div>
+        <h3>{{data.data.subtitle_fld}}</h3>
+        <div class="small">
+          <div style="font-weight: 600;">Posted by: {{ data.data.fullname_fld}}</div>
+          <div>{{data.data.datetime_fld | date: 'medium'}}</div>
+        </div>
+      </div>
+      <button [mat-dialog-close]="undefined" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </header>
+
+
+    <div class="p-4">
+      {{ data.data.subdesc_fld }}
+    </div>
+
+    <div class="comments" *ngFor="let item of forumContent">
+      <div class="comments__imgcontain">
+        <img [src]="_ds.baseURL + _user.getUserImage() || 'assets/images/profile.jpg'" alt=""
+          onerror="this.onerror=null;this.src='assets/images/profile.jpg'" class="comments__img">
+      </div>
+      <div class="comments__userinfo">
+        <div class="comments__header">
+          <div class="comments__fullname">
+            <strong>{{ item.fname_fld }} {{ item.lname_fld }} </strong>
+            <small class="text-muted">{{ item.datetime_fld | date: 'medium' }}</small>
+          </div>
+          <button mat-icon-button [matMenuTriggerFor]="del" aria-label="button menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #del="matMenu">
+            <button mat-menu-item class="nooutline">
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+
+        <p class="comments__content">{{ item.content_fld }}
+        </p>
+
+        <!--FOR IMAGE POST-->
+        <!-- <div class="comments__postimg">
+                    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+                </div> -->
+
+
+
+
+
+        <div class="comments__action">
+          <div class="comments__like right">
+            <mat-icon class="material-icons-outlined">thumb_up</mat-icon>
+            <!-- <small>21</small> -->
+          </div>
+          <div class="comments__like left">
+            <mat-icon class="material-icons-outlined">chat</mat-icon>
+            <!-- <small>21</small> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- </ng-container> -->
+  <footer>
+    <div class="forms-container">
+      <div class="formheader">
+        <mat-icon>create</mat-icon>
+        <span>Add comments here....</span>
+      </div>
+      <div class="formbody">
+        <img mat-card-avatar draggable="false" [src]="_ds.baseURL + _user.getUserImage() || 'assets/images/profile.jpg'"
+          alt="" class="profile-img" onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+
+        <textarea [(ngModel)]="content" class="example-full-width" placeholder="Ex. It makes me feel..."></textarea>
+      </div>
+      <div class="action-button">
+        <div class="icon-container">
+          <button class="icon" mat-icon-button>
+            <mat-icon>image</mat-icon>
+          </button>
+          <button class="icon" mat-icon-button>
+            <mat-icon>image</mat-icon>
+          </button>
+          <button class="icon" mat-icon-button>
+            <mat-icon>image</mat-icon>
+          </button>
+        </div>
+        <button [disabled]="content === ''" (click)="addReply()" mat-raised-button class="post-btn" type="submit">
+          <mat-icon>create</mat-icon>Add comments
+        </button>
+      </div>
+    </div>
+  </footer>
+</div>

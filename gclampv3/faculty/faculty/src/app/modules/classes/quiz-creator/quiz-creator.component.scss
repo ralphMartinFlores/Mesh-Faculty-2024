@@ -1,0 +1,335 @@
+@import "src/app/scss/__mixin.scss";
+
+input[type="time"]::-webkit-calendar-picker-indicator{
+  font-size: 1.2rem;
+}
+
+.questcontain{
+  position: relative;
+  padding: 1.5em .8em;
+  z-index: 0;
+  // &::before{
+  //   content: '${label}';
+  //   font-size: 1.5rem;
+  //   font-weight: 700;
+  //   opacity: .1;
+  //   position: absolute;
+  //   top: 1.5em;
+  //   right: .5em;
+  //   z-index: -1;
+  // }
+
+  &__title{
+    position: absolute;
+    z-index: -1;
+    font-size: 7rem;
+    font-weight: 700;
+    top: .125em;
+    right: 1em;
+    opacity: .1;
+  }
+}
+
+.btn-default{
+  @include flex(row, center, center);
+}
+
+header{
+  @include flex(row, flex-start, center);
+  gap: .5em;
+  margin-bottom: 1em;
+}
+
+mat-form-field{
+  font-size: .9rem;
+}
+
+
+.formcontain{
+  width: 100%;
+  h6{
+    margin-bottom: 1em;
+  }
+
+  &__box{
+    background: #fff;
+    padding: 1em;
+    border-radius: .5em;
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07)
+  ;
+  }
+
+  &__forms{
+    @include flex(column, flex-start, center);
+    gap: 1em;
+    mat-form-field{
+      width: 100%;
+    }
+  }
+
+ 
+}
+
+
+.foot{
+  @include flex(row, flex-end, center);
+  margin-top: 1em;
+}
+
+.title{
+  @include flex(column, center, flex-start);
+  gap: .5em;
+  width: 100%;
+  margin: 1em 0;
+
+  &__header{
+    @include flex(row, flex-start, center);
+    mat-icon{
+      @include flex(row, center, center);
+      width: 40px;
+      height: 40px;
+      background-color: #dcecff; 
+      color: var(--clr-primary);
+      border-radius: 50%;
+      margin-right: 5px; 
+      box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+        0 12.5px 10px rgba(0, 0, 0, 0.035),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+        0 100px 80px rgba(0, 0, 0, 0.07)
+      ;
+    }
+  }
+
+  &__action{
+    @include flex(row, center, center);
+    width: 100%;
+    button{
+      width: 100%;
+      font-size: .8rem;
+    }
+  }
+}
+
+
+
+.table{
+  background: var(--clr-white);
+  box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+  0 12.5px 10px rgba(0, 0, 0, 0.035),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+  0 100px 80px rgba(0, 0, 0, 0.07);
+}
+
+.table thead{
+  border-top-left-radius: .5em;
+  border-top-right-radius: .5em;
+  background-image: 
+  radial-gradient(circle at 77% 43%, rgba(168, 168, 168,0.04) 0%, rgba(168, 168, 168,0.04) 50%,rgba(10, 10, 10,0.04) 50%, rgba(10, 10, 10,0.04) 100%),
+  radial-gradient(circle at 33% 65%, rgba(248, 248, 248,0.04) 0%, rgba(248, 248, 248,0.04) 50%,rgba(228, 228, 228,0.04) 50%, rgba(228, 228, 228,0.04) 100%),
+  radial-gradient(circle at 92% 79%, rgba(152, 152, 152,0.04) 0%, rgba(152, 152, 152,0.04) 50%,rgba(28, 28, 28,0.04) 50%, rgba(28, 28, 28,0.04) 100%),
+  radial-gradient(circle at 91% 13%, rgba(41, 41, 41,0.04) 0%, rgba(41, 41, 41,0.04) 50%,rgba(214, 214, 214,0.04) 50%, rgba(214, 214, 214,0.04) 100%),
+  linear-gradient(90deg, var(--clr-primary),var(--clr-primary));
+}
+
+
+.table thead th {
+  text-align: center;
+  font-size: .9rem;
+  padding: 1.5em;
+  border: none;
+  // background: var(--clr-primary);
+  color: var(--clr-white);
+
+  font-weight: 500;
+}
+
+.table tbody tr td{
+  // border: none;
+  text-align: center;
+  padding: 1.3em 1em;
+  font-size: 1rem;
+  border: 2px solid #f5f5f5;
+}
+
+.total{
+  text-align: right; 
+  padding: 1em 2em;
+  span{
+    margin-right: 20px;
+    font-size: .9rem;
+    color: #626262;
+  }
+  &:hover{
+    background: #fff;
+  }
+}
+
+
+.edits{
+  color: var(--clr-primary);
+}
+
+
+
+@media only screen and(min-width: 800px){
+  .questcontain{
+    padding: 1.5em;
+    position: relative;
+     z-index: 0;
+
+    // &::before{
+    //   content: 'QUIZ CREATOR';
+    //   font-size: 6rem;
+    //   font-weight: 700;
+    //   opacity: .1;
+    //   position: absolute;
+    //   top: 0em;
+    //   right: .5em;
+    //   z-index: -1;
+    // }
+  }
+
+  .formcontain{
+    &__box{
+      padding: 1.5em;
+    }
+    &__forms{
+      @include flex(row, flex-start, center);
+    }
+  }
+
+  .title{
+    @include flex(row, space-between, center);
+    gap: .5em;
+    width: 100%;
+    margin: 1em 0;
+  
+    &__header{
+      @include flex(row, flex-start, center);
+    }
+  
+    &__action{
+      @include flex(row, flex-end, center);
+      button{
+        width: auto;
+        font-size: .8rem;
+      }
+    }
+  }
+}
+
+
+
+
+
+@media screen  and(max-width: 786px){
+        .table thead th {
+      font-size: .9rem;
+    }
+    
+    .table tbody tr td{
+      font-size: .9rem;
+    }
+
+        .table thead {
+      display: none;
+    }
+
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+      display: block;
+      width: 100%;
+    }
+
+    .table td:last-child,
+    .table th:last-child {
+      border-bottom: 1px solid #222;
+      cursor: pointer;
+    }
+
+    .table td{
+      position: relative;
+      padding-left: 50%;
+      padding: 1.5em;
+      font-size: .9rem;
+    }
+
+    .table tr {
+      
+      margin-bottom: 20px;
+    }
+
+    .table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .table tbody tr td{
+      border: none;
+      text-align: right;
+      line-height: 40px;
+      padding: 10px;
+      font-size: .9rem;
+      border-bottom: 2px solid #f5f5f5;
+    }
+
+  
+}
+
+
+@media only screen and(min-width: 1200px){
+  .questcontain{
+    padding: 2em;
+  }
+
+  .formcontain{
+    width: 100%;
+
+    &__box{
+      background: #fff;
+      padding: 1.5em;
+    }
+
+    &__matforms{
+      @include flex(row, flex-start, flex-start);
+      gap: 10px;
+
+      .div1, .div2{
+        width: 50%;
+      }
+    }
+  }
+}
+
+
+@media only screen and(min-width: 1400px){
+  .questcontain{
+    padding: 3em;
+  }
+
+  mat-form-field{
+    font-size: 1.1rem;
+  }
+
+}
+

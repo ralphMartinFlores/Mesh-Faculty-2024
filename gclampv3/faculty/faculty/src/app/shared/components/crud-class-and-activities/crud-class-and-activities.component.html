@@ -1,0 +1,96 @@
+<header class="heads">
+    <div class="heads__title">
+      <mat-icon>topic</mat-icon>
+      <h5 class="mb-0 ">{{data.type == 1 ? 'Edit' : 'Add' }} Question</h5>
+    </div>
+  
+    <button [mat-dialog-close]="undefined" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  
+  <div class="Selection">
+    <mat-radio-group aria-labelledby="radio-group-label" class="Selection__group" [(ngModel)]="selecteQuizType">
+      <mat-radio-button color="accent" [value]="0" class="radio-button">Multiple Choice</mat-radio-button>
+      <mat-radio-button color="accent" [value]="1" class="radio-button">Identification</mat-radio-button>
+      <mat-radio-button color="accent" [value]="2" class="radio-button">True or False</mat-radio-button>
+      <mat-radio-button color="accent" [value]="3" class="radio-button">Essay Type</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  
+  <form [formGroup]="questioniaresForms" class="Question">
+  
+    <div class="Question__main">
+      <div class="Question__header">
+        <h5 class="mb-0" *ngIf="selecteQuizType == 0">Multiple Choice</h5>
+        <h5 class="mb-0" *ngIf="selecteQuizType == 1">Identification</h5>
+        <h5 class="mb-0" *ngIf="selecteQuizType == 2">True or False</h5>
+        <h5 class="mb-0" *ngIf="selecteQuizType == 3">Essay Type</h5>
+        <mat-form-field appearance="fill">
+          <mat-label>Points</mat-label>
+          <input formControlName="question_points" matInput placeholder="Points" type="number">
+        </mat-form-field>
+      </div>
+  
+  
+  
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Question</mat-label>
+        <textarea formControlName="question_description" style="overflow: hidden;" placeholder="Question" matInput
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"></textarea>
+      </mat-form-field>
+  
+  
+      <ng-container *ngIf="selecteQuizType == 0">
+        <div class="d-flex align-items-center">
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Choice</mat-label>
+            <input formControlName="question_choice" matInput>
+            <mat-hint>Press <strong>ENTER</strong> to add Choices</mat-hint>
+          </mat-form-field>
+          <button class="ms-2" matTooltip="Add Choice" color="primary" type="submit" mat-icon-button
+            (click)="addChoices()">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </div>
+  
+        <div matRipple class=" d-flex align-items-center p-2" *ngFor="let item of choicesObject; let i = index">
+          <mat-radio-button class="mr-4" formControlName="question_answerkey" [value]="item" ngDefaultControl
+            color="primary">
+            {{ item }}
+          </mat-radio-button>
+          <span style="flex: 1 1 auto;"></span>
+          <button (click)="removeChoices(i)" mat-icon-button>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+  
+      </ng-container>
+  
+      <ng-container *ngIf="selecteQuizType == 1">
+        <label id="identification"><strong>Answer key</strong></label>
+        <mat-form-field aria-labelledby="identification" style="width: 100%;" appearance="fill">
+          <mat-label>Answer key</mat-label>
+          <input formControlName="question_answerkey" ngDefaultControl matInput>
+        </mat-form-field>
+      </ng-container>
+  
+      <ng-container *ngIf="selecteQuizType == 2">
+        <mat-radio-group formControlName="question_answerkey" ngDefaultControl aria-labelledby="radio-group-label"
+          class="radio-group m-0">
+          <mat-radio-button color="accent" value="true" class="radio-button">True</mat-radio-button>
+          <mat-radio-button color="accent" value="false" class="radio-button">False
+          </mat-radio-button>
+        </mat-radio-group>
+      </ng-container>
+  
+  
+    </div>
+  
+  
+    <div class="Question__footer">
+      <button class="btn-default" (click)="addQuizQuestion()" mat-stroked-button>Save Question</button>
+    </div>
+  
+  </form>
+  

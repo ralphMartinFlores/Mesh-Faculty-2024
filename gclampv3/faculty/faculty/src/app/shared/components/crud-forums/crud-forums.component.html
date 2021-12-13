@@ -1,0 +1,112 @@
+<!--################ ADD PART OF FORUMS ######################-->
+<div *ngIf="data.type === 'forumstopic'">
+  <header class="mainforum-header">
+    <button class="icon" mat-icon-button>
+      <mat-icon>assignment</mat-icon>
+    </button>
+    <h5 class="mb-0 ">Add Discussion</h5>
+    <span style="flex: 1 1 auto;"></span>
+    <button [mat-dialog-close]="undefined" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <section>
+    <form [formGroup]="ForumsFormGroup">
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Forum title</mat-label>
+        <input required formControlName="topic_title" placeholder="Forum title" matInput>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Forum description</mat-label>
+        <textarea formControlName="topic_desc" placeholder="Say something great here..."
+          style="overflow: hidden;  white-space: pre;" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="20"
+          cdkTextareaAutosize matInput></textarea>
+      </mat-form-field>
+      <mat-dialog-actions align="end">
+        <button mat-button cdkFocusInitial [mat-dialog-close]="undefined" class="mr-2">Cancel</button>
+        <button class="btn-default" mat-flat-button>Add</button>
+      </mat-dialog-actions>
+      <!-- (click)="addMainForums()" -->
+    </form>
+  </section>
+</div>
+
+
+<div *ngIf="data.type === 'mainforum'">
+  <header class="forumtopic_header">
+    <button class="icon" mat-icon-button>
+      <mat-icon>assignment</mat-icon>
+    </button>
+    <strong>Add topic</strong>
+    <span style="flex: 1 1 auto;"></span>
+    <button [mat-dialog-close]="undefined" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <section>
+    <form [formGroup]="ForumsFormGroup" (ngSubmit)="addForumTopic()">
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input required style="width: 100% !important;" class="inputtitle" placeholder="Activity Title"
+          formControlName="topic_title" required matInput>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="topic_desc" placeholder="Instructions" matInput
+          style="overflow-x: hidden; white-space: pre-wrap;" matInput cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="20"></textarea>
+      </mat-form-field>
+
+      <div class="d-flex justify-content-end">
+        <button mat-flat-button [mat-dialog-close]="undefined" class="mx-2 bg-light">Cancel</button>
+        <button type="submit" mat-flat-button class="btn-default">Add</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+
+
+
+<!--################ EDIT PART OF FORUMS ######################-->
+
+
+<div *ngIf="data.type === 'editmainforum'">
+  <header class="forumtopic_header">
+    <button class="icon" mat-icon-button>
+      <mat-icon>assignment</mat-icon>
+    </button>
+    <strong>Edit topic</strong>
+    <span style="flex: 1 1 auto;"></span>
+    <button [mat-dialog-close]="undefined" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <section>
+    <form [formGroup]="ForumsFormGroup" (ngSubmit)="saveForumTopic()">
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input required style="width: 100% !important;" class="inputtitle" placeholder="Activity Title"
+          formControlName="topic_title" required matInput>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="topic_desc" placeholder="Instructions" matInput
+          style="overflow-x: hidden; white-space: pre-wrap;" matInput cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="20"></textarea>
+      </mat-form-field>
+
+      <div class="d-flex justify-content-end">
+        <button mat-flat-button [mat-dialog-close]="undefined" class="mx-2 bg-light">Cancel</button>
+        <button type="submit" mat-flat-button class="btn-default">Save</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+
+<!--################ DELETE PART OF FORUMS ######################-->

@@ -1,0 +1,289 @@
+<div class="main-container">
+    <mat-tab-group mat-align-tabs="start" class="mat-elevation-z0 mat-tab-group">
+        <mat-tab label="Faculty Loading">
+            <form (submit)="onSubmitExcess($event)">
+              <div class="header">
+                <h3 class="subtitle">Faculty Loading</h3>
+                <mat-icon class="iconic">laptop_mac</mat-icon>
+              </div>
+              <div class="table-container" id="faculty-loading-table">
+                <table class="table3  table-hover">
+                  <thead class="text-center">
+                    <th>Class</th>
+                    <th>Subject</th>
+                    <th style="text-align: left;">Subject Decription</th>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Room</th>
+                    <th>Units</th>
+                    <th>Hours</th>
+                    <th>No. of Students</th>
+                    <th>Excess?</th>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr *ngFor="let class of classes; let i = index;">
+                      <td data-label="Class"><strong id="classcode_fld" name="classcode_fld">{{ class.classcode_fld
+                          }}</strong></td>
+                      <td data-label="Subject"><strong>{{ class.subjcode_fld }}</strong></td>
+                      <td data-label="Decription" style="text-align: left;">{{ class.subjdesc_fld }}</td>
+                      <td data-label="Day">{{ class.day_fld }}</td>
+                      <td data-label="Time">{{ class.starttime_fld }} - {{ class.endtime_fld }}</td>
+                      <td data-label="Room">
+                        <span class="online" [style.color]="status(class.room_fld)"
+                          [style.border]="'solid 1px ' + status(class.room_fld)">{{ class.room_fld }}</span>
+                      </td>
+                      <td data-label="Units">
+                        <span *ngIf="class.lecunits_fld!=0">{{ class.lecunits_fld }}</span>
+                        <span *ngIf="class.labunits_fld!=0">{{ class.labunits_fld }}</span>
+                        <span *ngIf="class.rleunits_fld!=0">{{ class.rleunits_fld }}</span>
+                      </td>
+                      <td data-label="Hours ">
+                        <span *ngIf="class.lecunits_fld==2">2</span>
+                        <span *ngIf="class.lecunits_fld==3">3</span>
+                        <span *ngIf="class.lecunits_fld==6">6</span>
+                        <span *ngIf="class.labunits_fld==1">3</span>
+                        <span *ngIf="class.rleunits_fld!=0">5</span>
+                      </td>
+                      <td data-label="No. of Students">{{ class.slots_fld }}</td>
+                      <td data-label="Excess"><input type="checkbox" class="check" id="isexcess_fld"
+                          [value]="class.classcode_fld" [checked]="class.isexcess_fld==1"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <br>
+              <div class="action-container">
+                 &nbsp;
+                <!-- <button (click)="printPage()" mat-flat-button>print</button> -->
+                <button type="submit" class="btn-save" style="background: var(--clr-primary);" mat-flat-button>Confirm and Save Excess Classes Information</button>
+              </div>
+            </form>
+      
+      
+          </mat-tab>
+    
+          <mat-tab label="Official Time ">
+          <form (submit)="onSubmitOfficialTime($event)">
+            <div class="header">
+              <h3 class="subtitle">Official time in and time out</h3>
+              <mat-icon class="iconic">schedule</mat-icon>
+            </div>
+            <table class="table3 table-hover table-bordered">
+              <thead>
+                <th>Day</th>
+                <th>AM In</th>
+                <th>AM Out</th>
+                <th>PM In</th>
+                <th>PM Out</th>
+    
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let o of officialTime; let i = index;">
+                  <td data-label="Day"><strong class="hours">{{ o.day }}</strong></td>
+                  <td data-label="AM In">
+                    <div class="unboxcheck">
+                      <input class="btn-time" type="time" name="amin" [value]="o.amin" #amin >
+                      <button data-toggle="tooltip" title="clear" class="btn-clear" name="camin" type="button"
+                        (click)="amin.value = ''" #camin>
+                        <mat-icon>clear</mat-icon>
+                      </button>
+                    </div>
+    
+                  
+                  </td>
+                  <td data-label="AM Out">
+                    <div class="unboxcheck">
+                      <input class="btn-time" type="time" name="amout" [value]="o.amout" #amout
+                        >
+                      <button data-toggle="tooltip" title="clear" class="btn-clear" name="camout" type="button"
+                        (click)="amout.value = ''" #camout>
+                        <mat-icon>clear</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                  <td data-label="PM In">
+                    <div class="unboxcheck">
+                      <input class="btn-time" type="time" name="pmin" [value]="o.pmin" #pmin >
+                      <button data-toggle="tooltip" title="clear" class="btn-clear" name="cpmin" type="button"
+                        (click)="pmin.value = ''" #cpmin>
+                        <mat-icon>clear</mat-icon>
+                      </button>
+                    </div>
+    
+                  </td>
+                  <td data-label="PM Out">
+                    <div class="unboxcheck">
+                      <input class="btn-time" type="time" name="pmout" [value]="o.pmout" #pmout
+                        >
+                      <button data-toggle="tooltip" title="clear" class="btn-clear" name="cpmout" type="button"
+                        (click)="pmout.value = ''" #cpmout>
+                        <mat-icon>clear</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    
+            <div class="action-container">
+              <!-- <button type="submit" class="btn-print"  mat-flat-button>Print</button> -->
+              <button type="submit" class="btn-save" style="background: var(--clr-primary);" mat-flat-button>Save Official Time In and
+                Out</button>
+            </div>
+    
+          </form>
+    
+          <mat-tab label="Consultation Hours">
+            <form (submit)="onSubmitConsultation($event)">
+              <div class="d-flex justify-content-between align-items-center">
+              
+                <div class="header">
+                  <h3 class="subtitle">Consultation Hours</h3>
+                  <mat-icon class="iconic">schedule</mat-icon>
+                </div>
+      
+              </div>
+              <table class="table3 table-hover table-bordered">
+                <thead class="text-center">
+                  <th class="text-center">Day</th>
+                  <th>AM From</th>
+                  <th>AM To</th>
+                  <th>PM From</th>
+                  <th>PM To</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let c of consultTime; let i = index" class="text-center">
+                    <td data-label="Day"><strong class="day">{{ c.day }}</strong></td>
+      
+                    <td data-label="AM From">
+                      <div class="unboxcheck">
+                        <input class="btn-time" type="time" name="consamfrom" [value]="c.consamfrom" #consamfrom
+                          >
+                        <button data-toggle="tooltip" title="clear" class="btn-clear" name="cconsamfrom" type="button"
+                          (click)="consamfrom.value = ''" #cconsamfrom>
+                          <mat-icon>clear</mat-icon>
+                        </button>
+                      </div>
+                    </td>
+                    <td data-label="AM To">
+                      <div class="unboxcheck">
+                        <input class="btn-time" type="time" name="consamto" [value]="c.consamto" #consamto
+                          >
+                        <button data-toggle="tooltip" title="clear" class="btn-clear" name="cconsamto" type="button"
+                          (click)="consamto.value = ''" #cconsamto>
+                          <mat-icon>clear</mat-icon>
+                        </button>
+                      </div>
+                    </td>
+                    <td data-label="PM From">
+                      <div class="unboxcheck">
+                        <input class="btn-time" type="time" name="conspmfrom" [value]="c.conspmfrom" #conspmfrom
+                          >
+                        <button data-toggle="tooltip" title="clear" class="btn-clear" name="cconspmfrom" type="button"
+                          (click)="conspmfrom.value = ''" #cconspmfrom>
+                          <mat-icon>clear</mat-icon>
+                        </button>
+                      </div>
+      
+      
+                    </td>
+                    <td data-label="PM To">
+                      <div class="unboxcheck">
+                        <input class="btn-time" type="time" name="conspmto" [value]="c.conspmto" #conspmto
+                         >
+                        <button data-toggle="tooltip" title="clear" class="btn-clear" name="cconspmto" type="button"
+                          (click)="conspmto.value = ''" #cconspmto>
+                          <mat-icon>clear</mat-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+      
+              <div class="action-container">
+                <!-- <button type="submit" class="btn-print"  mat-flat-button>Print</button> -->
+                <button type="submit" class="btn-save" mat-flat-button style="background: var(--clr-primary);">Save Consultation Hours</button>
+              </div>
+            </form>
+          </mat-tab>
+    
+        </mat-tab>
+    
+      <mat-tab label="Other Information">
+        <div class="col-lg-7 col-sm-7">
+    
+          <form class="Info-container" (submit)="onSubmitOtherInfo($event)" ngNativeValidate>
+            
+
+            <div class="others">
+              <h3 class="subtitle">Other Information</h3>
+              <mat-icon class="iconic">info</mat-icon>
+            </div>
+
+            <div class="form-group">
+              <label for="sex_fld"><strong>Sex-at-Birth</strong></label>
+                <select class="form-control" id="sex_fld" name="sex_fld"
+                aria-describedby="sexatbirth" [value]="otherinfo.sex_fld">
+                  <option value="0" disabled selected>Select your option</option>
+                  <option value="1">Male</option>
+                  <option value="2">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+              <label for="specialization_fld"><strong>Field of Specialization</strong></label>
+              <input type="text" class="form-control" id="specialization_fld" name="specialization_fld"
+                aria-describedby="specializationHelp" [value]="otherinfo.specialization_fld" required
+                placeholder="Field of Specialization">
+              <small id="specializationHelp" class="form-text text-muted">e.g. Information Technology, Customs
+                Administration, Marketing</small>
+            </div>
+            <div class="form-group">
+              <label for="educ_fld"><strong>Educational Attainment </strong><br><small>(Kindly indicate all the degree programs and professional licenses attained using program acronyms)</small></label>
+              <input type="text" class="form-control" id="educ_fld" name="educ_fld" aria-describedby="educHelp"
+                [value]="otherinfo.educ_fld" required placeholder="Highest Educational Attainment">
+              <small id="educHelp" class="form-text text-muted">e.g. BSA, CPA, MBA, DBA</small>
+            </div>
+            <div class="form-group">
+              <label for="assignment_fld"><strong>Designation and Other Assignments</strong></label>
+              <input type="text" class="form-control" id="assignment_fld" name="assignment_fld"
+                aria-describedby="assignmentHelp" [value]="otherinfo.assignment_fld" 
+                placeholder="Position and Other Assignments">
+              <small id="assignmentHelp" class="form-text text-muted">e.g. Assistant Dean, Program Coordinator, Research
+                Coordinator</small>
+            </div>
+
+            <div class="form-group">
+              <label for="numpreps_fld"><strong>Number of Preparations</strong></label>
+              <input type="number" class="form-control" id="numpreps_fld" name="numpreps_fld"
+                aria-describedby="assignmentHelp" [value]="otherinfo.numpreps_fld" required
+                placeholder="Number of Preparations">
+              
+            </div>
+
+            <div class="form-group">
+              <label for="effectivity_fld"><strong>Effectivity Date of Faculty Loading</strong></label>
+              <input type="Date" class="form-control" id="effectivity_fld" name="effectivity_fld"
+                aria-describedby="effectiveDate" [value]="otherinfo.effectivity_fld" required
+                placeholder="Effectivity Date of Faculty Loading">
+              <small id="effectiveDate" class="form-text text-muted">e.g. start of effectivity of faculty
+                loading</small>
+            </div>
+
+            <div class="form-group">
+              <label for="esign_fld"><strong>Upload E-Signature</strong> </label>
+              <img class="signature" [src]="signaturePath" alt="signature here" (click)="uploadSign()" onerror="this.onerror=null;this.src='assets/images/noimage.png'" >
+            </div> 
+
+            <div class="action-container">
+              <button type="submit" class="btn-save" style="background: var(--clr-primary);" mat-flat-button>Save Information</button>&nbsp;
+              <button type="button" class="btn-save" style="background: var(--clr-primary);" mat-flat-button (click)="printIFL(otherinfo.empcode_fld)">Print/Save as PDF IFL</button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+    
+    </mat-tab-group>
+</div>
+

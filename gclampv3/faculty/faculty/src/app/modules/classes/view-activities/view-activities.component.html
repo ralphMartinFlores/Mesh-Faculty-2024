@@ -1,0 +1,394 @@
+<div class="main-container">
+  <div class="d-flex align-items-center p-3">
+    <button style="background-color: #0166b3; color: white;"
+      [routerLink]="'/main/classes/' + _user.getClassroomInfo().classcode_fld" mat-icon-button>
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <strong class="ms-3">Back </strong>
+  </div>
+  <section>
+    <mat-tab-group class="example-stretched-tabs mat-elevation-z0" [(selectedIndex)]="TabIndex" (selectedTabChange)="setTabIndex($event)">
+      <mat-tab label="Instructions">
+        <mat-progress-bar *ngIf="_user.isLoading()" mode="indeterminate"></mat-progress-bar>
+        <div class="wrapper">
+          <div class="Activity-container pt-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="title">
+                <ng-container *ngIf="_user.getActivityInfo().type_fld == 0">
+                  <mat-icon class="icon">assignment</mat-icon>
+                </ng-container>
+                <ng-container *ngIf="_user.getActivityInfo().type_fld == 1">
+                  <mat-icon class="icon">quiz</mat-icon>
+                </ng-container>
+                <div>
+                  <strong class="font-weight-bold mb-0">{{ _user.getActivityInfo().title_fld | titlecase }}</strong>
+                  <div class="ml-2" style="font-size: small;">
+                    <span style="font-weight: 500;">Due Date:</span>
+                    <span> {{ _user.getActivityInfo().deadline_fld | date:'MMM dd, yyyy h:mm a' }}</span>
+                  </div>
+                </div>
+              </div>
+              <strong style="color: #27ae60;">{{ _user.getActivityInfo().totalscore_fld }} Points</strong>
+            </div>
+            <p class="mt-3">{{ _user.getActivityInfo().desc_fld }}</p>
+            <hr>
+
+
+            <ng-container *ngIf="_user.getActivityInfo().withfile_fld > 1 && _user.getActivityInfo().type_fld == 1">
+              <div class="d-flex align-items-center attach">
+                <mat-icon class="icon">description</mat-icon>
+                <strong>Attached Quiz</strong>
+              </div>
+              <div class="file">
+                <ng-container >
+                  <a class="file__contain">
+                    <div class="file__name">
+                      <div class="file__icon">
+                        <mat-icon class="material-icons-outlined">description</mat-icon>
+                        <span
+                          style="background-color: #222">json</span>
+                      </div>
+                      <div class="file__info">
+                        <p>{{_user.getActivityInfo().title_fld}}.json</p>
+                      </div>
+                    </div>
+                    <button type="button" (click)="downloadQuiz()">
+                      <mat-icon>file_download</mat-icon>
+                    </button>
+                  </a>
+                </ng-container>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="_user.getActivityInfo().withfile_fld == 1 && _user.getActivityInfo().type_fld == 0">
+              <div class="d-flex align-items-center attach">
+                <mat-icon class="icon">description</mat-icon>
+                <strong>Attached Files</strong>
+              </div>
+
+              <div class="file">
+                <ng-container *ngFor="let item of uploadservice.splitFilestring(_user.getActivityInfo().filedir_fld)">
+                  <a class="file__contain">
+                    <div class="file__name">
+                      <div class="file__icon">
+
+                        <mat-icon class="material-icons-outlined">description</mat-icon>
+                        <span
+                          [ngStyle]="{'background-color': getFileExtension( uploadservice.getfileExt( item.name ) )}">{{
+                          uploadservice.getfileExt( item.name ) | uppercase }}</span>
+                      </div>
+                      <div class="file__info">
+                        <p>{{item.name}}</p>
+                      </div>
+                    </div>
+                    <button type="button" (click)="_ds.downloadFile(item.path, item.name)">
+                      <mat-icon>file_download</mat-icon>
+                    </button>
+                  </a>
+                </ng-container>
+
+              </div>
+            </ng-container>
+
+
+            <ng-container *ngIf="_user.getActivityInfo().type_fld == 1">
+
+              <h4 class="mb-3">Quiz Details</h4>
+              <table mat-table [dataSource]="quizdataSource" class="mat-elevation-z1">
+                <ng-container matColumnDef="number">
+                  <th mat-header-cell *matHeaderCellDef> Number </th>
+                  <td mat-cell *matCellDef="let element;let i = index"> {{ i + 1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="question">
+                  <th mat-header-cell *matHeaderCellDef> Question </th>
+                  <td mat-cell *matCellDef="let element">
+
+                    <strong>{{ element.question }}</strong>
+                    <ng-container *ngIf="element.questiontype == 0">
+                      <br>
+                      <span class="text-muted"> Choices:
+                        <strong> {{ splitChoice(element.choices) }}</strong>
+                      </span>
+                    </ng-container>
+                  </td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                  <th mat-header-cell *matHeaderCellDef> Type </th>
+                  <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.questiontype == 0">Multiple Choice</span>
+                    <span *ngIf="element.questiontype == 1">Identification</span>
+                    <span *ngIf="element.questiontype == 2">True or False</span>
+                    <span *ngIf="element.questiontype == 3">Essay type</span>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="answerkey">
+                  <th mat-header-cell *matHeaderCellDef> Answer Key </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.questiontype == 3 ? 'N/A' : element.answer }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="score">
+                  <th mat-header-cell *matHeaderCellDef>Score </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.score }} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="quizdisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: quizdisplayedColumns;"></tr>
+              </table>
+            </ng-container>
+          </div>
+
+          <div class="comment-container">
+            <mat-card *ngIf="_user.getActivityInfo().type_fld == 1" class="mb-3">
+              <h4 class=" mb-2">Quiz Settings</h4>
+              <ng-container>
+                <div style="display: flex; justify-content: space-between;">
+                  <div>
+                    <mat-slide-toggle color="primary" [(ngModel)]="isOpen" (change)="onSaveSettings()">Open Quiz</mat-slide-toggle>
+                    <div class="text-muted mt-2" style="font-size: smaller;">
+                      Toggling the button will change the quiz's status.
+                    </div>
+                    <mat-slide-toggle color="primary" [(ngModel)]="isDisplayResult" (change)="onSaveSettings()">Show Result</mat-slide-toggle>
+                    <div class="text-muted mt-2" style="font-size: smaller;">
+                      Display the quiz results of students on the student panel.
+                    </div>
+                  </div>
+                </div>
+                <!-- <hr> -->
+                <!-- <button mat-stroked-button color="primary" type="button" (click)="onSaveSettings()">Save
+                  Settings</button> -->
+              </ng-container>
+            </mat-card>
+
+            <strong>Comments</strong>
+            <div class="input-box">
+              <input (keyup.enter)="addComments()" [(ngModel)]="comments" type="text" placeholder="Write something...">
+              <button [disabled]="comments==''" (click)="addComments()">
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+
+            <div class="post-container" *ngFor="let item of commentObject; let i = index">
+              <img [src]=" _ds.imageURL + item.img_fld || 'assets/images/profile.jpg'" alt=""
+                onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+              <div class="details">
+                <div class="info">
+                  <div class="student-name">
+                    <strong>{{ item.fullname_fld }}</strong>
+                    <br>
+                    <small>{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </small>
+                  </div>
+                  <button mat-icon-button [matMenuTriggerFor]="del" aria-label="button menu">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                  <mat-menu #del="matMenu">
+                    <button (click)="deleteRecords('comment', item, i)" mat-menu-item class="nooutline">
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                <p class="content mt-1" [innerHtml]="item.content_fld | linkify"></p>
+              </div>
+
+            </div>
+            <!-- <button class="btn-load mt-3" mat-flat-button>
+              load more ...
+            </button> -->
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab [disabled]="_user.isLoading()"
+        label="{{ _user.getActivityInfo().type_fld == 1 ? 'Student Quiz' : 'Student Works'}}">
+        <mat-progress-bar *ngIf="_user.isLoading()" mode="indeterminate"></mat-progress-bar>
+        <div class="student-container">
+          <div class="student-header">
+            <div class="title">
+              <mat-icon [style]="_user.getActivityInfo().type_fld == 1 ? '' : 'summarize'" class="icon">
+                {{ _user.getActivityInfo().type_fld == 1 ? 'quiz' : 'summarize'}}
+              </mat-icon>
+              <strong class="font-weight-bold mb-0">
+                {{ _user.getActivityInfo().type_fld == 1 ? 'Student Quiz' : 'Student Works'}}</strong>
+            </div>
+
+            <div *ngIf="dataSource != null" class="input-box align-items-center">
+              <input (keyup)="applyFilter($event)" type="text" placeholder="Search name">
+              <mat-icon>search</mat-icon>
+            </div>
+          </div>
+
+
+          <ng-container *ngIf="dataSource == null">
+            <div class="p-3 text-center mt-3">
+              <h1 class="mb-3">🤷‍♀️🤷‍♂️</h1>
+              <h5>There haven't been any student submissions yet.</h5>
+            </div>
+          </ng-container>
+
+
+          <table *ngIf="dataSource != null" matSortActive="lname_fld" matSortDisableClear matSortDirection="asc" matSort (matSortChange)="sortData($event)"
+            mat-table [dataSource]="dataSource" class="mat-elevation-z1 mt-3">
+            <ng-container matColumnDef="studnum_fld">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Number </th>
+              <td mat-cell *matCellDef="let element" style="letter-spacing: 0.5px;">
+                {{element.studnum_fld}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lname_fld">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name <span
+                  class="text-muted">(LN,FN)</span>
+              </th>
+              <td mat-cell *matCellDef="let element" style="font-weight: 600; letter-spacing: 0.5px;">
+                {{element.lname_fld | titlecase }},
+                {{element.fname_fld | titlecase}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="submittedfiles" >
+              <th mat-header-cell *matHeaderCellDef>
+                {{ _user.getActivityInfo().type_fld == 1 ? 'Status' : 'Submitted Files'}}
+              </th>
+              <td style="cursor: pointer;" mat-cell *matCellDef="let element">
+
+           
+                <ng-container *ngIf="element.type_fld == 0">
+                  <ng-container *ngIf="element.dir_fld != null">
+                    <span style="display: flex; align-items: center; ">
+                      <mat-icon style="font-weight: 600;">attach_file</mat-icon> {{
+                      uploadservice.splitFilestring(element.dir_fld).length }} Files/Attachments
+                    </span>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="element.type_fld == 1">
+                  <ng-container *ngIf="element.dir_fld != null">
+                    Quiz Submitted
+                  </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="element.dir_fld == null">
+                  N/A
+                </ng-container>
+              
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="datetime_fld">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ _user.getActivityInfo().type_fld == 1 ? 'Date Taken' : 'Date Submitted'}}
+              </th>
+              <td mat-cell *matCellDef="let element">
+
+                <ng-container *ngIf="_user.getActivityInfo().type_fld == 0">
+                  <span [style]="(_user.getActivityInfo().deadline_fld <
+                    element.datetime_fld && element.issubmitted_fld > 0)?'color:#c0392b':(element.issubmitted_fld > 0 && _user.getActivityInfo().deadline_fld >
+                  element.datetime_fld)?'color:green':'color:#c0392b'" style="white-space:pre-wrap">
+                    {{ (element.issubmitted_fld > 0 && _user.getActivityInfo().deadline_fld <
+                      element.datetime_fld)
+                      ?'Late':(element.issubmitted_fld > 0 && _user.getActivityInfo().deadline_fld >
+                      element.datetime_fld)?'Turned-in':'Files attached but submission \n not confirmed/saved' }}
+                  </span>
+                </ng-container>
+
+                <ng-container *ngIf="_user.getActivityInfo().type_fld == 1">
+                  <span [style]="(_user.getActivityInfo().deadline_fld <
+                    element.datetime_fld && element.issubmitted_fld > 0)?'color:#c0392b':(element.issubmitted_fld > 0 && _user.getActivityInfo().deadline_fld >
+                  element.datetime_fld)?'color:green':'color:#c0392b'" style="white-space:pre-wrap">
+                    {{ (element.issubmitted_fld > 0 && _user.getActivityInfo().deadline_fld <
+                      element.datetime_fld)
+                      ?'Late':(element.issubmitted_fld > 0 && _user.getActivityInfo().deadline_fld >
+                      element.datetime_fld)?'Turned-in':'Files attached but submission \n not confirmed/saved' }}
+                  </span>
+                </ng-container>
+
+                <ng-container *ngIf="element.issubmitted_fld > 0">
+                  <br>
+                  {{ element.datetime_fld | date: "MMM dd, yyyy h:mm a" }}
+                </ng-container>
+              </td>
+
+            </ng-container>
+
+            <ng-container matColumnDef="score_fld">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Score </th>
+              <td (click)="$event.stopPropagation()" mat-cell *matCellDef="let element; let i = index"
+                style="width: 5% !important;">
+                <div class="pt-2 pb-2" *ngIf="element.issubmitted_fld>0"
+                  [style]="element.isscored_fld > 0 ? 'color:green' : element.isscored_fld == 0 ? 'color:#c0392b' : 'color:black'">
+                  {{ element.isscored_fld > 0
+                  ?'Graded'
+                  : element.isscored_fld == 0
+                  ? 'Not yet Graded'
+                  :'N/A' }}
+                </div>
+
+                <div class="pb-2" *ngIf="element.isscored_fld==1">
+                  {{ element.score_fld }} / {{ _user.getActivityInfo().totalscore_fld }}
+                </div>
+
+                <div class="pb-2" *ngIf="element.issubmitted_fld > 0">
+                  <mat-form-field *ngIf="element.isscored_fld == 0" appearance="fill" style="width: 80%;">
+                    <mat-label>Points</mat-label>
+                    <input [(ngModel)]="element.score_fld" min="0" matInput [value]="element.score_fld" type="number"
+                      class="text-end" (keyup.enter)="saveGrade(i)">
+                    <span matPrefix> &nbsp;</span>
+                    <span matSuffix>/ {{ _user.getActivityInfo().totalscore_fld }}</span>
+                    <mat-hint>Tip: Enter to SAVE GRADES</mat-hint>
+                  </mat-form-field>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+              <td mat-cell *matCellDef="let element; let i = index" class="text-center"
+                (click)="$event.stopPropagation()">
+                <button (click)="$event.stopPropagation()"
+                  [style]="element.issubmitted_fld == 0 ? 'cursor: not-allowed' : 'cursor: default'"
+                  [disabled]="element.issubmitted_fld == 0" matTooltip="Grading & Saving" [matMenuTriggerFor]="menu"
+                  mat-icon-button>
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+
+                  
+
+                  <button [hidden]="element.isscored_fld == 0"
+                    (click)="_user.getActivityInfo().type_fld ==  1 ? viewSubmission(element) : editGrade(i)"
+                    mat-menu-item>
+                    <mat-icon *ngIf="_user.getActivityInfo().type_fld == 0 ">mode_edit</mat-icon>
+                    <span class="ml-1">
+                      {{ _user.getActivityInfo().type_fld == 1 ? 'View Student Answer' : 'Edit'}}
+                    </span>
+                  </button>
+
+                  <button [hidden]="element.isscored_fld == 1" (click)="saveGrade(i)" mat-menu-item>
+                    <mat-icon>save</mat-icon>
+                    <span class="ml-1">Save</span>
+                  </button>
+
+                  <button  (click)="deleteSubmit(element, i)" mat-menu-item>
+                    <mat-icon>delete</mat-icon>
+                    <span class="ml-1">Delete</span>
+                  </button>
+
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr (click)="viewSubmission(row)" routerLinkActive="router-link-active" mat-row
+              *matRowDef="let row; columns: displayedColumns; let i = index" >
+            </tr>
+          </table>
+          <!-- <mat-paginator *ngIf="dataSource != null" [pageSizeOptions]="[20, 30, 40]"></mat-paginator> -->
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </section>
+</div>

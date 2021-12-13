@@ -1,0 +1,250 @@
+@import 'src/app/scss/__mixin.scss';
+
+header{
+    @include flex(row, space-between, center);
+    padding: 1em;
+    border-bottom: 1px solid #c9c9c9;
+    
+    h5{
+        margin: 0;
+        font-weight: 600;
+    }
+}
+
+.head{
+    @include flex(row, flex-start, center);
+    &__icon{
+        @include flex(row, center, center);
+        width: 40px;
+        height: 40px;
+        background: #bfe1f8;
+        color: var(--clr-primary);
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+}
+
+.input-container{
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 100%;
+
+    .box-input{
+        margin-bottom: 1em;
+        label{
+            color: var(--clr-neutral);
+            font-size: .9rem;
+        }
+        input, select{
+            margin-top: .5em;
+            padding: 1em;
+        }
+    }
+
+    
+}
+
+.action{
+    @include flex(row, flex-end, center);
+    width: 100%;
+    padding: 1em;
+    button{
+        padding: .2em 1em;
+    }
+    .btn-save{
+        background: var(--clr-primary);
+        color: var(--clr-white);
+    }
+    .change-pass-btn{
+        background: var(--clr-primary);
+        color: var(--clr-white);
+        padding: .4em 1em;
+    }
+}
+
+
+.instruct{
+    padding: 1em;
+    p{ margin: 0; }
+}
+
+.changepass{
+    padding: 1em;
+    .box-input{
+        position: relative;
+        margin-bottom: 1em;
+        input{
+            padding: 1em;
+        }
+        .fa-eye{
+            position: absolute;
+            right: 1em;
+            top: 30%;
+            cursor: pointer;
+        }
+    }
+}
+
+.uploads{
+    padding: 1.5em 1em;
+    .btn-photo{
+        width: 100%;
+        padding: 1em;
+        border: none;
+        background: #e7e7e7;
+        margin-inline: auto;
+        font-weight: 600;
+        mat-icon{
+            margin-right: 10px;
+        }
+    }
+}
+
+.img-container{
+    margin-top: 1em;
+    background: rgba(0,0,0,0.4);
+}
+
+.progress{
+    margin-top: 1em;
+}
+
+
+
+@media  screen and(min-width: 1000px){
+    header{
+        padding: 1.5em 2em;
+    }
+    
+    .input-container{
+        padding:  2em;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    
+        .box-input{
+            margin-bottom: 0;
+            label{
+                color: var(--clr-neutral);
+                font-size: .9rem;
+            }
+            input, select{
+                margin-top: .5em;
+                padding: 1em;
+            }
+        }
+    }
+
+    .action{
+        @include flex(row, flex-end, center);
+        gap: 10px;
+        border-top: 1px solid #c9c9c9;
+        width: 100%;
+        padding: 1em 2em;
+       
+    }
+
+    .instruct, .changepass{
+        padding: 1em 2em;
+    }
+
+
+    .uploads{
+        padding: 1.5em 2em;
+        .btn-photo{
+            width: 100%;
+            margin-inline: auto;
+        }
+    }
+    
+}
+
+
+
+// .btn-cancel{
+//     background: var(--clr-secondary);
+//     color: var(--clr-neutral);
+// }
+// .btn-save{
+//     background: var(--clr-primary);
+//     color: var(--clr-white);
+// }
+
+// section{
+//     width: 100%;
+//     padding: 1em;
+//     text-align: center;
+//     button{
+//         width: 60%;
+//         padding: .6em;
+//         border: none;
+//         background: #d6d6d6;
+//         color: #222;
+//         font-weight: 600;
+//     }
+// }
+
+// .update{
+//     position: relative;
+//     .fullname{
+//         display: grid;
+//         grid-template-columns: repeat(3, minmax(30%, 1fr));
+//         gap: 15px;
+//         padding: 1.5em ;
+//     }
+    
+//     .user{
+//         text-align: left;
+//         input, select{
+//             padding: 1em;
+//             margin-top: 5px;
+//         }
+//         label{
+//             font-weight: 600;
+//             font-size: .9rem;
+//         }
+//     }
+//     .action{
+//         position: absolute;
+//         display: flex;
+//         gap: 10px;
+//         justify-content: flex-end;
+//         background: #fff;
+//         padding: 1.5em;
+//         width: 100%;
+//         border-top: 1px solid #d6d6d6;
+
+//         .btn-cancel{
+//             padding: .2em 1em;
+//         }
+//         .btn-save{
+//             padding: .2em 1em;
+//         }
+//     }
+// }
+
+
+
+
+
+
+
+
+
+// footer{
+//     border-top: 1px solid #d6d6d6;
+//     padding: 1em 1.5em;
+//     display: grid;
+//     grid-template-columns: repeat(2, minmax(40%, 1fr));
+//     gap: 10px;
+//     button{
+//         padding: .5em;
+//         border: none;
+        
+//     }
+
+   
+// }
+
+
+

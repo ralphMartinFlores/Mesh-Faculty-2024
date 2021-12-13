@@ -1,0 +1,77 @@
+<div class="main-container">
+
+  <section>
+    <ng-container *ngFor="let item of subforumContent">
+      <header>
+        <button (click)="backToSubforums()" mat-icon-button>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span>{{ item.subtitle_fld }}</span>
+      </header>
+      <hr>
+      <div class="descript">
+        {{ item.subdesc_fld }}
+      </div>
+    </ng-container>
+
+    <div class="comments" *ngFor="let item of forumContent; let i = index">
+      <img [src]="_ds.imageURL + item.profilepic_fld || 'assets/images/profile.jpg'" alt=""
+        onerror="this.onerror=null;this.src='assets/images/profile.jpg'" class="comments__img">
+      <div class="comments__userinfo">
+        <div class="comments__header">
+          <div class="comments__fullname">
+            <strong>{{ item.fullname_fld }}</strong>
+            <small class="text-muted">{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</small>
+          </div>
+          <button mat-icon-button [matMenuTriggerFor]="del" aria-label="button menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #del="matMenu">
+            <button (click)="deleteRecords('forumcontent', item, i)" mat-menu-item class="nooutline">
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+
+        <p class="comments__content">{{ item.content_fld }}</p>
+        <!-- <div class="comments__action">
+          <mat-icon>subdirectory_arrow_right</mat-icon>
+          <span>Reply</span>
+        </div> -->
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="forms-container">
+      <div class="formheader">
+        <mat-icon>create</mat-icon>
+        <span>Discussion</span>
+      </div>
+      <div class="formbody">
+        <img mat-card-avatar draggable="false"
+          [src]="_ds.downloadURL + _user.getUserImage() || 'assets/images/profile.jpg'" alt="" class="profile-img"
+          onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+        <textarea [(ngModel)]="content" class="example-full-width" placeholder="Write a discussion..."></textarea>
+      </div>
+      <div class="action-button">
+        <!-- <div class="icon-container">
+          <button class="icon" mat-icon-button>
+            <mat-icon>image</mat-icon>
+          </button>
+          <button class="icon" mat-icon-button>
+            <mat-icon>image</mat-icon>
+          </button>
+          <button class="icon" mat-icon-button>
+            <mat-icon>image</mat-icon>
+          </button>
+        </div> -->
+        <button [disabled]="content === ''" (click)="addReply()" mat-raised-button class="btn-default" type="submit">
+         Add comments
+        </button>
+      </div>
+    </div>
+  </section>
+  <!-- </ng-container> -->
+  <footer>

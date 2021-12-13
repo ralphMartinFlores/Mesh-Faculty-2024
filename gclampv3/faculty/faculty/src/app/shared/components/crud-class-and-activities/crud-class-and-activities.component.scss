@@ -1,0 +1,83 @@
+@import "src/app/scss/__mixin.scss";
+
+.radio-group{
+  @include flex(row, flex-start, center);
+  gap: 10px;
+}
+
+
+
+.heads{
+  @include flex(row, space-between, center);
+  padding: 1em;
+  border-bottom: 1px solid #c0bebe;
+
+  &__title{
+     @include flex(row, flex-start, center);
+     gap: 10px;
+
+     mat-icon{
+       color: var(--clr-primary);
+     }
+  }
+}
+
+.Selection{
+  padding: .5em 1em;
+  background: var(--clr-primary);
+
+  &__group{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(100%, 1fr));
+    gap: 10px;
+  }
+
+  mat-radio-button{
+    font-family: 'Poppins', sans-serif !important;
+    font-size: .9rem;
+    color: #fff;
+  }
+}
+
+.Question{
+  
+  &__main{
+    padding: 1em;
+  }
+
+  &__header{
+    @include flex(row, space-between, center);
+    h5{
+      margin: 0;
+    }
+  }
+
+  &__footer{
+    @include flex(row, flex-end, center);
+    border-top: 1px solid #c0bebe;
+    padding: 1em;
+  }
+}
+
+
+@media only screen and(min-width: 1000px){
+  .Selection{  
+    &__group{
+      grid-template-columns: repeat(2, minmax(40%, 1fr));
+    }
+  }
+}
+
+
+@media only screen and(min-width: 1600px){
+  .Selection{  
+    padding: 1em;
+    &__group{
+      grid-template-columns: repeat(4, minmax(20%, 1fr));
+    }
+
+    mat-radio-button{
+      font-size: 1rem;
+    }
+  }
+}

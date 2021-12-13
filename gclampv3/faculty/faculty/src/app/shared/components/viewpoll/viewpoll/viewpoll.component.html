@@ -1,0 +1,30 @@
+<header>
+    <div class="title">
+        <mat-icon>poll</mat-icon>
+        <h5>Poll Results</h5>
+    </div>
+    <button  [mat-dialog-close]="undefined" mat-icon-button>
+        <mat-icon>close</mat-icon>
+    </button>
+</header>
+
+<hr>
+
+<section>
+    <div *ngFor="let item of data; let i = index" class="background">
+        <div class="headers">
+            <mat-icon>radio_button_checked</mat-icon>
+            <h6>{{item.choice}} ({{item.votes}}  vote{{item.votes>1?'s':''}})</h6>
+        </div>
+
+        <div class="poll" >
+            <div class="poll__card" *ngFor="let students of item.respondents">
+                <img [src]="ds.imageURL + students.profilepic_fld" alt="student image" onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+                <div class="poll__name">
+                    <p>{{students.fullname}}</p>
+                    <small>{{students.studnum_fld}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

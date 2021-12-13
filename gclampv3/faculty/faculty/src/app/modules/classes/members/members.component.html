@@ -1,0 +1,55 @@
+<header class="header">
+  <div class="header__title">
+    <mat-icon>groups</mat-icon>
+    <span style='font-size: 1.3rem;'>Class List <span style="font-size: 0.8rem; color: black">({{ allStudents.length }} students)</span> </span>
+  </div>
+  <div class="header__action">
+    <!-- <button (click)="AddStudent()" class="btn-add" mat-flat-button>
+      <mat-icon>add</mat-icon> Add Student
+    </button> -->
+    <input type="text" placeholder="Search Student..." id="searchclass" (keyup)="filterStudents($event)">
+    <button style="width: 100%;" (click)="exportToExcel()" class="btn-download" mat-flat-button><mat-icon>get_app</mat-icon> Student List</button>
+  </div>
+</header>
+
+
+<div class="membercard">
+  <div class="membercard__container" *ngFor="let item of students">
+    <small class="membercard__studnum">{{ item.studnum_fld }}</small>
+    <div class="membercard__body">
+      <img appLazyLoad draggable="false" [src]="_ds.imageURL + item.profilepic_fld || 'assets/images/profile.jpg'"
+        class="membercard__pic" alt="" onerror="this.onerror=null;this.src='assets/images/profile.jpg';">
+      <div class="membercard__info">
+        <h6 class="membercard__name">{{ item.lname_fld }}, {{ item.fname_fld }} {{ item.mname_fld }} {{ item.extname_fld
+          }} </h6>
+        <!-- <pre>{{ item | json }}</pre> -->
+        <span [ngClass]="{'online': item.learningtype_fld == 2, 'offline': item.learningtype_fld == 1}">
+          {{ item.learningtype_fld == 2
+          ? 'Online and Offline learning'
+          : item.learningtype_fld == 1
+          ? 'Offline learning' : 'N/A' }}
+        </span>
+      </div>
+    </div>
+
+
+
+
+    <div class="membercard__footer">
+      <button class="membercard__btn left" mat-flat-button (click)="ViewStudentInfo(item)">
+        <mat-icon class="material-icons-outlined">account_circle</mat-icon>
+        Profile
+      </button>
+
+      <button [style]="studentact.length <= 0 ? 'cursor: not-allowed' : ''"
+        [matTooltip]="studentact.length <= 0 ? 'There are no activities; please add some first!': ''"
+        [disabled]="_user.isLoading() || studentact.length == 0" class="membercard__btn right" mat-flat-button
+        (click)="ViewStudentActivities(item)">
+        <mat-icon class="material-icons-outlined">folder</mat-icon>
+        Activities
+      </button>
+    </div>
+  </div>
+
+</div>
+

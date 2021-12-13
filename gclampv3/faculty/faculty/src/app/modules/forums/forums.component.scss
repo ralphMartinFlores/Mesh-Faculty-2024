@@ -1,0 +1,381 @@
+@import "src/app/scss/__mixin.scss";
+
+
+
+.header{
+  margin-bottom: 1em;
+  @include flex(row, space-between, center);
+  // small{ @include font(1rem, 400, var(--clr-neutral));}
+  p{ 
+    @include font(.9rem, 400, var(--clr-neutral)); 
+    line-height: 1.4;
+  }
+
+
+  &__main{
+    @include flex(row, flex-start, center);
+    margin-bottom: .5em;
+  }
+
+  &__title-container{
+    padding: 0;
+  }
+
+  &__title{
+    // @include font(1.8rem, 600,var(--clr-title));
+    @include font(1.4rem, 600,var(--clr-title));
+  }
+
+  &__icon-contain{
+    @include flex(row, center, center);
+    display: none;
+    background: var(--btn-primary);
+    color: var(--clr-white);
+    width: 32px;
+    height: 32px;
+    padding: 0px;
+    border-radius: 5px;
+    margin-left: 15px;
+  }
+}
+
+.action{
+  @include flex(row, flex-start, center);
+  border-bottom: 1px solid var(--clr-neutral);
+  padding-bottom: 1em;
+
+  &__input{
+    @include flex(row, flex-start, center);
+    width: 100%;
+    padding: 10px; 
+    position: relative;
+    background: var(--clr-nav);
+    border: 2px solid #dbdbdb;
+    input{
+      width: 100%;
+      border: none;
+      background: none;
+      outline: none;
+      color:var(--clr-neutral);
+      font-size: .9rem;
+    }
+    button{
+      @include flex(row, flex-start, center);
+      height: 100%;
+      background: var(--btn-primary);
+      color: var(--clr-white);
+      border: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      justify-content: center;
+      
+    }
+  }
+
+  &__add{
+    display: none;
+  }
+
+  &__addmobile{
+    position: fixed;
+    bottom: 3em;
+    right: 3em;
+    background:var(--clr-primary);
+    color: var(--clr-white);
+    transform: scale(1.2);
+    mat-icon{
+      transform: scale(.8);
+    }
+  }
+}
+
+.forums{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  align-items: flex-start;
+
+  &__icon-container{
+    width: 100%;
+    @include flex(row, space-between, center);
+
+    button{
+      mat-icon{
+        color: var(--clr-neutral);
+      }
+    }
+  }
+
+  &__main{
+      @include flex(row, flex-start, center);
+      background: var(--clr-nav);
+      justify-content: space-between;
+      border-radius: .5em;
+      
+      cursor: pointer;
+      padding: 1em;
+      margin-bottom: 1em;
+      // box-shadow: 2px 8px 12px rgba(0,0,0,0.08);
+      box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07)
+  ;
+    // transition: all .4s ease;
+
+    // &:hover{
+    //     transform: scale(1.1) rotate(2deg);
+    // }
+  }
+
+  &__details{
+    @include flex(column, flex-start, flex-start);
+  }
+
+  &__icons{
+    @include flex(row, flex-start, center);
+    width: 40px;
+    height: 40px;
+    background: #bfe1f8;
+    color: #1f79b4;
+    border-radius: 50%;
+    justify-content: center;
+  }
+
+  &__info{ 
+    width: 100%; 
+  }
+
+  &__title{  
+    line-height: 1.5;
+    font-weight: 700; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical; 
+    font-family: var(--ff-primary) !important; 
+    margin-top: .5em;
+    // font-size: 1rem;
+    font-size: .9rem;
+    color: #222C2A;
+  }
+
+  &__postdate{
+    @include flex(row, space-between, center);
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+
+  &__subtitle{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical; 
+    margin: .5em 0 1em;
+    line-height: 1.5;
+    font-size: .9rem;
+    color: #222C2A;
+  }
+  .topic{
+    display: none;
+  }
+
+  &__topic{ margin-right: 5px; color: var(--btn-primary);}
+  
+  &__date{ color: var(--clr-primary); margin-right: 5px;}
+
+  &__disc{
+    @include flex(row, flex-start, center);
+    font-size: .8rem;
+    color: var(--clr-neutral);
+  }
+}
+
+
+@media only screen and(min-width: 500px){
+  .header{
+    &__icon-contain{
+      @include flex(row, center, center);
+      display: block;
+      text-align: center;
+      .icon{
+        margin-top: 10%;
+      }
+    }
+  }
+
+
+  .forums{
+    &__main{
+        @include flex(row, flex-start, center);
+        padding: 1.5em;
+    }
+  }
+}
+
+@media only screen and(min-width: 768px){
+
+  
+.main-container{
+  &::before{
+    content: 'FORUMS';
+    font-size: 6rem;
+    font-weight: 700;
+    opacity: .1;
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    z-index: -1;
+  }
+}
+
+
+  .header{
+
+    &__title{
+      @include font(1.8rem, 600,var(--clr-title));
+    }
+  }
+
+  .forums{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(40%, 1fr));
+    gap: 1em;
+    &__main{
+        @include flex(row, flex-start, center);
+        padding: 1.5em;
+        
+    }
+
+    &__title{  
+      font-size: 1rem;
+    }
+
+  
+
+    .topic{
+      display: block;
+      float: right;
+      margin-left: 5px;
+    }
+  
+    &__topic{ margin-right: 5px; color: var(--btn-primary);}
+    
+    &__date{ color: var(--clr-primary); margin-right: 5px;}
+  
+    &__disc{
+      @include flex(row, flex-start, center);
+      font-size: .9rem;
+      color: var(--clr-neutral);
+    }
+  }
+
+  .action{
+    @include flex(row, space-between, center);
+    border-bottom: 1px solid var(--clr-neutral);
+  
+    &__input{
+      @include flex(row, flex-start, center);
+      width: 300px;
+
+      button{
+        @include flex(row, center, center);
+        height: 100%;
+      }
+    }
+  
+    &__add{
+      @include flex(row, flex-start, center);
+      justify-content: center;
+      border-radius: .5em;
+      background:var(--btn-primary);
+      color: var(--clr-white);
+      font-size: .9rem;
+      font-weight: 600;
+      mat-icon{ transform: scale(.7);}
+    }
+  
+    &__addmobile{
+      display: none;
+    }
+  }
+}
+
+@media only screen and(min-width: 1200px){
+  .forums{
+    grid-template-columns: repeat(3, minmax(30%, 1fr));
+    &__main{
+        @include flex(row, flex-start, center);
+        background: var(--clr-nav);
+        border-radius: .5em;
+        cursor: pointer;
+        padding: 1.5em;
+        margin-bottom: 1em;
+    }
+
+  
+  
+    &__postdate{
+      @include flex(row, space-between, center);
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+  
+    &__subtitle{
+      line-height: 1.8; 
+    }
+
+  
+    &__disc{
+      @include flex(row, flex-start, center);
+      font-size: 1rem;
+    }
+  }
+  
+
+  .header{
+      &__title{
+        @include font(2rem, 600, var(--clr-title));
+      }
+  }
+  
+}
+
+@media only screen and(min-width: 1600px){
+
+  .main-container{
+    &::before{
+      content: 'FORUMS';
+      font-size: 7rem;
+      font-weight: 700;
+      opacity: .1;
+      position: absolute;
+      top: .3em;
+      right: 1em;
+      z-index: -1;
+    }
+  }
+
+
+  .header{
+    p{
+      font-size: 1rem;
+    }
+  }
+
+  .forums{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(20%, 1fr));
+    &__main{
+        padding: 2em;
+    }
+
+  
+  }
+}
+

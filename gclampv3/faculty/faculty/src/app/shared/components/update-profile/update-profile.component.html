@@ -1,0 +1,98 @@
+<header>
+  <div class="head">
+    <div class="head__icon">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+    <h5 class="mb-0">Update Profile</h5>
+  </div>
+  <button [mat-dialog-close]="undefined" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<form [formGroup]="firstFormGroup" ngNativeValidate>
+  <div class="input-container">
+
+    <mat-form-field aria-labelledby="identification" style="width: 100%;" appearance="fill">
+      <mat-label>Firstname</mat-label>
+      <input formControlName="fname_fld" matInput>
+      <mat-error *ngIf="firstFormGroup.controls.fname_fld.invalid">{{ getErrorMessage() }}</mat-error>
+
+    </mat-form-field>
+
+
+    <mat-form-field aria-labelledby="identification" style="width: 100%;" appearance="fill">
+      <mat-label>Middlename</mat-label>
+      <input formControlName="mname_fld" matInput>
+      <mat-error *ngIf="firstFormGroup.controls.mname_fld.invalid">{{ getErrorMessage() }}</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field aria-labelledby="identification" style="width: 100%;" appearance="fill">
+      <mat-label>Lastname</mat-label>
+      <input formControlName="lname_fld" matInput>
+      <mat-error *ngIf="firstFormGroup.controls.lname_fld.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" class="Activity__input">
+      <mat-label>Name Extension</mat-label>
+      <mat-select formControlName="extname_fld">
+        <mat-option value="" class="mat-option">None</mat-option>
+        <mat-option value="Sr" class="mat-option">Sr</mat-option>
+        <mat-option value="Jr" class="mat-option">Jr</mat-option>
+        <mat-option value="I" class="mat-option">I</mat-option>
+        <mat-option value="II" class="mat-option">II</mat-option>
+        <mat-option value="III" class="mat-option">III</mat-option>
+
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field style="width: 100%;" appearance="fill" class="Activity__input">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput [matDatepicker]="bdate_fld" formControlName="bdate_fld">
+      <mat-datepicker-toggle matSuffix [for]="bdate_fld"></mat-datepicker-toggle>
+      <mat-datepicker #bdate_fld></mat-datepicker>
+      <mat-error *ngIf="firstFormGroup.controls.bdate_fld.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+
+
+    <mat-form-field style="width: 100%;" appearance="fill">
+      <mat-label>Specialization</mat-label>
+      <input formControlName="specialization_fld" matInput>
+    </mat-form-field>
+
+
+
+
+    <mat-form-field style="width: 100%;" appearance="fill">
+      <mat-label>Position</mat-label>
+      <input formControlName="position_fld" matInput>
+    </mat-form-field>
+
+
+    <mat-form-field style="width: 100%;" appearance="fill">
+      <mat-label>Highest Educational Attainment</mat-label>
+      <input formControlName="educ_fld" matInput>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;" appearance="fill">
+      <mat-label>Other Assignments</mat-label>
+      <input formControlName="assignment_fld" matInput>
+    </mat-form-field>
+
+  </div>
+
+  <div class="action">
+    <button type="button" [mat-dialog-close]="undefined" mat-flat-button class="mat-btn btn-cancel">Cancel</button>
+    <!-- <button type="submit" mat-flat-button class="mat-btn btn-save">Update</button> -->
+
+    <button [disabled]="_user.isLoading()" (click)="updateProfile()" class="btn-default" mat-flat-button>
+      <span *ngIf="!_user.isLoading()">Update</span>
+      <span *ngIf="_user.isLoading()">Saving...</span>
+    </button>
+  </div>
+
+</form>

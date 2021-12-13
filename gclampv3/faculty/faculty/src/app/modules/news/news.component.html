@@ -1,0 +1,97 @@
+<div class="main-container">
+  <header class="header">
+    <div class="header__title-container">
+
+      <div class="header__main">
+        <h1 class="header__title">News and Events</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">campaign</mat-icon>
+        </div>
+      </div>
+      <small>Get the latest News and Updates </small>
+    </div>
+  </header>
+
+
+  <div class="load" *ngIf="showLoader" style="margin-top: 25%">
+    <app-loadingscreen class="load__cons"></app-loadingscreen>
+  </div>
+
+  <h2 *ngIf="!showLoader && allAnnounce == null">There was no data found! 🙈🙉</h2>
+
+  <div class="" *ngIf="!showLoader && allAnnounce != null">
+    
+    
+    <strong class="line">Latest News</strong>
+
+
+    <section class="latest">
+      <ng-container *ngFor="let item of latestObj">
+
+        <div class="latest__details">
+          <div class="latest__header-news">
+            <h2 class="latest__title" (click)="gotoInnerContent(item)">{{ item.title_fld}}</h2>
+            <div class="d-flex align-items-center mt-1 latest__date">
+              <mat-icon>calendar_today</mat-icon>
+              <small>
+                {{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}
+              </small>
+            </div>
+
+          </div>
+          <p class="latest__content">{{ item.content_fld }}</p>
+          <div class="d-flex align-items-center">
+            <button class="latest__btn" type="button" (click)="gotoInnerContent(item)">
+              <p>Read more</p>
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+
+          </div>
+        </div>
+        <div class="latest__img">
+          <img appLazyLoad draggable="false" [src]="_ds.downloadURL + item.imgdir_fld" alt="image"
+            onerror="this.onerror=null;this.src='assets/images/noimage.png'">
+        </div>
+      </ng-container>
+    </section>
+
+
+    <div class="newsact">
+      <strong class="line">Other News</strong>
+      <div class="input-box">
+        <input (keyup)="filterlist()" [(ngModel)]="filter" type="text" placeholder="Search here...">
+        <button mat-flat-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="announce">
+      <div *ngFor="let ann of allAnnounce">
+        <div class="announce__card">
+          <div class="announce__img">
+            <img appLazyLoad draggable="false" [src]="_ds.downloadURL + ann.imgdir_fld + imageRandom" alt="image"
+              onerror="this.onerror=null;this.src='assets/images/noimage.png'">
+          </div>
+          <div class="announce__details">
+            <div class="announce__header">
+              <div class="d-flex align-items-center mt-1 announce__date">
+                <mat-icon>calendar_today</mat-icon>
+                <small>{{ ann.datetime_fld | date: 'MMM dd, yyyy h:mm a'}}</small>
+              </div>
+              <h1 class="announce__title" (click)="gotoInnerContent(ann)">{{ ann.title_fld }} </h1>
+            </div>
+            <p class="announce__content">{{ ann.content_fld}}</p>
+            <div class="d-flex align-items-center justify-content-between">
+              <button (click)="gotoInnerContent(ann)" class="announce__btn" type="button">
+                <p>Read more</p>
+                <mat-icon>chevron_right</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

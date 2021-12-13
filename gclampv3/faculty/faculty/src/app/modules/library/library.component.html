@@ -1,0 +1,79 @@
+<div class="main-container">
+    <header>
+      <div class="d-flex align-items-center page-title">
+          <h2>GC eLibrary</h2>
+          <div class="icon-contain">
+              <mat-icon class="icon">local_library</mat-icon>
+          </div>
+      </div>
+    </header>
+
+<div *ngIf="bookObject != null; else noBooks">
+    <section class="book-section" >
+        <div *ngIf="isTiled; else isListed">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4 class="font-weight-bold mb-0">Select a books</h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="d-flex flex-row-reverse align-items-center">
+                        <button class="btn-view" (click)="toggleview()" mat-flat-button><mat-icon class="mr-2">list</mat-icon>List View</button>
+                        <input [(ngModel)]="bookTitle" (keyup)="Search()" type="text" class="form-control search-books-input mr-2" placeholder="Search Book Title">
+                        <!-- [(ngModel)]="searchword"(input)="searchThis() -->
+                    </div>
+                </div>
+            </div>
+            <section class="book-container">
+                <div class="book-box" *ngFor="let b of bookObject; index as i">
+                    <div (click)="getBook(i)" class="book-content" style="color: rgb(95,95,95);">
+                        <mat-icon>auto_stories</mat-icon>
+                    </div>
+                    <strong>{{ b.title_fld }}</strong>
+                    <h3 class="card-subtitle mb-3 text-muted">{{ b.author_fld }}</h3>
+                    <small class="text-muted d-flex">{{ b.copyright_fld }}</small>
+                </div>
+            </section>
+        </div>
+
+        <ng-template #isListed>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4 class="font-weight-bold mb-0">Select a books</h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="d-flex flex-row-reverse align-items-center">
+                        <button class="btn-view" (click)="toggleview()" mat-flat-button><mat-icon class="mr-2">grid_on</mat-icon>Grid View</button>
+                        <input [(ngModel)]="bookTitle" (keyup)="Search()" type="text" class="form-control search-books-input mr-2" placeholder="Search Book Title">
+                        <!-- <input [(ngModel)]="bookSearch" (ngModelChange)="search_book()" type="text" class="form-control search-books-input mr-2" placeholder="Search Book Title"> -->
+                    </div>
+                </div>
+            </div>
+            <div class="book-list-container">
+                <div class="card book-box-list mb-2 mt-2" *ngFor="let b of bookObject; index as i">
+                    <div class="card-body" (click)="getBook(i)">
+                        <div class="d-flex ml-3">
+                            <div class="book-content" style="color: rgb(95,95,95);">
+                                <mat-icon class="book-icon-list">auto_stories</mat-icon>
+                            </div>
+                            <div class="ml-3">
+                                <strong>{{ b.title_fld }}</strong>
+                                <h3 class="card-subtitle mb-3 text-muted">{{ b.author_fld }}</h3>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+            </div>
+        </ng-template>
+    </section>
+</div>
+
+<ng-template #noBooks>
+    <h3>No Books to Display</h3>
+</ng-template>
+
+    <!-- <div class="d-flex justify-content-end">
+        <button mat-fab color="warn" aria-label="Example icon button with a home icon" (click)="addBook()">
+            <mat-icon>add</mat-icon>
+          </button>
+    </div> -->
+</div>

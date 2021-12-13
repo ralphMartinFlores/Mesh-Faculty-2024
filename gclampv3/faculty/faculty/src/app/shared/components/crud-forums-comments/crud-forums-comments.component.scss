@@ -1,0 +1,306 @@
+$space : 1em;
+$default-size: 1rem;
+%flex-align{ display: flex; align-items: center; }
+
+@mixin flex($align, $content, $direct){
+    display: flex;
+    flex-direction: $direct;
+    justify-content: $content;
+    align-items: $align;
+}
+
+.header{
+    &__back-action{
+      @extend %flex-align;
+      margin-bottom: 10px;
+      button{  background: var(--color-scheme-default); color: var(--txt-white);}
+      a{margin-left: 10px; text-decoration: none; color: var(--color-scheme-default);}
+    }
+  
+    &__title{ line-height: 32px; font-weight: 700;}
+  
+    &__author-post{
+      @extend %flex-align;
+      justify-content: space-between;
+      .btn-success{ 
+        @extend %flex-align;
+        font-size: $default-size - .1rem;
+      }
+    }
+  
+    &__date{  margin-left: 5px; }
+  
+  }
+  
+
+.mainforum-header, .forumtopic_header
+{ background: var(--btn-edit); color: #fff;
+  .icon{ background: #b8defc; color: var(--btn-edit)}
+}
+.btn-save{ padding: 2px 30px; }
+.forums-container{
+    width: 1000px;
+    margin: 1em auto;
+    background: #fff;
+    box-shadow: 8px 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 2em;
+    border-radius: .5rem;
+    .input-box{
+        margin: 1em 0;
+        .example-full-width{
+            width: 100%;
+            outline: none;
+            font-size: .9rem;
+        }
+    }
+}
+
+.comment-container{
+    padding: 10px 0;
+    position: relative;
+    border-bottom: 1px solid var(--background-default);
+    .comment-header{
+        display: flex;
+        .comment-img{
+            img{
+                width: 45px;
+                border-radius: 50%;
+            }
+        }
+        .user{
+            margin-top: 5px;
+            font-size: .9rem;
+            margin-left: 10px;
+        }
+    }
+    .content{
+        line-height: 27px;
+        margin-top: 5px;
+        font-size: .9rem;
+    }
+}
+
+.comment-img::before{
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-2%);
+    background-color: gray;
+}
+
+section{
+    padding: 1.5em;
+}
+
+
+.coms{
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    border: 1px solid #b8defc;
+    .imgcontain{
+        width: 7%;
+        display: flex;
+        justify-content: center;
+        background: red;
+        img{
+            width: 40px;
+        }
+    }
+    .imgcontain::before{
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        transform: translateX(-2%);
+        background-color: gray;
+    }
+    .description{
+        padding: 0 10px;
+    }
+}
+
+h6{
+    margin: 20px 0;
+    font-weight: 600;
+}
+
+.comments{
+    display: flex;
+    width: 100%;
+    margin: 1em 0;
+    
+    &__imgcontain{
+        width: 6%;
+        position: relative;
+      
+    }
+
+    &__img{
+        width: 45px;
+        border-radius: 50%;
+    }
+
+    &__userinfo{
+        width: 94%;
+    }
+
+    &__fullname{ 
+        @include flex(flex-start, flex-start, column); 
+        small{ font-size: .8rem; }
+    }
+
+    &__header{ @include flex(center, space-between, row);}
+
+    &__content{
+        line-height: 27px;
+        margin: 5px 0 0 0;
+    }
+    .left{
+        margin-left: 5px;
+    }
+
+    &__action, &__like{
+        margin-top: 2px;
+        font-size: 1rem;
+        @include flex(center, flex-start, row);
+        mat-icon{
+            transform: scale(.8);
+            cursor: pointer;
+            transition: .5s;
+        }
+    }
+
+
+    &__postimg{
+        width: 400px;
+        margin: 10px 0;
+        img{
+            width: 100%;
+        }
+    }
+  
+}
+
+
+
+.forms-container{
+    background: #fff;
+    width: 100%;
+    padding: 20px;
+    border-radius: .5rem;
+    // box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--background-light-gray);
+    .formheader{
+        display: flex;
+        align-items: center;
+        span{ font-size: .9rem; }
+        mat-icon{
+            transform: scale(.7);
+            color: var(--color-scheme-default);
+        }
+    }
+    .formbody{
+        display: flex;
+        align-items: flex-start;
+        padding: 10px;
+        justify-content: space-between;
+        margin-top: 10px;
+        border-radius: .5rem;
+        border: 1px solid #f5f5f5;
+        .profile-img{
+            background-size: cover;
+            // border: 1px solid #c4c3c3;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+        }
+        .example-full-width{
+            width: 95%;
+            height: 10vh;
+            margin-left: 5px;
+            border: none;
+            outline: none;
+            textarea{
+              height: 15vh;
+              border: none;
+            }
+        }
+    }
+    .action-button{
+        display: flex;
+      
+        margin-top: 10px;
+        justify-content: space-between;
+        .icon-container{
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-radius: 25px;
+            small{margin-left: 5px; font-weight: 500;}
+            .icon{
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--color-scheme-default);
+                mat-icon{ transform: scale(.9); }
+            }
+            
+        }
+        .post-btn {
+            background: var(--color-scheme-default);
+            color: #fff;
+            border-radius: 25px;
+            mat-icon{ transform: scale(.7); }
+        }
+        .post-btn :disabled,
+        .post-btn[disabled]{
+          background: #a7a7a7;
+        }
+    }
+}
+
+
+
+.commentscontain{
+    width: 100%;
+    position: relative;
+    header{
+      padding: 1em .5em;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #a7a7a7;
+    }
+
+    .subheader{
+        padding: 1em .5em;
+        span{
+            font-weight: 700;
+        }
+    }
+
+    section{
+        width: 100%;
+        height: 70vh;
+        max-height: 70vh    ;
+        overflow-y: auto;
+    }
+    section::-webkit-scrollbar{
+        width: 10px;
+        height: 10px;
+      }
+}
+
+.commentscontain::-webkit-scrollbar{
+    width: 10px;
+    height: 10px;
+}
+
+footer{
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+}

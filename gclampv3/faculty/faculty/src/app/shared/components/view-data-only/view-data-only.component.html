@@ -1,0 +1,374 @@
+<div *ngIf="Content['type'] === 'schedule'">
+  <header class=" schedule-header">
+    <h4>Class Schedule </h4>
+    <button mat-icon-button [mat-dialog-close]="undefined">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <section style="background-color: #f5f5f5; overflow: auto; max-height: 70vh;">
+    <div class="class">
+      <div class="class__card" style="border-top: 3px solid #2980b9;">
+        <h5 style="color: #2980b9" class="class__title">Monday</h5>
+
+        <ng-container *ngIf="data['data'][0].length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content " *ngFor="let item of data['data'][0]">
+          <div class="class__line" [style.background-color]="'#2980b9'"></div>
+          <div class="class__date">
+            <strong> {{ item.subjdesc_fld }}</strong>
+            <div class="class__foot">
+              <small> {{ item.block_fld }}</small>
+              <small> {{ item.starttime_fld}} - {{ item.endtime_fld }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="class__card" style="border-top: 3px solid #8e44ad;">
+        <h3 style="color: #8e44ad">Tuesday</h3>
+
+        <ng-container *ngIf="data['data'][1].length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let item of data['data'][1]">
+          <div class="class__line" [style.background-color]="'#8e44ad'"></div>
+          <div class="class__date">
+            <strong> {{ item.subjdesc_fld }}</strong>
+            <div class="class__foot">
+              <small> {{ item.block_fld }}</small>
+              <small> {{ item.starttime_fld}} - {{ item.endtime_fld }}</small>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="class__card" style="border-top: 3px solid #e67e22;">
+        <h3 style="color: #e67e22;">Wednesday</h3>
+
+        <ng-container *ngIf="data['data'][2].length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let item of data['data'][2]">
+          <div class="class__line" [style.background-color]="'#e67e22'"></div>
+          <div class="class__date">
+            <strong> {{ item.subjdesc_fld }}</strong>
+            <div class="class__foot">
+              <small> {{ item.block_fld }}</small>
+              <small> {{ item.starttime_fld}} - {{ item.endtime_fld }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="class__card" style="border-top: 3px solid #e74c3c;">
+        <h3 style="color: #e74c3c;">Thursday</h3>
+
+        <ng-container *ngIf="data['data'][3].length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let item of data['data'][3]">
+          <div class="class__line" [style.background-color]="'#e74c3c'"></div>
+          <div class="class__date">
+            <strong> {{ item.subjdesc_fld }}</strong>
+            <div class="class__foot">
+              <small> {{ item.block_fld }}</small>
+              <small> {{ item.starttime_fld}} - {{ item.endtime_fld }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="class__card" style="border-top: 3px solid #4cd137;">
+        <h3 style="color: #4cd137;">Friday</h3>
+
+        <ng-container *ngIf="data['data'][4].length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let item of data['data'][4]">
+          <div class="class__line" [style.background-color]="'#4cd137'"></div>
+          <div class="class__date">
+            <strong> {{ item.subjdesc_fld }}</strong>
+            <div class="class__foot">
+              <small> {{ item.block_fld }}</small>
+              <small> {{ item.starttime_fld}} - {{ item.endtime_fld }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="class__card" style="border-top: 3px solid #192a56;">
+        <h3 style="color: #192a56;">Saturday</h3>
+
+        <ng-container *ngIf="data['data'][5].length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+
+        <div class="class__content" *ngFor="let item of data['data'][5]">
+          <div class="class__line" [style.background-color]="'#192a56'"></div>
+          <div class="class__date">
+            <strong> {{ item.subjdesc_fld }}</strong>
+            <div class="class__foot">
+              <small> {{ item.block_fld }}</small>
+              <small> {{ item.starttime_fld}} - {{ item.endtime_fld }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="class__card" style="border-top: 3px solid #0097e6;">
+        <h3 style="color: #0097e6;">Sunday</h3>
+
+        <ng-container *ngIf="data['data'][6].length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let item of data['data'][6]">
+          <div class="class__line" [style.background-color]="'#0097e6'"></div>
+          <div class="class__date">
+            <strong> {{ item.subjdesc_fld }}</strong>
+            <div class="class__footer">
+              <small> {{ item.block_fld }}</small>
+              <small> {{ item.starttime_fld}} - {{ item.endtime_fld }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+</div>
+
+
+
+<div *ngIf="Content['type'] === 'academic'">
+  <header class="background">
+    <div class="headers">
+      <span>Student's Profile</span>
+      <button [mat-dialog-close]="undefined" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="profile">
+      <div class="personal">
+        <div class="borders">
+          <img appLazyLoad draggable="false" [src]="_ds.imageURL + Content.data.profilepic_fld || 'assets/images/profile.jpg'"
+            alt="avatar" class="profile-pic">
+        </div>
+        <div class="info">
+          <h4>{{ Content.data.fname_fld }} {{ Content.data.mname_fld }} {{
+            Content.data.lname_fld }} {{ Content.data.extname_fld }}</h4>
+          <small>{{ Content.data.email_fld }}</small>
+        </div>
+      </div>
+      <!-- <button class="btn-message" mat-flat-button>
+        <mat-icon>chat</mat-icon> Message
+      </button> -->
+    </div>
+  </header>
+
+  <mat-tab-group class="example-stretched-tabs mat-elevation-z1">
+    <!-- CLASS FEED  -->
+    <mat-tab label="Student Info">
+      <section>
+        <div class="row py-3">
+          <div class="col-lg-3 col-sm-12"><label>Fullname:</label></div>
+          <div class="col-lg-9 col-sm-12"><span>{{ Content.data.fname_fld }} {{
+              Content.data.mname_fld }} {{
+              Content.data.lname_fld }} {{ Content.data.extname_fld }}</span></div>
+        </div>
+        <div class="row py-3">
+          <div class="col-lg-3 col-sm-12"><label>Contact no:</label></div>
+          <div class="col-lg-9 col-sm-12"> <span>{{ Content.data.contactnum_fld == '' ? 'N/A' :
+              Content.data.contactnum_fld }} </span></div>
+        </div>
+
+        <div class="row py-3">
+          <div class="col-lg-3 col-sm-12"><label>Department:</label></div>
+          <div class="col-lg-9 col-sm-12"> <span> {{ Content.data.dept_fld }} Department</span></div>
+        </div>
+
+        <div class="row py-3">
+          <div class="col-lg-3 col-sm-12"><label>Gender:</label></div>
+          <div class="col-lg-9 col-sm-12">
+            <span>
+              {{ Content.data.sex_fld == 1
+              ? 'Male'
+              : Content.data.sex_fld == 2
+              ? 'Female' : 'N/A' }}
+            </span>
+          </div>
+        </div>
+        <div class="row py-3">
+
+          <div class="col-lg-3 col-sm-12"><label>Learning Mode:</label></div>
+          <div class="col-lg-9 col-sm-12">
+            <span>
+              {{ Content.data.learningtype_fld == 2
+              ? 'Online and Offline learning'
+              : Content.data.learningtype_fld == 1
+              ? 'Offline learning' : 'N/A'
+              }}
+            </span>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+    <!-- <mat-tab label="Quest Achievements">
+      <section>
+        <div class="achievement-container">
+          <div class="bagdes" *ngFor="let b of [1,3,4,5,6,7,0,6,7,4,4,3,2,3,2,21,1,2]">
+            <img src="assets/images/clock_puncher.png" alt="">
+            <br>
+                        <strong>Name of badge</strong>
+          </div>
+        </div>
+      </section>
+    </mat-tab> -->
+  </mat-tab-group>
+
+
+</div>
+
+
+<div *ngIf="Content['type'] === 'Previewimage'">
+  <div class="img-container">
+    <img appLazyLoad draggable="false" [src]="_ds.imageURL +  Content['img']" alt="image"
+      onerror="onerror=null;src='assets/images/noimage.png'" width="100%" class="img-container">
+  </div>
+</div>
+
+
+<div *ngIf="Content['type'] === 'selection'">
+  <div class="p-3">
+
+    <div class="pb-3 pt-3">
+      <div class="text-center">
+
+        <button mat-icon-button style="background-color: #192a56; color: white; margin-bottom: 1rem;">
+          <mat-icon>pageview</mat-icon>
+        </button>
+      </div>
+      <div>Please choose your preferred file viewer. 👀🤔</div>
+    </div>
+
+    <div class="text-center">
+      <button (click)="viewerSelected(0)" mat-stroked-button class="me-2" color="primary">View in Google Docs</button>
+      <button mat-stroked-button (click)="viewerSelected(1)" color="primary">View in Microsoft Office</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div *ngIf=" Content['type']==='Resources'">
+  <header class=" resource-header">
+    <h6>{{Content.data.title_fld}} </h6>
+
+    <button mat-icon-button [mat-dialog-close]="undefined">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <p class="resoursecontent">{{ Content.data.desc_fld }}</p>
+
+  <section class="resource-body">
+    <small class="resourceheader">Uploaded File(s)</small>
+
+    <div class="filecontain">
+      <ng-container *ngFor="let item of resourcesfiles">
+        <div class="filecontain__info">
+          <div class="filecontain__name">
+            <div class="filecontain__icon">
+
+              <mat-icon class="material-icons-outlined">description</mat-icon>
+              <span [ngStyle]="{'background-color': getFileExtension( uploadservice.getfileExt( item.name ) )}">{{
+                uploadservice.getfileExt( item.name ) | uppercase }}</span>
+            </div>
+            <p>{{item.name}}</p>
+          </div>
+
+          <button type="button" (click)="_ds.downloadFile(item.path, item.name)">
+            <mat-icon>file_download</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+
+</div>
+
+
+<ng-container *ngIf=" Content['type']==='score_essay'">
+
+
+  <div class="p-3">
+
+    <form [formGroup]="ScoringForm">
+      <div class="d-flex align-items-center" style="justify-content: space-between">
+        <div>
+          <small class="text-muted text-small">Essay question</small>
+          <h5>{{data.data.question}}</h5>
+        </div>
+
+        <div class="Details">
+          <mat-form-field style="width: 100%;" appearance="fill" class="Details__input">
+            <mat-label>Essay points</mat-label>
+            <input class="text-end" required formControlName="score" placeholder="Essay points" matInput>
+            <span matPrefix> &nbsp;</span>
+            <span matSuffix>/ {{ data.data.score }}</span>
+            <mat-error *ngIf="this.ScoringForm.controls.score.invalid">{{ getErrorMessage() }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="p-2">
+        <p style="font-size: initial;">{{data.data.answer}}</p>
+      </div>
+
+      <hr>
+
+      <footer class="text-end">
+        <button *ngIf="!_user.isLoading()" mat-button [mat-dialog-close]="undefined"
+          class="btn-cancel me-2">Cancel</button>
+        <button (click)="savePoints()" type="submit" class="btn-default " mat-flat-button>
+          <span *ngIf="!_user.isLoading()">Save</span>
+          <span *ngIf="_user.isLoading()">Saving...</span>
+        </button>
+      </footer>
+    </form>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf=" Content['type']==='logout'">
+  <div class="p-4">
+    <div class="mb-3">
+      <strong>
+        <h4 class="mb-2">Log Out</h4>
+      </strong>
+      <div style="font-size: initial;">Are you sure you want to logout?</div>
+    </div>
+    <div class="text-end">
+      <button [mat-dialog-close]="undefined" class="text-muted me-2" mat-button>Cancel</button>
+      <button (click)="userLogout()" color="warn" mat-flat-button>Logout</button>
+    </div>
+  </div>
+</ng-container>

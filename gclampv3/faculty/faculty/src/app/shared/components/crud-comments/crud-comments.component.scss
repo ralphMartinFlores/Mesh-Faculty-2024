@@ -1,0 +1,220 @@
+.replybtn {
+  display: flex;
+  align-items: center;
+  // color: gray;
+  cursor: pointer;
+}
+
+.cancelbtn {
+  margin-left: 4rem;
+  font-size: smaller;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8em 1em;
+  h5 {
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+section {
+  width: 100%;
+  max-height: 40vh;
+  overflow-y: scroll;
+}
+section::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+.comment-post {
+  // width: 100%;
+  // display: flex;
+  padding: 10px;
+  border: 1px solid var(--background-default);
+  .commentimg {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+  }
+  .comment-body {
+    // background-color: #fafafa;
+    // border-radius: 1rem;
+    // padding: 0.9rem;
+    width: 100%;
+    margin-left: 15px;
+    position: relative;
+    .messege-header {
+      width: 100%;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .sender-name {
+        font-size: 0.9rem;
+      }
+    }
+    .comment-content {
+      line-height: 24px;
+      font-size: 0.9rem;
+      padding-right: 10px;
+      text-align: justify;
+      white-space: pre-line;
+      margin: 10px 0 0;
+    }
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--background-default);
+  padding: 0.8rem;
+
+  .input-box {
+    width: 100%;
+    padding: 7px;
+    margin-left: 10px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--background-default);
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      margin-left: 5px;
+      background: var(--color-scheme-default);
+      color: #fff;
+      mat-icon {
+        transform: scale(0.7);
+      }
+    }
+    button:disabled {
+      background: #a7a7a7;
+    }
+  }
+}
+.imgsrc {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-size: cover;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+}
+
+@media screen and(min-width: 1400px) {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8em 1em;
+    h5 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+  }
+
+  .comment-post {
+    width: 100%;
+    // display: flex;
+    padding: 10px 15px;
+    border: 1px solid var(--background-default);
+    .commentimg {
+      width: 45px;
+      height: 45px;
+      background-size: cover;
+      border-radius: 50%;
+      box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+    }
+    .comment-body {
+      width: 100%;
+      margin-left: 15px;
+      position: relative;
+      .messege-header {
+        width: 100%;
+        margin-top: 3px;
+        display: flex;
+
+        justify-content: space-between;
+        .sender-name {
+          font-size: 1rem;
+        }
+      }
+      .comment-content {
+        line-height: 24px;
+        font-size: 1rem;
+        padding-right: 10px;
+        text-align: justify;
+        white-space: pre-line;
+        margin: 10px 0 0;
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--background-default);
+    padding: 0.8rem;
+
+    .input-box {
+      width: 100%;
+      padding: 8px;
+      margin-left: 10px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--background-default);
+      input {
+        width: 100%;
+        border: none;
+        outline: none;
+      }
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        margin-left: 5px;
+        background: var(--color-scheme-default);
+        color: #fff;
+        mat-icon {
+          transform: scale(0.7);
+        }
+      }
+      button:disabled {
+        background: #a7a7a7;
+      }
+    }
+  }
+
+  .imgsrc {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+  }
+}

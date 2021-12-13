@@ -1,0 +1,60 @@
+<div class="wrapper">
+  <ng-container *ngFor="let item of newsContent">
+
+    <section class="news">
+      <div class="news__header">
+        <button style="background-color: var(--btn-primary);" class="news__back" routerLink="/main/news" mat-icon-button>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <strong>Back</strong>
+      </div>
+      <img *ngIf="item.withimg_fld == 1" appLazyLoad draggable="false"
+        [src]="_ds.downloadURL + item.imgdir_fld + imageRandom" alt="image" class="news__img">
+      <!-- <span *ngIf="!item.imgdir_fld" class="news__photo" (click)="Imagepreview(item)">See to full photo</span> -->
+
+      <div *ngIf="item.withimg_fld == 0" class="news__imgcontain">
+        <img appLazyLoad draggable="false" src="assets/images/noimage.png" alt="image" class="news__img">
+      </div>
+
+
+      <div class="news__fullcontent">
+        <strong class="news__depart">{{ item.recipientcode_fld }}</strong>
+        <h1 class="news__title">{{ item.title_fld }} <br>
+          
+          <!-- <button (click)="opencomment()" class="news__comments mt-2" mat-stroked-button>
+            <mat-icon>chat</mat-icon>
+            <span class="ms-1">
+              View comment(s)
+              {{ item.commentcount > 0 ? item.commentcount + ' comments' : 'No comments yet' }}
+            </span>
+          </button> -->
+        </h1>
+        <span class="news__date">
+          <mat-icon>event</mat-icon>  {{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}
+        </span>
+
+        <hr>
+
+        <p class="news__content-body">{{ item.content_fld }}</p>
+      </div>
+    </section>
+
+    <section class="others mt-2">
+      <h2 class="others__news">Other News</h2>
+      <ng-container *ngFor="let a of announcementObj">
+        <div (click)="viewAnn(a)" class="others__newscontain" *ngIf="item.announcecode_fld != a.announcecode_fld">
+          <div class="others__imgcontain">
+            <img appLazyLoad draggable="false" [src]="_ds.downloadURL + a.imgdir_fld + imageRandom" alt="image"
+              onerror="this.onerror=null;this.src='assets/images/noimage.png'" class="others__img">
+          </div>
+          <div class="others__maintitle">
+            <strong class="others__depart">{{ a.recipientcode_fld }}</strong>
+            <h3 class="others__title">{{ a.title_fld }}</h3>
+            <small class="others__content">{{a.datetime_fld | date: 'MMM dd, yyyy h:mm a'}}</small>
+          </div>
+        </div>
+
+      </ng-container>
+    </section>
+  </ng-container>
+</div>

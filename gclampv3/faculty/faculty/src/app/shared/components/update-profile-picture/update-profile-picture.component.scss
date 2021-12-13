@@ -1,0 +1,38 @@
+header{
+    width: 100%;
+    padding:  1.5em;
+    border-bottom: 1px solid #bebdbd;
+}
+
+section{
+    padding: 1em 1.5em;
+}
+
+.photo{
+    &__btn{
+        width: 100%;
+        padding: .2em 1em;
+        margin-bottom: 1em;
+        background: #1C3D50;
+        color: var(--clr-white);
+        mat-icon{
+            margin-right: 5px;
+        }
+    }
+}
+
+.profile{
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    object-position: bottom;
+}
+
+footer{
+    border-top: 1px solid #bebdbd;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 1em 1.5em;
+}

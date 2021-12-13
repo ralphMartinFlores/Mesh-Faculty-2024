@@ -1,0 +1,38 @@
+header{
+    display: flex;
+    padding: 1.5em;
+    color: #fff;
+    align-items: center;
+    border-bottom: 1px solid #c9c9c9;
+    strong{
+      margin-left: 10px;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+}
+.mainforum-header, .forumtopic_header
+{ 
+  color: var(--clr-neutral);
+  .icon{ 
+    background: #cfe6f8; 
+    color: var(--clr-primary);
+  }
+}
+.btn-save{ padding: 2px 30px; }
+
+.forums-container{
+    width: 100%;
+    padding: 2em;
+    .input-box{
+        margin: 1em 0;
+        .example-full-width{
+            width: 100%;
+            outline: none;
+            font-size: .9rem;
+        }
+    }
+}
+
+section{
+  padding: 1.5em;
+}

@@ -1,0 +1,168 @@
+<header>
+  <small style="font-weight: 500;">
+    {{ commentObject.length > 0 ? commentObject.length + ' comments' : 'No comments yet' }} </small>
+  <button [mat-dialog-close]="undefined" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+<section>
+
+  <div class="comment-post" *ngFor="let item of commentObject; let i = index">
+    <div class="d-flex">
+      <div [id]="'img-container'+i" class="img-container">
+        <img appLazyLoad draggable="false" [src]="_ds.downloadURL + item.profilepic_fld || 'assets/images/profile.jpg'"
+          alt="" class="commentimg" draggable="false" onerror="this.onerror=null;this.src='assets/images/profile.jpg';">
+      </div>
+
+      <div class="comment-body" style="border-bottom: none !important;">
+        <form (submit)="saveComment($event, i, item)" ngNativeValidate>
+          <div id="ceditbox">
+            <footer class="edit-box" [id]="'edit-box'+i" style="display: none; border: none;">
+              <img appLazyLoad draggable="false"
+                [src]="_ds.downloadURL + _user.getUserImage() || 'assets/images/profile.jpg'" alt="" class="commentimg"
+                draggable="false" onerror="this.onerror=null;this.src='assets/images/profile.jpg';">
+              <div class="input-box">
+                <input name="content_fld" [id]="'content_fld' + i " type="text" placeholder="Write a comment...">
+                <button type="submit" mat-icon-button>
+                  <mat-icon>send</mat-icon>
+                </button>
+              </div>
+              <button type="button" (click)="closeEdit(i)" mat-icon-button>
+                <mat-icon>close</mat-icon>
+              </button>
+            </footer>
+          </div>
+        </form>
+        <div [id]="'comments'+i"
+          style="background-color: #fafafa;border-radius: 1rem;padding: 0.9rem; width: 100%;position: relative;">
+          <div class="messege-header">
+            <div class="sender-name">
+              <strong>{{ item.fullname_fld }}</strong>
+              <br>
+              <small class="text-muted ml-1 small">
+                {{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a'}}
+              </small>
+            </div>
+            <span style="flex: 1 1 auto"></span>
+            <button *ngIf="item.authorid_fld == _user.getUserID()" mat-icon-button [matMenuTriggerFor]="delc"
+              aria-label="button menu">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #delc="matMenu">
+              <button (click)="state(i, item)" mat-menu-item class="nooutline">
+                <span>Edit</span>
+              </button>
+              <button (click)="deleteRecords('comment', item, i)" mat-menu-item class="nooutline">
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </div>
+          <p class="comment-content">{{ item.content_fld }}</p>
+        </div>
+
+        <div class="replybtn p-2" [id]="'replybtn'+i">
+          <button (click)="addReply(item, i)" mat-stroked-button>{{ item.reply == null ? 'Add reply' : item.replycount
+            + ' replies'
+            }}</button>
+        </div>
+
+        <div [id]="'replydiv'+i" style="display: none; width: 100%;">
+          <ng-container *ngFor="let reply of item.reply; let j = index">
+            <form (submit)="saveReply($event, i, j, reply)" ngNativeValidate>
+              <div id="reditbox">
+                <footer class="edit-box p-0 mt-3" [id]="i + 'redit-box'+j" style="display: none; border: none;">
+                  <div>
+                    <img style="width: 28px; height: 28px;" appLazyLoad draggable="false"
+                      [src]="_ds.downloadURL + _user.getUserImage() || 'assets/images/profile.jpg'" alt=""
+                      class="imgsrc" draggable="false">
+                  </div>
+                  <div class="input-box">
+                    <input name="content_fld" [id]="i + 'reply_content_fld' + j " type="text"
+                      placeholder="Write a reply...">
+                    <button type="submit" mat-icon-button>
+                      <mat-icon>send</mat-icon>
+                    </button>
+                  </div>
+                  <button type="button" (click)="closeReplyEdit(i, j)" mat-icon-button>
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </footer>
+              </div>
+            </form>
+            <div class="d-flex">
+              <div style="display: flex; width: 100%;" class="pt-3" [id]="i +'replybox'+j">
+                <div class="img-container mt-2 text-center">
+                  <img appLazyLoad draggable="false"
+                    [src]="_ds.downloadURL + reply.profilepic_fld || 'assets/images/profile.jpg'" alt=""
+                    class="commentimg" draggable="false "
+                    onerror="this.onerror=null;this.src='assets/images/profile.jpg';"
+                    style="width: 28px !important; height: 28px !important;">
+                  <!-- <mat-icon class="mt-3 text-muted">subdirectory_arrow_right</mat-icon> -->
+                </div>
+                <div class="comment-body mt-0" style="border-bottom: none !important;">
+                  <div style="background-color: #fafafa;border-radius: 1rem;padding: 0.9rem; position: relative;">
+                    <div class="messege-header">
+                      <div class="sender-name" style="font-size: small">
+                        <strong>{{ reply.fullname_fld }}</strong>
+                        <br>
+                        <small class="text-muted ml-1">
+                          {{ reply.datetime_fld | date: 'MMM dd, yyyy h:mm a'}}
+                        </small>
+                      </div>
+                      <span style="flex: 1 1 auto"></span>
+                      <button *ngIf="reply.authorid_fld == _user.getUserID()" mat-icon-button [matMenuTriggerFor]="delc"
+                        aria-label="button menu">
+                        <mat-icon>more_horiz</mat-icon>
+                      </button>
+                      <mat-menu #delc="matMenu">
+                        <button (click)="reply_state(i, j ,reply)" mat-menu-item class="nooutline">
+                          <span>Edit</span>
+                        </button>
+                        <button (click)="deleteReply('reply', reply, i, j)" mat-menu-item class="nooutline">
+                          <span>Delete</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+                    <p class="comment-content">{{ reply.content_fld }}</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </ng-container>
+          <div>
+            <form (submit)="sendReply($event, item, i)" ngNativeValidate class="d-flex align-items-center">
+              <img style="width: 28px !important; height: 28px !important;" appLazyLoad draggable="false"
+                [src]="_ds.downloadURL + _user.getUserImage() || 'assets/images/profile.jpg'" alt="" class="commentimg"
+                draggable="false" onerror="this.onerror=null;this.src='assets/images/profile.jpg';">
+
+              <footer style="border: none; width: 100%; font-size: small; padding-right: 0 !important">
+                <div class="input-box ms-0" style="padding: 6px 10px !important;">
+                  <input name="content_fld" type="text" placeholder="Write a reply...">
+                  <button type="submit" mat-icon-button>
+                    <mat-icon>send</mat-icon>
+                  </button>
+                </div>
+              </footer>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<form (submit)="addComments($event)" ngNativeValidate>
+  <footer>
+    <img appLazyLoad draggable="false" [src]="_ds.downloadURL + _user.getUserImage() || 'assets/images/profile.jpg'"
+      alt="" class="imgsrc" draggable="false" onerror="this.onerror=null;this.src='assets/images/profile.jpg';">
+    <div class="input-box">
+      <input name="content_fld" type="text" placeholder="Write a comment...">
+      <button type="submit" mat-icon-button>
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </footer>
+</form>

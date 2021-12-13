@@ -1,0 +1,67 @@
+<header class="bg"></header>
+<div class="wrap">
+  <ng-container *ngFor="let item of profiledata; let i=index">
+    <div class="profile">
+      <div class="info">
+        <div class="info__square">
+          <img style="cursor: pointer;" [src]="_ds.imageURL + _user.getUserImage()" alt="profile"
+            onerror="this.onerror=null;this.src='assets/images/profile.jpg';" class="info__img">
+          <button mat-icon-button (click)="updatePicture()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="info__fullname">
+          <h4 class="info__name">{{ item.fname_fld }} {{ item.mname_fld }} {{ item.lname_fld }}
+            {{item.extname_fld}}</h4>
+          <span>{{ item.email_fld }}</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <button mat-flat-button class="action__btn" (click)="UpdateProfile(item)">Update Profile</button>
+        <button mat-flat-button class="action__btn" (click)="Changepassword(item)">Change Password</button>
+      </div>
+    </div>
+
+    <div class="information">
+      <!-- <h6>Personal information</h6> -->
+
+      <section>
+        <div class="info-group">
+          <label for="">Employee Number</label>
+          <p>{{ item.empcode_fld }}</p>
+        </div>
+        <div class="info-group">
+          <label for="">Email Address</label>
+          <p>{{ item.email_fld }} </p>
+        </div>
+        <div class="info-group">
+          <label for="">Department</label>
+          <p>{{ item.dept_fld }}</p>
+        </div>
+        <div class="info-group">
+          <label for="">Position</label>
+          <p>{{item.position_fld}}</p>
+        </div>
+        <div class="info-group">
+          <label for="">Other Assignments</label>
+          <p>{{item.assignment_fld == '' ? 'N/A' : item.assignment_fld }}</p>
+        </div>
+        <div class="info-group">
+          <label for="">Date of Birth</label>
+          <p>{{ item.bdate_fld | date: 'MMM dd, yyyy'}}</p>
+        </div>
+        <div class="info-group">
+          <label for="">Highest Educational Attainment</label>
+          <p>{{item.educ_fld == '' ? 'N/A' : item.educ_fld }}</p>
+        </div>
+        <div class="info-group">
+          <label for="">Specialization</label>
+          <p>{{item.specialization_fld == '' ? 'N/A' : item.specialization_fld }}</p>
+        </div>
+
+      </section>
+    </div>
+
+  </ng-container>
+</div>

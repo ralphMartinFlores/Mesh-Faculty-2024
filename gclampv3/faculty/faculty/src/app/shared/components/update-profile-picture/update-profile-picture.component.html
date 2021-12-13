@@ -1,0 +1,34 @@
+<header>
+  <h5>{{ pictureType=='signature'?'Signature':'Profile Picture' }}</h5>
+</header>
+
+<section class="photo">
+  <mat-dialog-content>
+    <button (click)="compressFile()" mat-flat-button class="photo__btn">
+      <mat-icon>photo_camera</mat-icon>Select Photo
+    </button>
+    <!-- <input type="file" name="files[]" id="files" (change)="getFile($event)" #uploadImage accept="image/*"
+      style="display: none;"> -->
+    <div *ngIf="pictureType=='profile'" style="width: 100%;" class="text-center">
+      <image-cropper [imageBase64]="base64Image" [maintainAspectRatio]="true" [aspectRatio]="1/1" format="png"
+        (imageCropped)="imageCropped($event)" outputType="base64"></image-cropper>
+    </div>
+  
+    <div *ngIf="pictureType=='signature'" style="width: 100% !important;" class="text-center">
+      <image-cropper [imageBase64]="base64Image" [maintainAspectRatio]="false"  [aspectRatio]="4/3" format="png"
+        (imageCropped)="imageCropped($event)" outputType="base64"></image-cropper>
+    </div>
+  </mat-dialog-content>
+  
+
+  <!-- <img [src]="imageUrl" alt="" draggable="false" onerror="this.onerror=null; this.src='assets/images/profile.jpg'"
+    class="profile"> -->
+</section>
+
+<footer>
+  <button cdkFocusInitial class="btn-cancel" *ngIf="!_user.isLoading()" mat-button
+    [mat-dialog-close]="undefined">Cancel</button>
+  <button [style]="base64Image==null ? 'cursor: not-allowed' : ''" [disabled]="base64Image==null || _user.isLoading()"
+    class=" btn-default" mat-button (click)="pictureType=='signature'?updateSignature():updateProfile()">{{ _user.isLoading() ? 'Saving Profile...' :
+    'Save' }}</button>
+</footer>

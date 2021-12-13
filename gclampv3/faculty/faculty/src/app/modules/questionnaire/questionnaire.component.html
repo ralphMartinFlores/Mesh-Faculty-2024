@@ -1,0 +1,214 @@
+<div class="main-container">
+  <header class="header">
+    <div class="header__title-container">
+      <div class="header__main">
+        <h1 class="header__title">Evaluation of Online Classroom Teaching</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">rule</mat-icon>
+        </div>
+      </div>
+      <small>Evaluation Result</small>
+    </div>
+  </header><br>
+
+  <div class="card">
+    <div class="card-header" style="font-size: 1.1rem;">
+      Classcode: <span><strong>{{ class.classcode_fld }}</strong> </span><br>
+      Course Code/Description: <span style="text-transform: uppercase;"><strong>{{ class.subjcode_fld }} - {{ class.subjdesc_fld }}</strong> </span><br>
+      <!-- Name of Professor/Instructor to be evaluated: <span style="text-transform: uppercase;"><strong>{{ class.honorifics_fld }}. {{ class.fname_fld }} {{ class.lname_fld }}</strong></span> -->
+    </div>
+  </div><br>
+
+  <!-- INSTRUCTIONS -->
+  <div class="card">
+    <div class="card-header" style="font-size: 1.1rem;">
+      <span><strong>LEGEND</strong></span><br>
+      <table class="table sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle" style="background-color: lightblue;">
+          <tr>
+            <th style="width: 10%">Scale</th>
+            <th style="width: 30%">Descriptive Rating</th>
+            <th style="width: 60%">Qualitative Description</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle text-center">
+          <tr>
+            <td><strong>5</strong></td>
+            <td><strong>OUTSTANDING</strong></td>
+            <td class="text-left">The performance almost always exceeds the job requirements. The faculty is an exceptional role model</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td><strong>VERY SATISFACTORY</strong></td>
+            <td class="text-left">The performance meets and often exceeds the job requirements</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td><strong>SATISFACTORY</strong></td>
+            <td class="text-left">The performance meets job requirements</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td><strong>FAIR</strong></td>
+            <td class="text-left">The performance need some development to meet job requirements</td>
+          </tr>
+          <tr>
+            <td><strong>1</strong></td>
+            <td><strong>POOR</strong></td>
+            <td class="text-left">The faculty fails to meet job requirements</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 1 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>I. KNOWLEDGE OF CONTENT</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle" style="background-color: lightblue;">
+          <tr>
+            <th style="width: 90%" colspan=2>Indicators</th>
+            <th width="10%">Average</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part1; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}</td>
+            <td class="text-center">{{ question.v }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 2 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>II. INSTRUCTIONAL SKILLS</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle" style="background-color: lightblue;">
+          <tr>
+            <th style="width: 90%" colspan=2>Indicators</th>
+            <th width="10%">Average</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part2; let i = index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}</td>
+            <td class="text-center">{{ question.v }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 3 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>III. COMMUNICATION SKILLS</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle" style="background-color: lightblue;">
+          <tr>
+            <th style="width: 90%" colspan=2>Indicators</th>
+            <th width="10%">Average</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part3; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}</td>
+            <td class="text-center">{{ question.v }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 4 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>IV. TEACHING FOR INDEPENDENT LEARNING</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle" style="background-color: lightblue;">
+          <tr>
+            <th style="width: 90%" colspan=2>Indicators</th>
+            <th width="10%">Average</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part4; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}</td>
+            <td class="text-center">{{ question.v }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 5 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>V. MANAGEMENT OF LEARNING</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle" style="background-color: lightblue;">
+          <tr>
+            <th style="width: 90%" colspan=2>Indicators</th>
+            <th width="10%">Average</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part5; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}</td>
+            <td class="text-center">{{ question.v }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 6 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>VI. FLEXIBLE LEARNING MODALITY</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle" style="background-color: lightblue;">
+          <tr>
+            <th style="width: 90%" colspan=2>Indicators</th>
+            <th width="10%">Average</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part6; let i = index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}</td>
+            <td class="text-center">{{ question.v }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+</div>

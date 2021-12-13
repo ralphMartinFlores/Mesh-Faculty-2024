@@ -1,0 +1,184 @@
+@import "src/app/scss/__mixin.scss";
+
+.header{
+  @include flex(column, flex-start, flex-start);
+  padding: .5em;
+
+  &__title{
+    @include flex(row, flex-start, center);
+      h5{ font-weight: 600; }
+      mat-icon{
+        @include flex(row, center, center);
+        @include box(40px, 40px, #bfe1f8);
+        color: var(--clr-primary);
+        margin-right: 10px;
+        border-radius: 50%;
+      }
+  }
+
+  &__action{
+    @include flex(row, flex-start, center);
+    width: 100%;
+    margin-top: .5em;
+  }
+
+}
+
+
+.btn-add{
+  background: var(--clr-primary);
+  color: #fff;
+  width: 50%;
+  padding: 3px 15px;
+}
+
+.btn-download{
+   @include flex(row, center, center);
+   @include box(50%, auto, #1C3D50);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    border: none;
+    padding: 3px 15px;
+    margin-left: 10px;
+    font-size: .9rem;
+    mat-icon{
+      transform: scale(1);
+      padding: 0;
+    }
+}
+
+.online{
+    color: var(--clr-primary);
+    background: #E4EFFA;
+    margin: 0;
+    padding: .1em .8em;
+    font-size: .9rem;
+    border-radius: 25px;
+    text-align: center;
+    font-weight: 600;
+}
+.offline{
+    color: rgb(202, 45, 39);
+    background: rgb(252, 231, 230);
+    margin: 0;
+    padding: .1em .8em;
+    font-size: .9rem;
+    border-radius: 25px;
+    text-align: center;
+    font-weight: 600
+}
+
+.membercard{
+  @include grid(1, 100%);
+  width: 100%;
+  gap: 1em;
+  padding: .5em;
+  
+
+  &__status{
+    margin: 0;
+    padding: .2em .8em;
+    font-size: .9rem;
+    background: #f5f5f5;
+    border-radius: 25px;
+    text-align: center;
+  }
+
+  &__studnum{
+    font-size: .9rem;
+    position: absolute;
+    right: 1em;
+    padding: .2em 1em;
+    // background: #f5f5f5;
+    // color: var(--clr-neutral);
+    background: var(--clr-primary);
+    color: var(--clr-white);
+    font-size: .8rem;
+    font-weight: 600;
+    border-radius: 5px;
+  }
+
+  &__name{
+    // color: var(--clr-primary);
+  }
+ 
+  &__container{
+    border: 1px solid #dddcdc;
+    padding: 1em;
+    border-radius: .5em;
+    position: relative;
+  }
+
+  &__body{
+    @include flex(column, center, center);
+    h6{ margin: 0; font-weight: 600; margin-bottom: .5em;}
+    margin: .5em 0;
+  }
+
+  &__info{
+    text-align: center;
+  }
+
+  &__pic{
+    max-width: 100%;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-bottom: .5em;
+  }
+  
+  &__footer{
+    width: 100%;
+    margin-top: 1em;
+    background: #f5f5f5;
+  }
+  &__btn{
+    width: 50%;
+    background: none;
+  }
+}
+
+
+@media screen and(min-width: 1200px){
+  .header{
+    @include flex(row, space-between, center);
+    padding: .5em;
+  
+    &__title{
+      @include flex(row, flex-start, center);
+        h5{ font-weight: 600; }
+        mat-icon{
+          @include flex(row, center, center);
+          @include box(40px, 40px, #bfe1f8);
+          color: var(--clr-primary);
+          margin-right: 10px;
+          border-radius: 50%;
+        }
+    }
+  
+    &__action{
+      @include flex(row, flex-start, center);
+      width: auto;
+      margin-top: .5em;
+    }
+  
+  }
+
+  .membercard{
+    @include grid(3, 33%);
+  }
+}
+
+
+@media screen and(min-width: 1600px){
+  .membercard{
+    @include grid(4, 20%);
+    gap: 1.5em;
+    &__container{
+      border: 1px solid #dddcdc;
+      padding: 1em;
+      border-radius: .5em;
+    }
+  }
+}

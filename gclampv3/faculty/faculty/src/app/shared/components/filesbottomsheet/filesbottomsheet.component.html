@@ -1,0 +1,20 @@
+<mat-list>
+    <div class="p-2" style="display: flex; justify-content: space-between;">
+        <div>
+            <h6 class="mb-1">{{ data.fname_fld }} {{ data.lname_fld }}</h6>
+            <div class="text-muted">{{data.studnum_fld}}</div>
+        </div>
+
+        <div>
+            <h6 class="mb-1">Date Submitted</h6>
+            <div class="text-muted">{{data.datetime_fld | date: 'medium' }}</div>
+        </div>
+    </div>
+    <mat-divider> </mat-divider>
+    <mat-list-item *ngFor="let item of uploadservices.splitFilestring(this.data.dir_fld)">
+        <mat-icon mat-list-icon class="color-primary">text_snippet</mat-icon>
+        <a matLine style="font-weight: 600; text-decoration: none; color: black;" [href]="item.link" target="_blank">{{
+            item.name }}</a>
+        <div mat-line> {{ uploadservices.getfileExt(item.name) | uppercase }} </div>
+    </mat-list-item>
+</mat-list>

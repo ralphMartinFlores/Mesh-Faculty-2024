@@ -1,0 +1,119 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "app/scss/__color.scss";
+@import "app/scss/__reset.scss";
+@import "app/scss/__root.scss";
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  opacity: 0 !important; /*click effect color change*/
+  background-color: #3acdf8  !important;  }
+  
+  .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #3acdf8  !important; /*inner circle color change*/  }
+  
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #3acdf8  !important; /*outer ring color change*/  }
+
+//ANGULAR MATERIALS
+.mat-form-field-appearance-fill {
+  padding: 0;
+}
+
+.main-container {
+  padding: 2.5em 1em;
+  position: relative;
+  z-index: 1;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background: var(--color-scheme-default);
+  height: 2px !important;
+}
+
+mat-dialog-container.mat-dialog-container {
+  padding: 0;
+}
+
+// ANGULAR MATERIAL MODAL
+// ASSIGNMENT
+.Assignment-modalbox {
+  padding: 0;
+}
+.academic-modalbox {
+  background: none;
+}
+
+.g-transparent-backdrop {
+  background: rgba(255, 255, 255, 0.288);
+  opacity: 0.2;
+}
+
+table {
+  width: 100%;
+}
+
+@media only screen and(min-width: 768px) {
+  .main-container {
+    padding: 3.5em 3em;
+  }
+}
+
+
+
+@media only screen and(min-width: 1400px){
+  .btn-default{
+    padding: .4em 1.2em;
+  }
+}
+
+// .cdk-global-overlay-wrapper {
+//   padding-top: 10px !important;
+//   pointer-events: auto;
+//   display: block;
+//   position: relative;
+//   overflow: auto;
+//   text-align: center;
+// }
+
+// .cdk-global-overlay-wrapper::before {
+//   padding-top: 10px !important;
+//   content: '';
+//   display: inline-block;
+//   // height: 100%;
+//   white-space: nowrap;
+// }
+
+// .cdk-overlay-pane {
+//   padding-top: 10px !important;
+//   display: inline-block;
+//   position: relative;
+//   text-align: left;
+//   white-space: normal;
+// }
+
+.text-right {
+  align-items: center;
+  text-align: center;
+}
+
+.text-left {
+  align-items: left;
+  text-align: left;
+}
+
+// Scroll Bar
+*::-webkit-scrollbar {
+  width: 0.2em;
+}
+
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+// ./Scroll Bar

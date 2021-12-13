@@ -1,0 +1,95 @@
+<div class="maincontent__container">
+        <div class="meeting-form">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="flex__container space-between">
+                    <mat-form-field class="flex-grow meeting__title" appearance="legacy">
+                        <input matInput placeholder="Add Title" formControlName="title_fld">
+                    </mat-form-field>
+                    <div class="option-buttons">
+                        <button mat-flat-button type="submit">Save</button>
+                        <button mat-stroked-button>Cancel</button>
+                    </div>
+                </div>
+                <div class="flex__container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Starting Date</mat-label>
+                        <input matInput [matDatepicker]="dp3"  formControlName="startdate_fld">
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Starting Time</mat-label>
+                        <input matInput
+                            name="selected_time_A"
+                            minutesGap:15
+                            [ngxMatTimepicker]="pickerA"
+                            formControlName="starttime_fld"/>
+                        <mat-icon matSuffix
+                                (click)="pickerA.open()">
+                            watch_later
+                        </mat-icon>
+                      </mat-form-field>
+                      <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
+                    <!-- <p>to</p> -->
+                </div>
+                <div class="flex__container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Ending Date</mat-label>
+                        <input matInput [matDatepicker]="dp4"  formControlName="enddate_fld">
+                        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Ending Time</mat-label>
+                        <input matInput
+                            name="selected_time_B"
+                            minutesGap:15
+                            [ngxMatTimepicker]="pickerB"
+                            formControlName="endtime_fld"/>
+                        <mat-icon matSuffix
+                                (click)="pickerB.open()">
+                            watch_later
+                        </mat-icon>
+                      </mat-form-field>
+                      <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
+                </div>
+                <p class="mediumfont">Event Details</p>
+                <div class="flex__container space-between">
+                    <p>{{ roomId }}</p>
+                    <button mat-icon-button aria-label=""  matTooltip="Copy conferrence info">
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
+                </div>
+                <div class="flex__container flex-grow">
+                    <mat-icon class="align-start" aria-hidden="false" aria-label="">notes</mat-icon>
+                    <mat-form-field appearance="fill" class="xd">
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="desc_fld">
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="guest__container">
+            <p class="mediumfont mrgntop-0">Participants</p>
+            <mat-form-field appearance="fill">
+                <mat-label>Add Participants</mat-label>
+                <mat-select [formControl]="participants" multiple>
+                  <mat-select-trigger>
+                    {{participants.value ? participants.value[0] : ''}}
+                    <span *ngIf="participants.value?.length > 1" class="example-additional-selection">
+                      (+{{participants.value.length - 1}} {{participants.value?.length === 2 ? 'other' : 'others'}})
+                    </span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let participants of facultyList" [value]="participants">{{participants}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <div class="participant__container">
+                <div *ngFor="let student of students" class="flex__participant">
+                    <img src="https://api.lorem.space/image/face?w=24&h=24">
+                    <div class="participant__text">
+                        <p>{{ student.studnum_fld }}@gordoncollege.edu.ph</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

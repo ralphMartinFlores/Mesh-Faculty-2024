@@ -1,0 +1,326 @@
+<header>
+  <div class="title">
+    <mat-icon class="icon">edit_off</mat-icon>
+    <strong>Creative Panel</strong>
+  </div>
+  <div class="action-button">
+    <button class="btn btn-3 btn-sep " mat-flat-button (click)="createTopicDialog()">
+      <mat-icon>topic</mat-icon> Label
+    </button>
+    <button class="btn btn-1 btn-sep " mat-flat-button (click)="createAssignmentDialog()">
+      <mat-icon>assignments</mat-icon> Assigment
+    </button>
+    <button class="btn btn-2 btn-sep " mat-flat-button (click)="createResourcesDialog()">
+      <mat-icon>book</mat-icon> Resources
+    </button>
+    <button class="btn btn-4 btn-sep " mat-flat-button [routerLink]="['/main/quiz']"
+      routerLinkActive="router-link-active">
+      <mat-icon>quiz</mat-icon> Quiz
+    </button>
+  </div>
+</header>
+
+<section class="mt-4">
+
+  <!-- <div class="action d-flex">
+    <input type="text" placeholder="Search here....">
+    <mat-icon>search</mat-icon>
+  </div> -->
+
+
+  <ng-container *ngFor="let item of activities; let i = index">
+    <div *ngIf="item.topiccode_fld == 0" class="panel-list" style="--animation-order: {{i + 1}};"
+      [routerLink]="['./', item.actcode_fld ]" (click)="viewActivity(item)">
+      <span class="line"></span>
+      <ng-container *ngIf="item.type_fld == 0">
+        <mat-icon class="legend" style="color: #118650;">assignments</mat-icon>
+      </ng-container>
+      <ng-container *ngIf="item.type_fld == 1">
+        <mat-icon class="legend" style="color: #e67e22;">quiz</mat-icon>
+      </ng-container>
+      <div class="">
+        <p>{{item.title_fld}}</p>
+        <small>Due Date: {{ item.deadline_fld | date: 'MMM dd, yyyy h:mm a'}}</small>
+        <span class="points2">{{ item.totalscore_fld }} points</span>
+      </div>
+      <span style="flex: 1 1 auto;"></span>
+      <small class="points">{{ item.totalscore_fld }} points</small>
+
+      <button *ngIf="item.type_fld == 0" (click)="$event.stopPropagation();" mat-icon-button
+        aria-label="Example icon-button with a menu" [matMenuTriggerFor]="actmenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <button *ngIf="item.type_fld == 1" (click)="$event.stopPropagation();" mat-icon-button
+        aria-label="Example icon-button with a menu" [matMenuTriggerFor]="quizmenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #quizmenu="matMenu">
+        <button (click)="editQuiz(item, i)" mat-menu-item>
+          <span>Edit</span>
+        </button>
+        <button *ngIf="topicObj.length != 0" mat-menu-item [matMenuTriggerFor]="topics">Move to</button>
+        <button (click)="deleteAct('activity', item , i)" mat-menu-item>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+
+
+      <mat-menu #actmenu="matMenu">
+        <button (click)="editActivity(item, i)" mat-menu-item>
+          <span>Edit</span>
+        </button>
+        <button *ngIf="topicObj.length != 0" mat-menu-item [matMenuTriggerFor]="topics">Move to</button>
+        <button (click)="deleteAct('activity', item , i)" mat-menu-item>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+
+      <mat-menu #topics="matMenu">
+        <button (click)="moveToTopic(0, 'act', item.actcode_fld)" mat-menu-item>
+          <span>No Label</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button (click)="moveToTopic(movetopic, 'act', item.actcode_fld)" mat-menu-item
+          *ngFor="let movetopic of topicObj">
+          {{ movetopic.topicname_fld }}
+        </button>
+      </mat-menu>
+
+    </div>
+  </ng-container>
+  <ng-container *ngFor="let resources of resourcesObj; let i = index;">
+    <div *ngIf="resources.topiccode_fld == 0" class="panel-list" style="--animation-order: {{i + 1}};"
+      (click)="ViewResource(resources)">
+      <span class="line"></span>
+      <mat-icon class="legend" style="color: #1f79b4;">book</mat-icon>
+      <div class="info">
+        <p>{{ resources.title_fld }}</p>
+        <small>Post added: {{ resources.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</small>
+      </div>
+      <span style="flex: 1 1 auto;"></span>
+      <button (click)="$event.stopPropagation();" mat-icon-button aria-label="Example icon-button with a menu"
+        [matMenuTriggerFor]="rmenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #rmenu="matMenu">
+        <button (click)="editResources(resources, i)" mat-menu-item>
+          <span>Edit</span>
+        </button>
+        <button *ngIf="topicObj.length != 0" mat-menu-item [matMenuTriggerFor]="topics">Move to</button>
+        <button (click)="deleteRes('res', resources, i)" mat-menu-item>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+
+      <mat-menu #topics="matMenu">
+        <button (click)="moveToTopic(0, 'res', resources.rescode_fld)" mat-menu-item>
+          <span>No Label</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button (click)="moveToTopic(movetopic, 'res', resources.rescode_fld)" mat-menu-item
+          *ngFor="let movetopic of topicObj">
+          {{ movetopic.topicname_fld }}
+        </button>
+      </mat-menu>
+    </div>
+  </ng-container>
+
+  <mat-expansion-panel *ngFor="let topic of topicObj; let i = index" class="mat-elevation-z0">
+    <mat-expansion-panel-header style="margin-top: 1rem;">
+      <div class="d-flex align-items-center">
+        <button (click)="$event.stopPropagation();" mat-icon-button aria-label="Example icon-button with a menu"
+          [matMenuTriggerFor]="tmenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #tmenu="matMenu">
+          <button (click)="editTopic(topic, i)" mat-menu-item>
+            <span>Edit</span>
+          </button>
+          <button (click)="deleteTopic(topic, i)" mat-menu-item>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+        <mat-icon class="topic-icon">topic</mat-icon>
+        <strong>{{ topic.topicname_fld | titlecase }}</strong>
+      </div>
+    </mat-expansion-panel-header>
+    <ng-container *ngFor="let item of activities; let i = index">
+      <div *ngIf="item.topiccode_fld === topic.topiccode_fld" class="panel-list" style="--animation-order: {{i + 1}};"
+        [routerLink]="['./', item.actcode_fld ]" (click)="viewActivity(item)">
+        <span class="line"></span>
+        <ng-container *ngIf="item.type_fld == 0">
+          <mat-icon class="legend" style="color: #2ecc71;">assignments</mat-icon>
+        </ng-container>
+        <ng-container *ngIf="item.type_fld == 1">
+          <mat-icon class="legend" style="color: #e67e22;">quiz</mat-icon>
+        </ng-container>
+
+        <div class="">
+          <p>{{item.title_fld | titlecase }}</p>
+          <small>Due Date: {{ item.deadline_fld | date: 'MMM dd, yyyy h:mm a'}}</small>
+          <span class="points2">{{ item.totalscore_fld }} points</span>
+        </div>
+        <span style="flex: 1 1 auto;"></span>
+        <small class="points">{{ item.totalscore_fld }} points</small>
+
+        <button *ngIf="item.type_fld == 0" (click)="$event.stopPropagation();" mat-icon-button
+          aria-label="Example icon-button with a menu" [matMenuTriggerFor]="actmenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <button *ngIf="item.type_fld == 1" (click)="$event.stopPropagation();" mat-icon-button
+          aria-label="Example icon-button with a menu" [matMenuTriggerFor]="quizmenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #quizmenu="matMenu">
+          <button (click)="editQuiz(item, i)" mat-menu-item>
+            <span>Edit</span>
+          </button>
+          <button *ngIf="topicObj.length != 0" mat-menu-item [matMenuTriggerFor]="topics">Move to</button>
+          <button (click)="deleteAct('activity', item , i)" mat-menu-item>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+
+
+        <mat-menu #actmenu="matMenu">
+          <button (click)="editActivity(item, i)" mat-menu-item>
+            <span>Edit</span>
+          </button>
+          <button *ngIf="topicObj.length != 0" mat-menu-item [matMenuTriggerFor]="topics">Move to</button>
+          <button (click)="deleteAct('activity', item , i)" mat-menu-item>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+
+
+        <mat-menu #topics="matMenu">
+          <button (click)="moveToTopic(0, 'act', item.actcode_fld)" mat-menu-item>
+            <span>No Label</span>
+          </button>
+          <mat-divider></mat-divider>
+          <ng-container *ngFor="let movetopic of topicObj">
+            <button [disabled]="movetopic.topiccode_fld === topic.topiccode_fld"
+              (click)="moveToTopic(movetopic, 'act', item.actcode_fld)" mat-menu-item>
+              <span [style]="movetopic.topiccode_fld === topic.topiccode_fld
+              ? 'font-weight: bold' : ''">{{
+                movetopic.topicname_fld }}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </div>
+    </ng-container>
+
+    <ng-container *ngFor="let resources of resourcesObj; let i = index;">
+      <div *ngIf="resources.topiccode_fld === topic.topiccode_fld" class="panel-list"
+        style="--animation-order: {{i + 1}};" (click)="ViewResource(resources)">
+        <span class="line"></span>
+        <mat-icon class="legend" style="color: #1f79b4;">book</mat-icon>
+        <div class="info">
+          <p>{{ resources.title_fld | titlecase }}</p>
+          <small>Post added: {{ resources.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</small>
+        </div>
+        <span style="flex: 1 1 auto;"></span>
+        <button (click)="$event.stopPropagation();" mat-icon-button aria-label="Example icon-button with a menu"
+          [matMenuTriggerFor]="rmenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #rmenu="matMenu">
+          <button (click)="editResources(resources, i)" mat-menu-item>
+            <span>Edit</span>
+          </button>
+          <button *ngIf="topicObj.length != 0" mat-menu-item [matMenuTriggerFor]="topics">Move to</button>
+          <button (click)="deleteRes('res', resources ,i)" mat-menu-item>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+
+        <mat-menu #topics="matMenu">
+          <button (click)="moveToTopic(0, 'res', resources.rescode_fld)" mat-menu-item>
+            <span>No Label</span>
+          </button>
+          <mat-divider></mat-divider>
+          <ng-container *ngFor="let movetopic of topicObj">
+            <button [disabled]="movetopic.topiccode_fld === topic.topiccode_fld"
+              (click)="moveToTopic(movetopic, 'res', resources.rescode_fld)" mat-menu-item>
+              <span [style]="movetopic.topiccode_fld === topic.topiccode_fld
+              ? 'font-weight: bold' : ''">{{
+                movetopic.topicname_fld }}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </div>
+    </ng-container>
+  </mat-expansion-panel>
+
+
+
+
+  <!--### SAMPLE FOR QUIZ ####-->
+  <!-- <div class="panel-list" *ngFor="let item of resourcesObj; let i = index" [routerLink]="['./', 232 ]"
+        style="--animation-order: {{i + 1}};">
+        <span class="line"></span>
+        <mat-icon class="legend" style="color: #e67e22;">quiz</mat-icon>
+        <div class="">
+            <p>Activities Title/Resources/Quiz</p>
+            <small>Date: Mar 1 - Mar 28</small>
+            <span class="points2">100 points</span>
+        </div>
+        <span style="flex: 1 1 auto;"></span>
+        <small class="points">100 points</small>
+
+        <button (click)="$event.stopPropagation();" mat-icon-button aria-label="Example icon-button with a menu"
+            [matMenuTriggerFor]="actmenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #actmenu="matMenu">
+            <button mat-menu-item>
+                <span>Edit</span>
+            </button>
+            <button mat-menu-item>
+                <span>Delete</span>
+            </button>
+        </mat-menu>
+
+    </div> -->
+</section>
+
+
+<!--########## FOR THE MOBILE BUTTONS #############-->
+<div class="fab-container">
+  <div class="fab fab-icon-holder">
+    <mat-icon>add</mat-icon>
+  </div>
+  <div class="fab-option">
+    <li (click)="createAssignmentDialog()">
+      <div class="fab-icon-holder">
+        <span class="fab-label">Assignments</span>
+        <mat-icon>add</mat-icon>
+      </div>
+    </li>
+    <li (click)="createResourcesDialog()">
+      <div class="fab-icon-holder">
+        <span class="fab-label">Resources</span>
+        <mat-icon>book</mat-icon>
+      </div>
+    </li>
+
+
+    <li (click)="createTopicDialog()">
+      <div class="fab-icon-holder">
+        <span class="fab-label">Topics</span>
+        <mat-icon>topic</mat-icon>
+      </div>
+    </li>
+    <li [routerLink]="['/main/quiz']">
+      <div class="fab-icon-holder">
+        <span class="fab-label">Quiz</span>
+        <mat-icon>Quiz</mat-icon>
+      </div>
+    </li>
+  </div>
+</div>

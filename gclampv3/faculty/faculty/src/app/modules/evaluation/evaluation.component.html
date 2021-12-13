@@ -1,0 +1,69 @@
+<div class="main-container">
+  <header class="header">
+    <div class="header__title-container">
+      <div class="header__main">
+        <h1 class="header__title">Student Evaluation Result</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">laptop</mat-icon>
+        </div>
+      </div>
+      <small>{{ date | date: 'EEEE MMMM d, y h:mm:ss a' }}</small>
+    </div>
+    <!-- <button [disabled]="allClasses == null" class="classhed btn-default"   mat-flat-button (click)="ViewSchedule()">
+      <mat-icon>calendar_today</mat-icon> <span>{{ allClasses == null ? 'No classes' : 'Class Schedule'}}</span>
+    </button> -->
+    <div class="action action__input d-flex">
+      <input type="text" placeholder="Search Class..." id="searchclass" (keyup)="filterClass($event)">
+      <button mat-flat-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </header>
+
+  <hr>
+
+  <div class="load" *ngIf="showLoader && allClasses != null">
+    <app-loadingscreen class="load__cons"></app-loadingscreen>
+  </div>
+
+  <h2 *ngIf="showLoader && allClasses == null">Uh oh, there's no data here... 😵🥴</h2>
+  
+  <!-- <div class="action action__input d-flex">
+    <input type="text" placeholder="Search Class..." id="searchclass" (keyup)="filterClass($event)">
+    <button mat-flat-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </div> -->
+
+  <div *ngIf="classes != null" class="class" [@cardAnimation]="classes.length">
+    <div class="class__card" *ngFor="let item of classes">
+      <div class="class__header">
+        <small class="class__status">{{ item.subjcode_fld }}</small>
+        <p class="class__desc"> {{ item.subjdesc_fld}} </p>
+        <small>Classcode: {{item.classcode_fld}}</small>
+        <!-- <img appLazyLoad draggable="false" src="assets/School logo/ASCOT.png" class="list-logo"  alt="logo" class ="logo"> -->
+        <!-- <img appLazyLoad draggable="false" src="assets/School logo/Nozagaray.png" class="list-logo"  alt="logo" class ="logo"> -->
+        <img appLazyLoad draggable="false" src="assets/School logo/GC.png" class="list-logo" alt="logo" class="logo">
+        <!-- <img src="assets/images/r3lamp.png" alt=""> -->
+      </div>
+
+
+      <div class="class__footer">
+        <div class="class__clock"></div>
+        <!-- <div class="class__clock"> -->
+          <!-- <img draggable="false" src="assets/images/clock.png" alt="" class="class__img"> -->
+          <!-- <mat-icon>av_timer</mat-icon>
+          <small style="margin-left: 10px;">{{item.day_fld}} <br> {{ item.starttime_fld }} - {{item.endtime_fld}} </small>
+        </div> -->
+        <button (click)="viewQuestionnaire(item)" class="class__enter">
+          <span>Result<mat-icon>keyboard_arrow_right</mat-icon></span> </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <div class="data">
+    <img src="assets/images/nodata.png" alt="" class="data__no">
+    <span class="data__text">No data retrieved</span>
+  </div> -->
+</div>

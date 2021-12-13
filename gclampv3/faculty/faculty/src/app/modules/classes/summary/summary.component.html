@@ -1,0 +1,40 @@
+<div class="summary-container">
+  <header>
+    <div class="title">
+      <mat-icon>summarize</mat-icon>
+      <h5>Summary of Activities and Exams</h5>
+    </div>
+
+    <button (click)="exportToExcel()" class="btn-default" mat-flat-button>
+      <mat-icon>get_app</mat-icon>Download Scores
+    </button>
+  </header>
+
+  <div class="wrapper">
+    <table class="table">
+      <thead>
+        <th  class="studid">Student ID</th>
+        <th  class="studname">Student Name</th>
+        <th *ngFor="let act_title of summaryObj; let i=index" class="studscore">{{ act_title.title }}</th>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let students of studentsObj; let i=index">
+          <td  data-label="Activity name">
+            <span style="letter-spacing: 1px; ">{{ students.studnum_fld }}</span>
+          </td>
+          <td style="text-align: left;" data-label="Filename">
+            <strong>{{ students.lname_fld | titlecase }},</strong> {{ students.fname_fld }} {{ students.mname_fld }}
+          </td>
+          <td [attr.data-label]="grades.title" *ngFor="let grades of summaryObj; let i=index">
+            <!-- <span *ngIf="grades.students[students.studnum_fld].issubmitted_fld > 0" -->
+            <span >{{ getScore(students.studnum_fld, grades) }} </span>
+          </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>

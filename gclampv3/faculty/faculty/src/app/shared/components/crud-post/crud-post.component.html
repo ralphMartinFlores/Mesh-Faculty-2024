@@ -1,0 +1,78 @@
+<div *ngIf="data.type === 'edit_post'">
+  <header class="forumtopic_header">
+    <button class="icon" mat-icon-button>
+      <mat-icon>edit</mat-icon>
+    </button>
+    <strong>Edit Post</strong>
+    <span style="flex: 1 1 auto;"></span>
+    <button [mat-dialog-close]="undefined" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <section>
+    <form [formGroup]="postForms" (ngSubmit)="savePost()">
+      <!-- <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Title</mat-label>
+        <input style="width: 100% !important;" class="inputtitle" placeholder="Activity Title"
+          formControlName="" required matInput>
+      </mat-form-field> -->
+
+      <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Post</mat-label>
+        <textarea formControlName="content_fld" placeholder="Instructions" matInput
+          style="overflow-x: hidden; white-space: pre-wrap;" matInput cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="20"></textarea>
+      </mat-form-field>
+
+      <!-- <div class="uploading-box mb-3" (click)="uploadfile.click()">
+        <mat-icon>description</mat-icon> <small> Click here to Upload files</small>
+      </div> -->
+
+      <div class="text-end">
+        <button (click)="uploadfile.click()" type="button" color="primary" mat-stroked-button>
+          <mat-icon>attachment</mat-icon> <span> Add Files</span>
+        </button>
+      </div>
+
+      <input id="files" #uploadfile style="display: none;" (change)="getFile($event)" type="file" name="file[]"
+        multiple>
+
+      <div class="small text-muted">Attachments
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="limit-container">
+        <mat-list *ngFor="let item of editFiles; let i = index;">
+          <mat-list-item>
+            <mat-icon class="text-primary" matListIcon>description</mat-icon>
+            <strong matLine>{{ item.name }} </strong>
+            <button type="button" (click)="deleteFiles(i, item.path)" mat-icon-button>
+              <mat-icon class="close">close</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </mat-list>
+      </div>
+      <div class="limit-container">
+        <mat-list *ngFor="let item of filePreviewAndUpload; let i = index;">
+          <mat-list-item>
+            <mat-icon class="text-primary" matListIcon>description</mat-icon>
+            <strong matLine>{{ item.name }} </strong>
+            <button (click)="removeFilePreviews(i)" mat-icon-button>
+              <mat-icon class="close">close</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </mat-list>
+      </div>
+
+      <div class="d-flex justify-content-end mt-3">
+        <button mat-flat-button [mat-dialog-close]="undefined" class="mx-2 bg-light">CANCEL</button>
+        <button [disabled]="_user.isLoading()" type="submit" mat-flat-button class="bg-success text-white">
+          {{ _user.isLoading() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

@@ -1,12 +1,13 @@
 .maincontent__container {
     /* border: 2px solid red; */
-    max-width: 100%;
+    max-width: 90%;
     margin: 0 auto;
     display: flex;
     gap: 10px;
     height: 100%;
     padding: 20px;
 }
+
 
 .meeting-form {
     /* border: 2px solid blue; */
@@ -27,10 +28,18 @@
     margin-top: 0;
 }
 
+.mrgntop-10 {
+    margin-top: 1rem;
+}
+
+.mrgnbtm-10 {
+    margin-bottom: 1rem;
+}
+
 .mediumfont {
     font-size: 1.25rem;
     font-weight: 800;
-    color: #f3f4f6;
+    color: #0166B3;
 }
 
 .guest__container {
@@ -75,7 +84,6 @@
     color: #FFF;
 }
 
-
 .mat-stroked-button {
     border-color: #0166B3;
 }
@@ -87,6 +95,12 @@
 .flex__participant {
     display: flex;
     gap: 10px;
+}
+
+.participant__container{
+    max-height: 50rem;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .flex__participant p {
@@ -134,8 +148,16 @@ mat-icon {
     color: #0166B3;
 }
 
-.xd {
-    padding: 40px;
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+::ng-deep.my-pagination .ngx-pagination .current {
+    background: #0166B3;
+    border-radius: 5px;
 }
 
 
@@ -145,12 +167,21 @@ mat-icon {
         flex-direction: column;
     }
 
-    .participant__text {
+    .participant__text p {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; 
         -o-text-overflow: ellipsis;
-        /* max-width: 90%; */
+        max-width: 90%;
+    }
+
+    .meeting-link {
+        font-size: 0.875rem;
+        word-break: break-all;
+    }
+
+    .participant__container{
+        max-height: 25rem;
     }
 }
 

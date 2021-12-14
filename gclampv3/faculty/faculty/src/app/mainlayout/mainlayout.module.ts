@@ -54,7 +54,8 @@ import { LibraryComponent } from '../modules/library/library.component';
 import { EvaluationComponent } from '../modules/evaluation/evaluation.component';
 import { QuestionnaireComponent } from '../modules/questionnaire/questionnaire.component';
 import { SurveyComponent } from '../modules/survey/survey.component';
-
+import { MeetingListComponent } from '../modules/classes/meeting-list/meeting-list/meeting-list.component';
+import { SchedMeetingComponent } from '../modules/classes/sched-meeting/sched-meeting/sched-meeting.component';
 @NgModule({
   declarations: [
     MainlayoutComponent,
@@ -74,6 +75,8 @@ import { SurveyComponent } from '../modules/survey/survey.component';
     CRUDForumsComponent,
     CRUDClassAndActivitiesComponent,
     CrudCommentsComponent,
+    MeetingListComponent,
+    SchedMeetingComponent,
     ViewDataOnlyComponent,
     QuizCreatorComponent,
     ForumscontentComponent,

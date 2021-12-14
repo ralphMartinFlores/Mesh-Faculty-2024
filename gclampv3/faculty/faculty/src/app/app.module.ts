@@ -13,7 +13,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ConfigService } from './services/config.service';
 import { AppConfig } from './services/data.schema';
-import { SchedMeetingComponent } from './modules/classes/sched-meeting/sched-meeting/sched-meeting.component';
 
 export function getConfig(cs: ConfigService) {
   return () => {
@@ -25,7 +24,6 @@ export function getConfig(cs: ConfigService) {
   declarations: [
     AppComponent,
     LoginComponent,
-    SchedMeetingComponent,
   ],
   imports: [
     BrowserModule,

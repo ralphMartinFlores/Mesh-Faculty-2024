@@ -70,6 +70,16 @@
           </div>
         </ng-template>
       </mat-tab>
+
+      <!--  MEETING LIST  -->
+      <mat-tab label="Meeting List">
+        <ng-template matTabContent>
+          <div class="class-container">
+              <app-meeting-list></app-meeting-list>
+          </div>
+        </ng-template>
+      </mat-tab>
+
       <mat-tab>
         <ng-template mat-tab-label>
           <span [matBadge]="_user.getMessageBadge()" matBadgeOverlap="false" matBadgeColor="warn">Messaging</span>

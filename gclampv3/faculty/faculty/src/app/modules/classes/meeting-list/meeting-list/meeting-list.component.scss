@@ -1,0 +1,259 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: last 4 version
+*/
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: .5rem;
+    border: 1px solid #d3d2d2;
+    .title{
+      display: flex;
+      align-items: center;
+      .icon{
+        width: 40px;
+        height: 40px;
+        background: #bfe1f8;
+        color: #1f79b4;
+        margin-right: 10px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      strong{
+          font-size: 1.3rem;          
+      }
+    }
+    .action-button{
+      display: flex;
+      button{
+        display: block;
+      }
+    }
+}
+
+// Create Meeting Button
+.btn-1 {
+    border: 2px solid #0166B3;
+    color: #0166B3;
+
+  }
+  .btn-1:hover {
+    background: var(--clr-primary-400);
+    color: #fff;
+  }
+  .btn-1:active {
+    background: var(--clr-primary-400);
+    top: 2px;
+  }
+  .btn-1:before {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 140%;
+    width: 60px;
+  }
+  
+  .example-spacer {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+}
+
+.logo-placeholder-container  img {
+    width: 100%;
+    height: auto;
+}
+
+.sidenav__button {
+    width: 98%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    padding: 0.625rem;
+    font-size: 1rem;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.active {
+    background-color: var(--clr-primary-800);
+}
+
+.sidenav__button mat-icon {
+    margin-right: 1rem;
+}
+/* End of sidenav and toolbar styles */
+
+/* Main content styles */
+.maincontent__container {
+    padding: 2rem;
+}
+
+.main__content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;
+    /* margin-top: 1rem; */
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.stud__info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.studinfo__container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    width: 30%;
+    border-radius: 0.625rem;
+    background-color: var(--clr-primary-400);
+    color: #fff;
+}
+
+
+.stud__name {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+.meet_schedule {
+    font-size: 0.875rem;
+    margin: 0;
+    justify-content: flex-start;
+}
+
+.profile__info {
+    padding: 1rem;
+    border-radius: 0.625rem;
+    width: 100%;
+}
+
+.divider {
+    border-top: 5px solid var(--clr-primary-400);
+    width: 14rem;
+    padding: 1rem;
+}
+
+.userinfo__container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    -webkit-box-align: flex-start;
+        -ms-flex-align: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+}
+
+.meeting__actions {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+        -ms-flex-align: flex-start;
+           justify-content: space-around;
+            flex-direction: row;
+}
+
+.userinfo__container p {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    margin: 0;
+    font-weight: 800;
+}
+
+.user__info {
+    padding: 0.5rem;
+    background-color: var(--clr-secondary-400);
+    border-radius: 10px;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.wickedbackground p {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--clr-neutral-400);
+}
+
+/* Responsive stylings */
+
+@media screen and (max-width: 50em) { 
+    
+    .maincontent__container {
+        padding: 1rem;
+    }
+
+    .main__content {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+    }
+
+    .studinfo__container, .profile__info {
+        width: 100%;
+    }
+
+    .user__info {
+        white-space: nowrap;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        font-size: 0.875rem;
+    }
+
+    .userinfo__container p {
+        font-size: 0.875rem;
+    }
+
+    .wickedbackground {
+        padding: 1rem;
+    }
+
+    .wickedbackground p {
+        font-size: 1.125rem;
+    }
+}
+  

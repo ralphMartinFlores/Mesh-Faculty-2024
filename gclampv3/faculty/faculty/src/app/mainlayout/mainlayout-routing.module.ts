@@ -18,7 +18,6 @@ import { LibraryComponent } from '../modules/library/library.component';
 import { EvaluationComponent } from '../modules/evaluation/evaluation.component';
 import { QuestionnaireComponent } from '../modules/questionnaire/questionnaire.component';
 import { SchedMeetingComponent } from '../modules/classes/sched-meeting/sched-meeting/sched-meeting.component';
-
 const routes: Routes = [
   { path: 'classes', component: ClassesComponent },
   { path: 'classes/:id', component: ClassroomComponent },

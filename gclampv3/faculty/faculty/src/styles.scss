@@ -4,6 +4,22 @@
 @import "app/scss/__reset.scss";
 @import "app/scss/__root.scss";
 
+:root {
+  --ff-primary: 'Poppins', sans-serif;
+  --clr-primary-400: #0166B3;
+  --clr-primary-600: #015ca1;
+  --clr-primary-800: #01528f;
+  --clr-secondary-400: #f3f4f6;
+  --clr-secondary-600: #dbdcdd;
+  --clr-secondary-800: #c7c7c7;
+  --clr-blackhole: #000000;
+  --clr-neutral-400: #FFF;
+  --clr-success-400: #32CD32;
+  --clr-success-600: #2db92d;
+  --clr-danger-400: #EE4B2B;
+  --clr-danger-600: #a7351e;
+}
+
 .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
   opacity: 0 !important; /*click effect color change*/
   background-color: #3acdf8  !important;  }

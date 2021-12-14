@@ -84,7 +84,7 @@
     </div>
     <div class="guest__container">
         <p class="mediumfont mrgnbtm-10">Participants</p>
-        <mat-form-field appearance="fill">
+        <!-- <mat-form-field appearance="fill">
             <mat-label>Add Participants</mat-label>
             <mat-select [formControl]="participants" multiple>
               <mat-select-trigger>
@@ -95,7 +95,7 @@
               </mat-select-trigger>
               <mat-option *ngFor="let participants of facultyList" [value]="participants">{{participants}}</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         <div class="participant__container">
             <div *ngFor="let student of students" class="flex__participant">
                 <img src="https://api.lorem.space/image/face?w=24&h=24">

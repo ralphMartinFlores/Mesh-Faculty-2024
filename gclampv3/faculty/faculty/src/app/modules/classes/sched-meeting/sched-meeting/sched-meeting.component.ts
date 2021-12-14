@@ -62,8 +62,9 @@ export class SchedMeetingComponent implements OnInit {
 
 
   initializeForm() {
+    const title: string = `${this._user.getClassroomInfo().subjdesc_fld} - ${this._user.getClassroomInfo().classcode_fld}`
     this.form = this.formBuilder.group({
-      title_fld: [null, [Validators.required]],
+      title_fld: [title, [Validators.required]],
       classcode_fld: [this.route.url.split('/')[3], Validators.required],
       startdate_fld: [null, [Validators.required]],
       starttime_fld: [null, [Validators.required]],
@@ -82,6 +83,7 @@ export class SchedMeetingComponent implements OnInit {
         semester: this._user.getSettings().sem_fld
       }
     }
+    console.log(this._user.getClassroomInfo())
     this._ds._httpRequest('getmembers', load, 1).subscribe((dt: any) => {
       dt = this._user._decrypt(dt.a);
       this._user.setClassMembers(dt.payload);
@@ -94,8 +96,29 @@ export class SchedMeetingComponent implements OnInit {
     });
   }
 
+  public convertTime12to24 = (time12h) => {
+    const [time, modifier] = time12h.split(' ');
+  
+    let [hours, minutes] = time.split(':');
+  
+    if (hours === '12') {
+      hours = '00';
+    }
+  
+    if (modifier === 'PM') {
+      hours = parseInt(hours, 10) + 12;
+    }
+  
+    return `${hours}:${minutes}`;
+  }
+
+
   onSubmit() {
     const load: any = this.form.value;
+
+    load.starttime_fld = this.convertTime12to24(load.starttime_fld)
+    load.endtime_fld = this.convertTime12to24(load.endtime_fld)
+
     this._ds._httpRequest('newmeeting', load, 1).subscribe((dt: any) => {
       dt = this._user._decrypt(dt.a);
       this._displaySnackBar('Added a meeting successfully!', 'Close', 'success', 'bottom');

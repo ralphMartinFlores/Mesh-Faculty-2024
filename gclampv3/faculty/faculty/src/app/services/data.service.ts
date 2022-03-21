@@ -19,9 +19,9 @@ export class DataService {
 
   // Development Testing:
   public prefix: string  = 'GC'
-  public baseURL: string = 'http://localhost/LAMP/api/faculty/'
-  public downloadURL: string = 'http://localhost/LAMP/api/'
-  public imageURL: string= 'http://localhost/LAMP/requests/'
+  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/'
+  public downloadURL: string = 'http://localhost/GC-LAMP-Faculty/api/'
+  public imageURL: string= 'http://localhost/GC-LAMP-Faculty/requests/'
 
   // public baseURL: string = 'https://gordoncollegeccs.edu.ph/lampapi/faculty/';
   // public downloadURL: string = 'https://gordoncollegeccs.edu.ph/lampapi/';

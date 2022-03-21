@@ -115,7 +115,7 @@ header{
             justify-content: center;
 }
 
-.stud__info {
+.meet__info {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -131,7 +131,7 @@ header{
             justify-content: center;
 }
 
-.studinfo__container {
+.meetinfo__container {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -148,9 +148,10 @@ header{
 }
 
 
-.stud__name {
-    font-size: 1.25rem;
+.meet__name {
+    font-size: 1rem;
     margin-bottom: 0;
+    justify-content: center;
 }
 
 .meet_schedule {
@@ -232,7 +233,7 @@ header{
                 flex-direction: column;
     }
 
-    .studinfo__container, .profile__info {
+    .meetinfo__container, .profile__info {
         width: 100%;
     }
 

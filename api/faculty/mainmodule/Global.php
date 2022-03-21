@@ -60,7 +60,6 @@
 				} 
 
 				$sqlstr.=") VALUES (".str_repeat("?, ", count($values)-1)."?)";
-
 				$sql = $this->pdo->prepare($sqlstr);
 				$sql->execute($values);
 				return array("code"=>200, "remarks"=>"success");

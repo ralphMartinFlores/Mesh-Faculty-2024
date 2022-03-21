@@ -63,13 +63,17 @@ export class SchedMeetingComponent implements OnInit {
 
   initializeForm() {
     const title: string = `${this._user.getClassroomInfo().subjdesc_fld} - ${this._user.getClassroomInfo().classcode_fld}`
+    const starttime : string = `${this._user.getClassroomInfo().starttime_fld}`
+    const endtime : string = `${this._user.getClassroomInfo().endtime_fld}`
+    const tomorrowsDate = new Date();
+    tomorrowsDate.setDate(tomorrowsDate.getDate() + 1);
     this.form = this.formBuilder.group({
       title_fld: [title, [Validators.required]],
       classcode_fld: [this.route.url.split('/')[3], Validators.required],
-      startdate_fld: [null, [Validators.required]],
-      starttime_fld: [null, [Validators.required]],
-      enddate_fld: [null, [Validators.required]],
-      endtime_fld: [null, [Validators.required]],
+      startdate_fld: [new Date(), [Validators.required]],
+      meetstarttime_fld: [starttime.toUpperCase(), [Validators.required]],
+      enddate_fld: [tomorrowsDate, [Validators.required]],
+      meetendtime_fld: [endtime.toUpperCase(), [Validators.required]],
       roomid_fld: [ this.roomId, [Validators.required]],
       desc_fld: [null, [Validators.required]]
     });
@@ -90,6 +94,7 @@ export class SchedMeetingComponent implements OnInit {
 
       this.allStudents = this._user.getClassMembers().student;
       this.students = this.allStudents;
+      console.log(this.students);
       
     }, er => {
       er = this._user._decrypt(er.error.a);
@@ -115,12 +120,13 @@ export class SchedMeetingComponent implements OnInit {
 
   onSubmit() {
     const load: any = this.form.value;
-
-    load.starttime_fld = this.convertTime12to24(load.starttime_fld)
-    load.endtime_fld = this.convertTime12to24(load.endtime_fld)
-
+    
+    load.meetstarttime_fld = this.convertTime12to24(load.meetstarttime_fld)
+    load.meetendtime_fld = this.convertTime12to24(load.meetendtime_fld)
+    console.log(load);
     this._ds._httpRequest('newmeeting', load, 1).subscribe((dt: any) => {
       dt = this._user._decrypt(dt.a);
+      console.log(dt);
       this._displaySnackBar('Added a meeting successfully!', 'Close', 'success', 'bottom');
       console.log(load);
       setTimeout(()=> this.clearMeetingForm(), 2000);

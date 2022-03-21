@@ -235,7 +235,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case 'newmeeting':
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($gm->insert("meetings_tbl", $d->payload));
+						echo returnData($gm->insert("schedulemeetings_tbl", $d->payload));
 					} else{
 						echo errmsg(401);
 					}

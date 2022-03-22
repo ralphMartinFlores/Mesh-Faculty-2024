@@ -75,7 +75,7 @@ export class SchedMeetingComponent implements OnInit {
       enddate_fld: [tomorrowsDate, [Validators.required]],
       meetendtime_fld: [endtime.toUpperCase(), [Validators.required]],
       roomid_fld: [ this.roomId, [Validators.required]],
-      desc_fld: [null, [Validators.required]]
+      desc_fld: ['']
     });
   }
 
@@ -123,7 +123,8 @@ export class SchedMeetingComponent implements OnInit {
     
     load.meetstarttime_fld = this.convertTime12to24(load.meetstarttime_fld)
     load.meetendtime_fld = this.convertTime12to24(load.meetendtime_fld)
-    console.log(load);
+    load.empcode_fld = this._user.getUserID();
+   
     this._ds._httpRequest('newmeeting', load, 1).subscribe((dt: any) => {
       dt = this._user._decrypt(dt.a);
       console.log(dt);

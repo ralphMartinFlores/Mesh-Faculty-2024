@@ -113,6 +113,22 @@ header{
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+            // flex-direction: column;
+            border: 1px solid rgb(211, 211, 211) !important;
+            padding: 0.8rem;
+            border-radius: 0.625rem;
+            margin-bottom: 0.7rem;
+
+}
+
+.meeting__link{
+    display: flex;
+    justify-content: space-around;
+}
+
+.meeting__card{
+    display: flex;
+    flex-direction: column;
 }
 
 .meet__info {
@@ -143,7 +159,7 @@ header{
             justify-content: center;
     width: 30%;
     border-radius: 0.625rem;
-    background-color: var(--clr-primary-400);
+    background:linear-gradient(359deg, #021B79, #014d9b, #1967b3);
     color: #fff;
 }
 
@@ -152,6 +168,7 @@ header{
     font-size: 1rem;
     margin-bottom: 0;
     justify-content: center;
+    display: flex;
 }
 
 .meet_schedule {
@@ -215,7 +232,7 @@ header{
 .wickedbackground p {
     font-size: 1.25rem;
     font-weight: 800;
-    color: var(--clr-neutral-400);
+    color: #000;
 }
 
 /* Responsive stylings */

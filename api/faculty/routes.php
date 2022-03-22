@@ -145,6 +145,14 @@ switch($_SERVER['REQUEST_METHOD']) {
 					}
 				break;
 
+				case "getScheeduleMeetingsbySubject":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($get->getScheduleMeetingsByClass($d->payload->data));
+					} else{
+						echo errmsg(401);
+					}
+				break;
+
 				case "getcpost":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
 						echo returnData($get->getClassPosts($d->payload->data));

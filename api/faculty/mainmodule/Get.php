@@ -240,6 +240,18 @@ class Get
 
 	# End of Get Class list
 
+	# Get ScheduleMeetings based on class
+	public function getScheduleMeetingsByClass($receivedPayload)
+	{
+		$empcode_fld = $receivedPayload->empcode_fld;
+		$classcode = $receivedPayload->classCode;
+		
+		$sql = "SELECT schedulemeetings_tbl.*, personnel_tbl.honorifics_fld, personnel_tbl.fname_fld, personnel_tbl.mname_fld, personnel_tbl.lname_fld FROM `schedulemeetings_tbl` LEFT JOIN `personnel_tbl` ON schedulemeetings_tbl.empcode_fld = personnel_tbl.empcode_fld WHERE schedulemeetings_tbl.empcode_fld = '$empcode_fld' AND schedulemeetings_tbl.classcode_fld = $classcode";
+		$res = $this->gm->executeQuery($sql);
+		return $this->isSuccessQuery($res, 'scheduledMeetings');
+	}
+	# End
+
 	# Get Class Schedule
 	# Get Class Schedule
 

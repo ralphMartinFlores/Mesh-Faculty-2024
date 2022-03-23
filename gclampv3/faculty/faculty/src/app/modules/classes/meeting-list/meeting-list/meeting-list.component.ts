@@ -9,6 +9,7 @@ import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
 import { Clipboard } from "@angular/cdk/clipboard";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-meeting-list',
@@ -26,7 +27,8 @@ constructor(private observer: BreakpointObserver,
   private _ds: DataService,
   public _user: UserService,
   private clipboard: Clipboard,
-  private _snackBar: MatSnackBar
+  private _snackBar: MatSnackBar,
+  private _router: Router
   ) { }
  
   meetingObj : any = [];
@@ -79,6 +81,11 @@ constructor(private observer: BreakpointObserver,
     }, er => {
       er = this._user._decrypt(er.error.a);
     });
+  }
+
+  editScheduledMeeting(recno_fld){
+    console.log(recno_fld);
+    this._router.navigate(['/main/meeting/'+ recno_fld]);
   }
 
   onCopy(value: any){

@@ -113,8 +113,8 @@ export class SchedMeetingComponent implements OnInit {
     const title: string = `${this._user.getClassroomInfo().subjdesc_fld} - ${this._user.getClassroomInfo().classcode_fld}`
     const starttime : string = `${this._user.getClassroomInfo().starttime_fld}`
     const endtime : string = `${this._user.getClassroomInfo().endtime_fld}`
-    const tomorrowsDate = new Date();
-    tomorrowsDate.setDate(tomorrowsDate.getDate() + 1);
+    // const tomorrowsDate = new Date();
+    // tomorrowsDate.setDate(tomorrowsDate.getDate() + 1);
     this.form = this.formBuilder.group({
       recno_fld: [''], 
       title_fld: [title, [Validators.required]],
@@ -122,7 +122,7 @@ export class SchedMeetingComponent implements OnInit {
       classcode_fld: [this.route.url.split('/')[3], Validators.required],
       startdate_fld: [new Date(), [Validators.required]],
       meetstarttime_fld: [starttime.toUpperCase(), [Validators.required]],
-      enddate_fld: [tomorrowsDate, [Validators.required]],
+      enddate_fld: [new Date(), [Validators.required]],
       meetendtime_fld: [endtime.toUpperCase(), [Validators.required]],
       roomid_fld: [this.roomId],
       desc_fld: ['']

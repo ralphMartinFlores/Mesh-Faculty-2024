@@ -6,9 +6,17 @@
                     <input matInput placeholder="Add Title" formControlName="title_fld">
                 </mat-form-field>
                 <div class="option-buttons">
-                    <button [disabled]="!form.valid" mat-flat-button type="submit">Save</button>
-                    <!-- <button mat-stroked-button>Cancel</button> -->
+                    <button [disabled]="!form.valid" *ngIf="!editMeetings" mat-flat-button type="submit">Save</button>
+                    <button [disabled]="!form.valid" *ngIf="editMeetings" mat-flat-button type="submit">Update</button>
                 </div>
+            </div>
+            <div class="flex__container flex-grow mrgntop-10">
+                <mat-form-field appearance="fill">
+                    <mat-label>Recurrence</mat-label>
+                    <mat-select  formControlName="recurrence_fld">
+                      <mat-option *ngFor="let range of recurrence" [value]="range.value">{{range.type}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
             <div class="flex__container">
                 <mat-form-field appearance="fill">
@@ -52,23 +60,10 @@
                     </mat-select>
                     
                 </mat-form-field>
-                <!-- <mat-form-field appearance="fill">
-                    <mat-label>Ending Time</mat-label>
-                    <input matInput
-                        name="selected_time_B"
-                        minutesGap:15
-                        [ngxMatTimepicker]="pickerB"
-                        formControlName="endtime_fld"/>
-                    <mat-icon matSuffix
-                            (click)="pickerB.open()">
-                        watch_later
-                    </mat-icon>
-                  </mat-form-field>
-                  <ngx-mat-timepicker #pickerB></ngx-mat-timepicker> -->
             </div>
             <p class="mediumfont">Meeting Link</p>
             <div class="flex__container space-between">
-                <p class="meeting-link">{{ roomId }}</p>
+                <p class="meeting-link" formControlName="roomid_fld">{{ roomId }}</p>
                 <a mat-icon-button aria-label="" (click)="onCopy( roomId )"  matTooltip="Copy conference info">
                     <mat-icon>content_copy</mat-icon>
                 </a>

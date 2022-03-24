@@ -252,6 +252,16 @@ class Get
 	}
 	# End
 
+	# Get ScheduleMeetings based on recno_fld
+	public function getScheduledMeeting($receivedPayload)
+	{
+		$recno_fld = $receivedPayload->recno_fld;
+		$sql = "SELECT recno_fld, title_fld, recurrence_fld, classcode_fld, startdate_fld, meetstarttime_fld, enddate_fld, meetendtime_fld, roomid_fld, desc_fld FROM schedulemeetings_tbl WHERE schedulemeetings_tbl.recno_fld=$recno_fld";
+		$res = $this->gm->executeQuery($sql);
+		return $this->isSuccessQuery($res, 'scheduledMeeting');
+	}
+	# End
+
 	# Get Class Schedule
 	# Get Class Schedule
 

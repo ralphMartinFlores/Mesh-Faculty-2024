@@ -10,13 +10,13 @@
     </div>
     
 </header>
-<div class="class-container" *ngIf="meetingObj != []">
+<div class="class-container" *ngIf="scheduledMeetings != []">
     <div class="maincontent__container">
         <div class="main__content" *ngFor="let meetings of scheduledMeetings">
               <mat-card class="meetinfo__container mat-elevation-z4">
                 <div class="meet__info">
                     <h4 class="meet__name">Meeting ID: {{ meetings.recno_fld }}</h4>
-                    <p class="meet_schedule">View</p>
+                    <small>{{ meetings.meetstarttime_fld }} - {{ meetings.meetendtime_fld }}</small>
                 </div>
             </mat-card>
             <div class="profile__info">
@@ -38,15 +38,14 @@
                     </div>
                 </div>
             </div>
-    
         </div>
     </div>
 </div>
-<ng-container *ngIf="meetingObj === 0">
+<ng-container *ngIf="scheduledMeetings.length === 0">
     <div class="text-center mt-5">
       <div><strong>No meetings found! ⌛</strong></div>
       <div class="p-3">
-        <span style="color: #000; font-size: smaller;">Create a meeting to your class</span>
+        <span style="color: #000; font-size: smaller;">Set up a meeting with your class.</span>
       </div>
     </div>
 </ng-container>

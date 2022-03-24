@@ -471,6 +471,13 @@ class Post
 		return $this->postCommon($receivedPayload, 'topic_tbl', 'topiccode_fld', $code, 'update', $notif);
 	}
 
+	public function updateScheduledMeetings($receivedPayload){
+		$res = $this->gm->update('schedulemeetings_tbl', $receivedPayload, "recno_fld = '$receivedPayload->recno_fld'");
+		if ($res['code'] == 200) {
+			return $this->gm->sendPayload($res['code'], 'success', 'Succesfully retrieved message', 200);
+		}
+	}
+
 	public function sendMessage($receivedPayload)
 	{
 		$receivedPayload->messagecode_fld = $this->codeGenerator('MS', 'messages_tbl', 'messagecode_fld');

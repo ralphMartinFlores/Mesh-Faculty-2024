@@ -92,6 +92,14 @@ switch($_SERVER['REQUEST_METHOD']) {
 					echo returnData($post->uploadPic($req[1], $req[2]));
 				break;
 
+				case "editMeeting":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($post->updateScheduledMeetings($d->payload));
+					} else{
+						echo errmsg(401);
+					}
+				break;
+
 				case "addexcess":
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
 						echo returnData($post->saveExcess($d->payload));
@@ -152,6 +160,16 @@ switch($_SERVER['REQUEST_METHOD']) {
 						echo errmsg(401);
 					}
 				break;
+				
+				
+				case "getScheduledMeeting":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($get->getScheduledMeeting($d->payload->data));
+					} else{
+						echo errmsg(401);
+					}
+				break;
+				
 
 				case "getcpost":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){

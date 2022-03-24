@@ -31,7 +31,6 @@ constructor(private observer: BreakpointObserver,
   private _router: Router
   ) { }
  
-  meetingObj : any = [];
 
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -43,8 +42,6 @@ constructor(private observer: BreakpointObserver,
   timer(0, 1000).subscribe(() => {
     this.datetime = new Date()
   })
-
-    this.meetingObj();
     // Observes for breakpoint changes and changes sidenav mode to be more responsive
     this.observer
       .observe(['(max-width: 800px)'])
@@ -74,8 +71,8 @@ constructor(private observer: BreakpointObserver,
       if (dt.status.remarks === 'success'){
         this.scheduledMeetings = dt.payload;
         this.scheduledMeetings.forEach(meetings => {
-          meetings.meetstarttime_fld = this.formatTimeShow(parseInt(meetings.meetstarttime_fld));
-          meetings.meetendtime_fld = this.formatTimeShow(parseInt(meetings.meetendtime_fld))
+          meetings.meetstarttime_fld = this.formatTimeShow(meetings.meetstarttime_fld);
+          meetings.meetendtime_fld = this.formatTimeShow(meetings.meetendtime_fld)
         })
       }
     }, er => {
@@ -84,7 +81,7 @@ constructor(private observer: BreakpointObserver,
   }
 
   editScheduledMeeting(recno_fld){
-    console.log(recno_fld);
+    // console.log(recno_fld);
     this._router.navigate(['/main/meeting/'+ recno_fld]);
   }
 
@@ -94,10 +91,16 @@ constructor(private observer: BreakpointObserver,
   }
 
   
-  public formatTimeShow(h_24) {
-    var h = h_24 % 12;
-    if (h === 0) h = 12;
-    return (h < 10 ? '0' : '') + h + ':00' + (h_24 < 12 ? 'am' : 'pm');
+  public formatTimeShow(time) {
+    let hour = (time.split(':'))[0]
+    let min = (time.split(':'))[1]
+    let part = hour > 12 ? 'PM' : 'AM';
+    
+    min = (min).length == 1 ? `0${min}` : min;
+    hour = hour > 12 ? hour - 12 : hour;
+    hour = (hour).length == 1 ? `0${hour}` : hour;
+  
+    return (`${hour}:${min} ${part}`)
   }
   _displaySnackBar = (message: string, action: string, pc: string, pos: any): any => this._snackBar.open(message, action, { panelClass: pc, verticalPosition: pos, duration: 3000 });
 

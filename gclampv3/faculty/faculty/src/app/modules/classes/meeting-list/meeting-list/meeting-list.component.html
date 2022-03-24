@@ -4,35 +4,41 @@
       <strong>Meeting List</strong>
     </div>
     <div class="action-button">
-      <button class="btn-1 btn-sep " mat-flat-button>
+      <!-- <button class="btn-1 btn-sep " mat-flat-button>
         <mat-icon>videocam</mat-icon> Create Meeting
-      </button>
+      </button> -->
     </div>
     
 </header>
 <div class="class-container" *ngIf="meetingObj != []">
     <div class="maincontent__container">
-        <div class="wickedbackground">
-            <p>Student's Profile</p>
-        </div>
-        <div class="main__content">
-            <mat-card class="meetinfo__container mat-elevation-z4">
+        <div class="main__content" *ngFor="let meetings of scheduledMeetings">
+              <mat-card class="meetinfo__container mat-elevation-z4">
                 <div class="meet__info">
-                    <h4 class="meet__name">Meeting ID: 123456789</h4>
-                    <p class="meet_schedule">04:00PM - 06:00PM</p>
+                    <h4 class="meet__name">Meeting ID: {{ meetings.recno_fld }}</h4>
+                    <p class="meet_schedule">View</p>
                 </div>
             </mat-card>
             <div class="profile__info">
                 <div class="profile">
-                    <h4>Meeting Details</h4>
-                    <div class="divider"></div>
+                    <h4>{{ meetings.startdate_fld |  date:'fullDate' }} - {{ meetings.enddate_fld |  date:'fullDate' }}</h4>
+                    <!-- <div class="divider"></div> -->
 
                     <div class="userinfo__container">
-                        <span>04:00PM - 06:00PM</span>
-                        <span>Meeting Link : 2312323123123213231323</span>
+                        <span>{{ meetings.meetstarttime_fld }} - {{ meetings.meetendtime_fld }}</span>
+                        <div class="meeting__link">
+                          <span>Meeting Link : {{meetings.roomid_fld}}</span> &nbsp;
+                          <a mat-icon-button aria-label="" (click)="onCopy( meetings.roomid_fld )"  matTooltip="Copy conference info">
+                            <mat-icon>content_copy</mat-icon>
+                          </a>
+                        </div>
+                        <div class="edit">
+                          <button type="button" mat-raised-button (click)="editScheduledMeeting(meetings.recno_fld)">Edit</button>
+                        </div>
                     </div>
                 </div>
             </div>
+    
         </div>
     </div>
 </div>

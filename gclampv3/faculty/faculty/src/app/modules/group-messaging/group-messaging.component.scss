@@ -1,0 +1,92 @@
+.main__container {
+    height: 80vh;
+    // border: 2px solid red;
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 0.75fr 2fr;
+    gap: 16px;
+    .groups__container {
+        height: 100%;
+        // border: 2px solid green;
+        border-radius: 10px;
+        padding: 10px;
+        overflow-y: auto;
+        box-shadow: rgb(0 0 0 / 12%) 0px 4px 16px;
+        .groups__container--header {
+            border-bottom: 1px solid #E0E0E0;
+            mat-form-field {
+                width: 100%;
+            }
+            ::ng-deep .mat-form-field-wrapper{
+                padding-bottom: 0;
+                margin-bottom: 10px;
+             }
+        }
+        .groups__container--group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+            border: 1px solid #E0E0E0;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            .groupsicon__container {
+                img {
+                    max-width: 64px;
+                    height: auto;
+                }
+            }
+            .groups__container--groupdetails {
+                p:first-of-type {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                p {
+                    font-size: 12px;
+                }
+            }
+        }
+        button {
+            margin-top: 10px;
+            background-color: var(--clr-primary);
+            color: #FFF;
+            transition: all .3s;
+            width: 100%;
+            &:hover {
+                background-color: #01477d;
+            }
+        }
+    }
+    .groupmessages__container {
+        height: 100%;
+        box-shadow: rgb(0 0 0 / 12%) 0px 4px 16px;
+        border-radius: 10px;
+        // border: 2px solid black;
+        .illustration__container {
+            max-width: 320px;
+            height: auto;
+            margin: 0 auto;
+        }
+        .main__container--header {
+            text-align: center;
+            p:first-of-type {
+            color: var(--clr-primary);
+            font-size: 22px;
+            font-weight: 600;
+            }
+            p {
+                font-size: 14px;
+            }
+            button {
+                margin-top: 1rem;
+                background-color: var(--clr-primary);
+                color: #FFF;
+                transition: all .3s;
+                &:hover {
+                    background-color: #01477d;
+                }
+            }
+        }
+    }
+}

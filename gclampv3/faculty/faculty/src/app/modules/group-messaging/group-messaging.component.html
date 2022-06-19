@@ -1,0 +1,44 @@
+<!-- <div class="main__container">
+    <div class="illustration__container">
+        <img src="assets/images/group-illustration-flat.svg" alt="Flat group illustration" loading="lazy">
+    </div>
+    <div class="main__container--header">
+        <p>Welcome to Groups!</p>
+        <p>A whole new way of interacting with everyone in your class.</p>
+        <p>It seems that you have not yet created a group for your class, get started by clicking on the button below.</p>
+        <button mat-flat-button>Create A Group</button>
+    </div>
+</div> -->
+
+<div class="main__container">
+    <div class="groups__container">
+        <div class="groups__container--header">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Search for a group ...</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+        </div>
+        <button mat-flat-button>Create a Group</button>
+        <div class="groups__container--group" *ngFor="let group of grouparray">
+            <div class="groupsicon__container">
+                <img src="../../../assets/images/groups-icon.png" alt="Groups icon">
+            </div>
+            <div class="groups__container--groupdetails">
+                <p>Sample Group Name</p>
+                <p>Date Created: June 19 2022</p>
+            </div>
+        </div>
+    </div>
+    <div class="groupmessages__container">
+        <div class="illustration__container">
+            <img src="assets/images/group-illustration-flat.svg" alt="Flat group illustration" loading="lazy">
+        </div>
+        <div class="main__container--header">
+            <p>Welcome to Groups!</p>
+            <p>A whole new way of interacting with everyone in your class.</p>
+            <p>It seems that you have not yet created a group for your class, get started by clicking on the button below.</p>
+            <button mat-flat-button>Create a Group</button>
+        </div>
+    </div>
+</div>
+

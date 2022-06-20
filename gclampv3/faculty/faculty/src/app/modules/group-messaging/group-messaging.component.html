@@ -18,7 +18,7 @@
                 <input matInput type="text">
             </mat-form-field>
         </div>
-        <button mat-flat-button>Create a Group</button>
+        <button mat-flat-button (click)="createGroupDialog()">Create a Group</button>
         <div class="groups__container--group" *ngFor="let group of grouparray; let i = index" [class.active]="group === groupNameisActive" (click)="chatBody(group, i)" >
         <!-- <div class="groups__container--group" *ngFor="let group of grouparray" (click)="openGroupChat()"> -->
             <div class="groupsicon__container">
@@ -40,7 +40,7 @@
                 <p>Welcome to Groups!</p>
                 <p>A whole new way of interacting with everyone in your class.</p>
                 <p>It seems that you have not yet created a group for your class, get started by clicking on the button below.</p>
-                <button mat-flat-button>Create a Group</button>
+                <button mat-flat-button (click)="createGroupDialog()">Create a Group</button>
             </div>
         </ng-container>
         <ng-container *ngIf="selectedRoom != ''">

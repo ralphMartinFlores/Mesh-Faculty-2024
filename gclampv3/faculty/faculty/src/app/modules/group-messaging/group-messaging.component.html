@@ -19,26 +19,124 @@
             </mat-form-field>
         </div>
         <button mat-flat-button>Create a Group</button>
-        <div class="groups__container--group" *ngFor="let group of grouparray">
+        <div class="groups__container--group" *ngFor="let group of grouparray; let i = index" [class.active]="group === groupNameisActive" (click)="chatBody(group, i)" >
             <div class="groupsicon__container">
-                <img src="../../../assets/images/groups-icon.png" alt="Groups icon">
+                <img [src]="group.src" alt="Groups icon">
             </div>
             <div class="groups__container--groupdetails">
-                <p>Sample Group Name</p>
-                <p>Date Created: June 19 2022</p>
+                <p>{{ group.name }}</p>
+                <p>Date Created: {{ group.dateCreated }}</p>
             </div>
         </div>
     </div>
     <div class="groupmessages__container">
-        <div class="illustration__container">
-            <img src="assets/images/group-illustration-flat.svg" alt="Flat group illustration" loading="lazy">
-        </div>
-        <div class="main__container--header">
-            <p>Welcome to Groups!</p>
-            <p>A whole new way of interacting with everyone in your class.</p>
-            <p>It seems that you have not yet created a group for your class, get started by clicking on the button below.</p>
-            <button mat-flat-button>Create a Group</button>
-        </div>
+        
+        <ng-container *ngIf="grouparray && selectedRoom == ''">
+            <div class="illustration__container">
+                <img src="assets/images/group-illustration-flat.svg" alt="Flat group illustration" loading="lazy">
+            </div>
+            <div class="main__container--header">
+                <p>Welcome to Groups!</p>
+                <p>A whole new way of interacting with everyone in your class.</p>
+                <p>It seems that you have not yet created a group for your class, get started by clicking on the button below.</p>
+                <button mat-flat-button>Create a Group</button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="selectedRoom != ''">
+            <header class="chat__container--header">
+                <strong>{{ selectedRoom['name'] }}</strong>
+                <span class="spacer"></span>
+                <button matTooltip="Call" mat-icon-button (click)="call()">
+                    <mat-icon>call</mat-icon>
+                </button>
+                <button matTooltip="Video Call" mat-icon-button (click)="videocall()">
+                    <mat-icon>videocam</mat-icon>
+                </button>
+                <button matTooltip="See Members" mat-icon-button (click)="seegroupMembers()" *ngIf="!showGroupMembers">
+                  <mat-icon>group</mat-icon>
+                </button>
+                <button matTooltip="Back to Chat" mat-icon-button (click)="backToChat()" *ngIf="showGroupMembers === true">
+                    <mat-icon>forum</mat-icon>
+                  </button>
+            </header>
+            <ng-container *ngIf="showGroupMembers === true">
+                <div class="maingroupmembers__container">
+                    <div class="searchmember__container--header">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <!-- <mat-label>Search for a member ...</mat-label> -->
+                            <input matInput type="text" placeholder="Search for a member ...">
+                            <button matSuffix mat-icon-button matTooltip="Search">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </mat-form-field>
+                   
+                    </div>
+                    <div class="groupmembers__container--body" *ngFor="let group of members; let i = index">
+                        <div class="groupmemberimage__container">
+                           <img [src]="group.src" alt="">
+                        </div>
+                    </div>
+                </div>
+
+
+            </ng-container>
+            
+            <ng-container *ngIf="!showGroupMembers">
+              <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+              <div class="mainmessage__container" #scrollTarget>
+                <div class="messagecontent__container" *ngFor="let chat of chats; index as i" [id]="i" [ngClass]="chat.sender_fld === myid ? 'my-message' : 'cor-message'" id="scrollDemo">
+                    <div class="imageAvatarLeft" *ngIf="chat.sender_fld !== myId">
+                        <div class="imageAvatarBottom">
+                            <div class="avatar">
+                                <!-- <img [src]="chat.img" alt=""> -->
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chatcontent__container">
+                                <div class="personsname__container">
+                                    <span>{{ chat.username }}</span>
+                                    <span> {{ chat.datetime_fld}} </span> 
+                                </div>
+                                <div class="chatDiv">
+                                    <p> {{ chat.content_fld }} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="imageAvatarRight" *ngIf="chat.sender_fld === myId">
+                        <div class="chatcontent__container">
+                            <div class="personsname__container1">
+                                <span>You</span> 
+                                <span> {{ chat.datetime_fld}} </span> 
+                            </div>
+                            <div class="chatDivReply">
+                                <p> {{ chat.content_fld }}  </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+          
+                <form [formGroup]="groupMessage">
+                    <div class="yourmessage__container">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <input formControlName="messageContent" matInput  type="text" placeholder="Send a message ..."/>
+                            <button type="submit" matSuffix mat-icon-button matTooltip="Send" (click)=addMessage(groupMessage.value.messageContent)>
+                                <mat-icon>send</mat-icon>
+                            </button>
+                            <button matSuffix mat-icon-button matTooltip="Attach file" type="button">
+                                <mat-icon>attach_file</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div> 
+                </form>
+            </ng-container>
+    
+        </ng-container>
+
     </div>
+
 </div>
 

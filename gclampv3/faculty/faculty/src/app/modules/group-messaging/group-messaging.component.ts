@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-group-messaging',
@@ -7,11 +11,214 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupMessagingComponent implements OnInit {
 
-  public grouparray = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+  myId: string = 'Austin Ray Aranda';
+  myid: any = '';
+  selectedRoom  = '';
+  groupNameisActive = {};
+  groupMessage: FormGroup;
 
-  constructor() { }
+  @ViewChild('scrollTarget') private myScrollContainer: ElementRef;
+  @ViewChild('scrollframe') private scrollFrame: ElementRef;
+  
+  // Sample Data from the backend .. 
+  public grouparray = [
+    {
+      "id": "1",
+      "name": "Team 1 - Flash Coders",
+      "src" : "assets/images/groups-icon.png",
+      "dateCreated" : "June 19 2022",
+      
+    },
+    {
+      "id": "2",
+      "name": "Team 2 - Debug Entity",
+      "src" : "assets/images/groups-icon.png",
+      "dateCreated" : "June 20 2022"
+    },
+    {
+      "id": "3",
+      "name": "Team 3 - GC Mesh",
+      "src" : "assets/images/groups-icon.png",
+      "dateCreated" : "June 20 2022"
+
+    },
+    {
+      "id": "4",
+      "name": "Team 4 - Plantip",
+      "src" : "assets/images/groups-icon.png",
+      "dateCreated" : "June 20 2022"
+
+    },
+    {
+      "id": "5",
+      "name": "Team 5 - Herecut",
+      "src" : "assets/images/groups-icon.png",
+      "dateCreated" : "June 20 2022"
+
+    },
+    {
+      "id": "6",
+      "name": "Team 6 - GC Clip",
+      "src" : "assets/images/groups-icon.png",
+      "dateCreated" : "June 20 2022"
+
+    }
+  ];
+
+
+  public chats =  [
+    {
+      "id": "1",
+      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
+      "sender_fld": "Austin Ray Aranda",
+      "datetime_fld": "June 20 2022",
+      "username": "John",
+      "img": "assets/images/groups-icon.png"
+    },
+    {
+      "id": "2",
+      "content_fld": "Lorem Ipsum",
+      "sender_fld": "Austin Ray Aranda",
+      "datetime_fld": "June 20 2022",
+      "username": "John",
+      "img": "assets/images/groups-icon.png"
+
+    },
+    {
+      "id": "3",
+      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
+      "sender_fld": "Allen Eduard Uy",
+      "datetime_fld": "June 20 2022",
+      "username": "John",
+      "img": "assets/images/groups-icon.png"
+    },
+    {
+      "id": "4",
+      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
+      "sender_fld": "Christian V. Alip",
+      "datetime_fld": "June 20 2022",
+      "username": "John",
+      "img": "assets/images/groups-icon.png"
+    },
+    {
+      "id": "5",
+      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
+      "sender_fld": "Bernie L. Inociete",
+      "datetime_fld": "June 20 2022",
+      "username": "John",
+      "img": "assets/images/groups-icon.png"
+    }
+  ]
+
+
+  public members =  [
+    {
+      "id": "1",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "2",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "3",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "3",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "4",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    }
+  ]
+
+  // End
+
+  constructor(
+    public _ds: DataService, 
+    public user: UserService, 
+    private route: Router,
+    private _fb: FormBuilder
+  ) { }
+
 
   ngOnInit(): void {
+    this.groupMessage = this._fb.group({
+      messageContent: ['', Validators.required],
+    });
+  }
+
+
+  chatBody(data, index): void {
+    
+    console.log('data', data);
+    this.selectedRoom = data
+    this.groupNameisActive = data
+    this.scrollToNewMessage();
+
+  }
+
+  videocall(): void{
+    console.log('videocall has been triggered');
+  }
+
+  call(): void{
+    console.log('call has been triggered');
+
+  }
+
+
+  addMessage(message: string): void {
+    // CHORE: Revamp DOM Manipulations for animationDelay .. 
+    const element = <HTMLElement> document.getElementsByClassName('chatDivReply')[0];
+    element.style.animationDelay = "--delay: 0s"
+
+  // Sample for testing if nag chat si user .. 
+   this.chats.push(
+    {
+      "id": "1",
+      "content_fld": `${message}`,
+      "sender_fld": "Austin Ray Aranda",
+      "datetime_fld": "June 20 2022",
+      "username": "John",
+      "img": "assets/images/groups-icon.png"
+    }
+   )
+   this.groupMessage.reset()
+    this.scrollToNewMessage();
+  }
+
+  showGroupMembers: boolean = false
+  seegroupMembers(): void{
+    console.log('group members triggered');
+    this.showGroupMembers = true;
+  }
+
+  backToChat(){
+    this.showGroupMembers = false;
+  }
+
+
+  private scrollToNewMessage(): void {
+    setTimeout(() => {
+      this.myScrollContainer.nativeElement.scroll({
+        top: this.myScrollContainer.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }, 200);
   }
 
 }

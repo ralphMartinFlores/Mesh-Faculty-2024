@@ -606,6 +606,16 @@ class Get
 		return $this->isSuccessQuery($res, 'messages');
 	}
 
+	public function getGroups($receivedPayload)
+	{
+		$classcode = $receivedPayload->classcode;
+		$id = $receivedPayload->id;
+		$sql = "SELECT * FROM groups_tbl WHERE classcode_fld = $classcode AND participants_fld LIKE $id AND isdeleted_fld = 0";
+		return $sql;
+		$res = $this->gm->executeQuery($sql);
+		return $this->isSuccessQuery($res, 'groups');
+	}
+
 	public function getQuizResult($receivedPayload)
 	{
 		$code = 404;

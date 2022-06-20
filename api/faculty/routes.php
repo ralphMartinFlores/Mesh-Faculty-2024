@@ -267,6 +267,14 @@ switch($_SERVER['REQUEST_METHOD']) {
 					}
 					break;
 	
+				case 'getgroups':
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($get->getGroups("groups_tbl", $d->payload));
+					} else{
+						echo errmsg(401);
+					}
+					break;
+
 
 				# End of Classroom Get Methods
 

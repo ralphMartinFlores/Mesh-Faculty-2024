@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateGroupComponent } from './create-group/create-group.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,7 +19,7 @@ export class GroupMessagingComponent implements OnInit {
 
   public grouparray = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
-  constructor(public ds: DataService, public user: UserService, private route: Router) { }
+  constructor(public _dialog: MatDialog, public ds: DataService, public user: UserService, private route: Router) { }
 
   ngOnInit(): void {
     this.initializeComponents();
@@ -31,8 +33,17 @@ export class GroupMessagingComponent implements OnInit {
     this.students = this.allStudents;
   }
 
+  public createGroupDialog (): void {
+    let dialogRef = this._dialog.open(CreateGroupComponent, {
+      maxHeight: "85vh",
+      maxWidth: "90vw"
+    });
 
+    dialogRef.afterClosed().subscribe(participant => {
+      // console.log('closed');
+    });
 
+  }
   getGroups() {
     
     const data = { 
@@ -56,11 +67,31 @@ export class GroupMessagingComponent implements OnInit {
       console.log(er)
     })
   }
+  isMobile(){
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    return width < 480;
+  }
+  openGroupChat(){
+    if(this.isMobile()){
+      console.log('group chat opened');
+      const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
+      const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
+      x.style.display = "block";
+      y.style.display = "none";
+    }else{
+      //Open group chat in desktop mode 
+    }
+
+  }
+  onBackButton(){
+    const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
+    const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
+    x.style.display = "none";
+    y.style.display = "block";
+  }
 
   splitEmail(email) {
     const arr = email.split('@')
     return arr[0]
   }
-
-
 }

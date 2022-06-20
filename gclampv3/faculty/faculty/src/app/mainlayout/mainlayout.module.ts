@@ -57,6 +57,7 @@ import { SurveyComponent } from '../modules/survey/survey.component';
 import { MeetingListComponent } from '../modules/classes/meeting-list/meeting-list/meeting-list.component';
 import { SchedMeetingComponent } from '../modules/classes/sched-meeting/sched-meeting/sched-meeting.component';
 import { GroupMessagingComponent } from '../modules/group-messaging/group-messaging.component';
+import { CreateGroupComponent } from '../modules/group-messaging/create-group/create-group.component';
 @NgModule({
   declarations: [
     MainlayoutComponent,
@@ -107,7 +108,8 @@ import { GroupMessagingComponent } from '../modules/group-messaging/group-messag
     EvaluationComponent,
     QuestionnaireComponent,
     SurveyComponent,
-    GroupMessagingComponent
+    GroupMessagingComponent,
+    CreateGroupComponent
   ],
   imports: [
     CommonModule,

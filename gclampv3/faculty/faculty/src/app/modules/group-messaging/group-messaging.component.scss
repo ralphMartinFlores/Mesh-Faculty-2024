@@ -68,6 +68,9 @@
             height: auto;
             margin: 0 auto;
         }
+        .groupmessages__back-button{
+            display: none;
+        }
         .main__container--header {
             text-align: center;
             p:first-of-type {
@@ -88,5 +91,29 @@
                 }
             }
         }
+    }
+}
+
+//
+
+@media only screen and (max-width: 480px) {
+    .main__container {
+            height: auto;
+            padding: 36px;
+            display: block;
+        .groupmessages__container{
+            display: none;
+            .groupmessages__back-button{
+                display: flex;
+                padding: 15px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1021PX) {
+    .groupmessages__container{
+        display: grid;
     }
 }

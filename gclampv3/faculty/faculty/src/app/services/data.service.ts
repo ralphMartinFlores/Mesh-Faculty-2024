@@ -19,7 +19,8 @@ export class DataService {
 
   // Development Testing:
   public prefix: string  = 'GC'
-  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/'
+  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/' // PHP
+  public nodeBaseURL: string = 'http://localhost:4230/api/' // NODE
   public downloadURL: string = 'http://localhost/GC-LAMP-Faculty/api/'
   public imageURL: string= 'http://localhost/GC-LAMP-Faculty/requests/'
 
@@ -68,6 +69,11 @@ export class DataService {
 
       case 4:
         // result = this._http.post(this.baseURL + btoa(api), this._user._convertmessage((decodeURIComponent(JSON.stringify(dt)))));
+        break;
+      
+      // NODEJS
+      case 5:
+        result = this._http.post(this.nodeBaseURL + api, load);
         break;
       default: break;
     }

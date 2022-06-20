@@ -33,6 +33,7 @@ exports.ClassMembers = (req, res) => {
 }
 
 exports.GroupList = (req, res) => {
+    console.log('REQUEST BODY: ',  req.body)
     ClassList.getGroupList(req.body, (err, data) =>{
         if(err){
             if (err.kind == "failed"){

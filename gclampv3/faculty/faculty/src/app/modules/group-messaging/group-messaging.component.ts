@@ -25,16 +25,35 @@ export class GroupMessagingComponent implements OnInit {
   
   initializeComponents() {
     this.getGroups();
+    this.getSavedMessages();
     this.allStudents = this.user.getClassMembers().student;
+    console.log(this.allStudents)
     this.students = this.allStudents;
   }
 
+
+
   getGroups() {
-    this.ds._httpRequest('getgroups', { data: { classcode: this.classcode, id: this.splitEmail(this.user.getUserEmail()) } }, 1).subscribe((dt: any) => {
-      dt = this.user._decrypt(dt.a)
-      console.log(dt)
+    
+    const data = { 
+      classcode: this.classcode, 
+      id: this.splitEmail(this.user.getUserEmail()) 
+    } 
+
+    this.ds._httpRequest('grouplist/', data, 5).subscribe((dt: any) => {
+      console.log('GROUPS: ', dt)
+      dt = this.user._decrypt(dt.d)
     }, er => {
-      er = this.user._decrypt(er.error.a)
+      console.log(er)
+      // er = this.user._decrypt(er.error.a)
+    })
+  }
+
+  getSavedMessages() {
+    this.ds._httpRequest("savedmessages/", {gid: '30398'}, 5).subscribe(dt => {
+      console.log('SAVED MESSAGES: ', dt)
+    }, (er) =>{
+      console.log(er)
     })
   }
 

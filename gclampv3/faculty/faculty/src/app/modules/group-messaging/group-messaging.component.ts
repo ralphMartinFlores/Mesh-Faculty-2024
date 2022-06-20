@@ -37,6 +37,28 @@ export class GroupMessagingComponent implements OnInit {
       er = this.user._decrypt(er.error.a)
     })
   }
+  isMobile(){
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    return width < 480;
+  }
+  openGroupChat(){
+    if(this.isMobile()){
+      console.log('group chat opened');
+      const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
+      const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
+      x.style.display = "block";
+      y.style.display = "none";
+    }else{
+      //Open group chat in desktop mode 
+    }
+
+  }
+  onBackButton(){
+    const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
+    const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
+    x.style.display = "none";
+    y.style.display = "block";
+  }
 
   splitEmail(email) {
     const arr = email.split('@')

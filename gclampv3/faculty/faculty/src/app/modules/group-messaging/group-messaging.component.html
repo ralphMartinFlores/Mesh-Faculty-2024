@@ -28,12 +28,15 @@
         (click)="chatBody(group, i)"
       >
         <!-- <div class="groups__container--group" *ngFor="let group of grouparray" (click)="openGroupChat()"> -->
+        <!-- <div class="groupsicon__container">
+          <img src="../../../assets/images/groups-icon.png" alt="Groups icon" />
+        </div> -->
         <div class="groupsicon__container">
-          <img [src]="group.src" alt="Groups icon" />
+            <img src="../../../assets/images/groups-icon.png" alt="Groups icon">
         </div>
         <div class="groups__container--groupdetails">
-          <p>{{ group.name }}</p>
-          <p>Date Created: {{ group.dateCreated }}</p>
+            <p>{{ group.groupname_fld }}</p>
+            <p>Date Created: {{ group.createdate_fld }}</p>
         </div>
       </div>
     </div>
@@ -135,7 +138,7 @@
                 <div>
                   <div class="chatcontent__container">
                     <div class="personsname__container">
-                      <span>{{ chat.username }}</span>
+                      <span>{{ chat.sender_fld }}</span>
                       <span> {{ chat.datetime_fld}} </span>
                     </div>
                     <div class="chatDiv">

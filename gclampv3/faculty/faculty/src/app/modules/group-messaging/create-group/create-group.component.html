@@ -13,20 +13,20 @@
     <div class="illustration__container">
         <img src="assets/images/fill-group-information-illustration.svg" alt="Fill group information illustration" loading="lazy">
     </div>
-    <form class="create-group-form">
+    <form [formGroup]="groupChatForm" (ngSubmit)="onSubmitForm($event, groupChatForm.value)" class="create-group-form">
         <mat-form-field class="input-full-width" appearance="fill">
           <mat-label>Name</mat-label>
-          <input matInput type="text" placeholder="Name">
+          <input matInput type="text" placeholder="Name" formControlName="name">
         </mat-form-field>
         <mat-form-field class="input-full-width" appearance="fill">
             <mat-label>Members</mat-label>
-            <mat-select [formControl]="toppings" multiple>
-              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            <mat-select formControlName="participants" multiple>
+              <mat-option *ngFor="let student of studentList" [value]="student.studnum_fld">{{student.lname_fld}}, {{student.fname_fld}}</mat-option>
             </mat-select>
         </mat-form-field>
+        <div class="buttongroup__container">
+            <button mat-stroked-button mat-dialog-close>Cancel</button>
+            <button type="submit" mat-flat-button>Save</button>
+        </div>
     </form>
-    <div class="buttongroup__container">
-        <button mat-stroked-button mat-dialog-close>Cancel</button>
-        <button mat-flat-button>Save</button>
-    </div>
 </div>

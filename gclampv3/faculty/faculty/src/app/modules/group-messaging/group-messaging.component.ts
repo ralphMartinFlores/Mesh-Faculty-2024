@@ -52,7 +52,7 @@ export class GroupMessagingComponent implements OnInit {
   }
   isMobile(){
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    return width < 480;
+    return width < 769;
   }
   openGroupChat(){
     if(this.isMobile()){

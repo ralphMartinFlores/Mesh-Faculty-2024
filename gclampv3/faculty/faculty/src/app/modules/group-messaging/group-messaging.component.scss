@@ -1,15 +1,13 @@
 .main__container {
     height: 80vh;
-    // border: 2px solid red;
     padding: 36px;
     display: grid;
     grid-template-columns: 0.75fr 2fr;
     gap: 16px;
     .groups__container {
         height: 100%;
-        // border: 2px solid green;
         border-radius: 10px;
-        padding: 10px;
+        padding: 16px;
         overflow-y: auto;
         box-shadow: rgb(0 0 0 / 12%) 0px 4px 16px;
         .groups__container--header {
@@ -62,7 +60,8 @@
         height: 100%;
         box-shadow: rgb(0 0 0 / 12%) 0px 4px 16px;
         border-radius: 10px;
-        // border: 2px solid black;
+        display: grid;
+        place-items: center;
         .illustration__container {
             max-width: 320px;
             height: auto;
@@ -96,24 +95,43 @@
 
 //
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
     .main__container {
             height: auto;
-            padding: 36px;
+            padding: 16px;
             display: block;
         .groupmessages__container{
             display: none;
-            .groupmessages__back-button{
+            .groupmessages__back-button {
                 display: flex;
                 padding: 15px;
                 cursor: pointer;
             }
         }
+        .main__container--header {
+            padding: 16px 16px 32px 16px;
+        }
     }
 }
 
-@media only screen and (max-width: 1021PX) {
+@media only screen and (max-width: 1021px) {
     .groupmessages__container{
         display: grid;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .groupmessages__container {
+        display: grid;
+    }
+    .groups__container--group {
+        flex-direction: column;
+        padding: 12px;
+    }
+    .main__container {
+        padding: 16px;
+    }
+    .main__container--header {
+        padding: 16px;
     }
 }

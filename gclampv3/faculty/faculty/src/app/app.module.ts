@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { ConfigService } from './services/config.service';
 import { AppConfig } from './services/data.schema';
 
+
 export function getConfig(cs: ConfigService) {
   return () => {
     return cs.load();

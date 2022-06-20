@@ -1,0 +1,32 @@
+<div class="main_container">
+    <header class="resources">
+        <div class="resources__header">
+            <div class="resources__header--icon">
+                <mat-icon>group_add</mat-icon>
+            </div>
+            <h5>Group Information</h5>
+        </div>
+        <button mat-icon-button aria-label="Close button" mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </header>
+    <div class="illustration__container">
+        <img src="assets/images/fill-group-information-illustration.svg" alt="Fill group information illustration" loading="lazy">
+    </div>
+    <form class="create-group-form">
+        <mat-form-field class="input-full-width" appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" placeholder="Name">
+        </mat-form-field>
+        <mat-form-field class="input-full-width" appearance="fill">
+            <mat-label>Members</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div class="buttongroup__container">
+        <button mat-stroked-button mat-dialog-close>Cancel</button>
+        <button mat-flat-button>Save</button>
+    </div>
+</div>

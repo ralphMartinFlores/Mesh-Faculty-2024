@@ -20,6 +20,7 @@
         </div>
         <button mat-flat-button>Create a Group</button>
         <div class="groups__container--group" *ngFor="let group of grouparray; let i = index" [class.active]="group === groupNameisActive" (click)="chatBody(group, i)" >
+        <!-- <div class="groups__container--group" *ngFor="let group of grouparray" (click)="openGroupChat()"> -->
             <div class="groupsicon__container">
                 <img [src]="group.src" alt="Groups icon">
             </div>
@@ -136,6 +137,17 @@
     
         </ng-container>
 
+        <!-- <span class="groupmessages__back-button" (click)="onBackButton()"><mat-icon>keyboard_backspace</mat-icon></span>
+        <div class="illustration__container">
+            <img src="assets/images/group-illustration-flat.svg" alt="Flat group illustration" loading="lazy">
+        </div>
+        <div class="main__container--header">
+            
+            <p>Welcome to Groups!</p>
+            <p>A whole new way of interacting with everyone in your class.</p>
+            <p>It seems that you have not yet created a group for your class, get started by clicking on the button below.</p>
+            <button mat-flat-button (click)="createGroupDialog()">Create a Group</button>
+        </div> -->
     </div>
 
 </div>

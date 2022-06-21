@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateGroupComponent } from './create-group/create-group.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
@@ -23,6 +23,9 @@ export class GroupMessagingComponent implements OnInit {
   selectedRoom  = '';
   groupNameisActive = {};
   groupMessage: FormGroup;
+
+  filter: any;
+  search = new FormControl();
 
   @ViewChild('scrollTarget') private myScrollContainer: ElementRef;
   @ViewChild('scrollframe') private scrollFrame: ElementRef;

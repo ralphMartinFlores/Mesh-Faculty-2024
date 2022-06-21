@@ -177,6 +177,7 @@ export class GroupMessagingComponent implements OnInit {
     });
   }
 
+
   initializeComponents = () => {
     this.myId = this.splitEmail(this.user.getUserEmail())
     this.getGroups();
@@ -312,14 +313,17 @@ export class GroupMessagingComponent implements OnInit {
     return width < 769;
   }
 
-  openGroupChat(){
+  openGroupChat(data, index) : void {
+    const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
+    const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
+    this.showGroupMembers = false;
+    this.chatBody(data, index);
     if(this.isMobile()){
-      const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
-      const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
       x.style.display = "block";
       y.style.display = "none";
     }else{
       //Open group chat in desktop mode 
+      
     }
 
   }

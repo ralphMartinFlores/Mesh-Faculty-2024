@@ -25,7 +25,8 @@
         class="groups__container--group"
         *ngFor="let group of grouparray; let i = index"
         [class.active]="group === groupNameisActive"
-        (click)="chatBody(group, i)">
+        (click)="openGroupChat(group, i)"
+      >
         <!-- <div class="groups__container--group" *ngFor="let group of grouparray" (click)="openGroupChat()"> -->
         <!-- <div class="groupsicon__container">
           <img src="../../../assets/images/groups-icon.png" alt="Groups icon" />
@@ -101,7 +102,7 @@
                 </div>
                 <div class="groupmember__details">
                   <span>Austin Ray Aranda</span>
-                  <div class="">
+                  <div class="groupmember__studid">
                     <span>201810144</span>
                   </div>
                 </div>

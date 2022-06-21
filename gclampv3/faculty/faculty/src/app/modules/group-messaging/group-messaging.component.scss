@@ -161,6 +161,13 @@
                 font-size: 0.9rem;
               }
             }
+            .groupmember__studid{
+              span{
+                font-size: 0.8rem !important;
+                font-weight: 400 !important;
+              }
+
+            }
           }
         }
 
@@ -171,7 +178,7 @@
         height: 54vh;
         width: 100%;
         overflow-y: auto;
-  
+        width: 100%;
         .messagecontent__container {
           gap: 15px;
           // margin-top: 10px;
@@ -382,6 +389,16 @@
   //
   
   @media only screen and (max-width: 768px) {
+    .groupmember__studid{
+      span{
+        font-size: 0.7rem !important;
+        font-weight: 300 !important;
+      }
+    }
+    .groupmembers__container{
+      display: grid !important;
+      grid-template-columns: repeat(1, 1fr) !important;
+    }
     .main__container {
       height: auto;
       padding: 16px;

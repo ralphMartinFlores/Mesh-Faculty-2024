@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-group-messaging',
@@ -17,10 +18,11 @@ export class GroupMessagingComponent implements OnInit {
   students: any = [];
   url = this.route.url.split('/');
   classcode = this.url[3];
+  groups: any[] = []
 
   myId: string = 'Austin Ray Aranda';
   myid: any = '';
-  selectedRoom  = '';
+  selectedRoom: any = [];
   groupNameisActive = {};
   groupMessage: FormGroup;
 
@@ -31,95 +33,9 @@ export class GroupMessagingComponent implements OnInit {
   @ViewChild('scrollframe') private scrollFrame: ElementRef;
   
   // Sample Data from the backend .. 
-  public grouparray = [
-    {
-      "id": "1",
-      "name": "Team 1 - Flash Coders",
-      "src" : "assets/images/groups-icon.png",
-      "dateCreated" : "June 19 2022",
-      
-    },
-    {
-      "id": "2",
-      "name": "Team 2 - Debug Entity",
-      "src" : "assets/images/groups-icon.png",
-      "dateCreated" : "June 20 2022"
-    },
-    {
-      "id": "3",
-      "name": "Team 3 - GC Mesh",
-      "src" : "assets/images/groups-icon.png",
-      "dateCreated" : "June 20 2022"
+  public grouparray = [];
 
-    },
-    {
-      "id": "4",
-      "name": "Team 4 - Plantip",
-      "src" : "assets/images/groups-icon.png",
-      "dateCreated" : "June 20 2022"
-
-    },
-    {
-      "id": "5",
-      "name": "Team 5 - Herecut",
-      "src" : "assets/images/groups-icon.png",
-      "dateCreated" : "June 20 2022"
-
-    },
-    {
-      "id": "6",
-      "name": "Team 6 - GC Clip",
-      "src" : "assets/images/groups-icon.png",
-      "dateCreated" : "June 20 2022"
-
-    }
-  ];
-
-
-  public chats =  [
-    {
-      "id": "1",
-      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
-      "sender_fld": "Austin Ray Aranda",
-      "datetime_fld": "June 20 2022",
-      "username": "John",
-      "img": "assets/images/groups-icon.png"
-    },
-    {
-      "id": "2",
-      "content_fld": "Lorem Ipsum",
-      "sender_fld": "Austin Ray Aranda",
-      "datetime_fld": "June 20 2022",
-      "username": "John",
-      "img": "assets/images/groups-icon.png"
-
-    },
-    {
-      "id": "3",
-      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
-      "sender_fld": "Allen Eduard Uy",
-      "datetime_fld": "June 20 2022",
-      "username": "John",
-      "img": "assets/images/groups-icon.png"
-    },
-    {
-      "id": "4",
-      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
-      "sender_fld": "Christian V. Alip",
-      "datetime_fld": "June 20 2022",
-      "username": "John",
-      "img": "assets/images/groups-icon.png"
-    },
-    {
-      "id": "5",
-      "content_fld": "Ex ullamco aliqua excepteur eiusmod excepteur non ipsum. Irure deserunt in enim deserunt magna labore Lorem cillum quis proident. Dolor minim pariatur ullamco nostrud. Ad est irure nisi aliqua consequat dolore labore ex ut ex esse eiusmod.",
-      "sender_fld": "Bernie L. Inociete",
-      "datetime_fld": "June 20 2022",
-      "username": "John",
-      "img": "assets/images/groups-icon.png"
-    }
-  ]
-
+  public chats =  []
 
   public members =  [
     {
@@ -161,7 +77,8 @@ export class GroupMessagingComponent implements OnInit {
     public user: UserService, 
     private route: Router,
     private _fb: FormBuilder,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    public socket: SocketService
   ) { }
 
 
@@ -172,14 +89,19 @@ export class GroupMessagingComponent implements OnInit {
     });
   }
 
+  initializeComponents = () => {
+    this.myId = this.splitEmail(this.user.getUserEmail())
+    this.getGroups();
+    this.allStudents = this.user.getClassMembers().student;
+    this.students = this.allStudents;
+  }
 
   chatBody(data, index): void {
-    
+    this.getSavedMessages(data.groupid_fld);
     console.log('data', data);
     this.selectedRoom = data
     this.groupNameisActive = data
     this.scrollToNewMessage();
-
   }
 
   videocall(): void{
@@ -194,22 +116,36 @@ export class GroupMessagingComponent implements OnInit {
 
   addMessage(message: string): void {
     // CHORE: Revamp DOM Manipulations for animationDelay .. 
-    const element = <HTMLElement> document.getElementsByClassName('chatDivReply')[0];
-    element.style.animationDelay = "--delay: 0s"
+    // const element = <HTMLElement> document.getElementsByClassName('chatDivReply')[0];
+    // element.style.animationDelay = "--delay: 0s"
 
-  // Sample for testing if nag chat si user .. 
-   this.chats.push(
-    {
-      "id": "1",
-      "content_fld": `${message}`,
-      "sender_fld": "Austin Ray Aranda",
-      "datetime_fld": "June 20 2022",
-      "username": "John",
-      "img": "assets/images/groups-icon.png"
+    const sender = this.splitEmail(this.user.getUserEmail())
+    const time = new Date()
+    const formattedTime = time.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
+
+    this.socket.chat(message, sender, formattedTime)
+    this.chats.push({ content_fld: message, sender_fld: sender, datetime_fld: formattedTime})
+    this.scrollToNewMessage()
+    this.saveMessage(message, time)
+    this.groupMessage.reset()
+  }
+
+  public saveMessage(message: string, dateTime: any): void {
+    const senderName = this.user.getUserFullname()
+    const load = {
+        groupid_fld: this.selectedRoom.groupid_fld,
+        sender_fld: this.splitEmail(this.user.getUserEmail()),
+        sendername_fld: senderName,
+        content_fld: message,
+        datetime_fld: dateTime
     }
-   )
-   this.groupMessage.reset()
-    this.scrollToNewMessage();
+
+    this.ds._httpRequest("addgrpmsg/", load, 1).subscribe(res => {
+      let dt = this.user._decrypt(res.a)
+      // DO SOMETHING
+    }, (er) =>{
+      er = this.user._decrypt(er.error.a)
+    })
   }
 
   showGroupMembers: boolean = false
@@ -233,15 +169,37 @@ export class GroupMessagingComponent implements OnInit {
     }, 200);
   }
 
-  
-  initializeComponents = () => {
-    this.getGroups();
-    this.getSavedMessages();
-    this.allStudents = this.user.getClassMembers().student;
-    console.log(this.allStudents)
-    this.students = this.allStudents;
+
+  backupGroupArray: any[] = [];
+  getGroups() {
+    const load = { 
+      data: {
+        cc: this.classcode, 
+        id: this.splitEmail(this.user.getUserEmail()) 
+      } 
+    } 
+
+    this.ds._httpRequest('getgroups/', load, 1).subscribe((dt: any) => {
+      dt = this.user._decrypt(dt.a)
+      this.grouparray = dt.payload
+      this.backupGroupArray = dt.payload
+      console.log(dt)
+    }, er => {
+      er = this.user._decrypt(er.error.a)
+    })
   }
 
+  getSavedMessages(groupid_fld) {
+    this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
+      dt = this.user._decrypt(dt.a)
+      this.chats = dt.payload
+      console.log(dt)
+    }, (er) =>{
+      er = this.user._decrypt(er.error.a)
+      this.chats = []
+    })
+  }
+  
   public createGroupDialog (): void {
     let dialogRef = this._dialog.open(CreateGroupComponent, {
       maxHeight: "85vh",
@@ -250,39 +208,18 @@ export class GroupMessagingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(participant => {
       // console.log('closed');
+      this.getGroups()
     });
 
   }
-  getGroups() {
-    
-    const data = { 
-      classcode: this.classcode, 
-      id: this.splitEmail(this.user.getUserEmail()) 
-    } 
 
-    this.ds._httpRequest('grouplist/', data, 5).subscribe((dt: any) => {
-      console.log('GROUPS: ', dt)
-      dt = this.user._decrypt(dt.d)
-    }, er => {
-      console.log(er)
-      // er = this.user._decrypt(er.error.a)
-    })
-  }
-
-  getSavedMessages() {
-    this.ds._httpRequest("savedmessages/", {gid: '30398'}, 5).subscribe(dt => {
-      console.log('SAVED MESSAGES: ', dt)
-    }, (er) =>{
-      console.log(er)
-    })
-  }
   isMobile(){
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     return width < 769;
   }
+
   openGroupChat(){
     if(this.isMobile()){
-      console.log('group chat opened');
       const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
       const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
       x.style.display = "block";
@@ -292,6 +229,7 @@ export class GroupMessagingComponent implements OnInit {
     }
 
   }
+
   onBackButton(){
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
@@ -302,5 +240,28 @@ export class GroupMessagingComponent implements OnInit {
   splitEmail(email) {
     const arr = email.split('@')
     return arr[0]
+  }
+
+  searchInput: string = '';
+  timer: any;              // Timer identifier
+  waitTime: number = 500;   // Wait time in milliseconds 
+
+  public search(){
+    if (this.searchInput === ''){
+      this.grouparray = this.backupGroupArray;
+    }
+    // Clear timer
+    clearTimeout(this.timer);
+
+    // Wait for X ms and then process the request
+    this.timer = setTimeout(() => {
+      this.searchGroups(this.searchInput);
+    }, this.waitTime);
+  }
+
+  public searchGroups(searchInput: string){
+    this.grouparray = this.grouparray.filter(item => {
+        return (item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase())); 
+    })
   }
 }

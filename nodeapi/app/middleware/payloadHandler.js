@@ -41,7 +41,7 @@ const encryptPayload = (msg) => {
     
             let encryptMethodLength = encryptLength / 4;
             let hashKey = CryptoJS.PBKDF2(key, salt, {
-            hasher: CryptoJS.algo.SHA256,
+            hasher: CryptoJS.algo.SHA512,
             keySize: encryptMethodLength / 8,
             iterations: iterations,
             });
@@ -62,7 +62,7 @@ const encryptPayload = (msg) => {
             }
             // console.log(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse((JSON.stringify(json)))));
             // this.decrypt(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse((JSON.stringify(json)))))
-            return {d: CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse((JSON.stringify(json))))};
+            return {a: CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse((JSON.stringify(json))))};
         }
     } catch (error) {
         console.log(error);

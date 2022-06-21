@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { DataService } from 'src/app/services/data.service';
+import { UserService } from 'src/app/services/user.service';
+import { v4 as uuidV4 } from 'uuid';
 
 @Component({
   selector: 'app-create-group',
@@ -11,9 +15,63 @@ export class CreateGroupComponent implements OnInit {
   toppings = new FormControl('');
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
-  constructor() { }
+  public groupLeader: string = ''
+  public groupChatForm = new FormGroup({
+    name: new FormControl(''),
+    classcode: new FormControl(''),
+    participants: new FormControl(''),
+  });
+  studentList: any[] = [];
+  constructor(
+    public dialogRef: MatDialogRef<CreateGroupComponent>,
+    public data: DataService, public user: UserService) { }
 
   ngOnInit(): void {
+    this.initializeComponents()
   }
 
+  initializeComponents() {
+    this.studentList = this.user.getClassMembers().student
+    const { classcode_fld, email_fld } = this.user.getClassroomInfo()
+    this.groupLeader = this.splitEmail(email_fld)
+    this.groupChatForm.get('classcode').setValue(classcode_fld)
+  }
+  
+  splitEmail(email) {
+    const arr = email.split('@')
+    return arr[0]
+  }
+
+  onSubmitForm(event, load) {
+    event.preventDefault()
+
+    this.createGroup(load)
+  }
+
+  createGroup(groupinfo) {
+    const participants = `${this.groupLeader}, ${this.groupChatForm.get('participants').value.join(', ')}`
+    const roomid = this.genRoomId()
+    const { name, classcode } = groupinfo
+
+    const data = {
+        groupname_fld: name,
+        roomid_fld: roomid,
+        classcode_fld: classcode,
+        participants_fld: participants
+    }
+
+    this.data._httpRequest("addgrpchat/", data, 1).subscribe(res => {
+      let dt = this.user._decrypt(res.a)
+      // DO SOMETHING
+      if (dt.status.remarks === 'success') {
+        this.dialogRef.close()
+      }
+    }, (err) =>{
+      // this.errorMessage = err.error.message;
+    })
+  }
+
+  genRoomId(): string {
+    return uuidV4();
+  }
 }

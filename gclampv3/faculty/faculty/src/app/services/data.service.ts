@@ -21,6 +21,7 @@ export class DataService {
   public prefix: string  = 'GC'
   public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/' // PHP
   public nodeBaseURL: string = 'http://localhost:4230/api/' // NODE
+  
   public downloadURL: string = 'http://localhost/GC-LAMP-Faculty/api/'
   public imageURL: string= 'http://localhost/GC-LAMP-Faculty/requests/'
 

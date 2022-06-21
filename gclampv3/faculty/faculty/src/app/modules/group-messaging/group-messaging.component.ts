@@ -66,6 +66,95 @@ export class GroupMessagingComponent implements OnInit {
       "fullname": "Bernie Inociete",
       "src": "assets/images/groups-icon.png",
       "studnum": "201810144"
+    },
+    {
+      "id": "5",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "6",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
+    },
+    {
+      "id": "7",
+      "fullname": "Bernie Inociete",
+      "src": "assets/images/groups-icon.png",
+      "studnum": "201810144"
     }
   ]
 
@@ -95,11 +184,12 @@ export class GroupMessagingComponent implements OnInit {
     this.students = this.allStudents;
   }
 
-  chatBody(data, index): void {
+  async chatBody(data, index): Promise<any> {
+
     this.getSavedMessages(data.groupid_fld);
     console.log('data', data);
-    this.selectedRoom = data
-    this.groupNameisActive = data
+    this.selectedRoom = await data
+    this.groupNameisActive = await data
     this.scrollToNewMessage();
   }
 
@@ -113,11 +203,16 @@ export class GroupMessagingComponent implements OnInit {
   }
 
 
-  addMessage(message: string): void {
-    // CHORE: Revamp DOM Manipulations for animationDelay .. 
-    // const element = <HTMLElement> document.getElementsByClassName('chatDivReply')[0];
-    // element.style.animationDelay = "--delay: 0s"
+  addMessage(message: string): any {
 
+
+    document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
+
+    // CHORE: Revamp DOM Manipulations for animationDelay .. 
+    const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
+    element.style.animationDelay = "--delay: 0s"
+
+    if (message === "") return false; 
     const sender = this.splitEmail(this.user.getUserEmail())
     const time = new Date()
     const formattedTime = time.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });

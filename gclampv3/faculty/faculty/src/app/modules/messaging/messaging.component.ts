@@ -95,6 +95,7 @@ export class MessagingComponent implements OnInit, OnDestroy {
   getRooms() {
     this.ds._httpRequest('getmembers', { data: { classcode: this.classcode, acadyear: this.user.getSettings().acadyear_fld, semester: this.user.getSettings().sem_fld } }, 1).subscribe(async (res: any) => {
       const result = await this.user._decrypt(res.a)
+      console.log(result.payload)
       this.rooms = await this.setRoom(result.payload);
     }, er => {
       er = this.user._decrypt(er.error.a)

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
 import { v4 as uuidV4 } from 'uuid';
@@ -21,8 +22,9 @@ export class CreateGroupComponent implements OnInit {
     participants: new FormControl(''),
   });
   studentList: any[] = [];
-
-  constructor(public data: DataService, public user: UserService) { }
+  constructor(
+    public dialogRef: MatDialogRef<CreateGroupComponent>,
+    public data: DataService, public user: UserService) { }
 
   ngOnInit(): void {
     this.initializeComponents()
@@ -30,7 +32,6 @@ export class CreateGroupComponent implements OnInit {
 
   initializeComponents() {
     this.studentList = this.user.getClassMembers().student
-    console.log(this.studentList)
     const { classcode_fld, email_fld } = this.user.getClassroomInfo()
     this.groupLeader = this.splitEmail(email_fld)
     this.groupChatForm.get('classcode').setValue(classcode_fld)
@@ -47,23 +48,23 @@ export class CreateGroupComponent implements OnInit {
     this.createGroup(load)
   }
 
-  createGroup(load) {
+  createGroup(groupinfo) {
     const participants = `${this.groupLeader}, ${this.groupChatForm.get('participants').value.join(', ')}`
     const roomid = this.genRoomId()
-    const { name, classcode } = load
+    const { name, classcode } = groupinfo
 
     const data = {
-      groupname_fld: name,
-      classcode_fld: classcode,
-      participants_fld: participants,
-      roomid_fld: roomid
+        groupname_fld: name,
+        roomid_fld: roomid,
+        classcode_fld: classcode,
+        participants_fld: participants
     }
 
-    this.data._httpRequest("creategroup/", data, 5).subscribe(res => {
+    this.data._httpRequest("addgrpchat/", data, 1).subscribe(res => {
       let dt = this.user._decrypt(res.a)
       // DO SOMETHING
-      if (dt.status === 'success') {
-        // this.router.navigate(['/groups'])
+      if (dt.status.remarks === 'success') {
+        this.dialogRef.close()
       }
     }, (err) =>{
       // this.errorMessage = err.error.message;

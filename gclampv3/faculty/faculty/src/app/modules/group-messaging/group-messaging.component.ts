@@ -113,8 +113,8 @@ export class GroupMessagingComponent implements OnInit {
 
   addMessage(message: string): void {
     // CHORE: Revamp DOM Manipulations for animationDelay .. 
-    const element = <HTMLElement> document.getElementsByClassName('chatDivReply')[0];
-    element.style.animationDelay = "--delay: 0s"
+    // const element = <HTMLElement> document.getElementsByClassName('chatDivReply')[0];
+    // element.style.animationDelay = "--delay: 0s"
 
     const sender = this.splitEmail(this.user.getUserEmail())
     const time = new Date()
@@ -128,20 +128,20 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   public saveMessage(message: string, dateTime: any): void {
-    console.log(this.selectedRoom)
-    
-    const data = {
-      gid: this.selectedRoom.groupid_fld,
-      sender: this.splitEmail(this.user.getUserEmail()),
-      content: message,
-      dt: dateTime
+    const senderName = this.user.getUserFullname()
+    const load = {
+        groupid_fld: this.selectedRoom.groupid_fld,
+        sender_fld: this.splitEmail(this.user.getUserEmail()),
+        sendername_fld: senderName,
+        content_fld: message,
+        datetime_fld: dateTime
     }
 
-    this.ds._httpRequest("savemessage/", data, 5).subscribe(res => {
+    this.ds._httpRequest("addgrpmsg/", load, 1).subscribe(res => {
       let dt = this.user._decrypt(res.a)
       // DO SOMETHING
-    }, (err) =>{
-      // this.errorMessage = err.error.message;
+    }, (er) =>{
+      er = this.user._decrypt(er.error.a)
     })
   }
 
@@ -166,29 +166,34 @@ export class GroupMessagingComponent implements OnInit {
     }, 200);
   }
 
+
+  backupGroupArray: any[] = [];
   getGroups() {
-    
-    const data = { 
-      classcode: this.classcode, 
-      id: this.splitEmail(this.user.getUserEmail()) 
+    const load = { 
+      data: {
+        cc: this.classcode, 
+        id: this.splitEmail(this.user.getUserEmail()) 
+      } 
     } 
 
-    this.ds._httpRequest('grouplist/', data, 5).subscribe((dt: any) => {
+    this.ds._httpRequest('getgroups/', load, 1).subscribe((dt: any) => {
       dt = this.user._decrypt(dt.a)
-      this.grouparray = dt.data
-      console.log(this.groups)
+      this.grouparray = dt.payload
+      this.backupGroupArray = dt.payload
+      console.log(dt)
     }, er => {
-      console.log(er)
       er = this.user._decrypt(er.error.a)
     })
   }
 
   getSavedMessages(groupid_fld) {
-    this.ds._httpRequest("savedmessages/", {gid: groupid_fld}, 5).subscribe(dt => {
+    this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = this.user._decrypt(dt.a)
-      this.chats = dt.data
+      this.chats = dt.payload
+      console.log(dt)
     }, (er) =>{
-      console.log(er)
+      er = this.user._decrypt(er.error.a)
+      this.chats = []
     })
   }
   
@@ -200,6 +205,7 @@ export class GroupMessagingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(participant => {
       // console.log('closed');
+      this.getGroups()
     });
 
   }
@@ -231,5 +237,28 @@ export class GroupMessagingComponent implements OnInit {
   splitEmail(email) {
     const arr = email.split('@')
     return arr[0]
+  }
+
+  searchInput: string = '';
+  timer: any;              // Timer identifier
+  waitTime: number = 500;   // Wait time in milliseconds 
+
+  public search(){
+    if (this.searchInput === ''){
+      this.grouparray = this.backupGroupArray;
+    }
+    // Clear timer
+    clearTimeout(this.timer);
+
+    // Wait for X ms and then process the request
+    this.timer = setTimeout(() => {
+      this.searchGroups(this.searchInput);
+    }, this.waitTime);
+  }
+
+  public searchGroups(searchInput: string){
+    this.grouparray = this.grouparray.filter(item => {
+        return (item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase())); 
+    })
   }
 }

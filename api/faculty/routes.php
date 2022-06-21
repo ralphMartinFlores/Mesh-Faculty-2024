@@ -265,15 +265,23 @@ switch($_SERVER['REQUEST_METHOD']) {
 					} else{
 						echo errmsg(401);
 					}
-					break;
+				break;
 	
-				case 'getgroups':
+				case "getgroups":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getGroups("groups_tbl", $d->payload));
+						echo returnData($get->getGroups($d->payload->data));
 					} else{
 						echo errmsg(401);
 					}
-					break;
+				break;
+
+				case "getgroupmessages":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($get->getGroupMessages($d->payload->data));
+					} else{
+						echo errmsg(401);
+					}
+				break;
 
 
 				# End of Classroom Get Methods
@@ -323,7 +331,14 @@ switch($_SERVER['REQUEST_METHOD']) {
 				break;
 	
 				# End of Announcements Methods
-
+				case "getroom":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($get->getRoomlist($d->param1));
+					} else{
+						echo errmsg(401);
+					}
+				break;
+				
 				case "getroom":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
 						echo returnData($get->getRoomlist($d->param1));
@@ -516,6 +531,24 @@ switch($_SERVER['REQUEST_METHOD']) {
 				case "addmsg":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
 						echo returnData($post->sendMessage($d->payload));
+					} else{
+						echo errmsg(401);
+					}
+				break;
+
+				// ADD GROUP CHAT
+				case "addgrpchat":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($post->addGroupChat($d->payload));
+					} else{
+						echo errmsg(401);
+					}
+				break;
+
+				// ADD GROUP MESSAGE
+				case "addgrpmsg":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo returnData($post->addGroupMessage($d->payload));
 					} else{
 						echo errmsg(401);
 					}

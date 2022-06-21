@@ -27,7 +27,6 @@ export class GroupMessagingComponent implements OnInit {
   groupMessage: FormGroup;
 
   filter: any;
-  search = new FormControl();
 
   @ViewChild('scrollTarget') private myScrollContainer: ElementRef;
   @ViewChild('scrollframe') private scrollFrame: ElementRef;

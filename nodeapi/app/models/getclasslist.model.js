@@ -43,7 +43,6 @@ ClassList.getClassMembers = (data, result) => {
             }
 
             if(res.length) {
-                console.log(res)
                 result(null, {data: res, status: "success", message: "User Login Successfully"});
                 return;
             }else{
@@ -59,16 +58,14 @@ ClassList.getClassMembers = (data, result) => {
 ClassList.getGroupList = (data, result) => {
     try {
         let selectQuery = 'SELECT * FROM groups_tbl WHERE classcode_fld = ? AND participants_fld LIKE ? AND isdeleted_fld = ?'
-        let query = sql.format(selectQuery,[`${data.classcode_fld}`, `%${data.user_id}%`, `0`])
+        let query = sql.format(selectQuery,[`${data.classcode}`, `%${data.id}%`, `0`])
 
         sql.query(query, async (err, res)=>{
             if(err){
                 result(err, null);
                 return;
             }
-
             if(res.length) {
-                console.log(res)
                 result(null, {data: res, status: "success", message: "Successfully Retrived Groups"});
                 return;
             }else{
@@ -105,6 +102,7 @@ ClassList.getSavedMessages = (data, result) => {
     try {
         let selectQuery = 'SELECT sender_fld, content_fld, datetime_fld FROM groupmessage_tbl WHERE groupid_fld = ?';
         let query = sql.format(selectQuery,[`${data.gid}`])
+        console.log(query)
 
         sql.query(query, async (err, res)=>{
             if(err){

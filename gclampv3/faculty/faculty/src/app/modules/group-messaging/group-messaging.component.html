@@ -157,32 +157,20 @@
           </div>
   
           <form [formGroup]="groupMessage">
-            <div class="yourmessage__container">
-              <mat-form-field appearance="outline">
-                <input
-                  formControlName="messageContent"
-                  matInput
-                  type="text"
-                  placeholder="Send a message ..."
-                />
-                <button
-                  type="submit"
-                  matSuffix
-                  mat-icon-button
-                  matTooltip="Send"
-                  (click)="addMessage(groupMessage.value.messageContent)"
-                >
-                  <mat-icon>send</mat-icon>
-                </button>
-                <button
-                  matSuffix
-                  mat-icon-button
-                  matTooltip="Attach file"
-                  type="button"
-                >
-                  <mat-icon>attach_file</mat-icon>
-                </button>
-              </mat-form-field>
+            <div class="yourmessage__box">
+              <div class="yourmessage__container">
+                
+                <input formControlName="messageContent" matInput type="text" placeholder="Send a message ..." />
+          
+              <button type="submit" matSuffix mat-icon-button matTooltip="Send" (click)="addMessage(groupMessage.value.messageContent)">
+                <mat-icon>send</mat-icon>
+              </button>
+
+              <button matSuffix mat-icon-button matTooltip="Attach file" type="button">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+
+            </div>
             </div>
           </form>
         </ng-container>

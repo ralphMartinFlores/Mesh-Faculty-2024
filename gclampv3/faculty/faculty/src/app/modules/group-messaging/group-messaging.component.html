@@ -157,10 +157,9 @@
           </div>
   
           <form [formGroup]="groupMessage">
-            <div class="yourmessage__box">
-              <div class="yourmessage__container">
+            <div class="yourmessage__container">
                 
-                <input formControlName="messageContent" matInput type="text" placeholder="Send a message ..." />
+              <input formControlName="messageContent" matInput type="text" placeholder="Send a message ..." />
           
               <button type="submit" matSuffix mat-icon-button matTooltip="Send" (click)="addMessage(groupMessage.value.messageContent)">
                 <mat-icon>send</mat-icon>
@@ -171,7 +170,9 @@
               </button>
 
             </div>
-            </div>
+            <!-- <div class="yourmessage__box">
+              
+            </div> -->
           </form>
         </ng-container>
       </ng-container>

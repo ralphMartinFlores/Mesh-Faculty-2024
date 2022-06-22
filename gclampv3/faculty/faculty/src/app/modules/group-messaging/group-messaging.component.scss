@@ -123,38 +123,60 @@
         flex: 1 1 auto;
       }
   
-      .searchmember__container--header {
-        padding: 0.5rem;
-        background-color: #cce0f0;
-  
-        mat-form-field {
-          width: 100%;
-        }
-        ::ng-deep .mat-form-field-wrapper {
-          padding-bottom: 0;
-          margin-bottom: 10px;
-        }
-      }
-  
       .maingroupmembers__container {
-        height: 60vh !important;
+        height: 68vh !important;
         overflow-y: auto;
-      }
-      .groupmembers__container--body {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        background-color: red;
-        grid-gap: 10px;
-        .groupmemberimage__container {
-          img {
-            max-width: 64px;
-            height: auto;
+        width: 100% !important;
+
+        .groupmembers__container{
+          
+          display: grid;
+          align-content: center;
+          grid-template-columns: repeat(3, 1fr);
+          grid-gap: 7px;
+          padding: 0.5rem;
+          .groupmembers__container--body {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: start;
+            transition: all 0.3s;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 3px;
+            padding: 1rem;
+            .groupmemberimage__container {
+            
+              img {
+                max-width: 50px;
+                height: auto;
+              }
+            }
+
+            .groupmember__details{
+              line-height: 1rem;
+              text-align: start;
+              span {
+                font-weight: 600;
+                font-size: 0.9rem;
+              }
+            }
+            .groupmember__studid{
+              span{
+                font-size: 0.8rem !important;
+                font-weight: 400 !important;
+              }
+
+            }
           }
         }
+
       }
+
   
       .mainmessage__container {
         height: 54vh;
+        width: 100%;
         overflow-y: auto;
         width: 100%;
   
@@ -333,17 +355,39 @@
             width: 100%;
         }
       }
-  
-      .yourmessage__container {
-        position: sticky;
-        // position: -webkit-sticky;
-        z-index: 1000;
-        flex-shrink: 0;
-        // background-color: #F3F4F6;
-        width: 100%;
-        padding: 16px;
-        mat-icon {
-          color: var(--clr-primary-400);
+      
+      .yourmessage__box{
+
+        width: 69%;
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+
+        .yourmessage__container {
+          position: sticky;
+          // position: -webkit-sticky;
+          z-index: 1000;
+          // background-color: #F3F4F6;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          margin: auto;
+          background: #fff;
+          padding: 10px;
+
+          mat-icon {
+            color: var(--clr-primary-400);
+          }
+
+          input {
+            width: 100%;
+            padding: 5px 15px;
+            border: none;
+            border-radius: 25px;
+            background: #f5f5f5;
+            outline: none;
+          }
         }
       }
     }
@@ -368,6 +412,16 @@
   //
   
   @media only screen and (max-width: 768px) {
+    .groupmember__studid{
+      span{
+        font-size: 0.7rem !important;
+        font-weight: 300 !important;
+      }
+    }
+    .groupmembers__container{
+      display: grid !important;
+      grid-template-columns: repeat(1, 1fr) !important;
+    }
     .main__container {
       height: auto;
       padding: 16px;

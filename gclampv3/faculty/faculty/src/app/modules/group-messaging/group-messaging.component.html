@@ -25,7 +25,7 @@
         class="groups__container--group"
         *ngFor="let group of grouparray; let i = index"
         [class.active]="group === groupNameisActive"
-        (click)="chatBody(group, i)"
+        (click)="openGroupChat(group, i)"
       >
         <!-- <div class="groups__container--group" *ngFor="let group of grouparray" (click)="openGroupChat()"> -->
         <!-- <div class="groupsicon__container">
@@ -68,7 +68,7 @@
       </div>
       <ng-container *ngIf="selectedRoom != ''">
         <header class="chat__container--header">
-          <strong>{{ selectedRoom['name'] }}</strong>
+          <strong>{{ selectedRoom['groupname_fld'] }}</strong>
           <span class="spacer"></span>
           <button matTooltip="Call" mat-icon-button (click)="call()">
             <mat-icon>call</mat-icon>
@@ -95,26 +95,20 @@
         </header>
         <ng-container *ngIf="showGroupMembers === true">
           <div class="maingroupmembers__container">
-            <div class="searchmember__container--header">
-              <mat-form-field class="example-full-width" appearance="outline">
-                <!-- <mat-label>Search for a member ...</mat-label> -->
-                <input
-                  matInput
-                  type="text"
-                  placeholder="Search for a member ..."
-                />
-                <button matSuffix mat-icon-button matTooltip="Search">
-                  <mat-icon>search</mat-icon>
-                </button>
-              </mat-form-field>
-            </div>
-            <div
-              class="groupmembers__container--body"
-              *ngFor="let group of members; let i = index"
-            >
-              <div class="groupmemberimage__container">
-                <img [src]="group.src" alt="" />
+            <div class="groupmembers__container">
+              <div class="groupmembers__container--body" *ngFor="let group of members; let i = index">
+                <div class="groupmemberimage__container" >
+                  <img [src]="group.src" alt="" />
+                </div>
+                <div class="groupmember__details">
+                  <span>Austin Ray Aranda</span>
+                  <div class="groupmember__studid">
+                    <span>201810144</span>
+                  </div>
+                </div>
               </div>
+
+              
             </div>
           </div>
         </ng-container>
@@ -163,48 +157,23 @@
           </div>
   
           <form [formGroup]="groupMessage">
-            <div class="yourmessage__container">
-              <mat-form-field appearance="outline">
-                <input
-                  formControlName="messageContent"
-                  matInput
-                  type="text"
-                  placeholder="Send a message ..."
-                />
-                <button
-                  type="submit"
-                  matSuffix
-                  mat-icon-button
-                  matTooltip="Send"
-                  (click)="addMessage(groupMessage.value.messageContent)"
-                >
-                  <mat-icon>send</mat-icon>
-                </button>
-                <button
-                  matSuffix
-                  mat-icon-button
-                  matTooltip="Attach file"
-                  type="button"
-                >
-                  <mat-icon>attach_file</mat-icon>
-                </button>
-              </mat-form-field>
+            <div class="yourmessage__box">
+              <div class="yourmessage__container">
+                
+                <input formControlName="messageContent" matInput type="text" placeholder="Send a message ..." />
+          
+              <button type="submit" matSuffix mat-icon-button matTooltip="Send" (click)="addMessage(groupMessage.value.messageContent)">
+                <mat-icon>send</mat-icon>
+              </button>
+
+              <button matSuffix mat-icon-button matTooltip="Attach file" type="button">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+
+            </div>
             </div>
           </form>
         </ng-container>
       </ng-container>
-  
-      <!-- <span class="groupmessages__back-button" (click)="onBackButton()"><mat-icon>keyboard_backspace</mat-icon></span>
-          <div class="illustration__container">
-              <img src="assets/images/group-illustration-flat.svg" alt="Flat group illustration" loading="lazy">
-          </div>
-          <div class="main__container--header">
-              
-              <p>Welcome to Groups!</p>
-              <p>A whole new way of interacting with everyone in your class.</p>
-              <p>It seems that you have not yet created a group for your class, get started by clicking on the button below.</p>
-              <button mat-flat-button (click)="createGroupDialog()">Create a Group</button>
-          </div> -->
-    </div>
   </div>
   

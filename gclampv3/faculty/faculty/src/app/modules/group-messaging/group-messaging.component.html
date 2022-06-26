@@ -14,7 +14,7 @@
     <div class="groups__container">
       <div class="groups__container--header">
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Search for a group ...</mat-label>
+          <mat-label>Search for a group...</mat-label>
           <input [(ngModel)]="searchInput" (keyup)="search()" matInput type="text" />
         </mat-form-field>
       </div>
@@ -70,14 +70,14 @@
         <header class="chat__container--header">
           <strong>{{ selectedRoom['groupname_fld'] }}</strong>
           <span class="spacer"></span>
-          <button matTooltip="Call" mat-icon-button (click)="call()">
+          <button matTooltip="Start a voice call" mat-icon-button (click)="call()">
             <mat-icon>call</mat-icon>
           </button>
-          <button matTooltip="Video Call" mat-icon-button (click)="videocall()">
+          <button matTooltip="Start a video call" mat-icon-button (click)="videocall()">
             <mat-icon>videocam</mat-icon>
           </button>
           <button
-            matTooltip="See Members"
+            matTooltip="See members"
             mat-icon-button
             (click)="seegroupMembers()"
             *ngIf="!showGroupMembers"
@@ -145,8 +145,8 @@
               <div class="imageAvatarRight" *ngIf="chat.sender_fld === myId">
                 <div class="chatcontent__container">
                   <div class="personsname__container1">
-                    <span>You</span>
-                    <span> {{ chat.datetime_fld}} </span>
+                    <span>You</span> <br>
+                    <span class="chat__datetime"> {{ chat.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </span>
                   </div>
                   <div class="chatDivReply">
                     <p>{{ chat.content_fld }}</p>
@@ -159,15 +159,15 @@
           <form [formGroup]="groupMessage">
             <div class="yourmessage__container">
                 
-              <input formControlName="messageContent" matInput type="text" placeholder="Send a message ..." />
+              <input formControlName="messageContent" matInput type="text" placeholder="Send a message..." />
           
-              <button type="submit" matSuffix mat-icon-button matTooltip="Send" (click)="addMessage(groupMessage.value.messageContent)">
+              <button type="submit" matSuffix mat-icon-button matTooltip="Send" (keyup.enter)="addMessage(groupMessage.value.messageContent)" (click)="addMessage(groupMessage.value.messageContent)">
                 <mat-icon>send</mat-icon>
               </button>
 
-              <button matSuffix mat-icon-button matTooltip="Attach file" type="button">
+              <!-- <button matSuffix mat-icon-button matTooltip="Attach file" type="button">
                 <mat-icon>attach_file</mat-icon>
-              </button>
+              </button> -->
 
             </div>
             <!-- <div class="yourmessage__box">

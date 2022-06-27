@@ -1,0 +1,189 @@
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .8em 1em;
+    h5{ margin: 0; font-weight: 600;}
+}
+
+section{
+  width: 100%;
+  max-height: 40vh;
+  overflow-y: scroll;
+}
+section::-webkit-scrollbar{
+  width: 1px; 
+  height: 1px; 
+}
+
+.comment-post {
+    width: 100%;
+    margin: 8px 0;
+    padding: 5px 10px;
+    display: flex;
+    position: relative;
+  
+    justify-content: space-between;
+    border-radius: 10px;
+  
+    .commentimg {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background-size: cover;
+      border-radius: 50%;
+      box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+    }
+    .comment-body {
+      width: 90%;
+      padding: 0 10px;
+      position: relative;
+      border-radius: 10px;
+      margin-left: 15px;
+      background: #f5f5f5;
+      .messege-header {
+        width: 100%;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .comment-content{
+        line-height: 24px;
+        font-size: .9rem;
+        text-align: justify;
+        white-space: pre-line;
+      }
+    }
+  
+    .comment-body::before{
+      content: '';
+      width: 15px;
+      height: 15px;
+      transform: rotate(45deg);
+      position: absolute;
+      top: 12px;
+      left: -7px;
+      z-index: -1;
+      background: #f5f5f5;
+    }
+  }
+
+  footer{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--background-default);
+      form{
+        width:100%;
+        margin: 10px 5px;
+      }
+      .input-box{
+          width: 100% !important;
+          padding: 7px;
+          border-radius: 25px;
+          display: flex;
+          align-items: center;
+          border: 1px solid var(--background-default);
+          input{
+              width: 100%;
+              border: none;
+              outline: none;
+          }
+          button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            background: var(--color-scheme-default);
+            color: #fff;
+            mat-icon{ transform: scale(.7);}
+        }
+        button:disabled{
+          background: #a7a7a7;
+        }
+      }
+
+      
+  }
+  .imgsrc{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+  }
+
+  .replies{
+    width:90%;
+    left: 10%;
+    display: flex;
+    position: relative;
+  
+    justify-content: space-between;
+    // justify-content: space-around;
+    button{ display: flex; align-items: center; background: none; border: none;
+      color: gray;
+      small{ margin-left: 5px;}
+      mat-icon{ transform: scale(.9); }
+    } 
+    button:hover{
+      color: var(--color-scheme-default);
+    }
+  }
+  .reply-post {
+    width:90%;
+    margin: 8px 0;
+    left: 10%;
+    padding: 5px 10px;
+    display: flex;
+    position: relative;
+  
+    justify-content: space-between;
+    border-radius: 10px;
+  
+    .commentimg {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background-size: cover;
+      border-radius: 50%;
+      box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+    }
+    .comment-body {
+      width: 90%;
+      padding: 0 10px;
+      position: relative;
+      border-radius: 10px;
+      margin-left: 15px;
+      background: #f5f5f5;
+      .messege-header {
+        width: 100%;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .comment-content{
+        line-height: 24px;
+        font-size: .9rem;
+        text-align: justify;
+        white-space: pre-line;
+      }
+    }
+  
+    .comment-body::before{
+      content: '';
+      width: 15px;
+      height: 15px;
+      transform: rotate(45deg);
+      position: absolute;
+      top: 12px;
+      left: -7px;
+      z-index: -1;
+      background: #f5f5f5;
+    }
+  }

@@ -1,0 +1,137 @@
+@import "src/app/scss/__mixin.scss";
+
+.memberscontainer{
+    @include flex(column, flex-start, center);
+    padding: 1em;
+}
+
+.instructor, .students{
+    width: 100%;
+    padding: 1em 0;
+}
+
+.instructor{
+    @include flex(column, flex-start, center);
+    gap: 1em;
+    border: 1px solid #c7c7c7;
+    padding: 1.5em;
+    border-radius: .5em;
+
+    &__img{
+        max-width: 100%;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+    }
+    h5{
+        margin: 0;
+        color: var(--clr-primary);
+        font-weight: 700;
+        font-size: var(--reg-font-size);
+    }
+
+    &__info{
+        text-align: center;
+    }
+
+    &__depart{
+        font-size: var(--reg-font-size);
+        color: #626262;
+    }
+}
+
+.students{
+    h5{
+        color: var(--clr-primary);
+    }
+    span{
+        color: #0166b3; font-size: var(--md-font-size);
+        font-weight: 600;
+    }
+
+    &__container{
+        display: grid;
+        grid-template-columns: repeat(1, minmax(100%, 1fr));
+        // padding: 1em 0;
+    }
+
+    &__card{
+        @include flex(row, flex-start, center);
+        gap: 1em;
+        padding: 1em 0;
+        border-radius: .5em;
+
+        &:hover{
+        background: #f5f5f5;
+        }
+    }
+
+    &__img{
+        max-width: 100%;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+
+    &__info{
+        font-size: var(--reg-font-size);
+    }
+}
+
+@media screen and(min-width: 600px){
+    .students{
+    
+        &__container{
+            grid-template-columns: repeat(2, minmax(50%, 1fr));
+        }
+    }
+}
+
+@media screen and(min-width: 786px){
+    .memberscontainer{
+        @include flex(row, space-between, flex-start);
+        gap: 1em;
+    }
+
+    .instructor{
+        width: 40%;
+    }
+    .students{
+        width: 80%;
+    }
+}
+
+@media screen and(min-width: 1200px){
+    .memberscontainer{
+        @include flex(row, space-between, flex-start);
+        gap: 1.5em;
+    }
+
+    .students{
+        &__container{
+            grid-template-columns: repeat(3, minmax(30%, 1fr));
+        }
+        &__card{
+            gap: 1em;
+            padding: 1em;
+        }
+    }
+    .instructor{
+        width: 20%;
+        &__img{
+            max-width: 100%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+    }
+    .students{
+        width: 80%;
+        &__img{
+            height: 60px;
+            width: 60px;
+        }
+    }
+}
+
+

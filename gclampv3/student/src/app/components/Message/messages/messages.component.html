@@ -1,0 +1,140 @@
+<div class="message">
+  <div class="message__wholecontain">
+    <div class="message__chatgroup" >
+
+      <section class="message__students">
+        <div class="message__header">
+          <input type="text" [(ngModel)]="filter" (keyup)="filterlist()" placeholder="Search here ...">
+          <mat-icon>search</mat-icon>
+        </div>
+
+        <div class="message__container" >
+            <div class="message__box" *ngFor="let room of rooms;  let i = index" (click)="chatBody(room, i)"
+            [class.active]="room === activeMessage">
+                <div class="message__img" [matBadge]="room.unread>0?room.unread:''" matBadgeOverlap="false" matBadgeColor="warn" matBadgeSize="small">
+                    <img appLazyLoad [src]=" ds.fileUrl + room.image" alt="" onerror="this.src='assets/images/profile.jpg';" />
+                </div>
+  
+  
+                <div class="message__fullname">
+                  <!-- <strong>{{ room.fullname }} </strong><br /> -->
+                  <!-- <span class="dot" *ngIf="room.unread > '0'"></span> -->
+                  <strong >{{room.fullname}}</strong>
+                </div>
+            </div>
+        </div>
+      </section>
+    </div>
+
+    <!--#########################  MOBILE VERSION  WITH SLIDE ANIMATION ##################  -->
+    <div class="message__chatbox mobile"  [@slideanimation]="position">
+      <ng-container *ngIf="roomMessages && selectedRoom == ''">
+        <div class="text-center mt-5 p-5">
+          <h1 class="mb-3">🙊📧</h1>
+          <div class="small text-muted">There was no contact chosen. Choose one to begin the conversation.</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="selectedRoom != ''">
+        <header class="message__chatboxheader">
+          <button class="mobile" (click)="buttonback()" mat-icon-button><mat-icon>keyboard_arrow_left</mat-icon></button>
+          <strong>{{selectedRoom['fullname']}}</strong>
+
+        </header>
+        <mat-progress-bar *ngIf="user.isLoading()" mode="indeterminate"></mat-progress-bar>
+
+        <div class="chatbox" #targetmobile>
+          <div class="chatbox__whiteboard"></div>
+          <div class="chatbox__messages" *ngFor="let item of roomMessages">
+            <div class="chatbox__buff" *ngIf="item.authorid_fld!=user.getUserID()" id="myPageId">
+              <p class="chatbox__recievermessage">{{item.content_fld}}</p>
+              <small class="chatbox__recievertimestamp">{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</small>
+            </div>
+            <div class="chatbox__buff sender" *ngIf="item.authorid_fld==user.getUserID()"  id="myPageId">
+              <p class="chatbox__sendermessage">{{ item.content_fld }}</p>
+              <small class="chatbox__sendertimestamp">{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</small>
+            </div>
+          </div>
+        </div>
+
+        <form [formGroup]="messageForms">
+          <div class="commnent-box">
+            <div class="comment-input">
+              <div class="other-buttons">
+                
+              </div>
+              <input formControlName="usermassage"  type="text" placeholder="Send a message..." />
+              <button type="submit" mat-icon-button (click)="sendChat(targetmobile)">
+                <mat-icon>send</mat-icon>
+              </button>
+            
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+
+
+    <!--#########################  DESKTOP VERSION ##################  -->
+    <div class="message__chatbox desktop" >
+      <ng-container *ngIf="roomMessages && selectedRoom == ''">
+        <div class="text-center mt-5 p-5">
+          <h1 class="mb-3">🙊📧</h1>
+          <div class="small text-muted">There was no contact chosen. Choose one to begin the conversation.</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="selectedRoom != ''">
+        <header class="message__chatboxheader">
+          <button class="mobile" (click)="buttonback()" mat-icon-button><mat-icon>keyboard_arrow_left</mat-icon></button>
+          <strong>{{selectedRoom['fullname']}}</strong>
+
+        </header>
+        <mat-progress-bar *ngIf="user.isLoading()" mode="indeterminate"></mat-progress-bar>
+
+        <div class="chatbox" #target>
+          <div class="chatbox__whiteboard"></div>
+          <div class="chatbox__messages" *ngFor="let item of roomMessages">
+            <div class="chatbox__buff" *ngIf="item.authorid_fld!=user.getUserID()" id="myPageId">
+              <p class="chatbox__recievermessage">{{item.content_fld}}</p>
+              <small class="chatbox__recievertimestamp">{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</small>
+            </div>
+            <div class="chatbox__buff sender" *ngIf="item.authorid_fld==user.getUserID()"  id="myPageId">
+              <p class="chatbox__sendermessage">{{ item.content_fld }}</p>
+              <small class="chatbox__sendertimestamp">{{ item.datetime_fld | date: 'MMM dd, yyyy h:mm a' }}</small>
+            </div>
+          </div>
+        </div>
+
+        <form [formGroup]="messageForms">
+          <div class="commnent-box">
+            <div class="comment-input">
+              <div class="other-buttons">
+              </div>
+              <input formControlName="usermassage"  type="text" placeholder="Send a message..." />
+              <button type="submit"  mat-icon-button (click)="sendChat(target)">
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,331 @@
+<div class="background"></div>
+
+<div class="assign">
+    <div class="assign__work">
+          <div class="assign__workhead">
+            <button class="btn-default" (click)="back()" mat-icon-button><mat-icon>arrow_back</mat-icon></button>
+            <span >Back</span>
+          </div>
+
+          <ng-container *ngIf="type == 0">
+              <input type="file" style="display: none;" #uploadfile id="files" type="file" name="file[]" (change)="getFile($event)"
+              multiple>
+
+              <div class="assign__studentwork">
+                  <h5>Your Work</h5>
+
+                  <label *ngIf="works == null && dueDate > _user.getDateToday()" class="text-success">Assigned</label>
+                  <label *ngIf="works == null && dueDate < _user.getDateToday()" class="text-danger">Missing</label>
+
+                  <ng-container *ngIf="works != null">
+                      <label *ngIf="issubmitted == 0" class="text-success">Assigned</label>
+                      <label *ngIf="works[0].isscored_fld == 0 && issubmitted == 1" style="color: #1590e2;">Turned in</label>
+                      <label *ngIf="works[0].isscored_fld == 0 && issubmitted == 2" class="text-danger">Late</label>
+
+                      <p *ngIf="works[0].isscored_fld == 1" style="color: #01B34E; font-weight: bold;">{{ works[0].score_fld }} points <br> <small>Graded</small></p>
+                  </ng-container>
+              </div>
+
+
+              <hr >
+
+              <div class="assign__filecontain" >
+                
+                  <p class="assign__label">Files Uploaded</p>
+
+
+
+                 
+
+                  <ng-container *ngIf="submittedFiles">
+                    <div class="list"  *ngFor="let file of submittedFiles; let i = index">
+                      <li class="list__content">
+                          <div class="list__name">
+                            <div class="list__icon">
+                              <mat-icon >description</mat-icon>
+                              <span [ngStyle]="{'background-color': getFileExtension( _us.getfileExt( file.name ) )}">{{
+                                getfileExt( file.name ) | uppercase }}</span>
+                            </div>
+                            <p>{{file.name}}</p>
+                          </div>
+  
+                          <button *ngIf="issubmitted == 0 && isLoading == 0"  type="button" mat-icon-button (click)="deleteDialog(i, 'file')">
+                            <mat-icon style="color: #B30110" >cancel</mat-icon>
+                          </button>
+                          <button *ngIf="issubmitted > 0" type="button" mat-icon-button>
+                            <mat-icon style="color: #01B34E;" >check_circle</mat-icon>
+                          </button>
+                      </li>
+                    </div>
+                  </ng-container>
+
+                  <div class="list" *ngFor="let file of files; let i = index">
+                    <li class="list__content">
+                        <div class="list__name">
+                          <div class="list__icon">
+                            <mat-icon >description</mat-icon>
+                            <span [ngStyle]="{'background-color': getFileExtension( _us.getfileExt( file.name ) )}"></span>
+                          </div>
+                          <p>{{file.name}}</p>
+                        </div>
+
+                        <button *ngIf="issubmitted == 0 && isLoading == 0"  type="button" mat-icon-button (click)="removeFile(i)">
+                          <mat-icon style="color: #B30110" >cancel</mat-icon>
+                        </button>
+                        <button *ngIf="issubmitted > 0" type="button" mat-icon-button>
+                          <mat-icon style="color: #01B34E;" >check_circle</mat-icon>
+                        </button>
+                    </li>
+                  </div>
+
+
+              </div>
+
+              <hr *ngIf="issubmitted == 0 || works == null ||  withfile > 0 || works[0].score_fld == 0">
+
+              <div class="assign__action">
+                <button class="Attach" *ngIf="issubmitted == 0" type="button"  mat-flat-button (click)="uploadfile.click()" >
+                  <mat-icon>add</mat-icon>
+                  <span>Attach file</span>
+                </button>
+
+                <ng-container *ngIf="issubmitted == 0 && withfile > 0 && works == null">
+                  <button class="btn-quiz"   mat-raised-button  [class.spinner]="isUploading" [disabled]="isUploading" (click)="addWork()"  type="button">Submit Assignment</button>
+                </ng-container>
+              
+                <ng-container *ngIf="works != null || issubmitted > 0 ">
+                  <button class="edits" *ngIf="issubmitted > 0 && isscored == 0 "  [class.spinner]="isUploading" [disabled]="isUploading" (click)="unsubmit()"  mat-raised-button type="button">Edit Uploaded Files</button>               
+                </ng-container>
+
+                <ng-container *ngIf="issubmitted == 0 && works != null">
+                  <button class="btn-quiz" [class.spinner]="isUploading"  [disabled]="isUploading" (click)="save()"   mat-flat-button type="button">Resubmit Assignment</button>               
+                </ng-container>
+
+              </div>
+             
+          </ng-container>
+
+
+          <ng-container  *ngIf="type == 1">
+              <div class="assign__studentwork">
+                <h5>My Quiz</h5>
+                <ng-container *ngIf="works != null">
+                  <label *ngIf="works[0].withfile_fld == 2">Score: <span>{{ works[0].score_fld+ "/"+ totalScore }}</span></label>
+                  <label *ngIf="works[0].withfile_fld == 3 && works[0].issubmitted_fld > 0">Done</label>
+                </ng-container>
+              </div>
+
+              <hr>
+
+              <div class="assign__action">
+                <ng-container *ngIf="works == null && withfileact == 2 && dueDate > _user.getDateToday()">
+                  <button class="btn-quiz" mat-flat-button type="button" disabled>Quiz is not open yet</button>
+                </ng-container>
+                <ng-container *ngIf="works == null && withfileact == 2 && dueDate < _user.getDateToday()">
+                  <button class="btn-quiz" mat-flat-button type="button" disabled>Exceeded the time to take the quiz</button>
+                </ng-container>
+
+                <ng-container *ngIf="works && withfileact == 3">
+                  <button class="btn-quiz" mat-flat-button type="button" disabled>Quiz is still ongoing</button>
+                </ng-container>
+                <ng-container *ngIf="works == null && withfileact == 3">
+                  <button class="btn-quiz" mat-flat-button  (click)="viewQuiz(0)" type="button" >Click to take the quiz</button>
+                </ng-container>
+                <ng-container *ngIf="works && withfileact == 2">
+                  <button class="btn-quiz" mat-raised-button (click)="viewQuiz(1)" type="button">View quiz details</button>
+                </ng-container>
+              </div>
+
+          </ng-container>
+    </div>
+
+
+    <div class="assign__content">
+        <div class="assign__fulldetails">
+          <div class="assign__heads">
+             
+              <div class="assign__details">
+                  <h3>{{actTitle}}</h3>
+                  <label>Instructor:  <span>{{_user.getSelectedClass().fname_fld}}  {{_user.getSelectedClass().lname_fld}}</span></label>
+                  <label>Date Posted: <span>{{datePosted | date:"MMMM d, y h:mm a"}}</span> &nbsp; &nbsp; Due date: <span>{{dueDate | date:"MMMM d, y h:mm a"}}</span> </label>
+              </div>
+
+              <hr>
+              <ng-container *ngIf="description != ''">
+                  <p class="assign__description">{{description}}</p>
+              </ng-container>
+
+              <ng-container *ngIf="description == ''">
+                  <p class="assign__description">No Instruction</p>
+              </ng-container>
+            </div>
+
+            <ng-container *ngIf="withfileact == 1 && type == 0">
+                <strong>Attachments</strong>
+            </ng-container>
+
+            <ng-container *ngIf="withfileact == 0">
+              <strong>No Attachments</strong>
+            </ng-container>
+
+            <div class="file"  *ngIf="withfileact == 1">
+              <ng-container *ngFor="let file of attachments">
+                <a class="file__contain">
+                  <div class="file__name">
+                    <div class="file__icon">
+
+                      <mat-icon class="material-icons-outlined">description</mat-icon>
+                      <span 
+                        [ngStyle]="{'background-color': getFileExtension( _us.getfileExt( file.name ) )}">{{
+                        getfileExt( file.name ) | uppercase }}</span>
+                    </div>
+                    <div class="file__info">
+                      <p>{{file.name}}</p>
+                    </div>
+                  </div>
+
+                  <div class="file__button">
+                    <mat-icon style="cursor: pointer;" *ngIf="_user.getext(file.name) == 'docx' || _user.getext(file.name) == 'pptx' || _user.getext(file.name) == 'xlsx' ||  _user.getext(file.name) == 'pdf' || _user.getext(file.name) == 'jpg' || _user.getext(file.name) == 'jpeg' || _user.getext(file.name) == 'png'" (click)="previewResource(file.link, file.name)"> pageview</mat-icon>
+                    <button mat-icon-button type="button" (click)="_ds.downloadFile(file.path, file.name)">
+                      <mat-icon style="color: #0166b3;">download</mat-icon>
+                    </button>
+                  </div>
+                  
+                </a>
+              </ng-container>
+
+            </div>
+
+            <hr>
+
+            <p class="assign__label"> {{comments == 1 ? comments + ' comment' : comments > 1 ? comments + ' comments' : 'No comments yet.'}}</p>
+
+            <div class="assign__comments">
+              <ng-container *ngFor="let item of comments;let i = index">
+                  <div class="assign__commentheader">
+                      <div class="assign__commentinfo">
+                          <img   onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                          [src]="_ds.imageURL + item.profilepic_fld" alt="" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+      
+                          <div class="assign__user">
+                            <p class="assign__name">{{item.fullname_fld}}</p>
+                            <small> {{_upload.getElapsedTime(item.datetime_fld)}}</small>
+                            <p class="assign__commentscontent">{{item.content_fld}}</p>
+
+
+
+                            <button class="assign__replycontain" [id]="'replybtn'+i" (click)="showReply(i)">
+                                <mat-icon>chat</mat-icon>
+                                <span>{{item.reply == null ? 'Write a reply...' : item.replycount == 1 ? item.replycount + ' Reply' : item.replycount + ' Replies'}}</span>
+                            </button>
+
+                            <div [id]="'replydiv'+i" style="display:none">
+                              <ng-container *ngFor="let reply of item.reply; let j = index">
+                                <div class="assign__commentheader">
+                                  <div class="assign__commentinfo">
+                                      <img   onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                                      [src]="_ds.imageURL + reply.profilepic_fld" alt="" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+                  
+                                      <div class="assign__user">
+                                        <p class="assign__name">{{reply.fullname_fld}}</p>
+                                        <small> {{_upload.getElapsedTime(reply.datetime_fld)}}</small>
+                                        <p class="assign__commentscontent">{{reply.content_fld}}</p>
+
+  
+                                        <div class="replyedit" [id]="i + 'redit-box'+j" style="display: none; border: none;">
+                                          <form style="width: 100%" class="replyedit__form"  (submit)="editReply($event,i)" ngNativeValidate >
+                                              
+                                            <input class="replyedit__input" type="text" name="content_fld" [id]="i + 'reply_content_fld'+j">
+                                            <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status"></div>
+                                            <div class="replyedit__action">
+                                              <button  mat-icon-button (click)="cancelEditReply(i,j)">
+                                                <mat-icon>cancel</mat-icon>
+                                              </button>
+
+                                              <button class="replyedit__button" mat-icon-button *ngIf="!_user.isLoading()"   type="submit">
+                                                <mat-icon >send</mat-icon>
+                                              </button>
+                                            </div>
+                                          </form>
+                                        </div>
+
+
+                                        
+                                       
+                                      </div>
+                                  </div>
+              
+                                  <button class="assign__icons"  *ngIf="_user.getUserID() === reply.authorid_fld"  mat-icon-button [matMenuTriggerFor]="del"
+                                  aria-label="button menu" >
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                                  <mat-menu #del="matMenu">
+                                    <button mat-menu-item class="nooutline" (click)="editthis(j,reply,i)">
+                                      <span>Edit</span>
+                                    </button>
+                                    <button mat-menu-item class="nooutline" (click)="deletereply(i,j,reply.commentcode_fld,'comment')">
+                                      <span>Delete</span>
+                                    </button>
+          
+                                  </mat-menu>
+                                </div>
+                              </ng-container>
+
+
+                              <div class="reply">
+                                <ng-container *ngIf="replystatus == 0">
+                                  <form style="width: 100%" class="reply__form" (submit)="addReply($event,item,i)" ngNativeValidate >
+                                    
+                                    <input class="reply__input" type="text" name="commentscontent" placeholder="Write a reply..." >
+                                    <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status"></div>
+                                    <button mat-icon-button *ngIf="!_user.isLoading()" class="reply__button" type="submit">
+                                      <mat-icon >send</mat-icon>
+                                    </button>
+                                  </form>
+                                </ng-container>
+                              </div>
+                            </div>
+
+
+                            
+
+
+                          </div>
+                      </div>
+  
+                      <button class="assign__icons" *ngIf="_user.getUserID() === item.authorid_fld" mat-icon-button [matMenuTriggerFor]="delc"
+                      aria-label="button menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+  
+                      <mat-menu #delc="matMenu">
+                        <button  mat-menu-item class="nooutline"  (click)="editComment(i,item,item.commentcode_fld,'editcomment')">
+                          <span>Edit</span>
+                        </button>
+                        <button   mat-menu-item class="nooutline" (click)="deletecomment(i,item.commentcode_fld ,'comment')">
+                          <span>Delete</span>
+                        </button>
+                      </mat-menu>
+                  </div>
+
+              </ng-container>
+          </div>
+        </div>
+
+
+      
+        <ng-container *ngIf="replystatus == 0">
+            <form class="assign__forms" (submit)="addComment($event)" ngNativeValidate >
+              <img  mat-card-avatar onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+              [src]="_ds.imageURL + _user.getProfilePic()" alt="" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+              <input  type="text" name="commentscontent" placeholder="Write a comment..." >
+              <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status"></div>
+              <button *ngIf="!_user.isLoading()" mat-icon-button class="btn-default" type="submit">
+                <mat-icon >send</mat-icon>
+              </button>
+            </form>
+        </ng-container>
+       
+        
+    </div>
+</div>

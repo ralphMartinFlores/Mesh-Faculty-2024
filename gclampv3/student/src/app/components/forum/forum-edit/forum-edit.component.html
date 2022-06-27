@@ -1,0 +1,23 @@
+<header>
+  <div class="head__icon">
+    <mat-icon >campaign</mat-icon>
+  </div>
+  <h5 >Edit Comment</h5>
+</header>
+
+<hr>
+
+<form (submit)="editforum($event)" ngNativeValidate>
+  <div class="forms">
+    <mat-form-field style="width: 100%;" appearance="fill">
+      <mat-label>Sub-Forum Comment</mat-label>
+      <textarea value="{{content}}" style="height: 8vh;" matInput></textarea>
+    </mat-form-field>
+  </div>
+  <hr>
+
+  <footer>
+    <button mat-flat-button  [mat-dialog-close]="undefined" class="btn-cancel">Cancel</button>
+    <button mat-flat-button class="btn-default" type="submit">Update</button>
+  </footer>
+</form>

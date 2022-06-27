@@ -1,0 +1,94 @@
+@import "src/app/scss/__mixin.scss";
+
+
+header{
+    @include flex(row, space-between, center);
+    background-color: rgba(0,0,0, .4);
+    color: #fff;
+    padding: 1em;
+    border-radius: 10px;
+    h5{
+        @include flex(row, flex-start, center);
+        gap: 5px;
+        margin: 0;
+        font-weight: 600;
+        font-size: var(--reg-font-size);
+    }
+    span{
+        @include flex(row, flex-start, center);
+        gap: 5px;
+    }
+    .right-icon-spacer{
+        color: yellow;
+    }
+    .right-icon-redeem{
+        color: rgb(0, 174, 255);
+    }
+}
+
+.quest{
+    @include grid(auto-fit, 100%);
+    gap: 1.5em;
+    margin-top: 1.5em;
+    h4{
+        margin: 0;
+    }
+
+    @media screen and(min-width: 1200px) {
+        @include grid(auto-fit, 40%);
+    }
+
+    @media screen and(min-width: 1600px) {
+        @include grid(3, 20%);
+    }
+}
+
+.questcard{
+    color: #fff;
+    background-color: none;
+    padding: 1.2em;
+    position: relative;
+    border-radius: .5rem;
+
+    @media screen and(min-width: 1600px) {
+        padding: 1.5em;
+    }
+
+    
+    &__back{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: #fff;
+        border-radius: .5rem;
+        opacity: .2;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+    p{
+        color: #f0e5e5;
+        z-index: 1;
+    }
+
+    &__footer{
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+
+        button{
+            &:disabled{
+                background-color: rgba(0,0,0, .3);
+                color: rgb(199, 199, 199);
+            }
+        }
+    }
+}
+
+.title{
+    font-weight: 600;
+}
+.Redeemed{
+    width: 100%;
+}

@@ -1,0 +1,38 @@
+<div class="memberscontainer">
+   <ng-container *ngIf="instructor">
+      <div class="instructor" *ngFor="let item of instructor">
+         
+         <img  onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+         [src]="_ds.imageURL + item.image_fld" alt=""  draggable="false"
+         onerror="this.onerror=null; this.src='assets/profile.jpg'" class="instructor__img">
+         
+
+         <div class="instructor__info">
+            <h5 class="instructor__name">{{item.fname_fld}} {{item.lname_fld}}</h5>
+            <span class="instructor__depart">{{item.dept_fld}} Department</span>
+         </div>
+      </div>
+   </ng-container>
+     
+      
+      <div class="students">
+         <span >Class List </span><small>({{ students.length }} students)</small>
+         <hr>
+         <div class="students__container" >
+            <div class="students__card" *ngFor="let list of pageslice">
+               <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+               [src]="_ds.imageURL + list.profilepic_fld" alt="" class="students__img" draggable="false"
+               onerror="this.onerror=null; this.src='assets/profile.jpg'" >
+
+               <div class="students__info">
+                  <div style="font-weight: bolder;">{{list.lname_fld}}, {{list.fname_fld}} </div>
+                  <div style="font-size: small;">{{list.email_fld}}</div>
+               </div>
+            </div>
+         </div>
+         <hr>
+         <!-- <mat-paginator  [length]="students.length" [pageSize]="16" (page)="OnpageChange($event)"></mat-paginator> -->
+      </div>
+
+      
+</div>

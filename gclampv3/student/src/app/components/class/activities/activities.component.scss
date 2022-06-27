@@ -1,0 +1,350 @@
+@import "src/app/scss/__mixin.scss";
+
+
+.activitycontainer{
+  @include flex(column, flex-start, center);
+  padding: 1em;
+}
+
+.materials, .activity{
+  width: 100%;
+  // padding: 0 1em;
+  h5{
+    color: var(--clr-primary);
+    margin-top: 1em;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}
+
+
+
+.list{
+  background: #f5f5f5;
+  padding: 1em;
+  margin-bottom: .5em;
+  &__content{
+    @include flex(row, space-between, center);
+  }
+
+  &__action{
+    @include flex(row, flex-start, center);
+    gap: 5px;
+
+    mat-icon{
+      cursor: pointer;
+    }
+  }
+
+  &__btn{
+    border: none;
+    background: none;
+  }
+
+  &__icon{
+    position: relative;
+    order: 2;
+    mat-icon{
+      color: #8d8d8d;
+      font-size: .8rem;
+      display: none;
+    }
+    span{     
+      padding: 0px 5px;
+      font-size: .5rem;
+      background: rgb(2, 78, 132);
+      color: #fff;
+    }
+  }
+
+  &__name{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    mat-icon{
+      transform: scale(1.5);
+      margin-right: 10px;
+    }
+    p{
+      order: 1;
+      font-size: .7rem;
+      word-break: break-all;
+      white-space: pre-line;
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+}
+
+.transition{
+  transition: all 0.25s ease-in-out;
+}
+
+.flipIn{
+  animation: flipdown 0.5s ease both;
+}
+
+.mat-elevation-z0{
+  position: relative;
+  --padding: 0;
+  margin: 0;
+  border-bottom: 1px dotted gray;
+  @extend .flipIn;
+}
+
+
+
+
+.resources{
+  @include flex(row, flex-start, flex-start);
+  // margin-top: 1em;
+  padding: 0 1em 1em;
+  
+
+  &__legend{
+    transform: scale(1);
+    margin-top: .2em;
+    margin-right: 10px;
+    color: #3FA0E9;
+  }
+
+  &__header{
+    width: 90%;
+    strong{
+      line-height: 1.4;
+      font-weight: 500;
+      font-size: .9rem !important;
+    }
+    p{ color: #626262; font-size: .8rem; margin-top: .5em; }
+  }
+
+ 
+}
+
+
+
+.panel-list{
+  @include flex(row, flex-start, flex-start);
+  border-bottom: 1px solid #ececec;
+  position: relative;
+	z-index: 0;
+  cursor: pointer;
+  outline: none;
+  padding: .5em;
+  p{ margin: 0; margin-bottom: .5em;}
+  .legend{ 
+    margin-top: .3em;
+    margin-right: 10px; 
+  }
+  .line{
+    position: absolute;
+		top: 50%;
+		transform: translate(0,-50%);
+		left: 0;
+		width: 3px;
+		height: 40px;
+		background: var(--btn-edit);
+		opacity: 0;
+		transition: all .3s ease;
+  }
+  small{ font-weight: 600; font-size: .8rem;}
+  .points{ 
+    color: #109447; 
+    background: #c2f8d9; 
+    padding: 0 5px;
+    font-size: .7rem;
+    border-radius: 25px;
+  }
+  .points2{ display: none;}
+  .date{
+    @include flex(row, flex-start, center);
+    mat-icon{ transform: scale(0.8);}
+  }
+}
+
+.panel-list:hover {
+  z-index: 2;
+}
+
+.panel-list:hover .line {
+  opacity: 1;
+  left: -15px;
+  transition-delay: .1s;
+}
+.panel-list:nth-child(2n){
+  background: #f6f6f6;
+}
+
+.activityheader{
+  width: 100%;
+  strong{
+    line-height: 1.4;
+    font-weight: 500;
+    font-size: var(--reg-font-size);
+  }
+  p{ color: #626262; font-size: .7rem;  }
+}
+
+.topic-name{
+  font-size: var(--reg-font-size) !important;
+}
+
+.mat-elevation-z0{
+  position: relative;
+  padding: 0;
+  margin: 0;
+  @extend .flipIn;
+  
+  mat-expansion-panel-header{
+    padding: 1.5em;
+    strong{ font-size: 1.1rem; font-weight: 500;}
+    .topic-icon{ color: #9b59b6; margin-right: 10px;}
+  }
+}
+
+
+@keyframes flipdown{
+  0%{
+    opacity: 0;
+    transform-origin: top center;
+    transform: rotateX(-90deg);
+  }
+  5%{
+    opacity: 1;
+  }
+  80%{
+    transform: rotateX(8deg);
+  }
+  83%{
+    transform: rotateX(6deg);
+  }
+  92%{
+    transform: rotateX(-3deg);
+  }
+  100%{
+    transform-origin: top center;
+    transform: rotateX(0deg) ;
+  }
+}
+
+
+
+
+
+
+
+@media screen and(min-width: 500px){
+  .activityheader{
+    @include flex(row, space-between, center);
+  }
+}
+
+
+
+@media screen and(min-width: 1200px){
+  .materials, .activity{
+    padding: 0 1em;
+  }
+  .activitycontainer{
+    @include flex(row, space-between, flex-start);
+    gap: 1em;
+    padding: 0;
+  }
+
+  .list{
+    background: #f5f5f5;
+    // padding: 1.5em 1em;
+    margin-bottom: .5em;
+   
+  
+    &__icon{
+      position: relative;
+      order: 1;
+      mat-icon{
+        position: relative;
+        font-size: 1.2rem;
+        display: block;
+      }
+      span{
+        position: absolute;
+        bottom: -5px;
+        left: -5px;
+        padding: 0px 5px;
+        font-size: .5rem;
+        background: rgb(2, 78, 132);
+        color: #fff;
+      }
+    }
+  
+    &__name{
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      mat-icon{
+        transform: scale(1.5);
+        margin-right: 10px;
+      }
+      p{
+        order: 2;
+        font-size: .8rem;
+        margin: 0;
+        font-weight: 600;
+      }
+    }
+  }
+
+
+  .panel-list{
+    padding: 1em;
+    .points{ 
+      padding: 0 10px;
+      font-size: .8rem;
+    }
+  }
+
+  .resources{
+    margin-top: 1em;
+    
+  
+    &__legend{
+      margin-right: 10px;
+    }
+  
+    &__header{
+      strong{
+        font-size: 1rem !important;
+      }
+    }
+  
+   
+  }
+
+  .topic-name{
+    font-size: 1rem !important;
+  }
+  
+
+
+  .activityheader{
+    strong{
+      font-size: 1rem;
+    }
+    p{  font-size: .8rem;  }
+  }
+
+  .materials, .activity{
+    width: 100%;
+    // padding: 0 1em;
+    h5{
+      color: var(--clr-primary);
+      font-size: 1.3rem;
+    }
+  }
+
+  .materials{
+    width: 40%;
+  } 
+  .activity{
+    width: 60%;
+  }
+} 

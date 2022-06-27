@@ -1,0 +1,147 @@
+<!-- *ngIf="options.option == 0 -->
+<div *ngIf="data.option == 'post' || data.option == 'comment'">
+
+  <div class="dialog">
+    <div class="dialog__header">
+        <p>Delete {{data.option}}?</p>
+        <span>Are you sure you want to delete this <b>{{data.option}}?</b></span>
+    </div>
+
+    <div class="dialog__footer">
+      <button class="btn-delete" mat-flat-button (click)="condel(1)">Delete</button>
+      <button class="btn-back" type='button' mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="data.option == 'forgotpass'">
+  <div class="dialog">
+    <div class="dialog__header">
+        <div style="display: flex;justify-content: space-between;">
+          <p>Your temporary password is: <strong>{{ newpass }}</strong></p>
+          <span style="cursor:pointer;" class="material-icons" matTooltip="Copy the password." [cdkCopyToClipboard]="newpass">copy_all</span>
+        </div>
+        <span>Please copy this password before closing this dialog. You will be <br>asked to create a new password once you login.</span>
+    </div>
+
+    <div class="dialog__footer">
+      <button class="btn-back" mat-button mat-dialog-close>Done</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="data.option == 'logout'">
+
+  <div class="dialog">
+    <div class="dialog__header">
+          <h5>Leaving LAMP?</h5>
+    </div>
+
+    <div class="dialog__footer">
+      <button mat-flat-button class="btn-cons"  (click)="logout(1)">Yes</button>
+      <button mat-flat-button mat-dialog-close class="btn-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="data.option == 'file'">
+
+  <div class="dialog">
+    <div class="dialog__header">
+        <p>Delete {{data.option}}?</p>
+        <span>Are you sure you want to delete this <b>{{data.option}}?</b></span>
+    </div>
+
+    <div class="dialog__footer">
+      <button class="btn-delete" mat-flat-button (click)="condel(1)">Delete</button>
+      <button class="btn-back" mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="data.option == 'quizConfirmation'">
+  <div class="dialog">
+      <div class="dialog__header">
+          <p>Submit Quiz?</p>
+      </div>
+
+      <div class="dialog__footer">
+        <button class="btn-default" mat-button cdkFocusInitial (click)="quizSubmit(1)">Yes</button>
+        <button class="btn-back" mat-button mat-dialog-close>Cancel</button>
+      </div>
+  </div>
+ 
+</div>
+  
+  <div *ngIf="data.type == 'submit'">
+    <div class="font-weight-bold">Turn in your work?</div> <br>
+    <div> Your work will be submitted for <span class="text-primary"> {{ data.payload.data2 }}</span> </div>
+    <hr>
+    <div class="files">
+  
+      <div class="d-flex align-items-center">
+        <mat-icon class="mr-1">attachment</mat-icon>
+        <a class="text-decoration-none" [href]="returnFileUrl(data.payload.data1)" target="javascript:void(0);" download>
+          {{ getFilename(data.payload.data1) }} </a>
+      </div>
+  
+    </div>
+    <div mat-dialog-actions class="py-3 float-right" style="font-weight: 500;">
+      <button mat-button cdkFocusInitial (click)="turnin(1)" color="primary">Turn in</button>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+  
+  <div *ngIf="data.type == 'unsubmit'">
+    <div class="font-weight-bold">Unsubmit?</div> <br>
+    <div> Unsubmit to add or change attachments. <br /> Don't forget to resubmit once you're done. </div>
+  
+    <div mat-dialog-actions class="py-3 float-right" style="font-weight: 500;">
+      <button mat-button cdkFocusInitial (click)="unsubmit(1)" color="primary">Unsubmit</button>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+  
+  
+  
+  <div *ngIf="data.type == 'error'">
+    <div class="text-danger font-weight-bold">{{data.payload.er.status.remarks | uppercase}}</div>
+    <br>
+    <div>An Error occurred, Please try again...</div>
+    <div mat-dialog-actions class="py-3 float-right" style="font-weight: 500;">
+      <button mat-button cdkFocusInitial (click)="unsubmit(1)" color="primary">Okay, I understand.</button>
+    </div>
+  </div>
+
+  <!-- EDITTT  -->
+<div *ngIf="data.option == 'editcomment'">
+
+  <div class="dialog">
+    <div class="dialog__header">
+        <mat-form-field class="example-full-width">
+          <textarea [(ngModel)]="textcontent" matInput ></textarea>
+        </mat-form-field>
+    </div>
+
+    <div class="dialog__footer">
+      <button class="btn-default" mat-flat-button  cdkFocusInitial (click)="editcomment(1)">Update</button>
+      <button mat-flat-button mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+</div>
+
+  <div *ngIf="data.option == 'buyItem'">
+
+    <div class="dialog">
+      <div class="dialog__header">
+          <p>Confirm Redeem</p>
+          <span>Are you sure you want to redeem this item</span>
+      </div>
+  
+      <div class="dialog__footer">
+        <button class="btn-delete" mat-flat-button (click) = "confirmRedeem()">Confirm</button>
+        <button class="btn-back" type='button' mat-button mat-dialog-close>Cancel</button>
+      </div>
+    </div>
+  </div>

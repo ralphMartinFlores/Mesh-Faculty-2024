@@ -1,0 +1,135 @@
+<div style="margin: 0;" mat-dialog-title>
+  <div class="head">
+      <div class="head__icon">
+          <mat-icon >campaign</mat-icon>
+      </div>
+      <h5 class="mb-0">Update Profile</h5>
+  </div>
+  
+</div>
+
+<hr>
+
+
+<form (submit)="updateProfile($event)"  ngNativeValidate>
+  <mat-dialog-content class="mat-typography">
+    <div class="input-container" *ngFor="let stud of student">
+      <div class="box-input">
+        <label ><strong>First Name</strong></label>
+        <input id="fname" name= "fname"  class="form-control form-control-sm" type="text" [pattern]="'^[a-zA-Z ]*$'" [value]="stud.fname_fld" required disabled/>
+      </div>
+  
+      <div class="box-input">
+        <label ><strong>Middle Name</strong></label>
+        <input id="mname"  class="form-control form-control-sm" type="text"  [pattern]="'^[a-zA-Z ]*$'" [value]="stud.mname_fld"/>
+      </div>
+      <div class="box-input">
+          <label ><strong>Last Name</strong></label>
+          <input id="lname"  class="form-control form-control-sm" type="text" [pattern]="'^[a-zA-Z ]*$'" [value]="stud.lname_fld" required disabled/>
+      </div>
+  
+      <div class="box-input">
+        <label><strong>Name Extension</strong></label>
+        <select id="extname" name="extname" class="form-control form-control-sm" [value]="stud.extname_fld">
+            <option value="">None</option>
+            <option value="Sr">Sr</option>
+            <option value="Jr">Jr</option>
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+        </select>
+      </div>
+      <div class="box-input">
+          <label for="birthdate_fld"><strong>Date of Birth</strong></label>
+          <input id="bdate" name="bdate" class="form-control form-control-sm" type="date" [value]="stud.birthdate_fld" [disabled]="student[0].birthdate_fld!=''" required />
+      </div>
+      <div class="box-input">
+        <label for="birthplace_fld"><strong>Place of Birth</strong></label>
+        <input class="form-control form-control-sm" type="text" placeholder="ex. Olongapo City" [pattern]="'^[a-zA-Z ]*$'" [value]="stud.birthplace_fld" [disabled]="student[0].birthplace_fld!=''"/>
+      </div>
+  
+      <div class="box-input">
+        <label><strong>Sex-at-Birth</strong></label>
+        <select  class="form-control form-control-sm"  [value]="stud.sex_fld">
+          <option value="" selected hidden>Select One...</option>
+          <option value="1">Male</option>
+          <option value="2">Female</option>
+        </select>
+      </div>
+  
+      <div class="box-input">
+        <label for="civilstatus_fld"><strong>Civil Status</strong></label>
+        <select  class="form-control form-control-sm"  [value]="stud.civilstatus_fld">
+          <option value="" selected hidden>Select One...</option>
+            <option value="0">Single</option>
+            <option value="1">Married</option>
+            <option value="2">Divorced</option>
+            <option value="3">Seperated</option>
+            <option value="4">Widowed</option>
+        </select>
+      </div>
+  
+      <div class="box-input">
+        <label for="contactnum_fld"><strong>Contact Number</strong></label>
+        <input class="form-control form-control-sm" type="number" placeholder="09xxxxxxxxx" maxlength="11" pattern="\d{11}" size="11" title="Enter a valid contact number. (11 Numeric Characters)" aria-describedby="" required [value]="stud.contactnum_fld"/>
+      </div>
+  
+      <div class="box-input">
+        <label for="nationality_fld"><strong>Nationality</strong></label>
+        <input class="form-control form-control-sm" [pattern]="'^[a-zA-Z ]*$'" type="text" placeholder="Ex. Filipino"  required [value]="stud.nationality_fld"/>
+      </div>
+      <div class="box-input">
+        <label for="religion_fld"><strong>Religion</strong></label>
+        <input class="form-control form-control-sm" [pattern]="'^[a-zA-Z ]*$'" type="text" placeholder="ex. Roman Catholic" [value]="stud.religion_fld" />
+      </div>
+  
+      <div class="box-input">
+        <label for="region_fld"><strong>Region</strong></label>
+        <select class="form-control form-control-sm" (change)="getProvince($event)">
+          <option *ngFor="let reg of region" [selected]="reg.regCode==stud.region_fld" [value]="reg.regCode">{{reg.regDesc}}</option>
+        </select>
+      </div>
+      <div class="box-input">
+        <label for="province_fld"><strong>Province</strong> </label>
+        <select class="form-control form-control-sm" (change)= "getCity($event)">
+          <option *ngFor="let prov of province" [selected]="prov.provCode==stud.province_fld" [value]="prov.provCode">{{prov.provDesc}}</option>
+        </select>
+      </div>
+  
+      <div class="box-input">
+        <label for="city_fld"><strong>City/Municipality</strong> </label>
+        <select class="form-control form-control-sm" (change)="getBrgy($event)">
+          <option *ngFor="let c of city" [selected]="c.citymunCode==stud.city_fld" [value]="c.citymunCode">{{c.citymunDesc}}</option>
+        </select>
+      </div>
+      <div class="box-input">
+        <label for="brgy_fld"><strong>Barangay</strong></label>
+        <!-- <input class="form-control form-control-sm" type="text" placeholder="Barangay"/> -->
+        <select class="form-control form-control-sm">
+          <option *ngFor="let b of brgy" [selected]="b.brgyCode==stud.brgy_fld" [value]="b.brgyCode">{{b.brgyDesc}}</option>
+        </select>
+      </div>
+      <div class="box-input">
+        <label for="house_fld"><strong>Lot/House No.</strong></label>
+        <input class="form-control form-control-sm" type="text" placeholder="ex. No.1" [value]="stud.house_fld" />
+  
+      </div>
+      <div class="box-input">
+        <label for="zipcode_fld"><strong>Zip Code</strong></label>
+        <input class="form-control form-control-sm" type="number" placeholder="Zip Code" [value]="stud.zipcode_fld" />
+      </div> 
+    </div>
+  </mat-dialog-content>
+ 
+  <hr>
+
+  <mat-dialog-actions align="end">
+    <button type="button"  [mat-dialog-close]="undefined" (click)="closeDialog(undefined)" mat-flat-button class="mat-btn btn-cancel" >Cancel</button>
+    <button  mat-flat-button class="btn-save" type="submit">Update</button>
+  </mat-dialog-actions>
+
+ 
+</form>
+
+

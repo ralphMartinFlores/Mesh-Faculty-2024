@@ -1,0 +1,28 @@
+<header>
+  <h5><mat-icon class="right-icon-spacer">emoji_events</mat-icon>Quest Shop</h5>
+  <span>
+    <!-- 12  -->
+    <!-- <mat-icon class="right-icon-spacer">emoji_events</mat-icon> -->
+    <!-- <mat-icon class="right-icon-redeem">redeem</mat-icon> -->
+    <button class="btn-back" mat-icon-button (click)="closeDialog()"><mat-icon >close</mat-icon></button>
+  </span>
+</header>
+
+<div class="quest">
+<div class="questcard"  *ngFor="let item of shopList.shopItems">
+  <div class="questcard__back"></div>
+  <div class="questcard__header">
+    <div style="display:flex; justify-content:space-between">
+      <h5>{{item.title_fld}}</h5>
+      <span style='color:#8ddd81; font-weight: 600;'>{{item.cost_fld}} pts.</span>
+    </div>
+    <p >{{item.description_fld}}</p>
+  </div>
+  <div class="questcard__footer">
+    <button mat-button style="background: #6ECC5F;" *ngIf='item.isRedeemed'  (click)="buyItem(item.itemcode_fld,item.cost_fld)">BUY</button>
+    <button mat-button  *ngIf='!item.isRedeemed' disabled>Already Redeemed</button>
+  </div>
+</div>
+
+</div>
+

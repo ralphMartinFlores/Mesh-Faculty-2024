@@ -36,6 +36,7 @@
     "ngx-skeleton-loader": "^2.10.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
+    "sdp-transform": "^2.14.1",
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1",
     "tslib": "^2.0.0",

@@ -1,0 +1,108 @@
+<ng-container *ngIf="data.option == 'editpost'">
+  <header>
+    <div class="head">
+      <div class="head__icon">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <h5 class="mb-0">Edit Post</h5>
+    </div>
+    <button  mat-icon-button  [mat-dialog-close]="undefined">
+      <mat-icon >close </mat-icon>
+    </button>
+  </header>
+
+  <hr>
+
+  <section class="edit">
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <textarea [(ngModel)]="textcontent" matInput ></textarea>
+      </mat-form-field>
+
+      <div class="list"  *ngFor="let item of submittedFiles; let i = index">
+        <li class="list__content">
+            <div class="list__name">
+              <div class="list__icon">
+                <mat-icon >description</mat-icon>
+                <span [ngStyle]="{'background-color': getFileExtension( _upload.getfileExt( item.name ) )}">{{
+                  getfileExt( item.name ) | uppercase }}</span>
+              </div>
+              <p>{{item.name}}</p>
+            </div>
+
+            <button type="button" mat-icon-button *ngIf="!_user.isLoading()" (click)="deletefileconfirmation(i,'file')">
+              <mat-icon style="color: #e74c3c" >cancel</mat-icon>
+            </button>
+            
+        </li>
+    </div>
+
+    <div class="list"  *ngFor="let item of files; let i = index">
+      <li class="list__content">
+          <div class="list__name">
+            <div class="list__icon">
+              <mat-icon >description</mat-icon>
+              <span [ngStyle]="{'background-color': getFileExtension( _upload.getfileExt( item.name ) )}">{{
+                getfileExt( item.name ) | uppercase }}</span>
+            </div>
+            <p>{{item.name}}</p>
+          </div>
+
+          <button type="button" mat-icon-button *ngIf="!_user.isLoading()" (click)="removeFile(i)">
+            <mat-icon style="color: #e74c3c" >cancel</mat-icon>
+          </button>
+          
+      </li>
+    </div>
+  </section>
+
+  <hr>
+
+  <footer class="footer">
+  
+    <!-- Inputs for medias start -->
+    <input type="file" style="display: none;" #uploadfile (change)="getFile($event)" id="files" type="file" name="file[]"
+            multiple accept=".doc,.docx,.html,.htm,.odt,.pdf,.xls,.xlsx,.ods,.ppt,.pptx,.txt">
+    <input type="file" style="display: none;" #uploadvideo (change)="getFile($event)" id="files" type="file" name="file[]"
+            multiple accept="video/*">
+    <input type="file" style="display: none;" #uploadphoto (change)="getFile($event)" id="files" type="file" name="file[]"
+            multiple accept="image/*">
+    <!-- Input for medias end -->
+
+
+        <div class="footer__icons">
+          <ng-container *ngIf="photoButton == true">
+            <button mat-icon-button  [disabled]="photoButton">
+              <mat-icon style="color: #7a7a7a">add_photo_alternate </mat-icon>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="photoButton == false">
+            <button mat-icon-button  [disabled]="photoButton" (click)="uploadphoto.click()">
+              <mat-icon style="color: #1f6499">add_photo_alternate </mat-icon>
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="videoButton == true">
+            <button mat-icon-button  [disabled]="videoButton">
+              <mat-icon style="color: #7a7a7a">video_call </mat-icon>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="videoButton == false">
+            <button mat-icon-button  [disabled]="videoButton" (click)="uploadvideo.click()">
+              <mat-icon style="color: #b34e01">video_call </mat-icon>
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="fileButton == true">
+           <button  mat-icon-button  [disabled]="fileButton" >
+              <mat-icon style="color: #7a7a7a">attach_file </mat-icon>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="fileButton == false">
+            <button  mat-icon-button  [disabled]="fileButton" (click)="uploadfile.click()">
+              <mat-icon style="color: #b3a701">attach_file </mat-icon>
+            </button>
+          </ng-container>
+        </div>
+        <button  mat-flat-button class="btn-default" *ngIf="!_user.isLoading()"  (click)="editpost(1)">Update</button>
+  </footer>
+</ng-container>

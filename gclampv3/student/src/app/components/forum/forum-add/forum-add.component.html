@@ -1,0 +1,31 @@
+<header>
+  <div class="head__icon">
+    <mat-icon >campaign</mat-icon>
+  </div>
+  <h5 >Sub-Forum</h5>
+</header>
+
+<hr>
+
+
+
+<form (submit)="addForum($event)" ngNativeValidate>
+  <div class="forms">
+    <mat-form-field style="width: 100%;" appearance="fill">
+      <mat-label>Sub-Forum Title</mat-label>
+      <input placeholder="Sub forum title" matInput required>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;" appearance="fill">
+      <mat-label>Sub-Forum Description</mat-label>
+      <textarea required placeholder="Say something great here..." style="height: 8vh;" matInput></textarea>
+    </mat-form-field>
+  </div>
+  <hr>
+
+  <footer>
+    <button mat-flat-button  [mat-dialog-close]="undefined" class="btn-cancel">Cancel</button>
+    <button mat-flat-button class="btn-default" type="submit">Add</button>
+  </footer>
+</form>
+
+

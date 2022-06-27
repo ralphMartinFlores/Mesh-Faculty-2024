@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="questheader">
+    <img src="assets/images/quest.png" alt="" class="questheader__img">
+    <div class="questheader__main">
+        <h1 >Quest</h1>
+        <span>Complete Quest to gain achievements and awesome rewards</span>
+        <!-- <img src="assets/images/background.png" alt="" class="questheader__back"> -->
+    </div>
+  
+    <div class="questheader__status">
+        <div class="questheader__level">
+          <div class="circle">
+            <mat-progress-spinner
+            [value]="resetExperienceBar"
+            aria-label="Rating"
+            >
+            </mat-progress-spinner>
+            <p>{{levelCount}}</p>
+          </div>
+            <span>level ({{resetExperienceBar}}/100)</span>
+        </div>
+  
+        <div class="questheader__level">
+          <h2 style="color: #6ECC5F;">{{pointGained}}</h2>
+          <span>Current Points.</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="head">
+    <h5 class="title">List of Quest</h5>
+    <!-- <button color='primary' mat-flat-button (click)=openShop()><mat-icon style="margin-right: 5px;">shopping_cart</mat-icon>Quest shop</button> -->
+  </div>
+  
+  
+  <div class="cardcontain" [@cardAnimation]="questList.quest.length">
+    <div class="quest" *ngFor="let data of questList.quest">
+      <img appLazyLoad alt="" [src]="data.filedir_fld" width="100%" class="quest__img">
+    
+      <div class="quest__header">
+          <img [src]="data.filedir_fld" alt="" class="quest__back">
+      </div>
+      <div class="quest__body">
+          <h5>{{ data.title_fld }}</h5>
+          <p class="quest__sub" style="margin: .5em 0 1em !important; ">{{data.questcontent_fld}}</p>
+          <mat-progress-bar  mode="determinate" class="mb-2" [value]="ProgressBarControl(data.questcode_fld, data.target_fld)"></mat-progress-bar>
+          <p class="quest__completed">{{ questCode(data.questcode_fld, data.target_fld) }}</p>
+      </div>
+  </div>
+  </div>
+  <ng-template #removeLevel></ng-template>
+</div>

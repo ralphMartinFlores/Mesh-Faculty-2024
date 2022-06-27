@@ -1,0 +1,16 @@
+<header>
+    <h5>{{this.data.reourcename}}</h5>
+    <button mat-icon-button [mat-dialog-close]="undefined"><mat-icon>close</mat-icon></button>
+</header>
+
+
+<section>
+    <ng-container *ngIf="linkPath != undefined">
+        <iframe  [src]="linkPath" class="responsive-iframe"></iframe>
+        <img class="imagePrev" *ngIf="name == 'jpg' || name == 'jpeg' || name == 'png'" [src] ="linkPath">
+    </ng-container>
+
+    <ng-container *ngIf="linkPath == undefined || linkPath == null">
+        <div class="error"><p>Error Display</p></div>
+    </ng-container>
+</section>

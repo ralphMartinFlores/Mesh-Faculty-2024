@@ -1,0 +1,33 @@
+<header>
+  <div class="head">
+      <div class="head__icon">
+          <mat-icon >portrait</mat-icon>
+      </div>
+      <h5 class="mb-0">Change profile picture</h5>
+  </div>
+ 
+</header>
+
+
+<section class="uploads">
+  <button (click)="compressFile()" class="btn-photo" mat-flat-button> <mat-icon>photo_camera</mat-icon><strong>Upload Photo</strong></button>
+  <div class="img-container" *ngIf="base64Image != null">
+    <!-- <img *ngIf="imgResultAfterCompress" class="hand-pointer" [src]="imgResultAfterCompress" alt="" style="width: 100%;" (click)="compressFile()"> -->
+    <image-cropper [imageBase64]="base64Image" [maintainAspectRatio]="true" [aspectRatio]="2 / 2" format="png"
+    (imageCropped)="imageCropped($event)" outputType="base64"></image-cropper>
+  </div>
+
+ 
+</section>
+
+
+
+<div class="action">
+  <button mat-button class="btn-cancel" *ngIf="!_user.isLoading()" mat-dialog-close>Cancel</button>
+    <button mat-button [disabled]="_user.isLoading()" class="btn-default" cdkFocusInitial (click)="updateProfile()">{{ _user.isLoading() ?
+      'Saving Profile...' :
+      'Save'}}</button>
+</div>
+
+
+

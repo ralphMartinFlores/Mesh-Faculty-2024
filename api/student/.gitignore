@@ -1,0 +1,10 @@
+/config
+/config/.env
+/config/.env.prod
+/uploads
+/books
+/acadrecords
+/lms
+*.log
+.env
+*.zip

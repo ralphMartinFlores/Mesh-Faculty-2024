@@ -1,0 +1,92 @@
+<div class="main-container">
+
+  <header class="header">
+    <div class="header__title-container">
+
+      <div class="header__main">
+        <h1 class="header__title">Forums and Discussion</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">layers</mat-icon>
+        </div>
+      </div>
+      <small>Get connected with and learn more in discussion </small>
+    </div>
+  </header>
+
+  <hr>
+
+  <section class="action">
+    <div class="action__input d-flex">
+      <input type="text" [(ngModel)]="filter" (keyup)="filterlist()" placeholder="Search topic...">
+      <button mat-flat-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <!-- <button class="action__add btn-default" (click)="addForum()" mat-flat-button>
+      New Topic
+    </button>
+    <button class="action__addmobile" (click)="addForum()" mat-icon-button>
+      <mat-icon>add</mat-icon>
+    </button> -->
+  </section>
+
+
+  <div class="load" *ngIf="showLoader == true && allforum != null">
+    <app-loadingscreen class="load__cons"></app-loadingscreen>
+  </div>
+
+  <div class="p-3">
+    <h2 *ngIf="showLoader == false && allforum == null">There was no data found! 🙈🙉</h2>
+  </div>
+
+  <ng-container *ngIf="showLoader == false">
+    <div class="forums" [@cardAnimation]="forumsdata.length">
+      <div class="forums__main" *ngFor="let f of forumsdata" [routerLink]="['./' , f.forumcode_fld]">
+
+        <div class="forums__details">
+          <div class="forums__icon-container">
+            <mat-icon class="forums__icons">layers</mat-icon>
+            <!-- <button *ngIf="item.authorid_fld == _user.getUserID()" (click)="$event.stopPropagation()"
+              [matMenuTriggerFor]="menu" mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="editTopic(item, i)"><span>Edit</span></button>
+              <button mat-menu-item (click)="deleteRecords('forums', item, i)"><span>Delete</span></button>
+            </mat-menu> -->
+          </div>
+
+          <section class="forums__info">
+            <h5 class="forums__title">{{f.forumtitle_fld}} </h5>
+            <p class="forums__subtitle">{{f.forumdesc_fld}}</p>
+            <div class="forums__postdate">
+              <div class="forums__disc">
+                <mat-icon class="forums__topic">watch_later</mat-icon>
+                <small>{{f.datetime_fld | date: "MMMM d yyyy"}}</small>
+              </div>
+              <div class="forums__disc">
+                <mat-icon class="forums__topic">topic</mat-icon>
+                <small>{{ f.discussion }} <p class="topic">Discussion(s)</p></small>
+              </div>
+            </div>
+          </section>
+        </div>
+
+
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<

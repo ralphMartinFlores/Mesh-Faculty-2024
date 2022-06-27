@@ -206,7 +206,6 @@ export class GroupMessagingComponent implements OnInit {
 
   addMessage(message: string): any {
 
-
     document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
 
     // CHORE: Revamp DOM Manipulations for animationDelay .. 

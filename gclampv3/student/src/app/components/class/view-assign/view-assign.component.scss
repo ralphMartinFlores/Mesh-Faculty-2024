@@ -1,0 +1,562 @@
+@import "src/app/scss/__mixin.scss";
+
+
+.background{
+    width: 100%;
+    height: 20vh;
+    background-image: radial-gradient(circle at 77% 43%, rgba(168, 168, 168,0.04) 0%, rgba(168, 168, 168,0.04) 50%,rgba(10, 10, 10,0.04) 50%, rgba(10, 10, 10,0.04) 100%),radial-gradient(circle at 33% 65%, rgba(248, 248, 248,0.04) 0%, rgba(248, 248, 248,0.04) 50%,rgba(228, 228, 228,0.04) 50%, rgba(228, 228, 228,0.04) 100%),radial-gradient(circle at 92% 79%, rgba(152, 152, 152,0.04) 0%, rgba(152, 152, 152,0.04) 50%,rgba(28, 28, 28,0.04) 50%, rgba(28, 28, 28,0.04) 100%),radial-gradient(circle at 91% 13%, rgba(41, 41, 41,0.04) 0%, rgba(41, 41, 41,0.04) 50%,rgba(214, 214, 214,0.04) 50%, rgba(214, 214, 214,0.04) 100%),linear-gradient(90deg, var(--clr-primary),rgb(1,124,210));
+    overflow: hidden;
+    position: absolute;
+    z-index: 0;
+}
+
+.assign{
+    @include flex(column, center, flex-start);
+    position: relative;
+    gap: 2em;
+    max-width: 24rem;
+    margin: 3em auto 0;
+    z-index: 1;
+
+    hr{margin: 0;}
+    strong{ font-size: .8rem;}
+    
+
+    &__label{
+        font-weight: 600;
+        font-size: var(--sm-font-size);
+        color: #222;
+        margin: 1em 0 1em;
+    }
+
+    &__work{
+        width: 100%;
+        background: #fff;
+        border-radius: .5em;
+        box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+        0 12.5px 10px rgba(0, 0, 0, 0.035),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+        0 100px 80px rgba(0, 0, 0, 0.07)
+      ;
+        z-index: 2;
+    }
+
+    &__workhead{
+        @include flex(row, flex-start, center);
+        padding: 1em;
+        gap: .5em;
+        span{ font-weight: 700;}
+    }
+
+    &__action{
+        padding: .5em 1em;
+        button{
+            width: 100%;
+            padding: .2em 0;
+            font-size: .9rem;
+            margin: .5em 0;
+        }
+    }
+
+    &__studentwork{
+        @include flex(row, space-between, flex-start);
+        padding: .5em 1em;
+        h5{
+            font-weight: 500;
+            margin: 0;
+        }
+        label{
+            font-weight: 600;
+            font-size: .9rem;
+            span{
+                font-weight: 400;
+            }
+        }
+        p{
+            font-size: .9rem;
+        }
+    }
+
+    &__listnone{
+      mat-icon{
+        transform: rotate(180deg);
+      }
+    }
+
+
+    &__filecontain{
+        padding: .5em 1em;
+    }
+
+    &__content{ 
+      background: #fff;
+      border-radius: .5em;
+      width: 100%;
+    }
+
+    &__fulldetails, &__forms{
+        background: #fff;
+        padding: 1em;
+        border-radius: .5em;
+        box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+        0 12.5px 10px rgba(0, 0, 0, 0.035),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+        0 100px 80px rgba(0, 0, 0, 0.07)
+      ;
+    }
+
+    &__forms{
+        @include flex(row, flex-start, center);
+        margin-top: 1em;
+        gap: 1em;
+        width: 100%;
+
+        img{
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        input{
+            width: 100%;
+            border: none;
+            outline: none;
+        }
+    }
+
+    &__img{
+        // width: 80px;
+        // height: 80px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    &__details{
+        @include flex(column, flex-start, flex-start);
+        padding: 1em 0;
+        h3{
+            font-size: 1.1rem;
+            margin: 0;
+            font-weight: 600;
+            color: var(--clr-primary);
+        }
+        label{
+            font-size: .7rem;
+            color: #222;
+            font-weight: 600;
+            span{
+              font-weight: 400;
+            }
+        }
+    }
+    
+
+    &__description{
+        margin-top: 1em;
+        font-size: var(--reg-font-size);
+        line-height: 1.8;
+        text-align: justify;
+        white-space: pre-line;
+        padding: .5em 0;
+    }
+
+    &__commentheader{
+        @include flex(row, space-between, flex-start);
+        margin-top: 1em;
+        width: 100%;
+
+        img{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+    }
+
+    &__commentinfo{
+        @include flex(row, flex-start, flex-start);
+        gap: .5em;
+        width: 100%;
+        margin-bottom: .5em;
+        small{
+            font-size: .7rem;
+            color: #626262;
+        }
+
+        img{
+            width: 30px;
+            height: 30px;
+        }
+
+    }
+
+    &__name{
+        margin: 0;
+        font-size: var(--reg-font-size);
+        font-weight: 600;
+    }
+
+    &__icons{
+        margin-top: -5px;
+        position: absolute;
+        right: 1.5em;
+    }
+
+ 
+
+    &__commentscontent{
+        margin: .5em 0;
+        word-break: break-all;
+        white-space: pre-line;
+        font-size: var(--reg-font-size);
+        line-height: 1.6;
+        padding: .5em 0;
+        width: 100%;
+        border-bottom: 1px solid #d1d1d1;
+    }
+
+    &__user{
+      width: 100%;
+      line-height: 1.4;
+    }
+
+   
+
+    &__replycontain{
+        @include flex(row, center, center);
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: var(--sm-font-size);
+        transition: all .2s;
+        mat-icon{
+          transform: scale(.8);
+        }
+        &:hover{
+            color: var(--clr-primary);
+           
+        }
+    }
+
+}
+
+
+
+.list{
+    background: #f5f5f5;
+    padding: .5em 1em;
+    margin-bottom: .5em;
+    &__content{
+      @include flex(row, space-between, center);
+    }
+  
+    &__action{
+      @include flex(row, flex-start, center);
+      gap: 5px;
+  
+      mat-icon{
+        cursor: pointer;
+      }
+    }
+  
+    &__btn{
+      border: none;
+      background: none;
+    }
+  
+    &__icon{
+      position: relative;
+      mat-icon{
+        color: #8d8d8d;
+      }
+      span{
+        position: absolute;
+        bottom: -5px;
+        left: -5px;
+        padding: 0px 5px;
+        font-size: .5rem;
+        background: rgb(2, 78, 132);
+        color: #fff;
+      }
+    }
+  
+    &__name{
+      display: flex;
+      align-items: center;
+      mat-icon{
+        transform: scale(1.5);
+        margin-right: 10px;
+      }
+      p{
+        font-size: .7rem;
+        margin: 0;
+        font-weight: 600;
+        white-space: pre-line;
+        word-break: break-all;
+      }
+    }
+  }
+
+
+.btn-quiz{
+    background-color: #12a548;
+    color: #fff;
+}
+
+.edits{
+  background-color: #1590e2;
+  color: #fff;
+
+}
+
+.Attach{
+  background: #e6e5e5;
+}
+
+
+.file{
+  display: grid;
+  position: relative;
+  margin:  .5em 0;
+
+  &__name{
+    @include flex(row, flex-start, center);
+  }
+
+  &__button{
+    @include flex(row, flex-start, center);
+    mat-icon{
+      color: #222;
+    }
+  }
+
+  &__icon{
+    position: relative;
+
+    mat-icon{ color: #8d8d8d; }
+
+    span{
+      position: absolute;
+      bottom: 0;
+      left: -5px;
+      padding: 1px 5px;
+      font-size: .4rem;
+      background: rgb(2, 78, 132);
+      color: #fff;
+    }
+  }
+
+  &__contain {
+    @include flex(row, space-between, center);
+    position: relative;
+    text-decoration: none;
+    padding: 0.7em;
+    position: relative;
+    background: #f5f5f5;
+    margin-bottom: .5em;
+  }
+
+  &__info {
+    margin-left: 10px;
+    word-break: break-all;
+    p {
+      font-size: 0.8rem;
+      margin: 0;
+      color: #222;
+      font-weight: 600;
+    }
+  }
+
+
+}
+
+
+.reply{
+    border-radius: 25px;
+    background: #f5f5f5;
+
+    &__form{
+        @include flex(row, flex-start, center);
+        padding: .2em .5em;
+    }
+
+    &__input{   
+        width: 100%;
+        border: none;
+        background: none;
+    }
+
+    &__button{
+        background: var(--clr-primary);
+        color: #fff;
+        transform: scale(.8);
+
+    }
+}
+
+.replyedit{
+
+  &__form{
+    @include flex(row, flex-start, center);
+    border-radius: 25px;
+    background: #f5f5f5;
+    padding: .2em .5em;
+  }
+
+  &__input{
+    width: 100%;
+    border: none;
+    background: none;
+  }
+
+  &__action{
+    @include flex(row, flex-start, center);
+
+  }
+
+  &__button{
+    background: var(--clr-primary);
+    color: #fff;
+    transform: scale(.8);
+
+  }
+}
+
+
+
+  
+@media screen and(min-width: 500px) {
+    .assign{
+        max-width: 26rem;
+    }
+}
+
+
+@media screen and(min-width: 786px) {
+    .assign{
+        max-width: 30rem;
+    }
+}
+
+
+@media screen and(min-width: 1000px) {
+    .assign{
+        @include flex(row, space-between, flex-start);
+        max-width: 60rem;
+    }
+}
+
+
+@media screen and(min-width: 1300px) {
+    .assign{
+        max-width: 70rem;
+        &__work{
+            width: 60%;
+        }
+
+        &__fulldetails, &__workhead{
+          padding: 1.5em;
+        }
+
+     
+
+        &__studentwork, &__filecontain, &__action{
+          padding: .5em 1.5em;
+        }
+
+        
+
+        &__details{
+          // padding: 1em 0;
+          h3{
+              font-size: 1.2rem;
+              margin-bottom: .2em;
+          }
+          label{
+              font-size: .9rem;
+          }
+        }
+        &__description{
+          line-height: 1.8;
+        }
+
+        &__commentinfo{
+          margin-bottom: .5em;
+          small{ font-size: .8rem; }
+  
+          img{
+              width: 40px;
+              height: 40px;
+          }
+  
+        }
+
+    }
+
+    .file{
+      &__icon{
+        mat-icon{ 
+          color: #8d8d8d; 
+          transform: scale(1.5);
+        }
+        span{
+          position: absolute;
+          bottom: 0;
+          left: -5px;
+          padding: 1px 5px;
+          font-size: .6rem;
+          background: rgb(2, 78, 132);
+          color: #fff;
+        }
+      }
+
+      &__info {
+        margin-left: 20px;
+        word-break: break-all;
+        p {
+          font-size: 0.7rem;
+          margin: 0;
+          color: #222;
+          font-weight: 600;
+        }
+      }
+    }
+
+
+
+    .reply{
+      border-radius: 25px;
+      background: #f5f5f5;
+  
+      &__form{
+          @include flex(row, flex-start, center);
+          padding: .2em .5em;
+      }
+    }
+
+
+}
+
+
+@media screen and(min-width: 1400px) {
+    .assign{
+        max-width: 80rem;
+
+        &__fulldetails{
+          padding: 1.8em;
+        }
+    }
+}
+
+
+@media screen and(min-width: 1600px) {
+  .assign{
+      max-width: 95rem;
+  }
+}

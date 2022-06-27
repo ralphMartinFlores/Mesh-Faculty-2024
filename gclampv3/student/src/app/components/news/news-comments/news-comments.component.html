@@ -1,0 +1,171 @@
+<!--################ ADD PART OF ACTIVITIES ######################-->
+<div >
+    <header>
+        <h5>{{count}} Comments </h5>
+        <button  [mat-dialog-close]="undefined" mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </header>
+    <section>
+      <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status"></div>
+          <div *ngIf="!_user.isLoading()">
+            <div *ngFor="let comment of newscomments; let i = index">
+              <div class="comment-post" >
+                <div class="img-container">
+                  <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                  [src]="_ds.fileUrl + comment.profilepic_fld" alt="" class="commentimg" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+                  <!-- <img appLazyLoad alt="" class="commentimg" src='assets/profile.jpg' draggable="false"> -->
+                </div>
+                <div class="comment-body">
+                  <div class="messege-header">
+                          <div class="sender-name">
+                            <strong>{{comment.fullname_fld}}</strong>
+                            <br>
+                            <small class="text-muted ml-1">
+                              {{comment.datetime_fld | date: 'MMMM d, y h:mm a'}}
+                            </small>
+                          </div>
+                          <span style="flex: 1 1 auto"></span>
+                          <button  mat-icon-button [matMenuTriggerFor]="del"
+                          aria-label="button menu" >
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
+                          <mat-menu #del="matMenu">
+                            <button mat-menu-item class="nooutline" *ngIf="comment.authorid_fld != _user.getUserID()" (click)="reply(comment.authorid_fld,comment.commentcode_fld)" >
+                            <span>Reply</span>
+                            </button>
+  
+                            <button mat-menu-item  class="nooutline" *ngIf="comment.authorid_fld == _user.getUserID()" (click)="edit(i,comment.commentcode_fld,comment.content_fld)">
+                              <span>Edit</span>
+                            </button>
+                            <button mat-menu-item  class="nooutline" *ngIf="comment.authorid_fld == _user.getUserID()" (click)="deletecomment(i,comment.commentcode_fld,'comment')">
+                              <span>Delete</span>
+                            </button>
+  
+                          </mat-menu>
+                      </div>
+                      <p class="comment-content">{{comment.content_fld}}</p>
+                </div>
+              </div>  
+              <div class="replies" [id]="'replybtn'+i" (click)="showReply(i)">
+                <!-- <button> <mat-icon>thumb_up</mat-icon><small>Likes</small></button> -->
+                <button  ><mat-icon>chat</mat-icon><small>{{comment.replycount}} Replies</small></button>
+              </div>   
+              
+              <ng-container *ngIf="comment.reply" >
+                <div [id]="'replydiv'+i"  style="display:none">
+                <div *ngFor="let reply of replyobject; let i = index">
+                  <div class="reply-post"  *ngIf="comment.commentcode_fld === reply.actioncode_fld"   >
+                    <div class="img-container">
+                      <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                      [src]="_ds.fileUrl + reply.profilepic_fld" alt=""  class="imgsrc" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+                      <!-- <img appLazyLoad alt="" class="commentimg"src='assets/profile.jpg' draggable="false"> -->
+                    </div>
+                    <div class="comment-body">
+                      <div class="messege-header">
+                              <div class="sender-name">
+                                <strong>{{reply.fullname_fld}}</strong>
+                                <br>
+                                <small class="text-muted ml-1">
+                                  {{reply.datetime_fld | date: 'MMMM d, y h:mm a'}}
+                                </small>
+                              </div>
+                              <span style="flex: 1 1 auto"></span>
+                              <button *ngIf="_user.getUserID() === reply.authorid_fld"  mat-icon-button [matMenuTriggerFor]="del"
+                              aria-label="button menu">
+                              <mat-icon>more_horiz</mat-icon>
+                            </button>
+                              <mat-menu #del="matMenu">       
+                                 <button mat-menu-item class="nooutline" (click)="editthis(i,reply.commentcode_fld,reply.content_fld)">
+                                  <span>Edit</span>
+                                </button>
+                                <button mat-menu-item class="nooutline" (click)="deletecomment(i,reply.commentcode_fld,'comment')">
+                                  <span>Delete</span>
+                                </button>
+      
+                              </mat-menu>
+                          </div>
+                          <p class="comment-content">{{reply.content_fld}}</p>
+                                    
+                    </div>
+      
+                  </div>
+                </div>
+              </div>
+                
+              </ng-container>
+            </div>
+          </div>
+    </section>
+
+    <footer *ngIf="!_user.isLoading()">
+      <ng-container *ngIf="replystatus == 0">
+        <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+        [src]="_ds.fileUrl + _user.getProfilePic()" alt="" class="imgsrc" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+        <!-- <img appLazyLoad draggable="false" src="assets/profile.jpg" alt="" class="imgsrc"  draggable="false"> -->
+        <form style="width:100%;" (submit)="addcomment($event)"  ngNativeValidate>
+          <div class="input-box">
+            <input type="text" placeholder="Add  here........">
+            <div *ngIf="_user.isLoadingInput()" class="spinner-border spinner-border-sm" role="status"></div>
+            <button *ngIf="!_user.isLoadingInput()"  mat-icon-button type="submit">
+                <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="replystatus == 1">
+        <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+        [src]="_ds.fileUrl + _user.getProfilePic()" alt="" class="imgsrc" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+        <!-- <img appLazyLoad draggable="false" src="assets/profile.jpg" alt="" class="imgsrc"  draggable="false"> -->
+        <form style="width:100%;" (submit)="addReply($event)"  ngNativeValidate>
+          <div class="input-box">
+            <input type="text" placeholder="Add reply here........">
+            <div *ngIf="_user.isLoadingInput()" class="spinner-border spinner-border-sm" role="status"></div>
+            <button *ngIf="!_user.isLoadingInput()"  mat-icon-button (click)="cancelreply()"><mat-icon>cancel</mat-icon></button>
+            <button *ngIf="!_user.isLoadingInput()"  mat-icon-button type="submit">
+                <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="editstatus == 1">
+        <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+        [src]="_ds.fileUrl + _user.getProfilePic()" alt="" class="imgsrc" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+        <!-- <img appLazyLoad draggable="false" src="assets/profile.jpg" alt="" class="imgsrc"  draggable="false"> -->
+        <form style="width:100%;" (submit)="editComment($event)" ngNativeValidate>
+          <div class="input-box">
+            <input type="text" value="{{commentcontent}}">
+            <div *ngIf="_user.isLoadingInput()" class="spinner-border spinner-border-sm" role="status"></div>
+            <button *ngIf="!_user.isLoadingInput()" mat-icon-button (click)="cancelEdit()"><mat-icon>cancel</mat-icon></button>
+            <button *ngIf="!_user.isLoadingInput()" mat-icon-button type="submit">
+                <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="editstatus == 3">
+        <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+        [src]="_ds.fileUrl + _user.getProfilePic()" alt="" class="imgsrc" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+        <!-- <img appLazyLoad draggable="false" src="assets/profile.jpg" alt="" class="imgsrc"  draggable="false"> -->
+        <form style="width:100%;" (submit)="editReply($event)" ngNativeValidate>
+          <div class="input-box">
+            <input type="text" value="{{commentcontent}}">
+            <div *ngIf="_user.isLoadingInput()" class="spinner-border spinner-border-sm" role="status"></div>
+            <button *ngIf="!_user.isLoadingInput()" mat-icon-button (click)="cancelEditReply()"><mat-icon>cancel</mat-icon></button>
+            <button *ngIf="!_user.isLoadingInput()" mat-icon-button type="submit">
+                <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        </form>
+      </ng-container>
+
+
+    </footer>
+</div>
+
+
+
+

@@ -1,0 +1,87 @@
+<!--LOADING SCREEN-->
+<div class="background-color" *ngIf="showLoader">
+    <app-loadingscreen></app-loadingscreen>
+</div>
+<!--END OF LOADING SCREEN-->
+
+
+<div class="main-container">
+   
+    <header>
+        <mat-icon>account_circle</mat-icon>
+        <h5>Student's Profile</h5>
+    </header>
+
+    <section class="profile">
+        <div class="profile__names">
+            <div class="profile__user">
+                <div class="circle">
+                    <img appLazyLoad [src]="_ds.imageURL + _user.getProfilePic()"  alt="" style="cursor: pointer;" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+                    <button (click)="updateProfilePicture()" mat-icon-button>
+                        <mat-icon>photo_camera</mat-icon>
+                    </button>
+                </div>
+    
+                <div class="profile__content" *ngIf="student">
+                    <h5>{{ student[0].fname_fld }} {{ student[0].lname_fld }}</h5>
+                    <p>{{ student[0].dept_fld }} / {{ student[0].program_fld }}</p>
+                </div>
+            </div>
+
+            <div class="profile__action">
+                <button mat-flat-button class="mat-btn" (click)="updateProfile()" >Update profile</button>
+                <button mat-flat-button class="mat-btn" (click)="changePassword()" >Change password</button>
+            </div>
+
+            <hr>
+
+            <h6>Quest Achievements</h6>
+
+            <div class="badge" *ngFor="let badge of badgesAcquired" >
+                <img appLazyLoad src="{{badge.filedir_fld}}" alt="" width="100%" class="badge-icons">
+            </div>
+            <hr>
+            <h6>Items Redeemed</h6>
+            <div style="display:grid;" *ngFor="let items of itemsAcquired" >
+                <li style="list-style:georgian;"><h6>{{items.title_fld}}</h6></li>
+            </div>
+        </div>
+
+        <div class="profile__info">
+            <div class="profile__header">
+                <mat-icon>account_circle</mat-icon>
+                <h5>Personal Information</h5>
+            </div>
+            <hr>
+            <div class="profile__inform">
+                <div class="info-group">
+                    <label for="">Student ID</label>
+                    <p>{{ student[0].studnum_fld  }}</p>
+                </div>  
+                <div class="info-group" >
+                    <label for="">Email Address</label>
+                    <p>{{ student[0].email_fld }}</p>
+                </div>     
+                <div class="info-group" >
+                    <label for="">Department</label>
+                    <p>{{ student[0].dept_fld }}</p>
+                </div>  
+                <div class="info-group" >
+                    <label for="">Mode of Learning</label>
+                    <p>{{ student[0].learningtype_fld==1?'Offline':'Online' }}</p>
+                </div> 
+                <div class="info-group" >
+                    <label for="">Program / Block</label>
+                    <p>{{ student[0].block_fld }}</p>
+                </div>  
+                <div class="info-group" >
+                    <label for="">Sex</label>
+                    <p>{{ student[0].sex_fld==1?'Male':'Female' }}</p>
+                </div>       
+            </div>
+        </div>
+    </section>
+
+   
+
+</div>

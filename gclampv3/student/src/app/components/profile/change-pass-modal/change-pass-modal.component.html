@@ -1,0 +1,76 @@
+<div class="main" style="margin: 0;" mat-dialog-title>
+   <div class="head">
+      <div class="head__icon">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <h5 class="mb-0">Change Password</h5>
+    </div>
+    <hr >
+</div>
+
+
+<form (submit)="changePass($event)" ngNativeValidate>
+   <mat-dialog-content class="mat-typography">
+      <section class="instruct">
+         <label for="">Read This</label>
+        <ul>
+           <ol>1. You must provide the following details: <strong>Student ID, Old Password, and New Password</strong>. if you were given a <strong>generated password </strong> in the forgot password section, you have to use that as your <strong>Old password.</strong></ol>
+           <ol>2. The password must contain at least 8 characters.</ol>
+           <ol>3. The password must contain all of the following combinations: <strong>digits, uppercase letters, lowercase letters</strong>.</ol>
+        </ul>
+     
+        
+      </section>
+
+      <div class="changepass">
+ 
+         <div class="box-input">
+            <input  class="form-control" id="id" type="text" placeholder="Student id" required />
+         </div>
+   
+         <div class="box-input">
+            <input  class="form-control" [type]="hide ? 'text' : 'password'" id="param1" placeholder="Old Password" required />
+            <mat-icon  class="fa-eye show" [ngStyle]="{'opacity.%':60}" *ngIf="!hide; else showpass" (click)="hide = !hide">
+            visibility
+            </mat-icon>
+            <ng-template #showpass>
+               <mat-icon class="fa-eye show" [ngStyle]="{'opacity.%':60}" (click)="hide = !hide">
+               visibility_off
+               </mat-icon>
+            </ng-template>
+         </div>
+   
+         <div class="box-input">
+            <input  class="form-control" [type]="newpasshide ? 'text' : 'password'" id="param2" placeholder="New Password" required />
+            <mat-icon  class="fa-eye show" [ngStyle]="{'opacity.%':60}" *ngIf="!newpasshide; else showpass1" (click)="newpasshide = !newpasshide">
+            visibility
+            </mat-icon>
+            <ng-template #showpass1>
+               <mat-icon class="fa-eye show" [ngStyle]="{'opacity.%':60}" (click)="newpasshide = !newpasshide">
+               visibility_off
+               </mat-icon>
+            </ng-template>
+         </div>
+   
+         <div class="box-input">
+            <input  class="form-control" [type]="newpasshide2 ? 'text' : 'password'" id="param3" type="password" placeholder="Confirm Password" required />
+            <mat-icon  class="fa-eye show" [ngStyle]="{'opacity.%':60}" *ngIf="!newpasshide2; else showpass2" (click)="newpasshide2 = !newpasshide2">
+            visibility
+            </mat-icon>
+            <ng-template #showpass2>
+               <mat-icon class="fa-eye show" [ngStyle]="{'opacity.%':60}" (click)="newpasshide2 = !newpasshide2">
+               visibility_off
+               </mat-icon>
+            </ng-template>
+         </div>
+      </div>
+   </mat-dialog-content>
+
+   <hr >
+
+   <mat-dialog-actions align="end">
+      <button type="button"   (click)="closeDialog(undefined)" mat-flat-button class="mat-btn btn-cancel" >Cancel</button>
+      <button mat-raised-button class="btn-save" type="submit">Change Password</button>
+    </mat-dialog-actions>
+</form>
+

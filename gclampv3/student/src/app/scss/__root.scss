@@ -1,0 +1,152 @@
+@import "src/app/scss/__mixin.scss";
+@import "src/app/scss/__animation.scss";
+
+:root {
+    --ff-primary: "Poppins", sans-serif;
+    --ff-seconday: "Poppins", sans-serif;
+    --body-font: 'Poppins', sans-serif;
+    --lg-font-size: 3rem;
+    --md-font-size: 1.25rem;
+    --reg-font-size: .938rem;
+    --sm-font-size: .8rem;
+}
+
+@media screen and (min-width: 1600px) {
+  :root{
+      --lg-font-size: 5.5rem;
+      --md-font-size: 1.5rem;
+      --reg-font-size: 1rem;
+      --sm-font-size: .9rem;  
+  }
+}
+
+
+
+
+
+
+
+//BUTTON COLORS
+.btn-default{
+  background: var(--btn-primary);
+  color: var(--clr-white);
+}
+
+.btn-delete{
+  background: hsl(354, 69%, 54%);
+  color: var(--clr-white);
+}
+
+.btn-cancel{
+  background: var(--clr-secondary);
+  color: var(--clr-neutral);
+}
+
+
+.data{
+    width: 80rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__no{
+      max-width: 100%;
+      height: 450px;
+      margin-top: 4em;
+      margin-bottom: 2em;
+      margin-inline: auto;
+    }
+    &__text{
+      font-weight: 600;
+      font-size: 1.4rem;
+      text-align: center;
+      color: var(--clr-nuetral);
+    }
+
+}
+
+
+
+
+.header{
+  // margin-bottom: 1em;
+  @include flex(column, space-between, flex-start);
+  small{ 
+    @include font(.9rem, 400, var(--txt-sub));
+  }
+
+  p{
+    @include font(.9rem, 400, var(--txt-sub));
+  }
+
+  &__main{
+    @include flex(row, flex-start, center);
+  }
+
+  &__title-container{
+    padding: 0;
+  }
+
+  &__title{
+    @include font(1.6rem, 600, var(--clr-title));
+  }
+
+  &__icon-contain{
+    @include flex(row, center, center);
+    background: var(--btn-primary);
+    color: var(--clr-white);
+    width: 32px;
+    height: 32px;
+    padding: 0px;
+    border-radius: 5px;
+    margin-left: 15px;
+  }
+
+  &__sched-button{
+    @include flex(row, center, center);
+    @include font(.9rem, 500, var(--clr-white));
+    width: 100%;
+    padding: .2em 1.5em;
+    margin-top: 2em;
+    border-radius: .5rem;
+    background:var(--btn-primary);
+    mat-icon{
+      transform: scale(.7);
+    }
+  }
+}
+
+
+
+
+@media only screen and(min-width: 768px){
+  .header{
+    @include flex(row, space-between, center);
+    &__title{
+      @include font(1.8rem, 600, var(--clr-title));
+    }
+
+    &__sched-button{
+      width: auto;
+      mat-icon{
+        transform: scale(.7);
+      }
+    }
+  }
+
+}
+
+
+@media only screen and(min-width: 1400px){
+  .header{
+    small{
+      font-size: 1rem;
+    }
+    &__title{
+      @include font(2rem, 600, var(--clr-title));
+    }
+  }
+
+}
+

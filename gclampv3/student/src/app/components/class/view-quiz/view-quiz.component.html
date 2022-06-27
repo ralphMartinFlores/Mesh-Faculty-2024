@@ -1,0 +1,211 @@
+<ng-container *ngIf="quizObject">
+    <div *ngIf="start==0" class="main">
+        <mat-horizontal-stepper >
+            <mat-step label="start" >
+                <div class="main__desciption">
+                    <h2>{{quizObject['quiztitle']}}</h2>
+                    <hr>
+                    <strong>Instructions:</strong>
+                    <p>{{quizObject['instruction']}}</p>
+
+                    <div class="main__actions">
+                        <button class="btn-default" mat-button matStepperNext (click)="startQuiz()" *ngIf="data.load[0]['withfile_fld'] == 3">Start the Quiz</button>
+                        <button class="btn-start" mat-button matStepperNext *ngIf="data.load[0]['withfile_fld'] == 2" disabled>Wait for the instructor to open the quiz.</button>
+                        <button class="btn-cancel" [disabled]="isSubmitButtonDisabled" mat-button  (click)="cancelQuiz()"  >Cancel</button>
+                    </div>   
+                </div>
+            </mat-step>
+
+        </mat-horizontal-stepper>
+    </div>
+
+
+    <div *ngIf="start==1" class="main" >
+        <mat-horizontal-stepper>
+            <mat-step label="{{i}}"  *ngFor="let item of questionObject; let i = index; let last = last; let first = first;">
+                <div class="question">
+                    <div class="question__header">
+                        <p>Question # {{i + 1}} / {{ questionObject.length }}</p>
+                    </div>
+
+                    <div class="question__content" >
+                        
+                        <ng-container *ngIf="checkIfQuestionIsString(item.question, 1)">
+                            <a [href]="_ds.fileUrl+item.question[1]" target="_blank">
+                                  <div class="imgoverlay"> <button mat-icon-button><mat-icon style="color: #fff">visibility</mat-icon></button></div>
+                                  <img appLazyLoad   [src]="_ds.fileUrl+item.question[1]" alt="" class="question__img" width="100%" draggable="false" >
+                            </a>
+                        </ng-container>
+
+                        <div class="question__quest">
+
+                            <p class="question__desc">{{ checkIfQuestionIsString(item.question, 0) }}</p>
+    
+                                <ng-container *ngIf="item.questiontype==0">
+                                    <mat-radio-group [(ngModel)]="answerObject[i].answer" aria-label="Select an option" class="example-radio-group" (change)="setAnswers(i, $event.value)" >
+                                        <ng-container  *ngFor="let choice of splitChoices(item.choices)">
+                                            <mat-radio-button  class="example-radio-button option" [value]="choice"><span class="mat-radio-label ">{{ choice }}</span></mat-radio-button>
+                                        </ng-container>
+                                    </mat-radio-group>
+                                </ng-container>
+        
+                                <ng-container *ngIf="item.questiontype==1">
+                                    <input class="question__input" type="text" placeholder="Answer here........." [(ngModel)]="answerObject[i].answer" (keyup)="setAnswers(i, ($any($event).target.value))">
+                                </ng-container>
+        
+                                <ng-container *ngIf="item.questiontype==2">
+                                    <mat-radio-group style="width: 100%;    -top: 1em;" [(ngModel)]="answerObject[i].answer" aria-label="Select an option" (change)="setAnswers(i ,$event.value)">
+                                        <mat-radio-button class="example-radio-button option"  value="true" >True</mat-radio-button>
+                                        <mat-radio-button class="example-radio-button option"  value="false" >False</mat-radio-button>
+                                    </mat-radio-group>
+                                </ng-container>
+        
+                                <ng-container *ngIf="item.questiontype==3">
+                                    <mat-form-field style="width: 100%" >
+                                        <mat-label>Answer here...</mat-label>
+                                        <textarea  class="example-full-width"  [(ngModel)]="answerObject[i].answer" (keyup)="setAnswers(i, ($any($event).target.value))" matInput ></textarea>
+                                    </mat-form-field>
+                                </ng-container>
+    
+                        </div>
+                       
+                    </div>
+
+
+                    <div class="question__footer">
+                        <button class="btn-back" mat-button matStepperPrevious *ngIf="!first">Back</button>
+                        <button class="btn-next" mat-button matStepperNext *ngIf="!last">Next question</button>
+                        <button class="btn-submit" mat-button matStepperNext (click)=" confirmQuiz()" *ngIf="last">Submit answers</button>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>   
+    </div>
+
+
+
+    <div *ngIf="start==2" class="resultmain">
+        <mat-horizontal-stepper>
+            <mat-step>
+                <div class="results">
+                    <div class="results__header">
+                        <mat-icon>equalizer</mat-icon>
+                        <h4>results</h4>
+                    </div>
+
+                    <hr>
+
+                    <div class="results__content">
+
+                        
+                        <table class="table1">
+                            <thead>
+                              <th>Total Question</th>
+                              <th>Your Score</th>
+                              <th>Passing Score</th>
+                            </thead>
+                        
+                            <tbody >
+                                <tr>
+                                  <td data-label=""> {{totalquestion}} </td>
+                                  <td data-label="Total Score">{{ totalscore }}/{{ quiztotal }}</td>
+                                  <td data-label="Passing Score">{{ passingscore | number:'1.2-2' }}</td>
+                                </tr>
+                            </tbody>           
+                        </table>
+
+
+
+                        <p class="results__status" [style]="totalscore>=passingscore?'color: green':'color:red'"> 
+                            {{ totalscore>=passingscore?'Congratulations! you passed':totalscore>=passingscore?'':'Sorry, you failed!' }} 
+                        </p>
+
+
+                        <div *ngIf="open">
+                            <table class="table  align-middle">
+                                <thead>
+                                    <th>#</th>
+                                    <th style="text-align: left;">Question</th>
+                                    <th>Your answer</th>
+                                    <th>Mark</th>
+                                    <th>Score</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let ans of quizScore; let i = index" >
+                                        <td data-label="#">{{i+1}}</td>
+                                       
+                                        <td data-label="Question" class="quest" style="text-align: left;">
+                                          <a [href]="_ds.fileUrl + ans.question.question[1]" target="_blank">
+                                              <img *ngIf="checkIfQuestionIsString(ans.question.question, 1)"  appLazyLoad [src]="_ds.fileUrl + ans.question.question[1]" alt="" width="100%" draggable="false" >    
+                                           </a>  
+                                          {{  checkIfQuestionIsString(ans.question.question, 0)}}</td>
+  
+  
+                                        <td data-label="Your answer">{{ans.answer}}</td>
+                                        <td data-label="Mark" [style]="ans.mark==1?'color: green':'color: red'" >{{ ans.mark==1?'&#x2714;':'&#x2716;' }}</td>
+                                        <td data-label="Score">{{ ans.points }}</td>
+                                                                      
+                                      </tr>
+                                      <tr class="total">
+                                        <td class="noborder"></td>
+                                        <td class="noborder"></td>
+                                        <td class="noborder"></td>
+                                        <td class="noborder"></td>
+                                        <td class="total__score" >
+                                           <b>Overall score: {{ totalscore }}</b>
+                                        </td>
+                                      </tr>
+                                </tbody>
+                        
+                              </table>
+
+
+                            <!-- <table class="table2"  >
+                                <thead>
+                                  <th>#</th>
+                                  <th style="text-align: left;">Question</th>
+                                  <th>Your answer</th>
+                                  <th>Mark</th>
+                                  <th>Score</th>
+                                </thead>
+                            
+                                <tbody >
+                                    <tr *ngFor="let ans of quizScore; let i = index" >
+                                      <td data-label="#">{{i+1}}</td>
+                                     
+                                      <td data-label="Question" class="quest" style="text-align: left;">
+                                        <a [href]="_ds.fileUrl + ans.question.question[1]" target="_blank">
+                                            <img *ngIf="checkIfQuestionIsString(ans.question.question, 1)"  appLazyLoad [src]="_ds.fileUrl + ans.question.question[1]" alt="" width="100%" draggable="false" >    
+                                         </a>  
+                                        {{  checkIfQuestionIsString(ans.question.question, 0)}}</td>
+
+
+                                      <td data-label="Your answer">{{ans.answer}}</td>
+                                      <td data-label="Mark" [style]="ans.mark==1?'color: green':'color: red'" >{{ ans.mark==1?'&#x2714;':'&#x2716;' }}</td>
+                                      <td data-label="Score">{{ ans.points }}</td>
+                                                                    
+                                    </tr>
+                                </tbody>
+        
+                                <tfoot>
+                                    <td style="border: none;"></td>
+                                    <td style="border: none;"></td>
+                                    <td style="border: none;"></td>
+                                    <td style="border: none;"></td>
+                                    <td data-label="total"><b>Overall score: {{ totalscore }}</b> </td>
+                                </tfoot>
+                   
+                              </table> -->
+                        </div>
+                    </div>
+    
+                    <div class="results__footer">
+                        <button class="btn-default" mat-flat-button (click)="cancelQuiz()">Done</button>
+                        <button class="btn-cancel" mat-flat-button (click)="Previewanswer()">Review</button>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+
+</ng-container>

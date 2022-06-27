@@ -1,0 +1,130 @@
+<div id="box-container" class="bg-container">
+   <div class="d-flex align-items-center justify-content-center flex-column">
+      <img class="logo" appLazyLoad src="assets/logo/logo.png" alt="">
+   </div>
+   <!--FORM SECTION-->
+   <div class="row">
+      <!--SIGN UP-->
+      <div class="col d-flex align-items-center justify-content-center flex-column sign-up">
+         <div class="form-wrapper align-items-center justify-content-center text-center">
+            <div class="form sign-up">
+               <button mat-icon-button class="backtn" (click)="toggle()">
+                  <mat-icon >arrow_back</mat-icon>
+               </button>
+
+               <form (submit)="forgotPassword($event)" ngNativeValidate>
+                  <h1 class="text-center">Forgot password?</h1>
+                  <p class="subtitle">Provide the information required below <span class="text-danger"><strong>Student ID, Email Address, Birthdate, and your Lastname</strong></span> and we'll generate a new password for you</p>
+                  
+                  <div class="box-input">
+                     <mat-icon>account_circle</mat-icon>
+                     <input type="text" placeholder="Student ID" required>
+                  </div>
+
+                  <div class="box-input">
+                     <mat-icon>email</mat-icon>
+                     <input type="email" placeholder="Email address" required>
+                  </div>
+
+                  <div class="box-input">
+                     <mat-icon>event</mat-icon> 
+                     <input type="text" placeholder="Birthdate" onfocus="(this.type='date')" required>
+                  </div>
+
+                  <div class="box-input">
+                     <mat-icon>engineering</mat-icon>
+                     <input type="password" placeholder="Lastname" required>
+                  </div>   
+
+                  <button mat-raised-button type="submit" class="submitbutton">Submit</button>
+               </form>
+               
+               <p><strong class="mainbtn" (click)="toggle()">Back to the main Page</strong></p>
+            </div>
+         </div>
+      </div>
+      <!--END OF SIGN UP-->
+ 
+
+      <!--SIGN IN-->
+      <div class="col d-flex align-items-center justify-content-center flex-column sign-in">
+         <div class="form-wrapper">
+            <form class="form sign-in" ngNativeValidate (submit)="onSubmit($event)">
+               
+               <h1 class="text-center">Welcome Students!</h1>
+               <!-- <p class="subtitle">Login first</p> -->
+               <div class="box-input">
+                  <mat-icon>account_circle</mat-icon>
+                  <input type="text"  placeholder="Email Address" id="param1" required />
+               </div>
+
+               <div class="box-input">
+                  <mat-icon>lock</mat-icon>
+                  <input [type]="hide ? 'text' : 'password'"  id="param2" type="password" placeholder="Password" required/>
+                  <mat-icon  class="fa-eye show" [ngStyle]="{'opacity.%':60}" *ngIf="!hide; else showpass" (click)="hide = !hide">
+                   visibility
+                  </mat-icon>
+                  <ng-template #showpass>
+                     <mat-icon class="fa-eye show" [ngStyle]="{'opacity.%':60}" (click)="hide = !hide">
+                     visibility_off
+                     </mat-icon>
+                  </ng-template>
+               </div>
+               <p *ngIf="errMsg != ''" class="text-danger text-center">
+                  <strong>{{ errMsg }}</strong>
+                </p>
+               <button mat-raised-button class="submitbutton" type="submit">LOGIN</button>
+               <p class="forget-pass">
+                  <span>Forgot Password? </span>
+                  <strong class="click-here" (click)="toggle()">Click here</strong>
+                  <br><br>
+                  <span style="font-size: 0.8em;">GCLAMP v{{ version }}</span>
+               </p>
+            </form>
+         </div>
+      </div>
+      <!--END OF SIGN IN-->
+   </div>
+
+   <div class="row content-row">
+      
+      <!--SIGN IN CONTENT-->
+      
+      <div class="col flex-column align-items-center justify-content-center text-center">
+         <div class="text sign-in">
+            <!-- <div class="d-flex link-page">
+               <li>View home Page</li>
+               <li>Contact</li>
+            </div> -->
+            <div class="img sign-in">
+               <img appLazyLoad src="assets/images/login.png" alt="">
+            </div>
+            <div class="other-img">
+               <div class="d-flex align-items-center justify-content-center flex-row">
+                  <div class="d-flex align-items-center justify-content-center flex-column">
+                     <a><img style="margin-bottom: 5px; " appLazyLoad src="assets/logo/apple.png" alt="" width="200px"></a>
+                     <a><img appLazyLoad src="assets/logo/playstore.png" alt="" width="200px"></a>
+                  </div>
+                  <a><img style="margin-left: 12px;" appLazyLoad src="assets/logo/logo.png" alt="" width="150px"></a>
+                  <!-- <a><img style="margin-left: 12px;" appLazyLoad src="assets/images/BHC.png" alt="" width="150px"></a> -->
+                  <a><img style="margin-left: 12px;" appLazyLoad src="assets/images/GC.png" alt="" width="150px"></a>
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--END OF SIGN IN CONTENT-->
+   
+      <!--SIGN UP CONTENT-->
+      
+      <div class="col flex-column align-items-center justify-content-center text-center">
+         <div class="img sign-up">
+            <img appLazyLoad src="assets/images/forgotpass.png" alt="" class="forgetimg">
+         </div>
+         <div class="text sign-up"></div>
+      </div>
+      <!--END OF SIGN UP CONTENT-->
+
+      <!--END OF CONTENT SECTION-->
+   </div>
+</div>

@@ -30,6 +30,13 @@ export class GroupMessagingComponent implements OnInit {
 
   @ViewChild('scrollTarget') private myScrollContainer: ElementRef;
   @ViewChild('scrollframe') private scrollFrame: ElementRef;
+  @ViewChild('emptyContainerElement') emptyContainerElement?: ElementRef;
+  @ViewChild('noSelectedConversationElement') noSelectedConversationElement?: ElementRef;
+  @ViewChild('greetingsElement') greetingsElement?: ElementRef;
+
+  public emptyContainerElementRef: any;
+  public noSelectedConversationElementRef: any;
+  public greetingsElementRef: any;
   
   // Sample Data from the backend .. 
   public grouparray = [];
@@ -177,6 +184,12 @@ export class GroupMessagingComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.emptyContainerElementRef = this.emptyContainerElement.nativeElement;
+    this.noSelectedConversationElementRef = this.noSelectedConversationElement.nativeElement;
+    this.greetingsElementRef = this.greetingsElement.nativeElement;
+  }
+
 
   initializeComponents = () => {
     this.myId = this.splitEmail(this.user.getUserEmail())
@@ -277,10 +290,17 @@ export class GroupMessagingComponent implements OnInit {
       dt = this.user._decrypt(dt.a)
       this.grouparray = dt.payload
       this.backupGroupArray = dt.payload
-      console.log(dt)
+      console.log(this.grouparray.length)
+      // Show Empty Illustration if there are no groups yet
+      if (this.grouparray.length > 0) {
+        this.emptyContainerElementRef.style.display = 'none';
+        this.noSelectedConversationElementRef.style.display = 'block';
+        this.greetingsElementRef.style.display = 'none';
+      }
     }, er => {
       er = this.user._decrypt(er.error.a)
     })
+
   }
 
   getSavedMessages(groupid_fld) {

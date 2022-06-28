@@ -21,6 +21,14 @@
       <button mat-flat-button (click)="createGroupDialog()">
         Create a Group
       </button>
+      <!-- Show this illustration if there are no groups listed yet -->
+      <div class="empty__container" #emptyContainerElement>
+        <div class="empty__illustration--container">
+          <img src="../../../assets/images/empty-groupslist-illustration-grayscale.svg" alt="Point to the right illustration" loading="lazy">
+        </div>
+        <p>Once you've created a new group under this class, you'll see it listed here.</p>
+      </div>
+      <!-- End of Show this illustration if there are no groups listed yet-->
       <div
         class="groups__container--group"
         *ngFor="let group of grouparray; let i = index"
@@ -32,7 +40,7 @@
           <img src="../../../assets/images/groups-icon.png" alt="Groups icon" />
         </div> -->
         <div class="groupsicon__container">
-            <img src="../../../assets/images/groups-icon.png" alt="Groups icon">
+            <img src="assets/images/groups-icon.png" alt="Groups icon">
         </div>
         <div class="groups__container--groupdetails">
             <p>{{ group.groupname_fld }}</p>
@@ -41,7 +49,7 @@
       </div>
     </div>
     <div class="groupmessages__container">
-      <div class="groupmessages__container--content">
+      <div class="groupmessages__container--content" #greetingsElement>
         <span class="groupmessages__back-button" (click)="onBackButton()"
           ><mat-icon>keyboard_backspace</mat-icon></span
         >
@@ -65,6 +73,16 @@
             </button>
           </div>
         </ng-container>
+      </div>
+      <div class="noselectedconversation__container" #noSelectedConversationElement>
+        <div class="illustration__container">
+          <img
+            src="assets/images/select-conversation-illustration.svg"
+            alt="No selected conversation illustration"
+            loading="lazy"
+          />
+        </div>
+        <p>Select a conversation in your group's list from the left to see messages in that group or Send the first message yourself.</p>
       </div>
       <ng-container *ngIf="selectedRoom != ''">
         <header class="chat__container--header">

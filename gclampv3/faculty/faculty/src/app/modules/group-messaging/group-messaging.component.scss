@@ -419,6 +419,29 @@
         // }
       }
     }
+
+    .empty__container {
+      padding: 16px;
+      margin-top: 10px;
+      text-align: center;
+      .empty__illustration--container {
+        img {
+          aspect-ratio: 4 / 3;
+        }
+      }
+      p {
+        margin: 0 32px;
+        font-size: 12px;
+      }
+    }
+    .noselectedconversation__container {
+      text-align: center;
+      p {
+        font-size: 14px;
+        width: 75ch;
+        margin-top: 16px;
+      }
+    }
   }
   
   // Animations ..

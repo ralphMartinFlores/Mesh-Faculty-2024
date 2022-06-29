@@ -1,0 +1,44 @@
+<div class="main-container">
+  <header class="header">
+    <div class="header__title-container">
+      <div class="header__main">
+        <h1 class="header__title">Class and Faculty Evaluation</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">rule</mat-icon>
+        </div>
+      </div>
+      <small>Feedback on instructors' classroom management</small>
+    </div>
+  </header>
+  <div class="line"></div>
+
+  <div class="class" [@cardAnimation]="classes.length">
+    <ng-container *ngFor="let class of classes">
+      <!-- <div class="class__card" *ngIf="!isHidden(class.mgrade_fld, class.fgrade_fld)"> -->
+        <div class="class__card">
+        <div class="class__header">
+          <small>Classcode: {{class.classcode_fld}}</small>
+          <p class="class__desc"> {{ class.subjdesc_fld}} </p>
+          <small>{{ getDays(class.day_fld) }} {{class.starttime_fld+'-'+class.endtime_fld}}</small>
+          <img src="assets/logo/logo.png" alt="">
+        </div>
+  
+        <div class="class__footer">
+          <div class="class__clock">
+            <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+            [src]="_ds.fileUrl + class.profilepic_fld" alt=""  class="class__img" draggable="false">
+          
+            <div class="class__info">
+                <span class="teacher" *ngIf = "class.fname_fld != null">{{ class.honorifics_fld }}. {{class.fname_fld +' '+class.lname_fld}}</span>
+                <span class="teacher" *ngIf = "class.fname_fld == null" >TBA</span>
+            </div>
+          </div>
+          <button class="class__enter" (click)="viewQuestionnaire(class)" [hidden]="isHidden(class.mgrade_fld, class.fgrade_fld)"><span>Evaluate<mat-icon>keyboard_arrow_right</mat-icon></span></button>
+          <small *ngIf="isHidden(class.mgrade_fld, class.fgrade_fld)">Done</small>
+        </div>
+      </div>
+    </ng-container>
+    
+
+  </div>
+</div>

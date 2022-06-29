@@ -1,0 +1,277 @@
+@import "src/app/scss/__mixin.scss";
+
+
+.main-container{
+  padding: 1em 0;
+  &::before{
+    content: 'FORUMS';
+    font-size: 9rem;
+    font-weight: 700;
+    opacity: .1;
+    position: absolute;
+    top: -.3em;
+    right: 1em;
+    z-index: -1;
+  }
+}
+
+.subcontainer{
+  max-width: 100rem;
+  background: var(--clr-nav);
+  border-radius:  .5em;
+  margin-inline: auto;
+  padding: 2em 1em;
+  // box-shadow: 2px 8px 12px rgba(0,0,0,0.08);
+  box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07)
+  ;
+}
+
+
+
+.heads{
+  max-width: 100rem;
+  padding: 0 1em;
+  margin-inline: auto;
+  &__back-action{
+    @include flex(row, flex-start, center);
+    margin-bottom: 1em;
+    button{  
+      background: var(--btn-primary); 
+      color: var(--clr-white);
+    }
+    a{ 
+      margin-left: 10px; 
+      font-weight: 600;
+      text-decoration: none; 
+      color: var(--clr-neutral);
+    }
+  }
+}
+
+
+.subheader{
+  &__desc{
+    line-height: 1.8;
+    white-space: pre-wrap;
+    color: var(--clr-neutral);
+    font-size: var(--reg-font-size);
+  }
+
+  &__title{ 
+    font-weight: 600;
+    font-family: "Poppins", sans-serif !important;
+    margin: 0 0 .5em;
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: var(--clr-neutral);
+  }
+
+  &__author-post{
+    margin-top: 1em;
+    @include flex(row, space-between, center);
+    .btn-success{ 
+      @include flex(row, center, center);
+    }
+  }
+
+  &__date{ 
+    @include flex(row, flex-start, center); 
+    color:var(--clr-neutral); 
+    font-size: var(--sm-font-size);
+    mat-icon{
+      transform: scale(.7)
+    }
+  }
+
+  &__btn{
+      @include flex(row, center, center);
+      display: none;
+      height: 40px;
+      border-radius: .5em;
+      background:var(--clr-primary);
+      color: var(--clr-white);
+      font-size: 1rem;
+      font-weight: 600;
+      mat-icon{ transform: scale(.7);}
+      border: none;
+  }
+
+}
+
+.topic{
+  @include flex(row, flex-start, center);
+
+  &__icons{
+    @include flex(row, center, center);
+    width: 35px;
+    height: 35px;
+    background: #bfe1f8;
+    color: #1f79b4;
+    margin-right: 10px;
+    border-radius: 50%;
+    transition: scale(.9);
+  }
+
+  strong{
+    color: var(--clr-neutral);
+    font-size: .9rem;
+  }
+}
+
+.subforum{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    margin-top: 1em;
+    align-items: flex-start;
+
+    &__card{
+      padding: 1em;
+      border: 1px solid #c5c5c5;
+      border-radius: .5em;
+      margin-bottom: 1em;
+    }
+
+    &__header{
+      @include flex(row, space-between, flex-start);
+      margin-bottom: .5em;
+      button{
+        margin-top: 1em;
+        mat-icon{
+          color:var(--clr-neutral);
+        }
+      }
+    }
+
+    &__title{
+      font-weight: 700;
+      margin-top: 1em;
+      font-family: "Poppins", sans-serif !important;
+      color: var(--clr-neutral);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    &__desc{
+      line-height: 1.6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4; 
+      -webkit-box-orient: vertical; 
+      margin-bottom: 1em;
+      color: var(--clr-neutral);
+      font-size: var(--sm-font-size);
+    }
+
+    &__date{
+      @include flex(row, flex-start, center);
+      gap: 4px;
+      font-size: .9rem;
+      color: #626262;
+      mat-icon{
+        transform: scale(.7)
+      }
+    }
+
+    &__footer{
+      @include flex(row, space-between, center);
+    }
+
+    &__comments{
+      @include flex(row, flex-start, center);
+      small{
+        color: var(--btn-primary);
+      }
+      mat-icon{
+        margin-left: 10px;
+        color: var(--clr-neutral);
+      }
+    }
+
+   
+}
+
+
+
+@media only screen and(min-width: 768px){
+  .subcontainer{
+    padding: 2em 1.5em;
+  }
+
+  .subforum{
+    &__title{
+      font-size: 1.1rem;
+    }
+  }
+}
+
+
+
+
+@media only screen and(min-width: 1000px){
+  .main-container{
+    padding: 3em;
+  }
+
+    .subheader{
+    &__desc{
+      margin-top: 1em;
+    }
+  }
+
+      .subcontainer{
+        padding: 2em;
+      }
+
+      .subforum{
+        grid-template-columns: repeat(2, minmax(40%, 1fr));
+        gap: 1em;
+
+        &__title{
+          font-weight: 700;
+          margin-top: 1em;
+          font-family: "Poppins", sans-serif !important;
+          color: var(--clr-neutral);
+          font-size: 1.2rem;
+          line-height: 1.6;
+        }
+
+        &__card{
+          padding: 1.2em;
+        }
+
+        &__comments{
+          @include flex(row, flex-start, center);
+          mat-icon{
+            margin-left: 10px;
+          }
+        }
+
+       
+    }
+}
+
+
+@media only screen and(min-width: 1600px){
+  .subforum{
+    grid-template-columns: repeat(3, minmax(30%, 1fr));
+    gap: 1em;
+
+  
+
+    &__comments{
+      @include flex(row, flex-start, center);
+      mat-icon{
+        margin-left: 10px;
+      }
+    }
+
+   
+  }
+}

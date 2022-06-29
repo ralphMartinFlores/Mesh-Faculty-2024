@@ -1,0 +1,148 @@
+<!-- <div class="wrapper">
+  <header class="header">
+    <div class="header__title-container">
+      <div class="header__main">
+        <h1 class="header__title">E-Library</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">import_contacts</mat-icon>
+        </div>
+      </div>
+      <small>Gordon College eLibrary</small>
+    </div>
+  </header>
+
+  <div class="line"></div>
+  
+    <div class="row">
+      <div class="col-md-8"><form (submit)="sendRequest($event)">
+        <div class="card" style="height: 100%;">
+          <div class="card-header">
+            <strong>BOOK REQUEST FORM</strong> (For Physical Copy of Book)
+          </div>
+          <div class="card-body">
+            <label for="booktitle"><strong>Book Title</strong></label>
+            <input type="text" class="form-control" id="booktitle" name="booktitle"><br>
+
+            <label for="booktitle"><strong>Author</strong></label>
+            <input type="text" class="form-control" id="booktitle" name="booktitle">
+          </div>
+          <div class="card-footer">
+            <div class="card-body text-right">
+              <button type="submit" class="btn btn-primary btn-sm">Submit Request</button>
+            </div>
+          </div>
+        </div>
+      </form></div>
+      
+      <div class="col-md-4">
+        <div class="card" style="height: 100%;">
+          <div class="card-header"><strong>Physical Library Books on Hand</strong></div>
+          <div class="card-body text-center">
+            <span>Borrowed Book/s</span><br><br> 
+            <span class="book-count">2</span>
+          </div>
+          <div class="card-body text-center">
+            <span>Unreturned Book/s</span><br><br> 
+            <span class="book-count">1</span>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="col-md-3">
+        <div class="card" style="height: 100%;">
+          <div class="card-header"><strong>Unreturned Books</strong></div>
+          <div class="card-body text-center"><span class="book-count">1</span></div>
+        </div>
+      </div> -->
+    <!-- </div><br>
+    
+ 
+
+  <div class="header__input">
+    <input type="text" placeholder="Search Available eBooks..." id="searchclass">
+    <button mat-flat-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </div><br>
+</div> -->
+
+<div class="main-container">
+  <header>
+    <div class="d-flex align-items-center page-title">
+        <h2>GC eLibrary</h2>
+        <div class="icon-contain">
+            <mat-icon class="icon">local_library</mat-icon>
+        </div>
+    </div>
+  </header>
+
+
+<div *ngIf="bookObject != null; else noBooks">
+  <section class="book-section" >
+      <div *ngIf="isTiled; else isListed">
+          <div class="row">
+              <div class="col-lg-6">
+                  <h4 class="font-weight-bold mb-0">Select a book</h4>
+              </div>
+              <div class="col-lg-6">
+                  <div class="d-flex flex-row-reverse align-items-center">
+                      <button class="btn-view" (click)="toggleview()" mat-flat-button><mat-icon class="mr-2">list</mat-icon>List View</button>
+                      <input [(ngModel)]="bookTitle" (keyup)="Search()" type="text" class="form-control search-books-input mr-2" placeholder="Search Book Title">
+                      <!-- [(ngModel)]="searchword"(input)="searchThis() -->
+                  </div>
+              </div>
+          </div>
+          <section class="book-container">
+              <div class="book-box" *ngFor="let book of bookObject; index as i" (click)="viewBook(book.file)">
+                  <div class="book-content" style="color: rgb(95,95,95);">
+                      <mat-icon>auto_stories</mat-icon>
+                  </div>
+                  <strong>{{ book.title_fld }}</strong>
+                  <h3 class="card-subtitle mb-3 text-muted">{{ book.author_fld }}</h3>
+                  <small class="text-muted d-flex">{{ book.copyright_fld }}</small>
+              </div>
+          </section>
+      </div>
+
+      <ng-template #isListed>
+          <div class="row">
+              <div class="col-lg-6">
+                  <h4 class="font-weight-bold mb-0">Select a book</h4>
+              </div>
+              <div class="col-lg-6">
+                  <div class="d-flex flex-row-reverse align-items-center">
+                      <button class="btn-view" (click)="toggleview()" mat-flat-button><mat-icon class="mr-2">grid_on</mat-icon>Grid View</button>
+                      <input [(ngModel)]="bookTitle" (keyup)="Search()" type="text" class="form-control search-books-input mr-2" placeholder="Search Book Title">
+                      <!-- <input [(ngModel)]="bookSearch" (ngModelChange)="search_book()" type="text" class="form-control search-books-input mr-2" placeholder="Search Book Title"> -->
+                  </div>
+              </div>
+          </div>
+          <div class="book-list-container">
+              <div class="card book-box-list mb-2 mt-2" *ngFor="let book of bookObject; index as i" (click)="viewBook(book.file)">
+                  <div class="card-body" >
+                      <div class="d-flex ml-3">
+                          <div class="book-content" style="color: rgb(95,95,95);">
+                              <mat-icon class="book-icon-list">auto_stories</mat-icon>
+                          </div>
+                          <div class="ml-3">
+                              <strong>{{ book.title_fld }}</strong>
+                              <h3 class="card-subtitle mb-3 text-muted">{{ book.author_fld }}</h3>
+                          </div>
+                      </div>
+                 </div>
+             </div>
+          </div>
+      </ng-template>
+  </section>
+</div>
+
+<ng-template #noBooks>
+  <h3>No Books to Display</h3>
+</ng-template>
+
+  <!-- <div class="d-flex justify-content-end">
+      <button mat-fab color="warn" aria-label="Example icon button with a home icon" (click)="addBook()">
+          <mat-icon>add</mat-icon>
+        </button>
+  </div> -->
+</div>

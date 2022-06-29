@@ -1,0 +1,230 @@
+@import 'src/app/scss/__mixin.scss';
+
+mat-dialog-title{
+    border-bottom: 1px solid #222;
+}
+
+
+
+
+mat-hint{
+    font-size: .8rem;
+    line-height: 20px;
+}
+
+.head{
+    @include flex(row, flex-start, center);
+    padding: 0 0 .5em;
+    h5{
+        margin: 0;
+        font-weight: 600;
+        font-size: var(--reg-font-size);
+    }
+    &__icon{
+        @include flex(row, center, center);
+        width: 30px;
+        height: 30px;
+        background: #bfe1f8;
+        color: var(--clr-primary);
+        border-radius: 50%;
+        margin-right: 10px;
+        mat-icon{
+            transform: scale(.8);
+        }
+    }
+}
+
+.input-container{
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 100%;
+
+    .box-input{
+        margin-bottom: 1em;
+        label{
+            color: var(--clr-neutral);
+            font-size: .9rem;
+        }
+        input, select{
+            margin-top: .5em;
+            padding: 1em;
+        }
+    }
+
+    
+}
+.btn-save{
+    background: var(--clr-primary);
+    color: var(--clr-white);
+}
+
+.action{
+    @include flex(row, flex-end, center);
+    width: 100%;
+    gap:10px;
+    padding: 1em;
+   
+   
+    .change-pass-btn{
+        background: var(--clr-primary);
+        color: var(--clr-white);
+    }
+}
+
+
+.instruct{
+    padding: .5em 0;
+    p{ margin: 0; font-size: var(--reg-font-size); }
+    label{
+        font-weight: 600;
+        font-size: var(--sm-font-size);
+        margin-bottom: .5em;
+        font-family: 'Poppins', sans-serif !important;
+        color: crimson;
+    }
+    ul{
+        margin: 0;
+        padding: 0;
+        ol{
+            margin: 0;
+            padding: 0;
+            font-size: var(--sm-font-size);
+            font-family: 'Poppins', sans-serif !important;
+            line-height: 1.6;
+        }
+    }
+}
+
+hr{
+    margin: 0;
+}
+
+.changepass{
+    display:  grid;
+    grid-template-columns: repeat(1, minmax(100%, 1fr));
+    padding: 1em 0;
+    .box-input{
+        position: relative;
+        margin-bottom: 1em;
+        input{
+            padding: .5em;
+        }
+        .fa-eye{
+            position: absolute;
+            right: 1em;
+            top: 30%;
+            cursor: pointer;
+        }
+    }
+
+    mat-icon{
+        cursor: pointer;
+    }
+}
+
+.uploads{
+    padding: 1.5em 1em;
+    .btn-photo{
+        width: 100%;
+        padding: 1em;
+        border: none;
+        background: #e7e7e7;
+        margin-inline: auto;
+        font-weight: 600;
+        mat-icon{
+            margin-right: 10px;
+        }
+    }
+}
+
+.img-container{
+    margin-top: 1em;
+    background: rgba(0,0,0,0.4);
+}
+
+.progress{
+    margin-top: 1em;
+}
+
+
+
+@media  screen and(min-width: 1000px){
+    .head{
+        padding: 0 0 .5em ;
+    }
+
+    form{
+        padding: 1em 0;
+    }
+    
+    .input-container{
+        padding:  2em;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    
+        .box-input{
+            margin-bottom: 0;
+            label{
+                color: var(--clr-neutral);
+                font-size: .9rem;
+            }
+            input, select{
+                margin-top: .5em;
+                padding: 1em;
+            }
+        }
+    }
+
+    .action{
+        @include flex(row, flex-end, center);
+        gap: 10px;
+        border-top: 1px solid #c9c9c9;
+        width: 100%;
+       
+    }
+
+    .changepass{
+        display:  grid;
+        grid-template-columns: repeat(2, minmax(50%, 1fr));
+        gap: 5px;
+        .box-input{
+            margin-bottom: .5em;
+        }
+    }
+
+
+    .uploads{
+        padding: 1.5em 2em;
+        .btn-photo{
+            width: 100%;
+            margin-inline: auto;
+        }
+    }
+    
+}
+
+
+
+@media only screen and(min-width: 1200px){
+
+    .changepass{
+        .box-input{
+            input{
+                padding: .8em;
+            }
+           
+        }
+    }
+
+    .action{
+        @include flex(row, flex-end, center);
+        width: 100%;
+        gap:10px;
+        
+        .change-pass-btn{
+            background: var(--clr-primary);
+            color: var(--clr-white);
+        }
+    }
+}

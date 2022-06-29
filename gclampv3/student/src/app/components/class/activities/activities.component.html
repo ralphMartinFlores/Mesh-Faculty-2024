@@ -1,0 +1,162 @@
+<div class="activitycontainer">
+   <div class="materials">
+      <h5>Resources</h5>
+      <hr>
+
+      <ng-container *ngIf="resources.length == 0">
+         <div class="text-center">
+            <h4 style="font-weight: 600">No resources posted! 🧐</h4>
+         </div>
+      </ng-container>
+
+      <mat-expansion-panel class="mat-elevation-z0" style="margin-bottom: 1em;" *ngFor="let item of resources">
+         <mat-expansion-panel-header style="padding: 0 .5em;" [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+             <div class="resources">
+               <mat-icon class="resources__legend">book</mat-icon>
+               <div class="resources__header">
+                 <strong>{{item.title_fld}} </strong>
+                 <p>Date Posted: {{item.datetime_fld | date: "MMMM d, y h:mm a"}}</p>
+               </div>
+             </div>
+         </mat-expansion-panel-header>
+         <div class="list" *ngFor="let file of _upload.splitFilestring(item.filedir_fld)">
+           <li class="list__content">
+               <div class="list__name">
+                 <div class="list__icon">
+                   <mat-icon >description</mat-icon>
+                   <span [ngStyle]="{'background-color': getFileExtension( uploadservice.getfileExt( file.name ) )}">{{
+                     getfileExt( file.name ) | uppercase }}</span>
+                 </div>
+                 <p>{{file.name}}</p>
+               </div>
+   
+               <div class="list__action">
+                <mat-icon style="cursor: pointer;" *ngIf="_user.getext(file.name) == 'docx' || _user.getext(file.name) == 'txt' || _user.getext(file.name) == 'pptx' || _user.getext(file.name) == 'xlsx' ||  _user.getext(file.name) == 'pdf' || _user.getext(file.name) == 'jpg' || _user.getext(file.name) == 'jpeg' || _user.getext(file.name) == 'png'" (click)="previewResource(file.link, file.name)" > pageview</mat-icon>
+   
+                <mat-icon style="color: #0166b3;" (click)="_ds.downloadFile(file.path, file.name)">download</mat-icon>
+              
+               </div>
+           </li>
+         </div>
+       </mat-expansion-panel>
+   </div> 
+
+   <div class="activity">
+      <h5>Activities</h5>
+      <hr>
+
+      <ng-container *ngIf="activities.length == 0">
+         <div class="text-center">
+           <h4 style="font-weight: 600">No activities/exams posted! 🥱</h4>
+         </div>
+       </ng-container>
+
+      <ng-container *ngFor="let item of activities; let i = index">
+
+        <ng-container  *ngIf="item.topiccode_fld == 0">
+
+          <div *ngIf="item.openQuiz == true" class="panel-list" style="--animation-order: {{i + 1}};"
+           [routerLink]="['./', item.actcode_fld ]">
+           <span class="line"></span>
+           <ng-container *ngIf="item.type_fld == 0">
+             <mat-icon class="legend" style="color: #2ecc71;">assignments</mat-icon>
+           </ng-container>
+           <ng-container *ngIf="item.type_fld == 1">
+             <mat-icon class="legend" style="color: #e67e22;">quiz</mat-icon>
+           </ng-container>
+           <div class="activityheader">
+             <div class="activityheader__info">
+              <strong>{{item.title_fld}}</strong>
+              <p>Due Date: {{ item.deadline_fld | date: 'MMM dd, yyyy h:mm a'}}</p>
+             </div>
+             <small class="points">{{ item.totalscore_fld }} Points</small>
+           </div>
+         </div>
+
+         <div *ngIf="item.openQuiz == false" class="panel-list" style="--animation-order: {{i + 1}};">
+           <span class="line"></span>
+           <ng-container *ngIf="item.type_fld == 0">
+             <mat-icon class="legend" style="color: #2ecc71;">assignments</mat-icon>
+           </ng-container>
+           <ng-container *ngIf="item.type_fld == 1">
+             <mat-icon class="legend" style="color: #7a7a7a;">quiz</mat-icon>
+           </ng-container>
+           <div class="activityheader">
+             <div class="activityheader__info">
+              <strong>{{item.title_fld}}</strong>
+              <p>Date to open: {{ item.datesched_fld | date: 'MMM dd, yyyy h:mm a'}}</p> 
+              <p>Due Date: {{ item.deadline_fld | date: 'MMM dd, yyyy h:mm a'}}</p>
+             </div>
+             <small class="points">{{ item.totalscore_fld }} Points</small>
+           </div>
+         </div>
+
+        </ng-container>
+         
+       </ng-container>    
+       
+       
+
+
+
+       <mat-expansion-panel *ngFor="let topic of topicObj; let i = index" class="mat-elevation-z0">
+         <mat-expansion-panel-header  [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+           <div class="d-flex align-items-center">
+             <mat-icon class="topic-icon">topic</mat-icon>
+             <strong class="topic-name">{{ topic.topicname_fld | titlecase }}</strong>
+           </div>
+         </mat-expansion-panel-header>
+        
+         <ng-container *ngFor="let item of activities; let i = index">
+
+          <ng-container *ngIf="item.topiccode_fld === topic.topiccode_fld">
+
+          </ng-container>
+           <div *ngIf="item.openQuiz == true" class="panel-list" style="--animation-order: {{i + 1}};"
+             [routerLink]="['./', item.actcode_fld ]" >
+
+             <span class="line"></span>
+             <ng-container *ngIf="item.type_fld == 0">
+               <mat-icon class="legend" style="color: #2ecc71;">assignments</mat-icon>
+             </ng-container>
+             <ng-container *ngIf="item.type_fld == 1">
+               <mat-icon class="legend" style="color: #e67e22;">quiz</mat-icon>
+             </ng-container>
+     
+             <div class="activityheader">
+              <div class="activityheader__info">
+               <strong>{{item.title_fld}}</strong>
+               <p>Due Date: {{ item.deadline_fld | date: 'MMM dd, yyyy h:mm a'}}</p>
+              </div>
+              <small class="points">{{ item.totalscore_fld }} Points</small>
+            </div>
+            
+           </div>
+
+           <div *ngIf="item.openQuiz == false" class="panel-list" style="--animation-order: {{i + 1}};"
+             [routerLink]="['./', item.actcode_fld ]" >
+
+             <span class="line"></span>
+             <ng-container *ngIf="item.type_fld == 0">
+               <mat-icon class="legend" style="color: #2ecc71;">assignments</mat-icon>
+             </ng-container>
+             <ng-container *ngIf="item.type_fld == 1">
+               <mat-icon class="legend" style="color: #7a7a7a;">quiz</mat-icon>
+             </ng-container>
+     
+             <div class="activityheader">
+              <div class="activityheader__info">
+               <strong>{{item.title_fld}}</strong>
+               <p>Date to open: {{ item.datesched_fld | date: 'MMM dd, yyyy h:mm a'}}</p> 
+               <p>Due Date: {{ item.deadline_fld | date: 'MMM dd, yyyy h:mm a'}}</p>
+              </div>
+              <small class="points">{{ item.totalscore_fld }} Points</small>
+            </div>
+            
+           </div>
+
+         </ng-container>
+     
+       </mat-expansion-panel>
+   </div>
+</div>

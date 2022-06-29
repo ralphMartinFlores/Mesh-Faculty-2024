@@ -13,6 +13,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ConfigService } from './services/config.service';
 import { AppConfig } from './services/data.schema';
+import { CallComponent } from './modules/call/call.component';
+import { VideoPlayerComponent } from './modules/call/video-player/video-player.component';
 
 
 export function getConfig(cs: ConfigService) {
@@ -25,6 +27,8 @@ export function getConfig(cs: ConfigService) {
   declarations: [
     AppComponent,
     LoginComponent,
+    CallComponent,
+    VideoPlayerComponent,
   ],
   imports: [
     BrowserModule,

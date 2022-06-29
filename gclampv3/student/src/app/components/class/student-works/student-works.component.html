@@ -1,0 +1,66 @@
+<div class="summary-container">
+   <div class="wrapper">
+     <table class="table">
+       <thead>
+         <th class="table__title" >Activity Title</th>
+         <th  class="table__file" >File Submitted</th>
+         <th  class="table__date">Date Submitted</th>
+         <th  class="table__score">Score</th>
+         <th class="table__remarks">Remarks</th>
+ 
+       </thead>
+       <tbody>
+         <tr *ngFor="let works of studworks">
+           <td data-label="Activity" class="table__left">
+              <p class="title"> {{works.title_fld}}</p>
+           </td>
+           <td  data-label="file" class="table__left" >
+
+            <ng-container *ngIf="works.type_fld == 1">
+              <p class="table__already">You already finished the quiz.</p>
+            </ng-container>
+          
+            <ng-container *ngIf="works.type_fld == 0">
+              <div class="files" *ngFor="let item of _upload.splitFilestring(works.dir_fld)">
+                 <ng-container *ngIf="!item.name.includes('.json')">
+                   <p class="ellipsis" 
+                   *ngIf="_user.getext(item.name) == 'docx' || _user.getext(item.name) == 'pptx' || _user.getext(item.name) == 'xlsx' || _user.getext(item.name) == 'pdf' || _user.getext(item.name) == 'txt'" 
+                   (click)="previewResource(item.link,item.name)">
+                   {{ item.name }} 
+                  </p>
+                 </ng-container>
+                 
+                 <div class="files__action">
+                  <button class="mobile" *ngIf="_user.getext(item.name) == 'docx' || _user.getext(item.name) == 'pptx' || _user.getext(item.name) == 'xlsx' || _user.getext(item.name) == 'pdf'" 
+                  (click)="previewResource(item.link,item.name)" mat-icon-button><mat-icon >preview</mat-icon></button>
+                  <button (click)="_ds.downloadFile(item.path, item.name)" mat-icon-button><mat-icon style="color: var(--clr-primary)">download</mat-icon></button>
+                 </div>
+                 
+               </div>
+            </ng-container>
+             
+           </td>
+           <td  data-label="Date">
+            {{works.datetime_fld | date: "MMM d, y h:mm a"}}
+           </td>
+           <td  data-label="Score">
+             <span class="status" style=" color: #0ea74d;" *ngIf="works.isscored_fld == 1 && works.withfile_fld == 1" > {{works.score_fld}} / {{works.totalscore_fld}} </span>
+             <span class="status" style=" color: #0ea74d;" *ngIf="works.isscored_fld == 1 && works.withfile_fld == 2" > {{works.score_fld}} / {{works.totalscore_fld}} </span>
+             <span class="status" style=" color: #ce801b;" *ngIf="works.isscored_fld == 1 && works.withfile_fld == 3" > Ongoing </span>
+             <span class="status" *ngIf="works.isscored_fld == 0" > Not scored yet </span>
+           </td>
+
+           <td data-label="Remarks">
+            <span class="status" style="color: #e74c3c;" *ngIf="works.issubmitted_fld == 0" > Missing </span>
+            <span class="status" style="color: #0ea74d;" *ngIf="works.issubmitted_fld == 1" > Turned in </span>
+            <span class="status" style="color: #e74c3c;" *ngIf="works.issubmitted_fld == 2" > Late </span>
+           </td>
+ 
+         </tr>
+ 
+       </tbody>
+     </table>
+   </div>
+ 
+ </div>
+ 

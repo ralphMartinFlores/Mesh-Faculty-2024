@@ -1,0 +1,73 @@
+<div class="main-container">
+    <header class="header">
+      <div class="header__title-container">
+        <div class="header__main">
+          <h1 class="header__title">My Classroom</h1>
+          <div class="header__icon-contain">
+            <mat-icon class="icon">laptop</mat-icon>
+          </div>
+        </div>
+        <!-- <small>{{ date | date: 'EEEE MMMM d, y' }}</small> -->
+      </div>
+      <ng-container *ngIf="allClasses.length != 0">
+        <button class="btn  header__sched-button" mat-flat-button (click)="openDialog()">
+          <mat-icon>calendar_today</mat-icon> Class schedule
+        </button>
+      </ng-container>
+    </header>
+    
+  <hr>
+    
+
+  <ng-container *ngIf="showLoader == false && allClasses == null">
+      No classes found...
+  </ng-container>
+
+  <div class="action action__input d-flex" *ngIf="!showLoader">
+    <input  type="text" placeholder="Search Class..." id="searchclass" (keyup)="filterClass($event)">
+    <button mat-flat-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <div class="load" *ngIf="showLoader">
+    <app-loadingscreen class="load__cons"></app-loadingscreen>
+  </div>
+    
+    
+      <ng-container  *ngIf="allClasses.length != 0">
+        <div class="class" [@cardAnimation]="classes.length">
+            <div class="class__card" *ngFor="let class of classes" >
+              <div class="class__header">
+                <small>Classcode: {{class.classcode_fld}}</small>
+                <p class="class__desc"> {{ class.subjdesc_fld}} </p>
+                <small>{{ getDays(class.day_fld) }} {{class.starttime_fld+'-'+class.endtime_fld}}</small>
+                <img src="assets/logo/logo.png" alt="">
+              </div>
+        
+        
+              <div class="class__footer">
+                <div class="class__clock">
+                  <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                  [src]="_ds.imageURL + class.profilepic_fld" alt=""  class="class__img" draggable="false">
+                
+                  <div class="class__info">
+                      <span class="teacher" *ngIf = "class.fname_fld != null">{{class.fname_fld +' '+class.lname_fld}}</span>
+                      <span class="teacher" *ngIf = "class.fname_fld == null" >TBA</span>
+                  </div>
+                </div>
+                <button class="class__enter"
+                [routerLink]="['./', class.classcode_fld]" (click)="viewclass(class)"><span>Enter <mat-icon>
+                      keyboard_arrow_right</mat-icon>
+                  </span> </button>
+              </div>
+            </div>
+          </div>
+    </ng-container>
+    
+    
+ 
+    
+
+    
+</div>

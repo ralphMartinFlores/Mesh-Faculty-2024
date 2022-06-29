@@ -1,0 +1,75 @@
+<div class="main-container">
+ 
+  <header class="header">
+    <div class="header__title-container">
+
+      <div class="header__main">
+        <h1 class="header__title">To-do List</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">layers</mat-icon>
+        </div>
+      </div>
+      <small>List of complete and pending activities</small>
+    </div>
+  </header>
+
+  <div class="load" *ngIf="showLoader == true && list.length == 0">
+    <app-loadingscreen></app-loadingscreen>
+  </div>
+
+  <ng-container *ngFor="let task of list; let i = index">
+    <section *ngIf="task.activity.length > 0">
+        <div class="taskheader">
+          <h6>{{task.subjdesc}}</h6>
+        </div>
+        <ng-container *ngFor="let acts of task.activity; let j = index">
+          <div class="panel-list" style="--animation-order: {{i + 1}};"  [routerLink]="['../classes/', acts.classcode_fld,acts.actcode_fld]" (click)="viewActivity(acts.classcode_fld)">
+          <span class="line"></span>
+          <ng-container *ngIf="acts.issubmitted_fld > 0; else pass">
+            <mat-icon class="legend" style="color: #0ea74d;">check_circle</mat-icon>
+          </ng-container>
+          <ng-template #pass>
+            <mat-icon class="legend" style="color: #e74c3c;">cancel</mat-icon>
+          </ng-template>
+          <div class="activityheader">
+            <div class="activityheader__info">
+             <h6 >{{acts.title_fld}} </h6>
+
+             <!--##################### QUIZ DUE DATE ####################### -->
+             <ng-container *ngIf="acts.type_fld == 1" >
+              <p *ngIf="acts.difdays >= 0"><b>Due Date: </b> {{acts.deadline_fld | date: 'MMMM d, y h:mm a'}}</p>
+              <p *ngIf="acts.difdays < 0 && acts.issubmitted == null"><span style="color: #e74c3c;">Late Quiz</span></p>
+              <p *ngIf="acts.difdays < 0 && acts.issubmitted != null"><b>Due Date: </b> {{acts.deadline_fld | date: 'MMMM d, y h:mm a'}}</p>
+             </ng-container>
+             <!--##################### ACTIVITY DUE DATE ####################### -->
+             <ng-container *ngIf="acts.type_fld == 0" >
+              <p *ngIf="acts.difdays >= 0" ><b>Due Date: </b> {{acts.deadline_fld | date: 'MMMM d, y h:mm a'}}</p>
+              <p *ngIf="acts.difdays < 0 && acts.issubmitted == null"><span style="color: #e74c3c;">Late Activity</span></p>
+              <p *ngIf="acts.difdays < 0 && acts.issubmitted != null"><b>Due Date: </b> {{acts.deadline_fld | date: 'MMMM d, y h:mm a'}}</p>
+             </ng-container>
+            </div>
+            <div class="activityheader__action">
+
+              <p class="points"  style=" background: #fddab2 ; color: #d47a12;" *ngIf="acts.withfile_fld == 3"> Ongoing </p>
+              <p class="points"  style=" background: #caffe0 ; color: #0ea74d;" *ngIf="acts.isscored_fld == 1 && acts.withfile_fld < 3"> {{acts.score_fld}} / {{acts.totalscore_fld}} </p>
+              <p class="points"  style=" background: #e0e0e0 ; color: #626262;" *ngIf="acts.isscored_fld == 0"> No grade yet </p>
+              <p class="points"  style=" background: #fcc9c3 ; color: #e74c3c;" *ngIf="acts.withfile_fld != 3 && acts.isscored_fld == null"> No Submission </p>
+
+              <button class="desktop" [routerLink]="['../classes/', acts.classcode_fld,acts.actcode_fld]" (click)="viewActivity(acts.classcode_fld)" mat-stroked-button><mat-icon style="color: var(--clr-primary); margin-right: 10px;">folder_open</mat-icon>Open the {{acts.type_fld == 0 ? 'Activity' : 'Quiz'}} </button>
+              <button class="mobile" [routerLink]="['../classes/', acts.classcode_fld,acts.actcode_fld]" (click)="viewActivity(acts.classcode_fld)" mat-icon-button><mat-icon style="color: #222">folder_open</mat-icon></button>
+            </div>
+          </div>
+         </div>
+        </ng-container>
+      
+        
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="showLoader == false && list.length == 0">
+    <div class="center-item">
+      <h2>No activities yet...</h2>
+    </div>
+  </ng-container>
+
+</div>

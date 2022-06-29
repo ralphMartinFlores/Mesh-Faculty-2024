@@ -1,0 +1,180 @@
+<div class="lamp-container">
+   <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+            <div class="circle" routerLink="profile" >
+                  <mat-progress-spinner
+                  class="example-margin"
+                  [value]="value">
+                  </mat-progress-spinner>
+               <!-- <img src="assets/profile.jpg" alt=""> -->
+               <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+              [src]="ds.imageURL + user.getProfilePic()" alt="" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+               <!-- <div class="scores">4</div> -->
+            </div>
+
+            <div class="nameinfo" routerLink="profile">
+               <p>{{user.getFullname()}}</p>
+               <small>{{user.getDepartment()+' / '+user.getProgram()}}</small>
+            </div>
+
+            <div class="lines"></div>
+
+            <mat-nav-list>
+ 
+               <div class="list" routerLinkActive="is-active" routerLink="todolist">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">format_list_bulleted</mat-icon>
+                  </div>
+                  <span>To-do List</span>
+               </div>
+      
+               <div class="list" routerLinkActive="is-active" routerLink="classes">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">laptop_mac</mat-icon>
+                  </div>
+                  <span>Classes</span>
+               </div>
+      
+               <div class="list" routerLinkActive="is-active" routerLink="news">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">public</mat-icon>
+                  </div>
+                  <span>News</span>
+               </div>
+      
+               <div class="list" routerLinkActive="is-active" routerLink="forum">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">supervised_user_circle</mat-icon>
+                  </div>
+                  <span>Forums</span>
+               </div>
+
+               <div class="list" routerLinkActive="is-active" routerLink="evaluation" *ngIf="user.getSettings().evalopen_fld==1">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">playlist_add_check_circle</mat-icon>
+                  </div>
+                  <span>Faculty Evaluation</span>
+               </div>
+               
+
+               <div class="list" routerLinkActive="is-active" routerLink="library">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">import_contacts</mat-icon>
+                  </div>
+                  <span>eLibrary</span>
+               </div>
+
+               <a class="list" href="https://chedro3.ched.gov.ph/open-educational-resources/" target="_blank">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">import_contacts</mat-icon>
+                  </div>
+                  <span>OER</span>
+               </a>
+      
+               <div class="list" routerLinkActive="is-active" routerLink="quest">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">emoji_events</mat-icon>
+                  </div>
+                  <span>Quest</span>
+               </div>
+               
+               <!-- <mat-expansion-panel>
+                  <mat-expansion-panel-header  [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                     <div class="icon">
+                       <mat-icon >view_list</mat-icon>
+                       <small >Library</small>
+                     </div>
+                 </mat-expansion-panel-header>
+               </mat-expansion-panel> -->
+
+             
+
+               <!-- <div class="list" routerLinkActive="is-active" routerLink="profile">
+                  <div class="list__circle">
+                     <mat-icon class="right-icon-spacer">account_circle</mat-icon>
+                  </div>
+                  <span>Profile</span>
+               </div> -->
+               <div class="lines"></div>
+               
+ 
+               <div class="logout">
+                  <div class="logout__circle" (click)="logout('logout')">
+                     <mat-icon class="right-icon-spacer">logout</mat-icon>
+                  </div>
+               </div>
+      
+            </mat-nav-list>
+
+      </mat-sidenav> 
+
+      <mat-sidenav-content>
+         <mat-toolbar >
+
+            <button type="button" class="header-btn" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+               <mat-icon aria-label="Side nav toggle icon" class="menu-icon">menu</mat-icon>
+            </button>
+
+           
+
+            
+            <span style="flex: 1 1 auto;"></span>
+            <!-- <mat-slide-toggle class="slide"></mat-slide-toggle>  -->
+
+
+            <div class="dropdown">
+               <!-- <button type="button" class=" header-btn notification-btn " id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                 aria-expanded="false" mat-icon-button>
+                 <mat-icon class="right-icon-spacer">notifications_none</mat-icon>
+                 <span class="count" style="color: #fff;">{{count}}</span>
+               </button> -->
+               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                 <div class="notification-header">
+                   <small>Notifications ({{count}})</small>
+                 </div>
+                 <section class="notification-body">
+                   <div class="noti-content" *ngFor="let notif of notifObject; let i = index">
+                     <div class="d-flex align-items-center">
+                       <!-- <div class="img-container">
+                         <img src="assets/images/profile.jpg" alt="">
+                       </div> -->
+                       <div class="info">
+                         <p>{{notif.notification}}</p>
+                         <small>{{notif.datetime | date: "MMMM d yyyy, EEEE"}}</small>
+                       </div>
+                     </div>
+                     <!-- <div class="read"></div> -->
+                   </div>
+     
+                 </section>
+     
+               </ul>
+             </div>
+
+
+
+            <div class="clock">
+               <mat-icon>today</mat-icon>
+               <p>{{ date | date: 'EEEE, MMM d, yyyy, h:mm a' }}</p>
+            </div>
+            
+            
+            
+            <!-- <button type="button"  routerLink="messages"  class="header-btn " aria-label="Toggle sidenav" mat-icon-button>
+               <mat-icon  class="right-icon-spacer">chat_bubble_outline</mat-icon>
+               <span class="count">1</span>
+            </button> -->
+            
+            <!-- <button type="button" class="mr-2 header-btn" aria-label="Toggle sidenav" mat-icon-button (click)="logout()">
+               <mat-icon class="right-icon-spacer">logout</mat-icon>
+            </button> -->
+
+         </mat-toolbar>
+         
+         <div class="gc-container">
+            <router-outlet></router-outlet>
+         </div>
+      
+      </mat-sidenav-content>
+   </mat-sidenav-container>
+</div>

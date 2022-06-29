@@ -1,0 +1,63 @@
+<div class="main-container">
+  <header>
+    <h2>{{ _user.getSelectedClass().subjdesc_fld }}</h2>
+    <p>Classcode: {{  _user.getSelectedClass().classcode_fld }} 
+    </p>
+    <p>{{ _user.getSelectedClass().day_fld }} {{ _user.getSelectedClass().starttime_fld }} - {{ _user.getSelectedClass().endtime_fld }}</p>
+    <img appLazyLoad draggable="false" src="assets/images/human.png" alt="" class="human">
+
+  </header>
+
+  <section>
+    <mat-tab-group 
+      mat-stretch-tabs class="example-stretched-tabs mat-elevation-z1">
+      <!-- CLASS FEED  -->
+      <mat-tab label="Class Feed">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-class-feed></app-class-feed>
+          </div>
+        </ng-template>
+
+      </mat-tab>
+      <!-- ACTIVITIES  -->
+      <mat-tab label="Activities/Resources">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-activities></app-activities>
+          </div>
+        </ng-template>
+
+      </mat-tab>
+      <!-- MEMBERS  -->
+      <mat-tab label="Student Works">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-student-works></app-student-works>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <!--  SUMMARY OF SCORES  -->
+      <mat-tab label="Class List">
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-members></app-members>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span  [matBadge]="_user.getMessageBadge()" matBadgeOverlap="false" matBadgeColor="warn">Messaging</span>
+        </ng-template>
+
+        <ng-template matTabContent>
+          <div class="class-container">
+            <app-messages></app-messages>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+
+
+</div>

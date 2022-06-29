@@ -14,13 +14,21 @@
     <div class="groups__container">
       <div class="groups__container--header">
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Search for a group ...</mat-label>
+          <mat-label>Search for a group...</mat-label>
           <input [(ngModel)]="searchInput" (keyup)="search()" matInput type="text" />
         </mat-form-field>
       </div>
       <button mat-flat-button (click)="createGroupDialog()">
         Create a Group
       </button>
+      <!-- Show this illustration if there are no groups listed yet -->
+      <div class="empty__container" #emptyContainerElement>
+        <div class="empty__illustration--container">
+          <img src="../../../assets/images/empty-groupslist-illustration-grayscale.svg" alt="Point to the right illustration" loading="lazy">
+        </div>
+        <p>Once you've created a new group under this class, you'll see it listed here.</p>
+      </div>
+      <!-- End of Show this illustration if there are no groups listed yet-->
       <div
         class="groups__container--group"
         *ngFor="let group of grouparray; let i = index"
@@ -32,16 +40,16 @@
           <img src="../../../assets/images/groups-icon.png" alt="Groups icon" />
         </div> -->
         <div class="groupsicon__container">
-            <img src="../../../assets/images/groups-icon.png" alt="Groups icon">
+            <img src="assets/images/groups-icon.png" alt="Groups icon">
         </div>
         <div class="groups__container--groupdetails">
             <p>{{ group.groupname_fld }}</p>
-            <p>Date Created: {{ group.createdate_fld }}</p>
+            <p>Date Created: {{ group.createdate_fld | date: 'MMM dd, yyyy h:mm a' }}</p>
         </div>
       </div>
     </div>
     <div class="groupmessages__container">
-      <div class="groupmessages__container--content">
+      <div class="groupmessages__container--content" #greetingsElement>
         <span class="groupmessages__back-button" (click)="onBackButton()"
           ><mat-icon>keyboard_backspace</mat-icon></span
         >
@@ -66,18 +74,28 @@
           </div>
         </ng-container>
       </div>
+      <div class="noselectedconversation__container" #noSelectedConversationElement>
+        <div class="illustration__container">
+          <img
+            src="assets/images/select-conversation-illustration.svg"
+            alt="No selected conversation illustration"
+            loading="lazy"
+          />
+        </div>
+        <p>Select a conversation in your group's list from the left to see messages in that group or Send the first message yourself.</p>
+      </div>
       <ng-container *ngIf="selectedRoom != ''">
         <header class="chat__container--header">
           <strong>{{ selectedRoom['groupname_fld'] }}</strong>
           <span class="spacer"></span>
-          <button matTooltip="Call" mat-icon-button (click)="call()">
+          <button matTooltip="Start a voice call" mat-icon-button (click)="call()">
             <mat-icon>call</mat-icon>
           </button>
-          <button matTooltip="Video Call" mat-icon-button (click)="videocall()">
+          <button matTooltip="Start a video call" mat-icon-button (click)="videocall()">
             <mat-icon>videocam</mat-icon>
           </button>
           <button
-            matTooltip="See Members"
+            matTooltip="See members"
             mat-icon-button
             (click)="seegroupMembers()"
             *ngIf="!showGroupMembers"
@@ -133,7 +151,7 @@
                   <div class="chatcontent__container">
                     <div class="personsname__container">
                       <span>{{ chat.sendername_fld }}</span>
-                      <span> {{ chat.datetime_fld}} </span>
+                      <span> {{ chat.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </span>
                     </div>
                     <div class="chatDiv">
                       <p>{{ chat.content_fld }}</p>
@@ -145,8 +163,8 @@
               <div class="imageAvatarRight" *ngIf="chat.sender_fld === myId">
                 <div class="chatcontent__container">
                   <div class="personsname__container1">
-                    <span>You</span>
-                    <span> {{ chat.datetime_fld}} </span>
+                    <span>You</span> <br>
+                    <span class="chat__datetime"> {{ chat.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </span>
                   </div>
                   <div class="chatDivReply">
                     <p>{{ chat.content_fld }}</p>
@@ -157,21 +175,22 @@
           </div>
   
           <form [formGroup]="groupMessage">
-            <div class="yourmessage__box">
-              <div class="yourmessage__container">
+            <div class="yourmessage__container">
                 
-                <input formControlName="messageContent" matInput type="text" placeholder="Send a message ..." />
+              <input formControlName="messageContent" matInput type="text" placeholder="Send a message..." />
           
-              <button type="submit" matSuffix mat-icon-button matTooltip="Send" (click)="addMessage(groupMessage.value.messageContent)">
+              <button type="submit" matSuffix mat-icon-button matTooltip="Send" (keyup.enter)="addMessage(groupMessage.value.messageContent)" (click)="addMessage(groupMessage.value.messageContent)">
                 <mat-icon>send</mat-icon>
               </button>
 
-              <button matSuffix mat-icon-button matTooltip="Attach file" type="button">
+              <!-- <button matSuffix mat-icon-button matTooltip="Attach file" type="button">
                 <mat-icon>attach_file</mat-icon>
-              </button>
+              </button> -->
 
             </div>
-            </div>
+            <!-- <div class="yourmessage__box">
+              
+            </div> -->
           </form>
         </ng-container>
       </ng-container>

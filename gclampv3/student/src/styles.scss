@@ -1,0 +1,109 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "app/scss/__color.scss";
+@import "app/scss/__reset.scss";
+@import "app/scss/__root.scss";
+
+/* You can add global styles to this file, and also import other style files */
+
+
+/* ########### QUEST DIALOG #################### */
+.quiz .mat-dialog-container{
+	background-image: radial-gradient(circle at 17% 77%, rgba(17, 17, 17,0.04) 0%, rgba(17, 17, 17,0.04) 50%,rgba(197, 197, 197,0.04) 50%, rgba(197, 197, 197,0.04) 100%),radial-gradient(circle at 26% 17%, rgba(64, 64, 64,0.04) 0%, rgba(64, 64, 64,0.04) 50%,rgba(244, 244, 244,0.04) 50%, rgba(244, 244, 244,0.04) 100%),radial-gradient(circle at 44% 60%, rgba(177, 177, 177,0.04) 0%, rgba(177, 177, 177,0.04) 50%,rgba(187, 187, 187,0.04) 50%, rgba(187, 187, 187,0.04) 100%),linear-gradient(19deg, rgb(28, 117, 250), #0166b3);
+	padding: 0;
+}
+
+.shop .mat-dialog-container {
+	background: var(--clr-primary);
+	padding: 1em;
+
+	@media screen and(min-width: 1200px){
+		padding: 1.5em;
+	}
+}
+
+
+/* ########### GLOBAL DIALOG #################### */
+.dialogpadding .mat-dialog-container {
+	padding: 0 !important;
+	position: relative;
+}
+
+
+
+
+//CLASSROOM
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background: var(--clr-primary);
+  height: 2px !important;
+}
+
+
+.main-container {
+	padding: 2.5em 1em;
+	position: relative;
+	z-index: 1;
+}
+
+@media only screen and(min-width: 768px) {
+	.main-container {
+	  padding: 3.5em 3em;
+	}
+}
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+	border-color: rgb(66, 134, 244);
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+	color: #fff;
+	background-color: rgb(66, 134, 244);
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #3eabff;
+}
+
+.load{
+	width: 100%;
+	height: 70vh;
+	position: relative;
+ }
+
+
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+	background: var(--color-scheme-default);
+	height: 2px !important;
+}
+
+
+
+// /* Chrome, Safari, Edge, Opera */
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }
+
+// /* Firefox */
+// input[type=number] {
+//   -moz-appearance: textfield;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

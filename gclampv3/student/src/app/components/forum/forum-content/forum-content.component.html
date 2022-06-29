@@ -1,0 +1,91 @@
+<div class="main-container">
+
+  <section>
+    <ng-container >
+      <header>
+        <button routerLink=".." mat-icon-button>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span>{{_user.getSubForums().subtitle_fld}}</span>
+      </header>
+      <hr>
+      <div class="descript" >
+        {{_user.getSubForums().subdesc_fld}}
+      </div>
+    </ng-container>
+
+    <div class="comments" *ngFor="let item of contents;let i = index">
+      <img [src]="_ds.imageURL + item.profilepic_fld" alt=""
+        onerror="this.onerror=null;this.src='assets/images/profile.jpg'" class="comments__img">
+      <div class="comments__userinfo">
+        <div class="comments__header">
+          <div class="comments__fullname">
+            <strong>{{item.fullname_fld}}</strong>
+            <small class="text-muted">{{_upload.getElapsedTime(item.datetime_fld)}} <mat-icon >event</mat-icon></small>
+          </div>
+          <button *ngIf="item.authorid_fld === _user.getUserID()" mat-icon-button [matMenuTriggerFor]="del" aria-label="button menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #del="matMenu">
+            <button mat-menu-item (click)="editSubForum(i,item.contentcode_fld,item.content_fld)">
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item class="nooutline" (click)="delcomment(item.contentcode_fld,'comment')">
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+
+        <p class="comments__content" [innerHtml]="item.content_fld  | linkify"></p>
+        <!-- <div class="comments__action">
+          <mat-icon>subdirectory_arrow_right</mat-icon>
+          <span>Reply</span>
+        </div> -->
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+
+    <hr>
+
+     <form class="forms-container" (submit)="addContent($event)" ngNativeValidate>
+      <div class="formheader">
+        <mat-icon>create</mat-icon>
+        <span>Discussion</span>
+      </div>
+      <div class="formbody">
+        <img mat-card-avatar draggable="false"
+        [src]="_ds.imageURL + _user.getProfilePic()" alt="" class="profile-img"
+          onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+        <textarea  class="example-full-width" name="commentscontent" placeholder="Write a discussion..."></textarea>
+      </div>
+      <div class="action-button">
+        <button type="submit" *ngIf="!_user.isLoadingInput()" mat-raised-button class="btn-default">
+         Add comments
+        </button>
+      </div>
+    </form>
+
+
+
+<!-- 
+
+    <form class="forms-container" *ngIf="replystatus == 1" (submit)="addReply($event)" ngNativeValidate>
+      <div class="formheader">
+        <mat-icon>create</mat-icon>
+        <span>Discussion</span>
+      </div>
+      <div class="formbody">
+        <img mat-card-avatar draggable="false"
+        [src]="_ds.imageURL + _user.getProfilePic()" alt="" class="profile-img"
+          onerror="this.onerror=null;this.src='assets/images/profile.jpg'">
+        <textarea  name="commentscontent" placeholder="Write a discussion..."></textarea>
+      </div>
+      <div class="action-button">
+        <button *ngIf="!_user.isLoadingInput()" mat-raised-button class="btn-default" type="submit">
+         Add comments
+        </button>
+      </div>
+    </form> -->
+  </section>
+  <!-- </ng-container> -->
+  <footer>

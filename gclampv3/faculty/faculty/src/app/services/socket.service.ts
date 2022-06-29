@@ -29,8 +29,7 @@ export class SocketService {
 
   public chat(content: string, sender, time: string): void {
     let facultyInfo = this._user.getUserData()
-    console.log(facultyInfo)
-    this.socket.emit('chat', content, sender, time, facultyInfo.fn);
+    this.socket.emit('chat', content, sender, time, facultyInfo.fullname);
     // console.log(data.fn)
   }
 

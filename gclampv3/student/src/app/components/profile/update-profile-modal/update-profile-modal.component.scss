@@ -1,0 +1,167 @@
+@import 'src/app/scss/__mixin.scss';
+
+header{
+    @include flex(row, space-between, center);
+    padding: 1em;
+    border-bottom: 1px solid #c9c9c9;
+
+}
+
+hr{
+    margin: 0;
+}
+
+.head{
+    @include flex(row, flex-start, center);
+    padding: 0 0 .5em;
+    h5{
+        margin: 0;
+        font-weight: 600;
+        font-size: var(--reg-font-size);
+    }
+    &__icon{
+        @include flex(row, center, center);
+        width: 30px;
+        height: 30px;
+        background: #bfe1f8;
+        color: var(--clr-primary);
+        border-radius: 50%;
+        margin-right: 10px;
+        mat-icon{
+            transform: scale(.8);
+        }
+    }
+}
+
+.input-container{
+    display: grid;
+    grid-template-columns: 100%;
+    padding: .5em 0;
+
+    .box-input{
+        label{
+            color: var(--clr-neutral);
+            font-size: var(--sm-font-size);
+        }
+        input, select{
+            padding: 1em;
+        }
+    }
+
+    
+}
+
+.btn-save{
+    background: var(--clr-primary);
+    color: var(--clr-white);
+}
+
+.action{
+    @include flex(row, flex-end, center);
+    padding: 1em;
+    
+    .change-pass-btn{
+        background: var(--clr-primary);
+        color: var(--clr-white);
+    }
+}
+
+
+.instruct{
+    padding: 1em;
+    p{ margin: 0; }
+}
+
+.changepass{
+    padding: 1em;
+    .box-input{
+        position: relative;
+        input{
+            padding: 1em;
+        }
+        .fa-eye{
+            position: absolute;
+            right: 1em;
+            top: 30%;
+            cursor: pointer;
+        }
+    }
+}
+
+.uploads{
+    .btn-photo{
+        width: 100%;
+        padding: 1em;
+        border: none;
+        background: #e7e7e7;
+        margin-inline: auto;
+        font-weight: 600;
+        mat-icon{
+            margin-right: 10px;
+        }
+    }
+}
+
+.img-container{
+    margin-top: 1em;
+    background: rgba(0,0,0,0.4);
+}
+
+.progress{
+    margin-top: 1em;
+}
+
+
+
+@media  screen and(min-width: 1000px){
+    .head{
+        padding: 0 0 .5em;
+    }
+
+    .input-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+        gap: 15px;
+        padding: 1em 0;
+    
+        .box-input{
+            label{
+                color: var(--clr-neutral);
+            }
+            input, select{
+                margin-top: .5em;
+                padding: 1em;
+            }
+        }
+    }
+
+    .action{
+        @include flex(row, flex-end, center);
+        gap: 10px;
+        border-top: 1px solid #c9c9c9;
+        width: 100%;
+       
+    }
+
+    .instruct, .changepass{
+        padding: 1em 2em;
+    }
+
+
+    .uploads{
+        .btn-photo{
+            width: 100%;
+            margin-inline: auto;
+        }
+    }
+    
+}
+
+@media  screen and(min-width: 1300px){
+    .input-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+

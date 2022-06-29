@@ -14,6 +14,7 @@
         position: relative;
         mat-form-field {
           width: 100%;
+          font-size: 0.8125em;
         }
         ::ng-deep .mat-form-field-wrapper {
           padding-bottom: 0;
@@ -179,6 +180,7 @@
         width: 100%;
         overflow-y: auto;
         width: 100%;
+  
         .messagecontent__container {
           gap: 15px;
           // margin-top: 10px;
@@ -331,6 +333,10 @@
               gap: 1rem;
               font-size: 0.9rem;
               margin: 10px 0;
+
+              .chat__datetime {
+                font-size: 0.75em;
+              }
   
               span:first-of-type {
                 color: #363636;
@@ -355,39 +361,85 @@
         }
       }
       
-      .yourmessage__box{
+      // .yourmessage__box{
 
-        width: 69%;
-        position: absolute;
-        bottom: 0;
+      //   width: 69%;
+      //   position: absolute;
+      //   bottom: 0;
+      //   display: flex;
+      //   align-items: center;
+
+        
+      // }
+
+      .yourmessage__container {
+        position: sticky;
+        position: -webkit-sticky;
+        z-index: 1000;
+        width: 100%;
         display: flex;
         align-items: center;
-
-        .yourmessage__container {
-          position: sticky;
-          // position: -webkit-sticky;
-          z-index: 1000;
-          // background-color: #F3F4F6;
+        margin: auto;
+        background: #fff;
+        padding: 16px;
+        gap: 8px;
+        // mat-icon {
+        //   color: var(--clr-primary-400);
+        // }
+        input {
           width: 100%;
-          display: flex;
-          align-items: center;
-          margin: auto;
-          background: #fff;
-          padding: 10px;
-
-          mat-icon {
-            color: var(--clr-primary-400);
+          padding: 5px 15px;
+          border: 2px solid transparent;
+          border-radius: 25px;
+          background: #f5f5f5;
+          outline: none;
+          font-size: 0.875em;
+          transition: all .3s;
+          &:hover {
+            border: 2px solid var(--clr-primary);
           }
-
-          input {
-            width: 100%;
-            padding: 5px 15px;
-            border: none;
-            border-radius: 25px;
-            background: #f5f5f5;
-            outline: none;
+          &:focus-visible {
+            border: 2px solid var(--clr-primary);
           }
         }
+        input::placeholder {
+          font-size: 0.875em;
+        }
+        button:first-of-type {
+          background-color: var(--clr-primary);
+          color: #FFF;
+          transition: all .3s;
+          &:hover {
+            background-color: #01477d;
+          }
+        }
+        // button:last-of-type {
+        //   background-color: transparent;
+        //   border: 1px solid #e0e0e0;
+        // }
+      }
+    }
+
+    .empty__container {
+      padding: 16px;
+      margin-top: 10px;
+      text-align: center;
+      .empty__illustration--container {
+        img {
+          aspect-ratio: 4 / 3;
+        }
+      }
+      p {
+        margin: 0 32px;
+        font-size: 12px;
+      }
+    }
+    .noselectedconversation__container {
+      text-align: center;
+      p {
+        font-size: 14px;
+        width: 75ch;
+        margin-top: 16px;
       }
     }
   }

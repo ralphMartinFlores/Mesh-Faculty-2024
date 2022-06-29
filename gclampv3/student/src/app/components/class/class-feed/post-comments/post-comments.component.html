@@ -1,0 +1,202 @@
+<!--################ ADD PART OF ACTIVITIES ######################-->
+
+
+<header>
+  <h6>{{count == 1 ? count + ' comment' : count > 1 ? count + ' comments' : 'No comment yet.'}}</h6>
+  <button [mat-dialog-close]="count" mat-icon-button>
+      <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<hr *ngIf="postcomments.length != 0">
+
+
+<section>
+    <div class="loading" *ngIf="_user.isLoading()">
+        <div  class="spinner-border"  role="status"></div>
+    </div>
+
+    <div class="assign" *ngIf="!_user.isLoading()">
+      <!---#################################### DISPLAY COMMENTS ####################################-->
+      <ng-container *ngFor="let comments of postcomments;let i = index">
+
+
+        <!--  #################################### EDIT COMMENTS #################################### -->
+          <div   [id]="'edit-box'+i" style="display: none; width: 100%;">
+            <form class="edit" (submit)="editComment($event)" ngNativeValidate>
+                <img   onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                [src]="_ds.imageURL + comments.profilepic_fld" alt="" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+                <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status"></div>
+
+                <div class="edit__details">
+                  <input  type="text" name="content_fld" [id]="'content_fld' + i " required>
+                  <div class="edit__action">
+                    <button  mat-icon-button (click)="cancelEdit(i)">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="!_user.isLoading()"   type="submit">
+                      <mat-icon >send</mat-icon>
+                    </button> 
+                  </div>
+                </div>
+                
+            </form>
+          </div> 
+        <!--#################################### END OF EDIT COMMENTS ####################################-->
+
+        <div [id]="'comments'+i" style="width: 100%;">
+          <div class="assign__commentheader" >
+            <div class="assign__commentinfo">
+                <img   onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                [src]="_ds.imageURL + comments.profilepic_fld" alt="" draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+
+                <div class="assign__user">
+                  <p class="assign__name">{{comments.fullname_fld}}</p>
+                  <small>  {{_upload.getElapsedTime(comments.datetime_fld)}}</small>
+                  <p class="assign__commentscontent">{{comments.content_fld }}</p>
+
+
+                  <button class="assign__replycontain" [id]="'replybtn'+i" (click)="showReply(i)">
+                    <mat-icon>chat</mat-icon>
+                    <span>{{comments.reply == null ? 'Write a reply...' : comments.replycount + ' Replies'}}</span>
+                  </button>
+
+
+
+                   <!---#################################### REPLY COMMENTS ####################################-->  
+                  <div [id]="'replydiv'+i"  style="display:none">
+                      <div class="replies" *ngFor="let reply of comments.reply; let j = index">
+                            <div class="replies__header">
+                              <img onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+                              [src]="_ds.imageURL + reply.profilepic_fld" alt=""  class="replies__img" draggable="false" >
+                              <div class="replies__user">
+                                  <div class="replies__details">
+                                    <p class="replies__name">{{reply.fullname_fld}}</p>
+                                    <small>  {{_upload.getElapsedTime(reply.datetime_fld)}}</small>
+                                    <p class="replies__commentscontent">{{reply.content_fld }}</p>
+                                  </div>
+
+
+                                  <div class="replyedit" [id]="i + 'redit-box'+j" style="display: none; border: none;">
+                                    <form style="width: 100%" class="replyedit__form"  (submit)="editReply($event,reply,i)" ngNativeValidate>
+                                        
+                                      <input class="replyedit__input" type="text" name="content_fld" [id]="i + 'reply_content_fld'+j">
+                                      <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status"></div>
+                                      <div class="replyedit__action">
+                                        <button  mat-icon-button (click)="cancelEditReply(i,j)">
+                                          <mat-icon>cancel</mat-icon>
+                                        </button>
+          
+                                        <button class="replyedit__button" mat-icon-button *ngIf="!_user.isLoading()"   type="submit">
+                                          <mat-icon >send</mat-icon>
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div> 
+
+
+                                  <button class="replies__icons" *ngIf="_user.getUserID() === reply.authorid_fld"  mat-icon-button [matMenuTriggerFor]="editdel"
+                                  aria-label="button menu">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #editdel="matMenu">       
+                                  <button mat-menu-item class="nooutline" (click)="editthis(i,reply,j)">
+                                    <span>Edit</span>
+                                  </button>
+                                  <button mat-menu-item class="nooutline" (click)="deletereply(i,j,reply.commentcode_fld,'comment')">
+                                    <span>Delete</span>
+                                  </button>
+        
+                                </mat-menu>
+                                 
+                              </div>
+
+                             
+                            </div>
+                      </div>
+
+
+                    
+
+                      
+
+
+
+
+                      <div class="reply">
+                        <ng-container *ngIf="replystatus == 0">
+                          <form style="width: 100%" class="reply__form" (submit)="addReply($event,comments,i)" ngNativeValidate >
+                            
+                            <input class="reply__input" type="text" name="commentscontent" placeholder="Write a reply..." >
+                            <div *ngIf="_user.isLoading()" class="spinner-border spinner-border-sm" role="status"></div>
+                            <button mat-icon-button *ngIf="!_user.isLoading()" class="reply__button" type="submit">
+                              <mat-icon >send</mat-icon>
+                            </button>
+                          </form>
+                        </ng-container>
+                      </div>
+
+
+                  </div>
+
+                  
+
+
+                  <!---#################################### END ####################################-->
+
+                </div>
+            </div>
+
+            <button class="assign__icons" *ngIf="comments.authorid_fld == _user.getUserID()"  mat-icon-button [matMenuTriggerFor]="delcom"
+                          aria-label="button menu">
+                    <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #delcom="matMenu">  
+                <button mat-menu-item class="nooutline" (click)="edit(i,comments.commentcode_fld,comments.content_fld)">
+                    <span>Edit</span>
+                </button>
+                <button mat-menu-item class="nooutline" (click)="deletecomment(i,comments.commentcode_fld,'comment')">
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
+          </div>
+        </div>
+       
+
+         
+
+
+          
+        
+      </ng-container>
+      <!---#################################### END ####################################-->
+    </div>
+</section>
+
+<hr>
+
+
+<!---#################################### ADD NEW COMMENTS ####################################-->  
+<footer class="comment">
+  <form class="comment__forms" (submit)="addComment($event)" ngNativeValidate>
+  
+    <img mat-card-avatar onerror="this.onerror=null;this.src='assets/profile.jpg';" appLazyLoad
+    [src]="_ds.imageURL + _user.getProfilePic()" alt=""  draggable="false" onerror="this.onerror=null; this.src='assets/profile.jpg'">
+
+    <input  type="text" name="commentscontent" placeholder="Write a comment..." >
+    <button mat-icon-button class="btn-default" type="submit">
+      <mat-icon >send</mat-icon>
+    </button>
+  </form>
+</footer>
+
+<!---#################################### END  ####################################--> 
+
+
+
+
+
+
+
+
+

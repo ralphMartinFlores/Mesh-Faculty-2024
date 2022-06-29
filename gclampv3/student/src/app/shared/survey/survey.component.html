@@ -1,0 +1,115 @@
+<section *ngIf="type == 'covid'">
+  <span mat-dialog-title style="font-size: medium; margin-bottom: 5px" class="text-danger">Let's take a quick survey on
+    your COVID Vaccination</span>
+  <hr />
+  <form (submit)="onSubmit($event)" [formGroup]="frmResponse">
+    <div class="row">
+      <div class="col-12">
+        <label id="radio-label"><strong>Are you vaccinated?</strong></label><span class="valid valid-small"
+          *ngIf="!frmResponse.controls.iscovax_fld.valid">*</span>
+        <mat-radio-group aria-labelledby="vacstatus" class="radio-group" formControlName="iscovax_fld"
+          [(ngModel)]="frmDisabled" (change)="getItemDisabled()" required>
+          <mat-radio-button class="radio-button" id="a1" name="iscovax_fld" value="1">I am fully vaccinated (1st and 2nd
+            Dose)</mat-radio-button>
+          <mat-radio-button class="radio-button" id="a2" name="iscovax_fld" value="2">I am fully vaccinated (1 dose of
+            Johnson and Johnson's
+            Janssen)</mat-radio-button>
+          <mat-radio-button class="radio-button" id="a3" name="iscovax_fld" value="3">I am partially vaccinated (1st
+            dose only)</mat-radio-button>
+          <mat-radio-button class="radio-button" id="a4" name="iscovax_fld" value="4">No, but I already have a schedule
+          </mat-radio-button>
+          <mat-radio-button class="radio-button" id="a5" name="iscovax_fld" value="5">No, but I am willing to get
+            vaccinated</mat-radio-button>
+          <mat-radio-button class="radio-button" id="a6" name="iscovax_fld" value="6">No, I do not intend to get
+            vaccinated</mat-radio-button>
+        </mat-radio-group>
+        <hr />
+
+        <label id="radio-label"><strong>If vaccinated, what type of vaccine was administered?</strong></label><span
+          class="valid valid-small" *ngIf="!frmResponse.controls.covaxtype_fld.valid">*</span>
+        <mat-radio-group aria-labelledby="vacstatus" class="radio-group" formControlName="covaxtype_fld" required>
+          <mat-radio-button class="radio-button" id="b1" value="1">Johnson and Johnson's Janssen</mat-radio-button>
+          <mat-radio-button class="radio-button" id="b2" value="2">Pfizer-BioNTech</mat-radio-button>
+          <mat-radio-button class="radio-button" id="b3" value="3">Moderna</mat-radio-button>
+          <mat-radio-button class="radio-button" id="b4" value="4">Oxford-AstraZeneca</mat-radio-button>
+          <mat-radio-button class="radio-button" id="b5" value="5">CoronaVac (Sinovac)</mat-radio-button>
+          <mat-radio-button class="radio-button" id="b6" value="6">Sinopharm</mat-radio-button>
+          <mat-radio-button class="radio-button" id="b5" value="7">Gamaleya Sputnik V</mat-radio-button>
+          <mat-radio-button class="radio-button" id="b6" value="8">Bharat BioTech</mat-radio-button>
+        </mat-radio-group>
+        <hr />
+
+        <label id="radio-label"><strong>If you do not intend to get vaccinated, what is/are your
+            reason/s?</strong></label><span class="valid valid-small"
+          *ngIf="!frmResponse.controls.nocovaxreason_fld.valid">*</span><br />
+        <textarea name="reason" id="reason" cols="100" rows="5" id="c1" name="nocovaxreason_fld"
+          formControlName="nocovaxreason_fld" required></textarea><br />
+        <hr />
+      </div>
+    </div>
+    <br />
+
+    <div class="row text-right">
+      <div class="col-12">
+        <button mat-button type="submit" [disabled]="!frmResponse.valid" class="btn-primary">
+          Submit
+        </button>
+        <!-- <button mat-button type="button" (click)="dialogClose()">Close</button> -->
+      </div>
+    </div>
+  </form>
+</section>
+
+<section *ngIf="type == 'info'">
+  <span mat-dialog-title style="font-size: medium; margin-bottom: 5px" class="text-danger">Additional Information
+  </span>
+  <hr />
+ 
+  <form class="info-form" (submit)="onSubmitAdditionalInfo($event)" [formGroup]="infoResponse">
+
+    <div>
+      <label id="radio-label"><strong>Mother's Maiden Name</strong></label><span class="valid valid-small"></span><br />
+      <div class="input-width" >
+       <mat-form-field class="input-width" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="" required formControlName="fname_fld">
+          <mat-error *ngIf="infoResponse.controls.fname_fld.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+       <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Middle Name</mat-label>
+          <input matInput placeholder="" required formControlName="mname_fld">
+          <mat-error *ngIf="infoResponse.controls.mname_fld.invalid">{{ getErrorMessage() }}</mat-error>
+
+        </mat-form-field>
+       <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="" required formControlName="lname_fld">
+          <mat-error *ngIf="infoResponse.controls.lname_fld.invalid">{{ getErrorMessage() }}</mat-error>
+
+        </mat-form-field>
+      </div>
+    </div>
+   
+    <div style="margin-bottom: 1rem;">
+      <label id="radio-label"><strong>Are you a member or your family a member of Indigineous People?</strong></label><span class="valid valid-small"></span>
+    
+    <mat-radio-group aria-label="Select an option" formControlName="isip_fld" required>
+      <mat-radio-button class="radio-button" value="0">No</mat-radio-button>
+      <mat-radio-button class="radio-button" value="1">Yes</mat-radio-button>
+    </mat-radio-group>
+    <mat-error *ngIf="infoResponse.controls.isip_fld.invalid">{{ getErrorMessage() }}</mat-error>
+    </div>
+    
+   <div *ngIf="infoResponse.value.isip_fld == 1">
+    <label id="radio-label"><strong>If yes, what is your indigenous identity?(eg. aeta, badjao, etc..)</strong></label><span class="valid valid-small"></span>
+    <mat-form-field class="input-width" appearance="outline">
+      <mat-label>Indigenous Identity</mat-label>
+      <input matInput required formControlName="iptype_fld" placeholder="eg. aeta, badjao, etc..">
+      <mat-error *ngIf="infoResponse.controls.iptype_fld">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+   </div>
+   <div>
+     <button mat-raised-button color="primary" type="submit">Submit</button>
+   </div>
+  </form>
+</section>

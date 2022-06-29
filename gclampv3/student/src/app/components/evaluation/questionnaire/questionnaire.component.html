@@ -1,0 +1,295 @@
+<div class="wrapper"><form (ngSubmit)="submitResponse($event)" [formGroup]="frmResponse" ngNativeValidate>
+  <header class="header">
+    <div class="header__title-container">
+      <div class="header__main">
+        <h1 class="header__title">Evaluation of Online Classroom Teaching</h1>
+        <div class="header__icon-contain">
+          <mat-icon class="icon">rule</mat-icon>
+        </div>
+      </div>
+      <small>Feedback on instructors' classroom management</small><br><br>
+      <small><strong><em>This evaluation is for the purpose of improving the teaching-learning process of our institution. Evaluate your teachers objectively and fairly on their teaching performance.  Please remember to treat them with respect when making your remarks.</em></strong></small>
+    </div>
+  </header><br>
+
+  <div class="card">
+    <div class="card-header" style="font-size: 1.1rem;">
+      Classcode: <span><strong>{{ class.classcode_fld }}</strong> </span><br>
+      Course Code/Description: <span style="text-transform: uppercase;"><strong>{{ class.subjcode_fld }} - {{ class.subjdesc_fld }}</strong> </span><br>
+      Name of Professor/Instructor to be evaluated: <span style="text-transform: uppercase;"><strong>{{ class.honorifics_fld }}. {{ class.fname_fld }} {{ class.lname_fld }}</strong></span>
+    </div>
+  </div><br>
+
+  <!-- INSTRUCTIONS -->
+  <div class="card">
+    <div class="card-header" style="font-size: 1.1rem;">
+      <span><strong>DIRECTION:</strong></span><br>
+      <p style='font-style: italic;'>Select the number corresponding to your choice based on the code below. Be fair and honest with your evaluation. <span class="valid valid-bold">All items are required.</span></p>
+      <table class="table sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle">
+          <tr>
+            <th style="width: 10%">Scale</th>
+            <th style="width: 30%">Descriptive Rating</th>
+            <th style="width: 60%">Qualitative Description</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle text-center">
+          <tr>
+            <td><strong>5</strong></td>
+            <td><strong>OUTSTANDING</strong></td>
+            <td class="text-left">The performance almost always exceeds the job requirements. The faculty is an exceptional role model</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td><strong>VERY SATISFACTORY</strong></td>
+            <td class="text-left">The performance meets and often exceeds the job requirements</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td><strong>SATISFACTORY</strong></td>
+            <td class="text-left">The performance meets job requirements</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td><strong>FAIR</strong></td>
+            <td class="text-left">The performance need some development to meet job requirements</td>
+          </tr>
+          <tr>
+            <td><strong>1</strong></td>
+            <td><strong>POOR</strong></td>
+            <td class="text-left">The faculty fails to meet job requirements</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 1 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>I. KNOWLEDGE OF CONTENT</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle">
+          <tr>
+            <th style="width: 75%" colspan=2>Indicators</th>
+            <th width="5%">1</th>
+            <th width="5%">2</th>
+            <th width="5%">3</th>
+            <th width="5%">4</th>
+            <th width="5%">5</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part1; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }} <br><span class="valid valid-small" *ngIf="!isValid(question.n)">This item is required</span></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'1'" value="1" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'2'" value="2" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'3'" value="3" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'4'" value="4" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'5'" value="5" required aria-label="..."></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 2 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>II. INSTRUCTIONAL SKILLS</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle">
+          <tr>
+            <th style="width: 75%" colspan=2>Indicators</th>
+            <th width="5%">1</th>
+            <th width="5%">2</th>
+            <th width="5%">3</th>
+            <th width="5%">4</th>
+            <th width="5%">5</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part2; let i = index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}<br><span class="valid valid-small" *ngIf="!isValid(question.n)">This item is required</span></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'1'" value="1" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'2'" value="2" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'3'" value="3" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'4'" value="4" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'5'" value="5" required aria-label="..."></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 3 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>III. COMMUNICATION SKILLS</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle">
+          <tr>
+            <th style="width: 75%" colspan=2>Indicators</th>
+            <th width="5%">1</th>
+            <th width="5%">2</th>
+            <th width="5%">3</th>
+            <th width="5%">4</th>
+            <th width="5%">5</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part3; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}<br><span class="valid valid-small" *ngIf="!isValid(question.n)">This item is required</span></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'1'" value="1" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'2'" value="2" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'3'" value="3" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'4'" value="4" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'5'" value="5" required aria-label="..."></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 4 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>IV. TEACHING FOR INDEPENDENT LEARNING</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle">
+          <tr>
+            <th style="width: 75%" colspan=2>Indicators</th>
+            <th width="5%">1</th>
+            <th width="5%">2</th>
+            <th width="5%">3</th>
+            <th width="5%">4</th>
+            <th width="5%">5</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part4; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}<br><span class="valid valid-small" *ngIf="!isValid(question.n)">This item is required</span></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'1'" value="1" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'2'" value="2" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'3'" value="3" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'4'" value="4" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'5'" value="5" required aria-label="..."></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 5 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>V. MANAGEMENT OF LEARNING</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle">
+          <tr>
+            <th style="width: 75%" colspan=2>Indicators</th>
+            <th width="5%">1</th>
+            <th width="5%">2</th>
+            <th width="5%">3</th>
+            <th width="5%">4</th>
+            <th width="5%">5</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part5; let i=index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}<br><span class="valid valid-small" *ngIf="!isValid(question.n)">This item is required</span></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'1'" value="1" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'2'" value="2" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'3'" value="3" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'4'" value="4" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'5'" value="5" required aria-label="..."></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- PART 6 -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>VI. FLEXIBLE LEARNING MODALITY</strong></span>
+    </div>
+    
+    <div class="card-body">
+      <table class="table table-sm table-bordered" style="width: 100%">
+        <thead class="text-center align-middle">
+          <tr>
+            <th style="width: 75%" colspan="2">Indicators</th>
+            <th width="5%">1</th>
+            <th width="5%">2</th>
+            <th width="5%">3</th>
+            <th width="5%">4</th>
+            <th width="5%">5</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <tr *ngFor = 'let question of questions.Part6; let i = index' class="text-center">
+            <td class="text-center" style="width: 4%">{{ i + 1 }}</td>
+            <td class="text-left">{{ question.q }}<br><span class="valid valid-small" *ngIf="!isValid(question.n)">This item is required</span></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'1'" value="1" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'2'" value="2" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'3'" value="3" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'4'" value="4" required aria-label="..."></td>
+            <td><input class="form-check-input position-static" type="radio" [name]="question.n" [formControlName]="question.n" [id]="question.n+'5'" value="5" required aria-label="..."></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <!-- Comment Weak -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>Comments/Suggestions on points to improve by the instructor</strong></span><br>
+      <span class="valid valid-small" *ngIf="!frmResponse.controls.weak_fld.valid">This item is required</span>
+    </div>
+    
+    <div class="card-body">
+      <textarea class="form-control" name="weak_fld" id="weak_fld" cols="30" rows="10" required formControlName="weak_fld"></textarea>
+    </div>
+  </div><br>
+
+  <!-- Comment Strong -->
+  <div class="card">
+    <div class="card-header">
+      <span><strong>Comments/Suggestions on strong point(s) of instructor</strong></span><br>
+      <span class="valid valid-small" *ngIf="!frmResponse.controls.strong_fld.valid">This item is required</span>
+    </div>
+    
+    <div class="card-body">
+      <textarea class="form-control" name="strong_fld" id="strong_fld" cols="30" rows="10" required formControlName="strong_fld"></textarea>
+    </div>
+  </div><br>
+
+  <div class="card text-right">
+    <div class="card-body text-right">
+      <span class="valid valid-bold">All items are required. Please complete the form to enable button</span>
+      <button type="submit" [disabled]="!frmResponse.valid" class="btn btn-primary">Submit Response</button>
+    </div>
+  </div>
+</form></div>

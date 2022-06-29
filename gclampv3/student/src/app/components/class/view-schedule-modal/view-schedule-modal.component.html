@@ -1,0 +1,152 @@
+<header class=" schedule-header">
+    <h4>Class Schedule </h4>
+    <button mat-icon-button [mat-dialog-close]="undefined">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <section style="background-color: #f5f5f5; overflow: auto; max-height: 70vh;">
+    <div class="class">
+      <div class="class__card" style="border-top: 3px solid #2980b9;">
+        <h5 style="color: #2980b9" class="class__title">Monday</h5>
+
+        <ng-container *ngIf="m.length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content " *ngFor="let monday of m">
+          <div class="class__line" [style.background-color]="'#2980b9'"></div>
+          <div class="class__date">
+            <strong> {{ monday.subject }}</strong>
+            <div class="class__foot">
+              <!-- <small> {{ monday.block_fld }}</small> -->
+              <small> {{monday.startTime}} - {{monday.endTime}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="class__card" style="border-top: 3px solid #8e44ad;">
+        <h3 style="color: #8e44ad">Tuesday</h3>
+
+        <ng-container *ngIf="t.length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let tuesday of t">
+          <div class="class__line" [style.background-color]="'#8e44ad'"></div>
+          <div class="class__date">
+            <strong> {{ tuesday.subject }}</strong>
+            <div class="class__foot">
+              <!-- <small> {{ item.block_fld }}</small> -->
+              <small> {{tuesday.startTime}} - {{tuesday.endTime}}</small>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="class__card" style="border-top: 3px solid #e67e22;">
+        <h3 style="color: #e67e22;">Wednesday</h3>
+
+        <ng-container *ngIf="w.length==0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let wednesday of w">
+          <div class="class__line" [style.background-color]="'#e67e22'"></div>
+          <div class="class__date">
+            <strong> {{ wednesday.subject }}</strong>
+            <div class="class__foot">
+              <!-- <small> {{ wednesday.block_fld }}</small> -->
+              <small> {{ wednesday.startTime}} - {{ wednesday.endTime }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="class__card" style="border-top: 3px solid #e74c3c;">
+        <h3 style="color: #e74c3c;">Thursday</h3>
+
+        <ng-container *ngIf="th.length == 0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let thursday of th">
+          <div class="class__line" [style.background-color]="'#e74c3c'"></div>
+          <div class="class__date">
+            <strong> {{ thursday.subject }}</strong>
+            <div class="class__foot">
+              <!-- <small> {{ thursday.block_fld }}</small> -->
+              <small> {{ thursday.startTime}} - {{ thursday.endTime }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="class__card" style="border-top: 3px solid #4cd137;">
+        <h3 style="color: #4cd137;">Friday</h3>
+
+        <ng-container *ngIf="f.length==0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let friday of f">
+          <div class="class__line" [style.background-color]="'#4cd137'"></div>
+          <div class="class__date">
+            <strong> {{ friday.subject }}</strong>
+            <div class="class__foot">
+              <!-- <small> {{ friday.block_fld }}</small> -->
+              <small> {{ friday.startTime}} - {{ friday.endTime }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   
+
+      <div class="class__card" style="border-top: 3px solid #192a56;">
+        <h3 style="color: #192a56;">Saturday</h3>
+
+        <ng-container *ngIf="sat.length==0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+
+        <div class="class__content" *ngFor="let saturday of sat">
+          <div class="class__line" [style.background-color]="'#192a56'"></div>
+          <div class="class__date">
+            <strong> {{ saturday.subject }}</strong>
+            <div class="class__foot">
+              <!-- <small> {{ saturday.block_fld }}</small> -->
+              <small> {{ saturday.startTime}} - {{ saturday.endTime }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="class__card" style="border-top: 3px solid #0097e6;">
+        <h3 style="color: #0097e6;">Sunday</h3>
+
+        <ng-container *ngIf="sun.length==0">
+          <h6 class="p-3">No classes for today.</h6>
+        </ng-container>
+
+        <div class="class__content" *ngFor="let sunday of sun">
+          <div class="class__line" [style.background-color]="'#0097e6'"></div>
+          <div class="class__date">
+            <strong> {{ sunday.subject }}</strong>
+            <div class="class__footer">
+              <!-- <small> {{ sunday.block_fld }}</small> -->
+              <small> {{ sunday.startTime}} - {{ sunday.endTime }}</small>
+            </div>
+          </div>
+        </div>
+      </div> 
+
+
+    </div>
+  </section>

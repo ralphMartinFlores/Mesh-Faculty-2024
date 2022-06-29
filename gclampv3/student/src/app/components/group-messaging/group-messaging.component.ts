@@ -178,6 +178,7 @@ export class GroupMessagingComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeComponents();
+    this.handleNewMessage()
     this.groupMessage = this._fb.group({
       messageContent: ['', Validators.required],
     });
@@ -202,6 +203,25 @@ export class GroupMessagingComponent implements OnInit {
     this.selectedRoom = await data
     this.groupNameisActive = await data
     this.scrollToNewMessage();
+    this.joinRoom(data.groupid_fld)
+  }
+
+  
+  private joinRoom(roomId: string): void {
+    console.log(this.user.getUserID())
+    let name:string = this.user.getFullname()
+    let id:string = this.user.getUserID()
+    this.socket.joinRoom(roomId, name, id)
+  }
+
+  handleNewMessage(): void {
+    this.socket.newMessage.subscribe(message => {
+      console.log(message)
+      if (message) {
+        this.chats.push(message)
+        this.scrollToNewMessage();
+      }
+    })
   }
 
   videocall(): void{
@@ -224,22 +244,21 @@ export class GroupMessagingComponent implements OnInit {
 
     if (message === "") return false; 
     const sender = this.splitEmail(this.user.getEmail())
-    const time = new Date()
-    const formattedTime = time.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
-    const studentInfo = this.user.getFullname()
-    this.socket.chat(message, sender, formattedTime, studentInfo)
-    this.chats.push({ content_fld: message, sender_fld: sender, datetime_fld: formattedTime})
+    const date = new Date()
+    const sender_name = this.user.getFullname()
+
+    this.socket.chat(message, sender, sender_name, date)
+    this.chats.push({ content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date})
     this.scrollToNewMessage()
-    this.saveMessage(message, time)
+    this.saveMessage(message, date)
     this.groupMessage.reset()
   }
 
   public saveMessage(message: string, dateTime: any): void {
-    const senderName = this.user.getFullname()
     const load = {
         groupid_fld: this.selectedRoom.groupid_fld,
         sender_fld: this.splitEmail(this.user.getEmail()),
-        sendername_fld: senderName,
+        sendername_fld: this.user.getFullname(),
         content_fld: message,
         datetime_fld: dateTime
     }

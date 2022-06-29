@@ -367,6 +367,17 @@ class Post
 		return $this->gm->sendPayload(null, "failed", "failed to add message", 404);
 	}
 
+	
+	public function addGroupMessage($receivedPayload)
+	{
+		$res = $this->gm->insert("groupmessage_tbl", $receivedPayload);
+
+		if ($res['code'] == 200) {
+			return $this->gm->sendPayload(null, 'success', 'Succesfully added message', 200);
+		}
+		return $this->gm->sendPayload(null, "failed", "failed to add message", 401);
+	}
+
 	public function addRoom($receivedPayload)
 	{
 		$receivedPayload->roomcode_fld = $this->codeGenerator('CR', 'chatroom_tbl', 'roomcode_fld');

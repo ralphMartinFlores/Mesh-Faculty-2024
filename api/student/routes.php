@@ -209,6 +209,21 @@ switch($_SERVER['REQUEST_METHOD']) {
 					}
 				break;
 
+				case "getgroups":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo json_encode($get->getGroups($d->payload->data));
+					} else{
+						echo errmsg(401);
+					}
+				break;
+
+				case "getgroupmessages":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo json_encode($get->getGroupMessages($d->payload->data));
+					} else{
+						echo errmsg(401);
+					}
+				break;
 				# End of Classroom Get Methods
 
 				# Forum Methods
@@ -421,6 +436,14 @@ switch($_SERVER['REQUEST_METHOD']) {
 					}
 				break;
 				
+				// ADD GROUP MESSAGE
+				case "addgrpmsg":
+					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
+						echo json_encode($post->addGroupMessage($d->payload));
+					} else{
+						echo errmsg(401);
+					}
+				break;
 				#End of Add Methods
 
 				#Start of Edit Methods

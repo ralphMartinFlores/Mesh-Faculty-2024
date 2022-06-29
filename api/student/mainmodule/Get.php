@@ -591,6 +591,25 @@ class Get
 		return $this->isSuccessQuery($res, 'messages');
 	}
 
+	
+	public function getGroups($receivedPayload)
+	{
+		$cc = $receivedPayload->cc;
+		$id = $receivedPayload->id;
+		$sql = "SELECT * FROM groups_tbl WHERE classcode_fld = '$cc' AND participants_fld LIKE '%$id%' AND isdeleted_fld = 0";
+		$res = $this->gm->executeQuery($sql);
+		return $this->isSuccessQuery($res, 'groups');
+	}
+
+	public function getGroupMessages($receivedPayload)
+	{
+		$gid = $receivedPayload->gid;
+		$sql = "SELECT sender_fld, sendername_fld, content_fld, datetime_fld FROM groupmessage_tbl WHERE groupid_fld = '$gid'";
+		return $sql;
+		$res = $this->gm->executeQuery($sql);
+		return $this->isSuccessQuery($res, 'group messages');
+	}
+
 	public function getNotif($userid)
 	{
 		$payload = null;

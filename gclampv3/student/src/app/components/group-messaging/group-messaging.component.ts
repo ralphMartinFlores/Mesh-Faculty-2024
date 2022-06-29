@@ -277,11 +277,11 @@ export class GroupMessagingComponent implements OnInit {
 
   backupGroupArray: any[] = [];
   getGroups() {
-    console.log(this.user.getEmail())
+    console.log(this.user.getUserID())
     const load = { 
       data: {
         cc: this.classcode, 
-        id: this.splitEmail(this.user.getEmail()) 
+        id: this.splitEmail(this.user.getUserID()) 
       } 
     } 
 

@@ -60,6 +60,7 @@ io.on('connection', socket => {
         })
         // when someone has to chat from the chat box
         socket.on('chat', (content, sender, time, username) => {
+            console.log('NEW MESSAGE: ', content, username)
             socket.broadcast.to(roomId).emit('new-message', content, sender, time, username); 
         })
         socket.on('share-screen', (userId) => {

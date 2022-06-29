@@ -199,9 +199,8 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   async chatBody(data, index): Promise<any> {
-
+    console.log(data)
     this.getSavedMessages(data.groupid_fld);
-    console.log('data', data);
     this.selectedRoom = await data
     this.groupNameisActive = await data
     this.scrollToNewMessage();
@@ -219,18 +218,19 @@ export class GroupMessagingComponent implements OnInit {
 
   addMessage(message: string): any {
 
-    document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
+    // document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
 
     // CHORE: Revamp DOM Manipulations for animationDelay .. 
-    const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
-    element.style.animationDelay = "--delay: 0s"
+    // const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
+    // element.style.animationDelay = "--delay: 0s"
 
     if (message === "") return false; 
     const sender = this.splitEmail(this.user.getUserEmail())
     const time = new Date()
     const formattedTime = time.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
+    const facultyFullname = this.user.getUserFullname()
 
-    this.socket.chat(message, sender, formattedTime)
+    this.socket.chat(message, sender, formattedTime, facultyFullname)
     this.chats.push({ content_fld: message, sender_fld: sender, datetime_fld: formattedTime})
     this.scrollToNewMessage()
     this.saveMessage(message, time)
@@ -290,7 +290,6 @@ export class GroupMessagingComponent implements OnInit {
       dt = this.user._decrypt(dt.a)
       this.grouparray = dt.payload
       this.backupGroupArray = dt.payload
-      console.log(this.grouparray.length)
       // Show Empty Illustration if there are no groups yet
       if (this.grouparray.length > 0) {
         this.emptyContainerElementRef.style.display = 'none';
@@ -307,7 +306,6 @@ export class GroupMessagingComponent implements OnInit {
     this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = this.user._decrypt(dt.a)
       this.chats = dt.payload
-      console.log(dt)
     }, (er) =>{
       er = this.user._decrypt(er.error.a)
       this.chats = []
@@ -321,7 +319,6 @@ export class GroupMessagingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(participant => {
-      // console.log('closed');
       this.getGroups()
     });
 

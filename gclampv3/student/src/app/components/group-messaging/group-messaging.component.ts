@@ -199,7 +199,6 @@ export class GroupMessagingComponent implements OnInit {
   async chatBody(data, index): Promise<any> {
 
     this.getSavedMessages(data.groupid_fld);
-    console.log('data', data);
     this.selectedRoom = await data
     this.groupNameisActive = await data
     this.scrollToNewMessage();
@@ -217,18 +216,18 @@ export class GroupMessagingComponent implements OnInit {
 
   addMessage(message: string): any {
 
-    document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
+    // document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
 
     // CHORE: Revamp DOM Manipulations for animationDelay .. 
-    const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
-    element.style.animationDelay = "--delay: 0s"
+    // const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
+    // element.style.animationDelay = "--delay: 0s"
 
     if (message === "") return false; 
     const sender = this.splitEmail(this.user.getEmail())
     const time = new Date()
     const formattedTime = time.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
-
-    this.socket.chat(message, sender, formattedTime)
+    const studentInfo = this.user.getFullname()
+    this.socket.chat(message, sender, formattedTime, studentInfo)
     this.chats.push({ content_fld: message, sender_fld: sender, datetime_fld: formattedTime})
     this.scrollToNewMessage()
     this.saveMessage(message, time)
@@ -277,7 +276,6 @@ export class GroupMessagingComponent implements OnInit {
 
   backupGroupArray: any[] = [];
   getGroups() {
-    console.log(this.user.getUserID())
     const load = { 
       data: {
         cc: this.classcode, 
@@ -289,7 +287,6 @@ export class GroupMessagingComponent implements OnInit {
       dt = dt
       this.grouparray = dt.payload
       this.backupGroupArray = dt.payload
-      console.log(this.grouparray.length)
       // Show Empty Illustration if there are no groups yet
       if (this.grouparray.length > 0) {
         this.emptyContainerElementRef.style.display = 'none';
@@ -306,7 +303,6 @@ export class GroupMessagingComponent implements OnInit {
     this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = dt
       this.chats = dt.payload
-      console.log(dt)
     }, (er) =>{
       er = er.error
       this.chats = []

@@ -27,10 +27,9 @@ export class SocketService {
     this.socket.disconnect()
   }
 
-  public chat(content: string, sender, time: string): void {
-    let facultyInfo = this._user.getUserData()
-    this.socket.emit('chat', content, sender, time, facultyInfo.fullname);
-    // console.log(data.fn)
+  public chat(content: string, sender, time: string, fullname: string): void {
+    console.log('OUTGOING: ', content, fullname)
+    this.socket.emit('chat', content, sender, time, fullname);
   }
 
   public participants(participants: any): void {
@@ -40,6 +39,7 @@ export class SocketService {
   private handleNewMessage(): void {
     this.socket.on('new-message', (content, sender, time, username) => {
       let message = {content_fld: content, sender_fld: sender, datetime_fld: time, username: username}
+      console.log('NEW MESSAGE: ', message)
       this.newMessage.next(message);
     })
   }

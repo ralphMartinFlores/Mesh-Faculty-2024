@@ -60,6 +60,7 @@
 
 		protected function checkPassword($pword, $existingHash)
 		{
+			return $pword;
 			$hash = crypt($pword, $existingHash);
 			if ($hash === $existingHash) {
 				return true;
@@ -174,7 +175,7 @@
 					);
 				} else {
 					$code = 401;
-					$remarks = "failed";
+					$remarks = "failed3";
 					$message = "Incorrect Username or Password";
 					$payload = null;
 					#Record Log
@@ -187,7 +188,7 @@
 				}
 			} else {
 				$code = 401;
-				$remarks = "failed";
+				$remarks = "failed2";
 				$message = "Incorrect Username or Password";
 				$payload = null;
 				#Record Log
@@ -199,7 +200,7 @@
 			}
 		} catch (\PDOException $e) {
 			$code = 401;
-			$remarks = "failed";
+			$remarks = "failed1";
 			$message = "Incorrect Username or Password";
 			$payload = null;
 			#Record Log

@@ -15,7 +15,7 @@ $get = new Get($pdo);
 $post = new Post($pdo);
 
 if (isset($_REQUEST['request'])) {
-	$req = explode('/', rtrim(base64_decode($_REQUEST['request']), '/'));
+	$req = explode('/', rtrim($_REQUEST['request'], '/'));
 } else {
 	$req = array("errorcatcher");
 }
@@ -23,22 +23,22 @@ if (isset($_REQUEST['request'])) {
 
 switch($_SERVER['REQUEST_METHOD']) {
 	case 'POST':
-		$d = receivedData(file_get_contents("php://input"));
-		// $d = json_decode(file_get_contents("php://input"));
+		// $d = receivedData(file_get_contents("php://input"));
+		$d = json_decode(file_get_contents("php://input"));
 
 		switch ($req[0]) {
 
 				# Student Panel -------------------
 				case 'studentlogin':
-					echo returnData($auth->studentLogin($d));
+					echo json_encode($auth->studentLogin($d));
 				break;
 
 				case "forgotpass":
-					echo returnData($auth->forgotPassword(($d)));
+					echo json_encode($auth->forgotPassword(($d)));
 				break;
 
 				case 'getsettings':
-					echo returnData($get->getSetting());
+					echo json_encode($get->getSetting());
 				break;
 				
 				case "download":
@@ -48,7 +48,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 							readfile("../" . $d->payload->filepath);
 						}
 						catch(Exception $e){
-							echo  returnData($gm->sendPayload(null, 'failed', 'file does not exist', 404));
+							echo  json_encode($gm->sendPayload(null, 'failed', 'file does not exist', 404));
 						}
 					
 					} else {
@@ -61,7 +61,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 				case 'getbooks':
 					// echo json_encode($get->getBooks());
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
-						echo returnData($get->getBooks($req[1], $req[2]));
+						echo json_encode($get->getBooks($req[1], $req[2]));
 						// echo returnData($get->getBooks('ccs', 'bsemc'));
 
 					}
@@ -74,7 +74,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 				# Student Profile 	
 				case "studentprofile":
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
-						echo returnData($get->getStudentProfile($d->param1));
+						echo json_encode($get->getStudentProfile($d->param1));
 					} else {
 						echo errmsg(401);
 					}
@@ -82,7 +82,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "updateprofile":
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
-						echo returnData($post->postCommon($d->payload->data, 'students_tbl', 'studnum_fld', $req[1], 'update' ,$d->payload->notif));
+						echo json_encode($post->postCommon($d->payload->data, 'students_tbl', 'studnum_fld', $req[1], 'update' ,$d->payload->notif));
 					} else {
 						echo errmsg(401);
 					}
@@ -90,7 +90,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "updateinfo":
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
-						echo returnData($post->updateAdditionalInfo($d->payload, $d->param1));
+						echo json_encode($post->updateAdditionalInfo($d->payload, $d->param1));
 					} else {
 						echo errmsg(401);
 					}
@@ -98,12 +98,12 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				/*Upload Profile Picture --Riejan*/
 				case "editProfile":
-					echo returnData($post->editProfile($req[1]));
+					echo json_encode($post->editProfile($req[1]));
 				break;
 				
 				case "changepass":
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
-						echo returnData($auth->changeStudentPassword($d->payload));
+						echo json_encode($auth->changeStudentPassword($d->payload));
 					} else {
 						echo errmsg(401);
 					}
@@ -116,7 +116,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 					
 				case "getclasslist":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getClasslist($d->payload));
+						echo json_encode($get->getClasslist($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -124,7 +124,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getcpost":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getClassPosts($d->payload, $d->param1));
+						echo json_encode($get->getClassPosts($d->payload, $d->param1));
 					} else{
 						echo errmsg(401);
 					}
@@ -132,7 +132,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 				
 				case "getccomment":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getClassComments($d->payload));
+						echo json_encode($get->getClassComments($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -140,7 +140,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getreslist":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getClassResource($d->payload));
+						echo json_encode($get->getClassResource($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -148,7 +148,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getmembers":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getClassmember($d->payload->data));
+						echo json_encode($get->getClassmember($d->payload->data));
 					} else{
 						echo errmsg(401);
 					}
@@ -156,7 +156,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getstudworks":		
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getClassworkslist($d->payload));
+						echo json_encode($get->getClassworkslist($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -164,7 +164,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "gettopic":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getClasstopics($d->payload));
+						echo json_encode($get->getClasstopics($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -174,7 +174,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "gettodolist":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getTasksList($d->param1, $req[1], $req[2]));
+						echo json_encode($get->getTasksList($d->param1, $req[1], $req[2]));
 					} else{
 						echo errmsg(401);
 					}
@@ -182,28 +182,28 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getRegion":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getReference('refregion_tbl',null));
+						echo json_encode($get->getReference('refregion_tbl',null));
 					} else{
 						echo errmsg(401);
 					}
 				break;
 				case "getProvince":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getProvince($d->payload->region_id));
+						echo json_encode($get->getProvince($d->payload->region_id));
 					} else{
 						echo errmsg(401);
 					}
 				break;
 				case "getCity":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getMunicipality($d->payload->province_id));
+						echo json_encode($get->getMunicipality($d->payload->province_id));
 					} else{
 						echo errmsg(401);
 					}
 				break;
 				case "getBrgy":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getBarangay($d->payload->municipality_id));
+						echo json_encode($get->getBarangay($d->payload->municipality_id));
 					} else{
 						echo errmsg(401);
 					}
@@ -214,7 +214,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 				# Forum Methods
 				case "getforumtopic":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getForumTopic());
+						echo json_encode($get->getForumTopic());
 					} else{
 						echo errmsg(401);
 					}
@@ -222,7 +222,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 				
 				case "getsubforum":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getSubforum($d->payload));
+						echo json_encode($get->getSubforum($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -230,7 +230,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getsubcontent":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getSubcontent($d->payload));
+						echo json_encode($get->getSubcontent($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -241,7 +241,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 				# Announcements Methods
 				case "getannounce":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getAnnouncements($d->payload, $d->param5));
+						echo json_encode($get->getAnnouncements($d->payload, $d->param5));
 					} else{
 						echo errmsg(401);
 					}
@@ -249,7 +249,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getpoll":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getPoll($d->payload, $d->param1));
+						echo json_encode($get->getPoll($d->payload, $d->param1));
 					} else{
 						echo errmsg(401);
 					}
@@ -257,7 +257,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getresult":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getQuizResult($d->payload));
+						echo json_encode($get->getQuizResult($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -265,7 +265,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getroom":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getRoomlist($d->param1));
+						echo json_encode($get->getRoomlist($d->param1));
 					} else{
 						echo errmsg(401);
 					}
@@ -273,7 +273,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getmsg":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getMessage($d->payload, null));
+						echo json_encode($get->getMessage($d->payload, null));
 					} else{
 						echo errmsg(401);
 					}
@@ -281,7 +281,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getunread":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getUnreadMessages($d->payload));
+						echo json_encode($get->getUnreadMessages($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -289,7 +289,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "readmsg":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->readMessage($d->payload));
+						echo json_encode($post->readMessage($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -297,7 +297,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getnotif":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getNotif($d->param1));
+						echo json_encode($get->getNotif($d->param1));
 					} else{
 						echo errmsg(401);
 					}
@@ -305,7 +305,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "getquiz":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($get->getQuiz($d->payload));
+						echo json_encode($get->getQuiz($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -320,12 +320,12 @@ switch($_SERVER['REQUEST_METHOD']) {
 				# Add Methods
 
 				case "upload":
-					echo returnData($post->uploadFile($req[1], $req[2], $req[3]));
+					echo json_encode($post->uploadFile($req[1], $req[2], $req[3]));
 				break;
 
 				case "deletefile":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->deleteFile($d->payload, $d->param1));
+						echo json_encode($post->deleteFile($d->payload, $d->param1));
 					} else{
 						echo errmsg(401);
 					}
@@ -333,7 +333,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "answerpoll":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->responsePoll($d->payload->data, $d->payload->filepath, $d->payload->notif));
+						echo json_encode($post->responsePoll($d->payload->data, $d->payload->filepath, $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -341,7 +341,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addcomment":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->addComment($d->payload->data, $d->payload->notif));
+						echo json_encode($post->addComment($d->payload->data, $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -349,7 +349,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addpost":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->addPost($d->payload->data, $d->payload->notif));
+						echo json_encode($post->addPost($d->payload->data, $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -357,7 +357,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "gameprogress":
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
-						echo returnData($get->getGameProgress($d->param1));
+						echo json_encode($get->getGameProgress($d->param1));
 					} else {
 						echo errmsg(401);
 					}
@@ -365,7 +365,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "updategameprogress":
 					if ($auth->isAuthorized($d->param1, $d->param2, $d->param5)) {
-						echo returnData($post->updateGameProgress($d->payload, $d->param1));
+						echo json_encode($post->updateGameProgress($d->payload, $d->param1));
 					} else {
 						echo errmsg(401);
 					}
@@ -375,7 +375,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addwork":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->addSubmission($d->payload->data, $d->payload->notif));
+						echo json_encode($post->addSubmission($d->payload->data, $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -383,7 +383,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addsubforum":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->addDiscussion($d->payload->data, $d->payload->notif));
+						echo json_encode($post->addDiscussion($d->payload->data, $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -391,7 +391,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addreply":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->addReply($d->payload->data, $d->payload->notif));
+						echo json_encode($post->addReply($d->payload->data, $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -399,7 +399,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addanswer":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->saveAnswer($d->payload->data, $d->param1, $d->payload->notif, $req[1], $req[2]));
+						echo json_encode($post->saveAnswer($d->payload->data, $d->param1, $d->payload->notif, $req[1], $req[2]));
 					} else{
 						echo errmsg(401);
 					}
@@ -407,7 +407,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addroom":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->addRoom($d->payload->data));
+						echo json_encode($post->addRoom($d->payload->data));
 					} else{
 						echo errmsg(401);
 					}
@@ -415,7 +415,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "addmsg":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->sendMessage($d->payload));
+						echo json_encode($post->sendMessage($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -427,7 +427,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "deletefile":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->deleteFile($d->payload->data, $d->payload->notif));
+						echo json_encode($post->deleteFile($d->payload->data, $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -435,7 +435,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "editpost":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->editPost($d->payload->data, $req[1], $d->payload->notif));
+						echo json_encode($post->editPost($d->payload->data, $req[1], $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -443,7 +443,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "editcomm":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->editComment($d->payload->data, $req[1], $d->payload->notif));
+						echo json_encode($post->editComment($d->payload->data, $req[1], $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -452,7 +452,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 				case "editsubmit":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
 						// echo returnData($post->postCommon($d->payload->data, 'submissions_tbl', 'submitcode_fld', $req[1], 'update', $d->payload->notif));
-						echo returnData($post->editSubmission($d->payload->data, $req[1], $d->param1, $req[2], $d->payload->notif));
+						echo json_encode($post->editSubmission($d->payload->data, $req[1], $d->param1, $req[2], $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -460,7 +460,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "editdisc":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->editDiscussion($d->payload->data, $req[1], $d->payload->notif));
+						echo json_encode($post->editDiscussion($d->payload->data, $req[1], $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -468,7 +468,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "editreply":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->editReply($d->payload->data, $req[1], $d->payload->notif));
+						echo json_encode($post->editReply($d->payload->data, $req[1], $d->payload->notif));
 					} else{
 						echo errmsg(401);
 					}
@@ -487,7 +487,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "submiteval":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->submitEval($d->payload));
+						echo json_encode($post->submitEval($d->payload));
 					} else{
 						echo errmsg(401);
 					}
@@ -495,7 +495,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
 				case "updatecovaxinfo":
 					if($auth->isAuthorized($d->param1, $d->param2, $d->param5)){
-						echo returnData($post->updateCovaxInfo($d->payload));
+						echo json_encode($post->updateCovaxInfo($d->payload));
 					} else{
 						echo errmsg(401);
 					}

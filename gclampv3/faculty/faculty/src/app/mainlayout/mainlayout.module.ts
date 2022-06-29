@@ -58,6 +58,8 @@ import { MeetingListComponent } from '../modules/classes/meeting-list/meeting-li
 import { SchedMeetingComponent } from '../modules/classes/sched-meeting/sched-meeting/sched-meeting.component';
 import { GroupMessagingComponent } from '../modules/group-messaging/group-messaging.component';
 import { CreateGroupComponent } from '../modules/group-messaging/create-group/create-group.component';
+import { CallComponent } from '../modules/call/call.component';
+import { VideoPlayerComponent } from '../modules/call/video-player/video-player.component';
 @NgModule({
   declarations: [
     MainlayoutComponent,
@@ -109,7 +111,9 @@ import { CreateGroupComponent } from '../modules/group-messaging/create-group/cr
     QuestionnaireComponent,
     SurveyComponent,
     GroupMessagingComponent,
-    CreateGroupComponent
+    CreateGroupComponent,
+    CallComponent,
+    VideoPlayerComponent
   ],
   imports: [
     CommonModule,

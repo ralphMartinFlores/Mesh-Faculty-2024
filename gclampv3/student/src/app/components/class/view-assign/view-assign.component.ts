@@ -81,7 +81,7 @@ export class ViewAssignComponent implements OnInit {
 
   getActivity(){
     this._ds._httpRequest('getcpost',{classcode:this._user.getSelectedClass().classcode_fld, actcode:this.arr[4],type:'act'},1).subscribe((data:any)=>{
-      data = this._user._decrypt(data.a);
+      data = data;
       this.actObj = data.payload;  
            
       for (let i = 0; i < this.actObj.length; i++) {
@@ -102,7 +102,7 @@ export class ViewAssignComponent implements OnInit {
 
       
     },er => {
-      er = this._user._decrypt(er.error.a);
+      er = er.error;
       this._snackbar.open("Failed to load activity.",null,{duration:1500});
     })
   }
@@ -112,12 +112,12 @@ export class ViewAssignComponent implements OnInit {
       acode:this.arr[4]
     }
     this._ds._httpRequest('getccomment',load,1).subscribe((data:any)=>{
-      data = this._user._decrypt(data.a);
+      data = data;
       
       this.comments = data.payload;
       
     },er=>{
-      er = this._user._decrypt(er.error.a);
+      er = er.error;
       this.comments = [];
     })
   }
@@ -130,7 +130,7 @@ export class ViewAssignComponent implements OnInit {
       type:'act'
     }    
     this._ds._httpRequest('getstudworks',load,1).subscribe((data:any)=>{
-      data = this._user._decrypt(data.a);
+      data = data;
       this.works = data.payload;
       
       if (this.works[0].dir_fld == '') {
@@ -145,7 +145,7 @@ export class ViewAssignComponent implements OnInit {
       this.isscored = this.works[0].isscored_fld;
       
     },(er) => {
-      let err = this._user._decrypt(er.error.a);
+      let err = er.error;
     })
   }
 
@@ -175,7 +175,7 @@ export class ViewAssignComponent implements OnInit {
       }
       
       this._ds._httpRequest('addcomment',load,1).subscribe((data:any)=>{
-        data = this._user._decrypt(data.a);
+        data = data;
         e.target[0].value  = null;
         this.commentcount = this.commentcount + 1;
         
@@ -207,7 +207,7 @@ export class ViewAssignComponent implements OnInit {
         }
         
         this._ds._httpRequest('addwork',load,1).subscribe((data:any)=>{
-          data = this._user._decrypt(data.a);
+          data = data;
           this.isUploading = false;
           this.works = data.payload;
           this.files = [];
@@ -222,7 +222,7 @@ export class ViewAssignComponent implements OnInit {
            }
            
         },er => {
-          er = this._user._decrypt(er.error.a);
+          er = er.error;
           this.isUploading = false;
         })
       });
@@ -276,10 +276,10 @@ export class ViewAssignComponent implements OnInit {
           }
         }
         this._ds._httpRequest('editcomm/'+code, load , 1).subscribe((res) => {
-          res = this._user._decrypt(res.a);
+          res = res;
           this.comments[index] = res.payload[0];   
         }, er => {
-          let err = this._user._decrypt(er.error.a);
+          let err = er.error;
           if (err.payload == null) {
             this.getComments();
           }
@@ -349,10 +349,10 @@ export class ViewAssignComponent implements OnInit {
     this.isLoading = 1
     return new Promise((resolve,rejects)=>{
       this._ds._httpRequest('deletefile',load,1).subscribe((data:any)=>{
-        data = this._user._decrypt(data.a);
+        data = data;
         resolve(data.status.remarks);
       },er=>{
-        er = this._user._decrypt(er.error.a);
+        er = er.error;
         return new Promise(()=>{
           rejects(er.status.remarks)
         })
@@ -385,7 +385,7 @@ export class ViewAssignComponent implements OnInit {
     let api = `editsubmit/${this.works[0].submitcode_fld}/${this.works[0].actcode_fld}`
 
       this._ds._httpRequest(api,load,1).subscribe((data:any)=>{
-        data = this._user._decrypt(data.a);
+        data = data;
         this.existingDir = data.payload[0].dir_fld;
         if (data.payload[0].dir_fld == '') {
           this.withfile = 0
@@ -397,7 +397,7 @@ export class ViewAssignComponent implements OnInit {
         this._user.setLoading(false);
         
       },er=>{
-        er = this._user._decrypt(er.error.a);
+        er = er.error;
         this._user.setLoading(false);
       })
       
@@ -414,11 +414,11 @@ export class ViewAssignComponent implements OnInit {
     formdata = this.uploadFile(this.files);
     return new Promise((resolve, rejects) => {
       this._ds._httpRequest(requestURL, formdata, 3).subscribe((data: any) => {
-        data = this._user._decrypt(data.a);        
+        data = data;        
         resolve(data.payload.filepath);
       }, er => {
-        er = this._user._decrypt(er.error.a);        
-        rejects(er.error.a)
+        er = er.error;        
+        rejects(er.error)
       });
     })
   }
@@ -451,11 +451,11 @@ export class ViewAssignComponent implements OnInit {
     let api = `editsubmit/${this.works[0].submitcode_fld}/${this.works[0].actcode_fld}`
     
     this._ds._httpRequest(api,load,1).subscribe((data:any)=>{
-      data = this._user._decrypt(data.a)
+      data = data
       this.issubmitted = 0
       this.isUploading = false;
     },er=>{
-      er = this._user._decrypt(er.error.a)
+      er = er.error
     })
   }
 
@@ -510,7 +510,7 @@ export class ViewAssignComponent implements OnInit {
 
     this._ds._httpRequest(api,load,1).subscribe((data:any)=>{
       this.isLoading = 0
-      data = this._user._decrypt(data.a); 
+      data = data; 
       this.existingDir = data.payload[0].dir_fld;
       this.works = data.payload;            
       this.files = [];
@@ -522,7 +522,7 @@ export class ViewAssignComponent implements OnInit {
       this.issubmitted = data.payload[0].issubmitted_fld;
       this.isUploading = false;
     },er => {
-      er = this._user._decrypt(er.error.a); 
+      er = er.error; 
     })
     
   }
@@ -585,11 +585,11 @@ export class ViewAssignComponent implements OnInit {
 
       }
       this._ds._httpRequest('addwork',data,1).subscribe((data:any)=>{
-        data = this._user._decrypt(data.a);
+        data = data;
         this.works = data.payload;
         
       },er=>{
-        er = this._user._decrypt(er.error.a);
+        er = er.error;
       })
     }
   });
@@ -625,9 +625,9 @@ deletecomment(i,commentcode , option){
         }
       }
       this._ds._httpRequest('editcomm/'+commentcode, load , 1).subscribe((res) => {
-        res = this._user._decrypt(res.a);
+        res = res;
       }, er => {
-        er = this._user._decrypt(er.error.a);   
+        er = er.error;   
         this.comments.splice(i,1);
         this.commentcount = this.commentcount - 1;
       })
@@ -663,9 +663,9 @@ deletereply(i,j,commentcode , option){
         }
       }
       this._ds._httpRequest('editcomm/'+commentcode, load , 1).subscribe((res) => {
-        res = this._user._decrypt(res.a);
+        res = res;
       }, er => {
-        er = this._user._decrypt(er.error.a);   
+        er = er.error;   
         this.comments[i].reply.splice(j,1);
       })
     }
@@ -710,7 +710,7 @@ addReply(e,item,i){
     }
     
     this._ds._httpRequest('addcomment',load,1).subscribe((data:any)=>{
-      data = this._user._decrypt(data.a);
+      data = data;
       
       if (this.comments[i].reply == null) {
         this.comments[i].reply = [];
@@ -724,7 +724,7 @@ addReply(e,item,i){
       // this.editstatus = 0;
       // this.postcomments.unshift(this._user._convert(data.payload[0]));
     },er=>{
-      er = this._user._decrypt(er.error.a);
+      er = er.error;
       this._user.setLoading(false);
       // this._snackbar.open(er.message, null, {duration:1500});
 
@@ -790,14 +790,14 @@ editReply(e,i){
 
     }
     this._ds._httpRequest('editcomm/'+this.commentcode, load , 1).subscribe((res) => {
-      res = this._user._decrypt(res.a);
+      res = res;
       this.comments[i].reply[this.i] = res.payload[0];
       // this.replyobject[this.i] = res.payload[0];  
       // this.editstatus = 0; 
       this.replystatus = 0;
       this._user.setLoading(false);
     }, er => {
-      let err = this._user._decrypt(er.error.a);
+      let err = er.error;
     })
   }
   

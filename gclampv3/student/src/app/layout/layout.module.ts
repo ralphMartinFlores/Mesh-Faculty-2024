@@ -79,6 +79,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { SurveyComponent } from "../shared/survey/survey.component";
 import { LibraryComponent } from "../components/library/library.component";
+import { GroupMessagingComponent } from "../components/group-messaging/group-messaging.component";
 
 
 @NgModule({
@@ -156,7 +157,8 @@ import { LibraryComponent } from "../components/library/library.component";
     EvaluationComponent,
     QuestionnaireComponent,
     SurveyComponent,
-    LibraryComponent
+    LibraryComponent,
+    GroupMessagingComponent
     // FileDownloadsComponent
   ],
   providers: [DatePipe],

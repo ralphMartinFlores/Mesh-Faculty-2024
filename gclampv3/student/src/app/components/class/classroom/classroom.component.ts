@@ -39,7 +39,7 @@ export class ClassroomComponent implements OnInit {
       }
     }
     this._ds._httpRequest('getmembers',load,1).subscribe((data:any)=>{
-      data = this._user._decrypt(data.a);
+      data = data;
       
       
       if (data.payload != null) {
@@ -49,7 +49,7 @@ export class ClassroomComponent implements OnInit {
         this._user.setStudents(this.students);
       }
     },er => {
-      er = this._user._decrypt(er.error.a);
+      er = er.error.a;
       
     })
   }
@@ -58,12 +58,12 @@ export class ClassroomComponent implements OnInit {
 
   getUnread() {
     this._ds._httpRequest('getunread', { roomcode: this.route.url.split('/')[3], recipient: this._user.getUserID() }, 1).subscribe(async(res:any) => {
-      const data = await this._user._decrypt(res.a);
+      const data = await res;
       this.unreadCount = data.payload.length;  
       
       this._user.setMessageBadge(this.unreadCount)
     }, er => {
-      er = this._user._decrypt(er.error.a)
+      er = er.error.a
       this._user.setMessageBadge('')
     })
   }

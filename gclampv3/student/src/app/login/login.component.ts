@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
 
   getSettings(){
     this.ds._httpRequest('getsettings',null,2).subscribe((data:any)=>{
-      data = this.user._decrypt(data.a);     
+      data = data;
+      console.log(data)     
       this.user.setSettings(data.payload[0]);
     },er=>{
       console.log(er.error.text);
@@ -71,8 +72,8 @@ export class LoginComponent implements OnInit {
     let param4: string = this.user.isMobile() ? 'Web Access using Mobile phone' : 'Web Access using Desktop/Laptop';
    
     this.ds._httpRequest('studentlogin',{param1,param2,param3,param4},2).subscribe((data:any)=>{
-      data = this.user._decrypt(data.a);
-      // console.log(data);
+      data = data;
+      console.log(data);
       
       if (data.status.remarks === 'success') {
         this.user.setLoading(false);

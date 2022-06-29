@@ -41,8 +41,6 @@ export function getConfig(cs: ConfigService){
     LoginComponent,
     ChangePassModalComponent,
     ShopdialogComponent,
-
-
     // UpdateProfileModalComponent,
   ],
   imports: [

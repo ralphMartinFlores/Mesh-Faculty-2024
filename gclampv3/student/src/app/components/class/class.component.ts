@@ -40,7 +40,7 @@ export class ClassComponent implements OnInit {
 
   getClass() {
     this._ds._httpRequest('getclasslist', { userid: this._user.getUserID(), acadyear:this._user.getAcadYear(), semester:this._user.getSemester() }, 1).subscribe((res: any)=>{
-      res = this._user._decrypt(res.a);
+      res = res;
       this.allClasses = this.sortClass(res.payload);
       this.classes = this.allClasses;
       this._user.setStudentSchedule(this.allClasses);
@@ -49,7 +49,7 @@ export class ClassComponent implements OnInit {
     },er =>{
       er = this._user._decrypt(er.error.a);
       this.allClasses = [];
-      this.classes = [];
+      this.classes = []; 
       this._user.setStudentSchedule(this.allClasses);
       this.showLoader = false
     });

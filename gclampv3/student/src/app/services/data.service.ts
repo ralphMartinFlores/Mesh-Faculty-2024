@@ -10,9 +10,10 @@ export class DataService {
 
 
   public prefix: string = 'GC'; 
-  public baseURL: string = 'http://localhost/LAMP/api/student/';
-  public fileUrl: string = 'http://localhost/LAMP/api/';
-  public imageURL: string = 'http://localhost/LAMP/requests/';
+  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/student/';
+  public nodeBaseURL: string = 'http://localhost:4230/api/' // NODE
+  public fileUrl: string = 'http://localhost/GC-LAMP-Faculty/api/';
+  public imageURL: string = 'http://localhost/GC-LAMP-Faculty/requests/';
   // public booksURL: string = 'http://localhost/LAMP/documents/books/'
   // Staging
   // public prefix: string; 
@@ -28,6 +29,7 @@ export class DataService {
    }
 
   _httpRequest(api: string, load: any, sw: number) {
+    console.log(this.baseURL)
     let userDevice: string = this._user.isMobile() ? 'Web Access using Mobile phone' : 'Web Access using Desktop/Laptop';
 
     let result: any;
@@ -44,10 +46,10 @@ export class DataService {
           param7: this._user.getDepartment(),
           param8: this._user.getProgram()
         };
-        result = this._http.post(this.baseURL + btoa(api), this._user._convertmessage(JSON.stringify(dt)));
+        result = this._http.post(this.baseURL + api, JSON.stringify(dt));
         break;
       case 2:
-        result = this._http.post(this.baseURL + btoa(api), this._user._convertmessage(JSON.stringify(load)));
+        result = this._http.post(this.baseURL + api, JSON.stringify(load));
         break;
       case 3:
         let d = {
@@ -62,10 +64,10 @@ export class DataService {
         };
 
         load.append('auth', JSON.stringify(d));
-        result = this._http.post(this.baseURL + btoa(api), load);
+        result = this._http.post(this.baseURL + api, load);
         break;
       case 4:
-        result = this._http.post(this.baseURL + btoa(api), (JSON.stringify(load)));
+        result = this._http.post(this.baseURL + api, (JSON.stringify(load)));
         break;
       // Papalitan ni louds
       case 5:

@@ -24,11 +24,19 @@
       <!-- Show this illustration if there are no groups listed yet -->
       <div class="empty__container" #emptyContainerElement>
         <div class="empty__illustration--container">
-          <img src="../../../assets/images/empty-groupslist-illustration-grayscale.svg" alt="Point to the right illustration" loading="lazy">
+          <img src="assets/images/empty-groupslist-illustration-grayscale.svg" alt="Point to the right illustration" loading="lazy">
         </div>
         <p>Once you've created a new group under this class, you'll see it listed here.</p>
       </div>
       <!-- End of Show this illustration if there are no groups listed yet-->
+      <!-- Show this illustraion if there are no groups on the search bar -->
+      <div class="empty__container" #emptySearchContainerElement>
+        <div class="empty__illustration--container">
+          <img src="assets/images/empty-groupslist-illustration-grayscale.svg" alt="Point to the right illustration" loading="lazy">
+        </div>
+        <p>Sorry, there is no group related to {{searchInput}}</p>
+      </div>
+      <!-- End -->
       <div
         class="groups__container--group"
         *ngFor="let group of grouparray; let i = index"
@@ -61,7 +69,7 @@
               loading="lazy"
             />
           </div>
-          <div class="main__container--header" *ngIf="!show">
+          <div class="main__container--header">
             <p>Welcome to Groups!</p>
             <p>A whole new way of interacting with everyone in your class.</p>
             <p>
@@ -74,7 +82,7 @@
           </div>
         </ng-container>
       </div>
-      <div class="noselectedconversation__container" #noSelectedConversationElement  *ngIf="show">
+      <div class="noselectedconversation__container" #noSelectedConversationElement >
         <div class="illustration__container">
           <img
             src="assets/images/select-conversation-illustration.svg"
@@ -86,6 +94,9 @@
       </div>
       <ng-container *ngIf="selectedRoom != ''">
         <header class="chat__container--header">
+          <span class="groupmessages__back-button" (click)="onBackToGroupButton()" >
+            <mat-icon>keyboard_backspace</mat-icon>
+          </span>
           <strong>{{ selectedRoom['groupname_fld'] }}</strong>
           <span class="spacer"></span>
           <button matTooltip="Start a voice call" mat-icon-button (click)="call()">
@@ -111,6 +122,8 @@
             <mat-icon>forum</mat-icon>
           </button>
         </header>
+
+        <!-- If you want to show the grop members : TRUE -->
         <ng-container *ngIf="showGroupMembers === true">
           <div class="maingroupmembers__container">
             <div class="groupmembers__container">
@@ -141,7 +154,9 @@
             </div>
           </div>
         </ng-container>
-  
+        <!-- END -->
+
+        <!-- If you wish to hide ... -->
         <ng-container *ngIf="!showGroupMembers">
           <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
           <div class="mainmessage__container" #scrollTarget>
@@ -204,6 +219,7 @@
             </div> -->
           </form>
         </ng-container>
+        <!-- End -->
       </ng-container>
   </div>
   

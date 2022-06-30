@@ -25,6 +25,7 @@ export class GroupMessagingComponent implements OnInit {
   selectedRoom: any = [];
   groupNameisActive = {};
   groupMessage: FormGroup;
+  show:boolean;
 
   filter: any;
 
@@ -313,11 +314,13 @@ export class GroupMessagingComponent implements OnInit {
       this.backupGroupArray = dt.payload
       // Show Empty Illustration if there are no groups yet
       if (this.grouparray.length > 0) {
+        this.show = true;
         this.emptyContainerElementRef.style.display = 'none';
         this.noSelectedConversationElementRef.style.display = 'block';
         this.greetingsElementRef.style.display = 'none';
       }
     }, er => {
+
       er = this.user._decrypt(er.error.a)
     })
 
@@ -326,8 +329,10 @@ export class GroupMessagingComponent implements OnInit {
   getSavedMessages(groupid_fld) {
     this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = this.user._decrypt(dt.a)
-      this.chats = dt.payload
+      this.chats = dt.payload;
+      
     }, (er) =>{
+      console.log(false)
       er = this.user._decrypt(er.error.a)
       this.chats = []
     })
@@ -353,6 +358,7 @@ export class GroupMessagingComponent implements OnInit {
   public selectedGroup: any;
   openGroupChat(data, index) : void {
     this.selectedGroup = data
+    this.show = false;
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;
@@ -361,7 +367,7 @@ export class GroupMessagingComponent implements OnInit {
       x.style.display = "block";
       y.style.display = "none";
     }else{
-      //Open group chat in desktop mode 
+      //group chat in desktop mode 
       
     }
 

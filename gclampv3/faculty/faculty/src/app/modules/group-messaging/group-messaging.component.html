@@ -61,7 +61,7 @@
               loading="lazy"
             />
           </div>
-          <div class="main__container--header">
+          <div class="main__container--header" *ngIf="!show">
             <p>Welcome to Groups!</p>
             <p>A whole new way of interacting with everyone in your class.</p>
             <p>
@@ -74,7 +74,7 @@
           </div>
         </ng-container>
       </div>
-      <div class="noselectedconversation__container" #noSelectedConversationElement>
+      <div class="noselectedconversation__container" #noSelectedConversationElement  *ngIf="show">
         <div class="illustration__container">
           <img
             src="assets/images/select-conversation-illustration.svg"

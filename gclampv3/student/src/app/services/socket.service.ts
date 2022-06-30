@@ -27,9 +27,9 @@ export class SocketService {
     this.socket.disconnect()
   }
 
-  public chat(content: string, sender, time: string, fullname: string): void {
-    console.log('OUTGOING: ', content, fullname)
-    this.socket.emit('chat', content, sender, time, fullname);
+  public chat(content: string, sender, sendername_fld: string, time: Date): void {
+    console.log('OUTGOING: ', content, sendername_fld)
+    this.socket.emit('chat', content, sender, sendername_fld, time);
   }
 
   public participants(participants: any): void {
@@ -37,8 +37,8 @@ export class SocketService {
   }
 
   private handleNewMessage(): void {
-    this.socket.on('new-message', (content, sender, time, username) => {
-      let message = {content_fld: content, sender_fld: sender, datetime_fld: time, username: username}
+    this.socket.on('new-message', (content, sender, sendername_fld, time) => {
+      let message = {content_fld: content, sender_fld: sender, sendername_fld, datetime_fld: time}
       console.log('NEW MESSAGE: ', message)
       this.newMessage.next(message);
     })

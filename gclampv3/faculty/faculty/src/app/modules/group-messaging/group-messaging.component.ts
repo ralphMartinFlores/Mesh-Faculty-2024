@@ -179,6 +179,7 @@ export class GroupMessagingComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeComponents();
+    this.handleNewMessage()
     this.groupMessage = this._fb.group({
       messageContent: ['', Validators.required],
     });
@@ -189,7 +190,6 @@ export class GroupMessagingComponent implements OnInit {
     this.noSelectedConversationElementRef = this.noSelectedConversationElement.nativeElement;
     this.greetingsElementRef = this.greetingsElement.nativeElement;
   }
-
 
   initializeComponents = () => {
     this.myId = this.splitEmail(this.user.getUserEmail())
@@ -204,6 +204,24 @@ export class GroupMessagingComponent implements OnInit {
     this.selectedRoom = await data
     this.groupNameisActive = await data
     this.scrollToNewMessage();
+    this.joinRoom(data.groupid_fld)
+  }
+
+  private joinRoom(roomId: string): void {
+    console.log(this.user.getUserID())
+    let name:string = this.user.getUserFullname()
+    let id:string = this.user.getUserID()
+    this.socket.joinRoom(roomId, name, id)
+  }
+
+  handleNewMessage(): void {
+    this.socket.newMessage.subscribe(message => {
+      console.log(message)
+      if (message) {
+        this.chats.push(message)
+        this.scrollToNewMessage();
+      }
+    })
   }
 
   videocall(): void{
@@ -227,11 +245,11 @@ export class GroupMessagingComponent implements OnInit {
     if (message === "") return false; 
     const sender = this.splitEmail(this.user.getUserEmail())
     const time = new Date()
-    const formattedTime = time.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
-    const facultyFullname = this.user.getUserFullname()
+    const date = new Date()
+    const sender_name = this.user.getUserData().fullname
 
-    this.socket.chat(message, sender, formattedTime, facultyFullname)
-    this.chats.push({ content_fld: message, sender_fld: sender, datetime_fld: formattedTime})
+    this.socket.chat(message, sender, sender_name, date)
+    this.chats.push({ content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date})
     this.scrollToNewMessage()
     this.saveMessage(message, time)
     this.groupMessage.reset()

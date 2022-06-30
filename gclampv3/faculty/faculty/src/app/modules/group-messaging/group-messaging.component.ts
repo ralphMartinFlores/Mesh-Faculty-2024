@@ -353,6 +353,7 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   openGroupChat(data, index) : void {
+    this.show = false;
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;

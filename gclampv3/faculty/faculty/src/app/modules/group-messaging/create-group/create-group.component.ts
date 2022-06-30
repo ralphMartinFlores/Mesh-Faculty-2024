@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,9 +17,9 @@ export class CreateGroupComponent implements OnInit {
 
   public groupLeader: string = ''
   public groupChatForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', [Validators.required]),
     classcode: new FormControl(''),
-    participants: new FormControl(''),
+    participants: new FormControl('', [Validators.required]),
   });
   studentList: any[] = [];
   constructor(
@@ -42,10 +42,16 @@ export class CreateGroupComponent implements OnInit {
     return arr[0]
   }
 
+  isOptionDisabled(opt: any) {
+    return this.groupChatForm.value.participants.length >= 4 && !this.groupChatForm.value.participants.includes(opt)
+  }
+
   onSubmitForm(event, load) {
     event.preventDefault()
 
-    this.createGroup(load)
+    if (this.groupChatForm.valid) {
+      this.createGroup(load)
+    }
   }
 
   createGroup(groupinfo) {

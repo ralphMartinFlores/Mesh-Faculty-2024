@@ -114,14 +114,25 @@
         <ng-container *ngIf="showGroupMembers === true">
           <div class="maingroupmembers__container">
             <div class="groupmembers__container">
-              <div class="groupmembers__container--body" *ngFor="let group of members; let i = index">
+              <div class="groupmembers__container--body">
                 <div class="groupmemberimage__container" >
-                  <img [src]="group.src" alt="" />
+                  <!-- <img [src]="group.src" alt="" /> -->
                 </div>
                 <div class="groupmember__details">
-                  <span>Austin Ray Aranda</span>
+                  <span>{{instructor.fullname}}</span>
                   <div class="groupmember__studid">
-                    <span>201810144</span>
+                    <span>{{instructor.dept}} Department</span>
+                  </div>
+                </div>
+              </div>
+              <div class="groupmembers__container--body" *ngFor="let student of groupChatMembers; let i = index">
+                <div class="groupmemberimage__container" >
+                  <!-- <img [src]="group.src" alt="" /> -->
+                </div>
+                <div class="groupmember__details">
+                  <span>{{student.lname_fld}}, {{student.mname_fld}} </span>
+                  <div class="groupmember__studid">
+                    <span>{{student.studnum_fld}}@gordoncollege.edu.ph</span>
                   </div>
                 </div>
               </div>

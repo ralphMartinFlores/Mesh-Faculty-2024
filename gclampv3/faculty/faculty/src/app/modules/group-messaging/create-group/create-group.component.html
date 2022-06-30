@@ -21,7 +21,7 @@
         <mat-form-field class="input-full-width" appearance="fill">
             <mat-label>Members</mat-label>
             <mat-select formControlName="participants" multiple>
-              <mat-option *ngFor="let student of studentList" [value]="student.studnum_fld">{{student.lname_fld}}, {{student.fname_fld}}</mat-option>
+              <mat-option *ngFor="let student of studentList" [value]="student.studnum_fld" [disabled]="isOptionDisabled(student.studnum_fld)">{{student.lname_fld}}, {{student.fname_fld}}</mat-option>
             </mat-select>
         </mat-form-field>
         <div class="buttongroup__container">

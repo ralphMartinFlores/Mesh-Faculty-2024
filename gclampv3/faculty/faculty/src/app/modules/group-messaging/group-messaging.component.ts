@@ -163,7 +163,9 @@ export class GroupMessagingComponent implements OnInit {
       "src": "assets/images/groups-icon.png",
       "studnum": "201810144"
     }
-  ]
+  ]  
+  
+  public instructor: any;
 
   // End
 
@@ -192,6 +194,7 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   initializeComponents = () => {
+    this.instructor = this.user.getUserData();
     this.myId = this.splitEmail(this.user.getUserEmail())
     this.getGroups();
     this.allStudents = this.user.getClassMembers().student;
@@ -199,7 +202,6 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   async chatBody(data, index): Promise<any> {
-    console.log(data)
     this.getSavedMessages(data.groupid_fld);
     this.selectedRoom = await data
     this.groupNameisActive = await data
@@ -208,7 +210,6 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   private joinRoom(roomId: string): void {
-    console.log(this.user.getUserID())
     let name:string = this.user.getUserFullname()
     let id:string = this.user.getUserID()
     this.socket.joinRoom(roomId, name, id)
@@ -216,7 +217,6 @@ export class GroupMessagingComponent implements OnInit {
 
   handleNewMessage(): void {
     this.socket.newMessage.subscribe(message => {
-      console.log(message)
       if (message) {
         this.chats.push(message)
         this.scrollToNewMessage();
@@ -273,9 +273,12 @@ export class GroupMessagingComponent implements OnInit {
     })
   }
 
-  showGroupMembers: boolean = false
+  showGroupMembers: boolean = false  
+  groupChatMembers: any = [];
   seegroupMembers(): void{
-    console.log('group members triggered');
+    const groupChatMembersId = this.selectedGroup.participants_fld.split(', ')
+    const groupChatMembers: any[] = this.students.filter(student => groupChatMembersId.includes(student.studnum_fld))
+    this.groupChatMembers = groupChatMembers
     this.showGroupMembers = true;
   }
 
@@ -347,7 +350,9 @@ export class GroupMessagingComponent implements OnInit {
     return width < 769;
   }
 
+  public selectedGroup: any;
   openGroupChat(data, index) : void {
+    this.selectedGroup = data
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;

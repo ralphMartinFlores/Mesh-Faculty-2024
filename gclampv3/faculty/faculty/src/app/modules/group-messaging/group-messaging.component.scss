@@ -232,7 +232,7 @@
             }
   
             .chatDiv {
-              max-width: 50% !important;
+              // max-width: 50% !important;
               flex-direction: column;
               animation-delay: var(--delay);
               animation: message 0.15s ease-out 0s forwards;

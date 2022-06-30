@@ -347,7 +347,7 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
       if (this.grouparray.length > 0) {
         this.show = true;
         this.emptyContainerElementRef.style.display = 'none';
-        this.noSelectedConversationElementRef.style.display = 'block';
+
         this.greetingsElementRef.style.display = 'none';
       }
     }, er => {
@@ -376,6 +376,12 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(participant => {
+
+      if (Object.entries(this.groupNameisActive).length !== 0)
+        this.noSelectedConversationElementRef.style.display = 'none';
+      else
+        this.noSelectedConversationElementRef.style.display = 'block';
+      
       this.getGroups()
     });
 

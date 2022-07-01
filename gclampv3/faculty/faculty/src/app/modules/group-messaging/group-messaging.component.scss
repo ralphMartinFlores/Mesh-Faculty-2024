@@ -76,7 +76,11 @@
         margin: 0 auto;
       }
       .groupmessages__back-button {
-        display: none;
+        // display: none;
+        font-size: 0.5rem;
+        cursor: pointer;
+        display: inline-grid;
+        align-content: center;
       }
       .main__container--header {
         text-align: center;
@@ -228,7 +232,7 @@
             }
   
             .chatDiv {
-              max-width: 50% !important;
+              // max-width: 50% !important;
               flex-direction: column;
               animation-delay: var(--delay);
               animation: message 0.15s ease-out 0s forwards;

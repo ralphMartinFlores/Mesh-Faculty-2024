@@ -14,7 +14,7 @@ import { SocketService } from 'src/app/services/socket.service';
 export class GroupMessagingComponent implements OnInit {
 
   allStudents: any = [];
-  students: any = [];
+  students: any;
   url = this.route.url.split('/');
   classcode = this.url[3];
   groups: any[] = []
@@ -164,6 +164,9 @@ export class GroupMessagingComponent implements OnInit {
     }
   ]
 
+  public instructor: any;
+  public pageslice;
+
   // End
 
   constructor(
@@ -192,6 +195,12 @@ export class GroupMessagingComponent implements OnInit {
 
 
   initializeComponents = () => {
+    this.instructor = this.user.getTeachers();
+    let students = this.user.getStudents();
+    this.pageslice = students.slice(0, 18);
+
+    console.log('CLASS MEMBERS: ', this.instructor, this.pageslice)
+
     this.myId = this.splitEmail(this.user.getEmail())
     this.getGroups();
     this.students = this.allStudents;
@@ -208,7 +217,6 @@ export class GroupMessagingComponent implements OnInit {
 
   
   private joinRoom(roomId: string): void {
-    console.log(this.user.getUserID())
     let name:string = this.user.getFullname()
     let id:string = this.user.getUserID()
     this.socket.joinRoom(roomId, name, id)
@@ -272,8 +280,11 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   showGroupMembers: boolean = false
+  groupChatMembers: any;
   seegroupMembers(): void{
-    console.log('group members triggered');
+    const groupChatMembersId = this.selectedGroup.participants_fld.split(', ')
+    const groupChatMembers: any[] = this.pageslice.filter(student => groupChatMembersId.includes(student.studnum_fld))
+    this.groupChatMembers = groupChatMembers
     this.showGroupMembers = true;
   }
 
@@ -333,7 +344,9 @@ export class GroupMessagingComponent implements OnInit {
     return width < 769;
   }
 
+  public selectedGroup: any;
   openGroupChat(data, index) : void {
+    this.selectedGroup = data
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;

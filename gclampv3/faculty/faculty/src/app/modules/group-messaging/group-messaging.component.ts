@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,8 +12,13 @@ import { SocketService } from 'src/app/services/socket.service';
   templateUrl: './group-messaging.component.html',
   styleUrls: ['./group-messaging.component.scss']
 })
-export class GroupMessagingComponent implements OnInit {
 
+
+
+export class GroupMessagingComponent implements OnInit, AfterViewInit {
+
+  // @HostListener('window:resize', ['$event'])
+  
   allStudents: any = [];
   students: any = [];
   url = this.route.url.split('/');
@@ -25,16 +30,18 @@ export class GroupMessagingComponent implements OnInit {
   selectedRoom: any = [];
   groupNameisActive = {};
   groupMessage: FormGroup;
+  show:boolean;
 
   filter: any;
-
   @ViewChild('scrollTarget') private myScrollContainer: ElementRef;
   @ViewChild('scrollframe') private scrollFrame: ElementRef;
   @ViewChild('emptyContainerElement') emptyContainerElement?: ElementRef;
+  @ViewChild('emptySearchContainerElement') emptySearchContainerElement?: ElementRef;
   @ViewChild('noSelectedConversationElement') noSelectedConversationElement?: ElementRef;
   @ViewChild('greetingsElement') greetingsElement?: ElementRef;
 
   public emptyContainerElementRef: any;
+  public emptySearchContainerElementRef: any
   public noSelectedConversationElementRef: any;
   public greetingsElementRef: any;
   
@@ -163,9 +170,19 @@ export class GroupMessagingComponent implements OnInit {
       "src": "assets/images/groups-icon.png",
       "studnum": "201810144"
     }
-  ]
+  ]  
+  
+  public instructor: any;
 
   // End
+
+  // pageWidth: any;
+
+  // onResize(event?) {
+  //   this.pageWidth = window.innerWidth;
+  //   console.log(this.pageWidth);
+  // }
+
 
   constructor(
     public ds: DataService, 
@@ -174,7 +191,11 @@ export class GroupMessagingComponent implements OnInit {
     private _fb: FormBuilder,
     private _dialog: MatDialog,
     public socket: SocketService
-  ) { }
+  ) { 
+    // this.onResize();
+  }
+
+
 
 
   ngOnInit(): void {
@@ -185,13 +206,21 @@ export class GroupMessagingComponent implements OnInit {
     });
   }
 
+  isMobile(){
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    return width < 769;
+  }
   ngAfterViewInit() {
     this.emptyContainerElementRef = this.emptyContainerElement.nativeElement;
+    this.emptySearchContainerElementRef = this.emptySearchContainerElement.nativeElement;
+
     this.noSelectedConversationElementRef = this.noSelectedConversationElement.nativeElement;
     this.greetingsElementRef = this.greetingsElement.nativeElement;
+    this.emptySearchContainerElementRef.style.display = 'none'
   }
 
   initializeComponents = () => {
+    this.instructor = this.user.getUserData();
     this.myId = this.splitEmail(this.user.getUserEmail())
     this.getGroups();
     this.allStudents = this.user.getClassMembers().student;
@@ -199,7 +228,6 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   async chatBody(data, index): Promise<any> {
-    console.log(data)
     this.getSavedMessages(data.groupid_fld);
     this.selectedRoom = await data
     this.groupNameisActive = await data
@@ -208,7 +236,6 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   private joinRoom(roomId: string): void {
-    console.log(this.user.getUserID())
     let name:string = this.user.getUserFullname()
     let id:string = this.user.getUserID()
     this.socket.joinRoom(roomId, name, id)
@@ -216,7 +243,6 @@ export class GroupMessagingComponent implements OnInit {
 
   handleNewMessage(): void {
     this.socket.newMessage.subscribe(message => {
-      console.log(message)
       if (message) {
         this.chats.push(message)
         this.scrollToNewMessage();
@@ -242,7 +268,7 @@ export class GroupMessagingComponent implements OnInit {
     // const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
     // element.style.animationDelay = "--delay: 0s"
 
-    if (message === "") return false; 
+    if (message === "") return; 
     const sender = this.splitEmail(this.user.getUserEmail())
     const time = new Date()
     const date = new Date()
@@ -273,9 +299,12 @@ export class GroupMessagingComponent implements OnInit {
     })
   }
 
-  showGroupMembers: boolean = false
+  showGroupMembers: boolean = false  
+  groupChatMembers: any = [];
   seegroupMembers(): void{
-    console.log('group members triggered');
+    const groupChatMembersId = this.selectedGroup.participants_fld.split(', ')
+    const groupChatMembers: any[] = this.students.filter(student => groupChatMembersId.includes(student.studnum_fld))
+    this.groupChatMembers = groupChatMembers
     this.showGroupMembers = true;
   }
 
@@ -309,12 +338,20 @@ export class GroupMessagingComponent implements OnInit {
       this.grouparray = dt.payload
       this.backupGroupArray = dt.payload
       // Show Empty Illustration if there are no groups yet
+
+      if (this.grouparray.length === 0) {
+        this.noSelectedConversationElementRef.style.display = 'none';
+        return;
+      }
+
       if (this.grouparray.length > 0) {
+        this.show = true;
         this.emptyContainerElementRef.style.display = 'none';
-        this.noSelectedConversationElementRef.style.display = 'block';
+
         this.greetingsElementRef.style.display = 'none';
       }
     }, er => {
+      this.noSelectedConversationElementRef.style.display = 'none';
       er = this.user._decrypt(er.error.a)
     })
 
@@ -323,8 +360,10 @@ export class GroupMessagingComponent implements OnInit {
   getSavedMessages(groupid_fld) {
     this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = this.user._decrypt(dt.a)
-      this.chats = dt.payload
+      this.chats = dt.payload;
+      
     }, (er) =>{
+      console.log(false)
       er = this.user._decrypt(er.error.a)
       this.chats = []
     })
@@ -337,17 +376,22 @@ export class GroupMessagingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(participant => {
+
+      if (Object.entries(this.groupNameisActive).length !== 0)
+        this.noSelectedConversationElementRef.style.display = 'none';
+      else
+        this.noSelectedConversationElementRef.style.display = 'block';
+      
       this.getGroups()
     });
 
   }
 
-  isMobile(){
-    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    return width < 769;
-  }
 
+  public selectedGroup: any;
   openGroupChat(data, index) : void {
+    this.selectedGroup = data
+    this.show = false;
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;
@@ -356,10 +400,10 @@ export class GroupMessagingComponent implements OnInit {
       x.style.display = "block";
       y.style.display = "none";
     }else{
-      //Open group chat in desktop mode 
+      //group chat in desktop mode 
       
     }
-
+    this.noSelectedConversationElementRef.style.display = 'none'
   }
 
   onBackButton(){
@@ -367,6 +411,25 @@ export class GroupMessagingComponent implements OnInit {
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     x.style.display = "none";
     y.style.display = "block";
+  }
+
+
+  async onBackToGroupButton(){
+
+    if(await this.isMobile()){
+      const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
+      const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
+      x.style.display = "none";
+      y.style.display = "block";
+      this.emptyContainerElementRef.style.display = 'none'
+      this.groupNameisActive = {}
+
+    } else {
+      this.selectedGroup = ''
+      this.selectedRoom = ''
+      this.noSelectedConversationElementRef.style.display = 'block';
+      this.groupNameisActive = {}
+    }   
   }
 
   splitEmail(email) {
@@ -392,8 +455,19 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   public searchGroups(searchInput: string){
+    const groupNameTile = document.getElementsByClassName("groups__container--group")[0] as HTMLElement; //('')
+    if (searchInput === ''){
+      groupNameTile.style.display = 'block'
+    } 
+
     this.grouparray = this.grouparray.filter(item => {
-        return (item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase())); 
+        if ((item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase()))){
+          this.emptySearchContainerElementRef.style.display = 'none'
+        } else {
+          groupNameTile.style.display = 'none'
+          this.emptySearchContainerElementRef.style.display = 'block'
+        }
+        return this.grouparray;
     })
   }
 }

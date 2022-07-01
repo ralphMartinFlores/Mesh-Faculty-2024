@@ -113,7 +113,7 @@ import { VideoPlayerComponent } from '../modules/call/video-player/video-player.
     GroupMessagingComponent,
     CreateGroupComponent,
     CallComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,76 @@
+.main__container {
+    // border: 1px solid red;
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    .videotiles__container {
+        // border: 1px solid black;
+        display: grid;
+        grid-template-columns: repeat(1, fit-content(100%));
+        // height: 90vh;
+        // overflow-y: scroll;
+        // grid-auto-flow: column;
+        // overflow:hidden;
+        gap: 5px;
+        // height: 100%;
+        justify-content: center;
+        .videotile {
+            background-color: #dbdcdd;
+            border-radius: 10px;
+            aspect-ratio: 16 / 9;
+            // border: 1px solid green;
+            // &:nth-child(4n + 1) {
+            //     grid-column: 1;
+            // }
+            video {
+                width: 100%;
+                height: 100%;
+                vertical-align: bottom;
+            }
+        }
+    }
+    .buttons__container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        button {
+            background-color: var(--clr-primary);
+            color: #FFF;
+            transition: all .3s;
+            &:hover {
+                background-color: #01477d;
+            }
+        }
+        .danger--btn {
+            background-color: var(--btn-close);
+            transition: all .3s;
+            &:hover {
+                background-color: #8a0000;
+            }
+        }
+    }
+}
+@media only screen and (min-width: 600px) and (max-width: 865px) {
+    .main__container {
+        .videotiles__container {
+            grid-template-columns: repeat(2, fit-content(100%));
+        }
+    }
+}
+@media only screen and (min-width: 866px) and (max-width: 960px) {
+    .main__container {
+        .videotiles__container {
+            grid-template-columns: repeat(3, fit-content(90%));
+        }
+    }
+}
+@media only screen and (min-width: 961px) {
+    .main__container {
+        .videotiles__container {
+            grid-template-columns: repeat(4, fit-content(80%));
+        }
+    }
+}

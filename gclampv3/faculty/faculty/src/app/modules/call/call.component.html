@@ -3,9 +3,9 @@
         <div class="videotile">
             <video src="assets/images/Sample 4by3 video.mp4" autoplay loop></video>
         </div> 
-        <div class="videotile">
+        <!-- <div class="videotile">
             <video src="assets/images/Sample 4by3 video.mp4"></video>
-        </div> 
+        </div>  -->
     </div>
     <div class="buttons__container">
         <button mat-icon-button>
@@ -17,7 +17,7 @@
         <button mat-icon-button class="danger--btn">
             <mat-icon>call_end</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="callSettingsDialog()">
             <mat-icon>settings</mat-icon>
         </button>
     </div>

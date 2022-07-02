@@ -72,5 +72,8 @@
         .videotiles__container {
             grid-template-columns: repeat(4, fit-content(80%));
         }
+        .buttons__container {
+            padding: 10px;
+        }
     }
 }

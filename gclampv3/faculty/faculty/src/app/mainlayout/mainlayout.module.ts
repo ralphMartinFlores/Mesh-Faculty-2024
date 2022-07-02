@@ -60,6 +60,7 @@ import { GroupMessagingComponent } from '../modules/group-messaging/group-messag
 import { CreateGroupComponent } from '../modules/group-messaging/create-group/create-group.component';
 import { CallComponent } from '../modules/call/call.component';
 import { VideoPlayerComponent } from '../modules/call/video-player/video-player.component';
+import { CallSettingsComponent } from '../modules/call/call-settings/call-settings.component';
 @NgModule({
   declarations: [
     MainlayoutComponent,
@@ -114,6 +115,7 @@ import { VideoPlayerComponent } from '../modules/call/video-player/video-player.
     CreateGroupComponent,
     CallComponent,
     VideoPlayerComponent,
+    CallSettingsComponent
   ],
   imports: [
     CommonModule,

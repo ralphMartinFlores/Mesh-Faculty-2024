@@ -8,9 +8,12 @@ import { UserService } from './user.service';
 })
 export class SocketService {
 
+  public joinedId = new BehaviorSubject(null);
+  public leavedId = new BehaviorSubject(null);
   public newMessage = new BehaviorSubject(null);
   public socket: Socket;
-
+  public USER_ID = new BehaviorSubject(null);
+  public forceMuteUnmuteAction = new BehaviorSubject(null);
   public participantsList = new BehaviorSubject(null);
 
   constructor(private _user: UserService) {
@@ -19,12 +22,13 @@ export class SocketService {
     this.handleNewMessage();
   }
 
-   public joinRoom(roomId: string, name: string, id: string): void {
-    this.socket.emit('join-room', roomId, name, id);
+  public joinRoom(roomId: string, userId: string, name: string, id: string): void {
+    const peerId = null;
+    this.socket.emit('join-room', roomId, peerId, name, id);
   }
 
   public disconnectToMeeting() {
-    this.socket.disconnect()
+    this.socket.emit('leave-room')
   }
 
   public chat(content: string, sender, sendername_fld: string, time: Date): void {

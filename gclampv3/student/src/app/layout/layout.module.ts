@@ -80,6 +80,9 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 import { SurveyComponent } from "../shared/survey/survey.component";
 import { LibraryComponent } from "../components/library/library.component";
 import { GroupMessagingComponent } from "../components/group-messaging/group-messaging.component";
+import { CallComponent } from "../components/call/call.component";
+import { VideoPlayerComponent } from "../components/call/video-player/video-player.component";
+import { CallSettingsComponent } from "../components/call/call-settings/call-settings.component";
 
 
 @NgModule({
@@ -158,7 +161,10 @@ import { GroupMessagingComponent } from "../components/group-messaging/group-mes
     QuestionnaireComponent,
     SurveyComponent,
     LibraryComponent,
-    GroupMessagingComponent
+    GroupMessagingComponent,
+    CallComponent,
+    VideoPlayerComponent,
+    CallSettingsComponent,
     // FileDownloadsComponent
   ],
   providers: [DatePipe],

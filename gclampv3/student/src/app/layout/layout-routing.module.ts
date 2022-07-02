@@ -17,6 +17,7 @@ import { AuthGuard } from '../services/auth.guard';
 import { EvaluationComponent } from '../components/evaluation/evaluation.component';
 import { QuestionnaireComponent } from '../components/evaluation/questionnaire/questionnaire.component';
 import { LibraryComponent } from '../components/library/library.component';
+import { CallComponent } from '../components/call/call.component';
 
 export const MainLayoutRoutes: Routes = [
   { path: '', redirectTo: 'todolist', pathMatch: 'full' },
@@ -36,6 +37,7 @@ export const MainLayoutRoutes: Routes = [
   { path: 'evaluation', component: EvaluationComponent },
   { path: 'questionnaire', component: QuestionnaireComponent },
   { path: 'library', component: LibraryComponent },
+  { path: 'call', canActivate: [AuthGuard],component: CallComponent }
 
 
 

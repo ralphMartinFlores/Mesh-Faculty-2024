@@ -81,7 +81,7 @@ export class CallComponent implements OnInit {
   async ngAfterViewInit(): Promise<void> {
     this.videoElementContainerRef = this.videoElementContainer.nativeElement;
     this.videoElementRef = this.videoElement.nativeElement;
-    // this.buttonElementRef = this.buttonElement.nativeElement;
+    this.buttonElementRef = this.buttonElement.nativeElement;
     this.videoTilesElementContainerRef = this.videoTilesElementContainer.nativeElement;
     this.shareAndMembersContainerRef = this.shareAndMembersContainer.nativeElement;
     this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;

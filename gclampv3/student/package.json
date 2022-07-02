@@ -29,6 +29,7 @@
     "ngx-image-compress": "^11.0.3",
     "ngx-image-cropper": "^4.0.1",
     "rxjs": "~6.6.0",
+    "sdp-transform": "^2.14.1",
     "socket.io-client": "^4.5.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

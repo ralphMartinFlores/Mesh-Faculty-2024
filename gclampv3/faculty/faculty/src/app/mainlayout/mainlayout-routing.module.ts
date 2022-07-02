@@ -23,7 +23,7 @@ import { VideoPlayerComponent } from '../modules/call/video-player/video-player.
 
 const routes: Routes = [
   { path: 'call', component: CallComponent },
-  { path: 'call/video', component: VideoPlayerComponent },
+  // { path: 'call/video', component: VideoPlayerComponent },
   { path: 'classes', component: ClassesComponent },
   { path: 'classes/:id', component: ClassroomComponent },
   { path: 'classes/:id/:view', component: ViewActivitiesComponent },

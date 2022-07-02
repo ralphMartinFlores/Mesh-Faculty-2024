@@ -190,7 +190,8 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
     private route: Router,
     private _fb: FormBuilder,
     private _dialog: MatDialog,
-    public socket: SocketService
+    public socket: SocketService,
+    private router: Router
   ) { 
     // this.onResize();
   }
@@ -236,9 +237,10 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   }
 
   private joinRoom(roomId: string): void {
+    this.socket.disconnectToMeeting()
     let name:string = this.user.getUserFullname()
     let id:string = this.user.getUserID()
-    this.socket.joinRoom(roomId, name, id)
+    this.socket.joinRoom(roomId, null, name, id)
   }
 
   handleNewMessage(): void {
@@ -250,15 +252,16 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
     })
   }
 
-  videocall(): void{
-    console.log('videocall has been triggered');
-  }
-
   call(): void{
     console.log('call has been triggered');
 
   }
 
+  videocall(): void{
+    window.sessionStorage.setItem('roomId', this.selectedRoom.roomid_fld)
+    this.router.navigate(['/main/call'])  
+
+  }
 
   addMessage(message: string): any {
 

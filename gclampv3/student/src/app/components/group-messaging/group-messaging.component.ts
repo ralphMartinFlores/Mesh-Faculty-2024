@@ -24,6 +24,7 @@ export class GroupMessagingComponent implements OnInit {
   selectedRoom: any = [];
   groupNameisActive = {};
   groupMessage: FormGroup;
+  show:boolean;
 
   filter: any;
 
@@ -320,14 +321,27 @@ export class GroupMessagingComponent implements OnInit {
       this.grouparray = dt.payload
       this.backupGroupArray = dt.payload
       // Show Empty Illustration if there are no groups yet
+      if (this.grouparray.length === 0) {
+        this.noSelectedConversationElementRef.style.display = 'none';
+        return;
+      }
+
       if (this.grouparray.length > 0) {
+        this.show = true;
         this.emptyContainerElementRef.style.display = 'none';
-        this.noSelectedConversationElementRef.style.display = 'block';
-        this.greetingsElementRef.style.display = 'none';
       }
     }, er => {
-      er = er.error
+      this.noSelectedConversationElementRef.style.display = 'none';
+      er = this.user._decrypt(er.error.a)
     })
+    //   if (this.grouparray.length > 0) {
+    //     this.emptyContainerElementRef.style.display = 'none';
+    //     this.noSelectedConversationElementRef.style.display = 'block';
+    //     this.greetingsElementRef.style.display = 'none';
+    //   }
+    // }, er => {
+    //   er = er.error
+    // })
 
   }
 

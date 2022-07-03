@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import Peer from 'peerjs';
 import { BehaviorSubject, Observable } from 'rxjs';
 import transform, { SessionDescription } from 'sdp-transform';
 
-declare var Peer: any;
 export interface CallUser {
   peerId: string;
   stream: MediaStream;
@@ -180,7 +180,7 @@ export class PeerService {
   private initPeer(config: any): void {
     // this.peer = new Peer(this.myPeerId, {
     //   host: 'localhost',
-    //   port: '3001',
+    //   port: 3001,
     //   secure: true,
     //   config: {
     //     "iceServers": [
@@ -223,7 +223,7 @@ export class PeerService {
     
     this.peer = new Peer(this.myPeerId, {
       host: 'localhost',
-      port: '3001',
+      port: 3001,
       secure: false,
       config: {
         "iceServers": [

@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import Peer from 'peerjs';
 import { BehaviorSubject, Observable } from 'rxjs';
 import transform, { SessionDescription } from 'sdp-transform';
 
-declare var Peer: any;
 export interface CallUser {
   peerId: string;
   stream: MediaStream;
@@ -48,7 +48,7 @@ export class PeerService {
 
   public openPeer(stream: MediaStream): Promise<string> {
     return new Promise<string>((resolve) => {
-      console.log(this.getTurnServeConfig())
+      // console.log(this.getTurnServeConfig())
         this.initPeer('asdasd');
         this.peer.on('open', (userPeerId: string) => {
           this.myPeerId = userPeerId
@@ -179,61 +179,61 @@ export class PeerService {
   }
 
   private initPeer(config: any): void {
-    this.peer = new Peer(this.myPeerId, {
-      host: 'gordoncollegeccs.edu.ph',
-      port: '4234',
-      secure: true,
-      config: {
-        "iceServers": [
-          {
-              "url": "stun:ss-turn1.xirsys.com"
-          },
-          {
-              "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
-              "url": "turn:ss-turn1.xirsys.com:80?transport=udp",
-              "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
-          },
-          {
-              "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
-              "url": "turn:ss-turn1.xirsys.com:3478?transport=udp",
-              "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
-          },
-          {
-              "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
-              "url": "turn:ss-turn1.xirsys.com:80?transport=tcp",
-              "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
-          },
-          {
-              "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
-              "url": "turn:ss-turn1.xirsys.com:3478?transport=tcp",
-              "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
-          },
-          {
-              "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
-              "url": "turns:ss-turn1.xirsys.com:443?transport=tcp",
-              "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
-          },
-          {
-              "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
-              "url": "turns:ss-turn1.xirsys.com:5349?transport=tcp",
-              "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
-          }
-        ]
-      }
-    });
-    
     // this.peer = new Peer(this.myPeerId, {
-    //   host: 'localhost',
-    //   port: '3001',
-    //   secure: false,
+    //   host: 'gordoncollegeccs.edu.ph',
+    //   port: 4234,
+    //   secure: true,
     //   config: {
     //     "iceServers": [
     //       {
-    //         urls:['stun:stun1.1.google.com:19302', 'stun:stun2.1.google.com:19302']
+    //           "url": "stun:ss-turn1.xirsys.com"
+    //       },
+    //       {
+    //           "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
+    //           "url": "turn:ss-turn1.xirsys.com:80?transport=udp",
+    //           "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
+    //       },
+    //       {
+    //           "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
+    //           "url": "turn:ss-turn1.xirsys.com:3478?transport=udp",
+    //           "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
+    //       },
+    //       {
+    //           "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
+    //           "url": "turn:ss-turn1.xirsys.com:80?transport=tcp",
+    //           "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
+    //       },
+    //       {
+    //           "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
+    //           "url": "turn:ss-turn1.xirsys.com:3478?transport=tcp",
+    //           "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
+    //       },
+    //       {
+    //           "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
+    //           "url": "turns:ss-turn1.xirsys.com:443?transport=tcp",
+    //           "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
+    //       },
+    //       {
+    //           "username": "4Bniw1xSGROiXEb7CQAekvgwRPN4k7fW0aRIo97vaAJEalwSkgetLboNOhhGXrO9AAAAAGKaHHZzZWZwdXNpbmcxOTk1",
+    //           "url": "turns:ss-turn1.xirsys.com:5349?transport=tcp",
+    //           "credential": "93d1f204-e34a-11ec-8b8b-0242ac140004"
     //       }
     //     ]
     //   }
     // });
+    
+    this.peer = new Peer(this.myPeerId, {
+      host: 'localhost',
+      port: 3001,
+      secure: false,
+      config: {
+        "iceServers": [
+          {
+            urls:['stun:stun1.1.google.com:19302', 'stun:stun2.1.google.com:19302']
+          }
+        ]
+      }
+    });
   }
 
 }

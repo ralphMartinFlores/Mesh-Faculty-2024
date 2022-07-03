@@ -165,42 +165,6 @@ export class CallComponent implements OnInit {
   private listenLeavedUser(): void {
     this.socketService.leavedId.subscribe(async userPeerId => {
       this.joinedUsers = this.joinedUsers.filter(x => x.peerId != userPeerId);
-
-      if (userPeerId === sessionStorage.getItem('sharerPeerId')) {
-
-        if (sessionStorage.getItem('sharerPeerId')) {
-          const peer: any = this.joinedUsers.find(user => user.peerId === sessionStorage.getItem('sharerPeerId'));
-          // console.log(peer);
-          if (!peer) {
-            // console.log('SHARER LEAVED THE ROOM!');
-            setTimeout(() => {
-              this.videoElementRef.srcObject = null;
-              this.videoElementRef.pause();
-              this.videoElementRef.removeAttribute('srcObject');
-              this.videoElementRef.load();
-
-              // Dito na lang gawin
-              this.buttonElementRef.style.display = 'block';
-              this.videoElementContainerRef.style.display = 'none';
-              // Kapag nagstop ng sharescreen, ibalik yung dating styles
-              if (this.shareAndMembersContainerRef.classList.contains("share-screen-grid")) {
-                this.shareAndMembersContainerRef.classList.remove("share-screen-grid");
-                this.shareAndMembersContainerRef.classList.add("shareandmembers__container");
-                // console.log("shareandmembers__container class added")
-              }
-
-              if (this.participantTilesElementContainerRef.classList.contains("participant-tile-alternate")) {
-                this.participantTilesElementContainerRef.classList.remove("participant-tile-alternate");
-                this.participantTilesElementContainerRef.classList.add("participant-tile__video");
-                // console.log("participant-tile class added");
-              };
-            }, 500)
-
-          }
-        }
-
-      }
-
     })
   }
 

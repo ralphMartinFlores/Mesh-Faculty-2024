@@ -8,6 +8,7 @@ import { DataService } from 'src/app/services/data.service';
 import { MediaService } from 'src/app/services/media.service';
 import { CallUser, PeerService } from 'src/app/services/peer.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { UserService } from 'src/app/services/user.service';
 import Utils from 'src/app/shared/utils/utils';
 import { CallSettingsComponent } from './call-settings/call-settings.component';
 
@@ -69,7 +70,8 @@ export class CallComponent implements OnInit {
     public dialog: MatDialog,
     private mediaService: MediaService,
     private _ds: DataService,
-    private observer: BreakpointObserver) { }
+    private observer: BreakpointObserver,
+    private user: UserService) { }
 
   public callSettingsDialog (): void {
     let dialogRef = this._dialog.open(CallSettingsComponent, {
@@ -272,13 +274,13 @@ export class CallComponent implements OnInit {
   private openPeer(localStream: MediaStream): void {
     this.peerService.openPeer(localStream).then((myPeerId) => {
       this.myPeerId = myPeerId;
-      let sessionData = JSON.parse(window.sessionStorage.getItem('data'))
+      // let sessionData = JSON.parse(window.sessionStorage.getItem('data'))
 
-      this.participants.push( {
-        name: `${sessionData.fn} ${sessionData.ln}`,
-        peerId: myPeerId,
-        userId: sessionData.id
-       } );
+      // this.participants.push( {
+      //   name: this.user.getUserFullname(),
+      //   peerId: myPeerId,
+      //   userId: sessionData.id
+      //  } );
 
       this.joinRoom(this.roomId, myPeerId);
     })
@@ -289,9 +291,8 @@ export class CallComponent implements OnInit {
   }
 
   private joinRoom(roomId: string, userPeerId: string): void {
-    let sessionData: any = JSON.parse(window.sessionStorage.getItem('data'))
-    let name:string = `${sessionData.fn} ${sessionData.ln}`;
-    let id:string = sessionData.id;
+    let name:string = this.user.getUserFullname()
+    let id:string = this.user.getUserID()
     this.socketService.joinRoom(roomId, userPeerId, name, id);
   }
 

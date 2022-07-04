@@ -87,8 +87,6 @@ export class CallComponent implements OnInit {
     this.videoTilesElementContainerRef = this.videoTilesElementContainer.nativeElement;
     this.shareAndMembersContainerRef = this.shareAndMembersContainer.nativeElement;
     this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;
-    console.log(this.shareAndMembersContainerRef);
-    console.log(this.participantTilesElementContainerRef);
 
     await this.listenNewUser();
     await this.participantsList();

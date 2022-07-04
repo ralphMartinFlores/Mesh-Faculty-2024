@@ -66,8 +66,8 @@ io.on('connection', socket => {
             socket.leave(roomId);
         })
         // when someone has to chat from the chat box
-        socket.on('chat', (content, sender, time, username) => {
-            socket.broadcast.to(roomId).emit('new-message', content, sender, time, username); 
+        socket.on('chat', (groupId, content, sender, time, username) => {
+            socket.broadcast.to(roomId).emit('new-message',groupId, content, sender, time, username); 
         })
         socket.on('share-screen', (userId) => {
             socket.broadcast.to(roomId).emit('user-sharescreen', userId);

@@ -108,6 +108,7 @@ export class CallComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.user.getUserData())
     this.observer
       .observe(['(max-width: 1200px)'])
       .pipe(delay(1))

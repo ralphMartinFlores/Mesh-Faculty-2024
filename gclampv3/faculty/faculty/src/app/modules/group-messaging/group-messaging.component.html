@@ -167,7 +167,7 @@
               [ngClass]="chat.sender_fld === myid ? 'my-message' : 'cor-message'"
               id="scrollDemo"
             >
-              <div class="imageAvatarLeft" *ngIf="chat.sender_fld !== myId">
+              <div class="imageAvatarLeft" *ngIf="chat.sender_fld !== myId && chat.groupid_fld === selectedGroup.groupid_fld">
                 <div class="imageAvatarBottom">
                   <div class="avatar">
                     <!-- <img [src]="chat.img" alt=""> -->
@@ -186,7 +186,7 @@
                 </div>
               </div>
   
-              <div class="imageAvatarRight" *ngIf="chat.sender_fld === myId">
+              <div class="imageAvatarRight" *ngIf="chat.sender_fld === myId && chat.groupid_fld === selectedGroup.groupid_fld">
                 <div class="chatcontent__container">
                   <div class="personsname__container1">
                     <span>You</span> <br>

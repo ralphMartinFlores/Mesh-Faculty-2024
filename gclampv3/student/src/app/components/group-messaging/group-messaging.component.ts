@@ -213,15 +213,14 @@ export class GroupMessagingComponent implements OnInit {
     this.selectedRoom = await data
     this.groupNameisActive = await data
     this.scrollToNewMessage();
-    this.joinRoom(data.groupid_fld)
+    this.joinRoom(data.groupid_fld, this.user.getUserID())
   }
 
   
-  private joinRoom(roomId: string): void {
-    this.socket.disconnectToChat()
+  private joinRoom(roomId: string, userId: any): void {
     let name:string = this.user.getFullname()
     let id:string = this.user.getUserID()
-    this.socket.joinRoom(roomId, null, name, id)
+    this.socket.joinRoom(roomId, userId, name, id)
   }
 
   handleNewMessage(): void {
@@ -257,9 +256,11 @@ export class GroupMessagingComponent implements OnInit {
     const sender = this.splitEmail(this.user.getEmail())
     const date = new Date()
     const sender_name = this.user.getFullname()
+    const groupId = this.selectedGroup?.groupid_fld
 
-    this.socket.chat(message, sender, sender_name, date)
-    this.chats.push({ content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date})
+    this.socket.chat(groupId, message, sender, sender_name, date)
+    this.chats.push({ groupid_fld: groupId, content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date})
+    console.log(this.chats)
     this.scrollToNewMessage()
     this.saveMessage(message, date)
     this.groupMessage.reset()
@@ -267,7 +268,7 @@ export class GroupMessagingComponent implements OnInit {
 
   public saveMessage(message: string, dateTime: any): void {
     const load = {
-        groupid_fld: this.selectedRoom.groupid_fld,
+        groupid_fld: this.selectedGroup?.groupid_fld,
         sender_fld: this.splitEmail(this.user.getEmail()),
         sendername_fld: this.user.getFullname(),
         content_fld: message,
@@ -349,6 +350,7 @@ export class GroupMessagingComponent implements OnInit {
     this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = dt
       this.chats = dt.payload
+      console.log(this.chats)
     }, (er) =>{
       er = er.error
       this.chats = []
@@ -360,9 +362,26 @@ export class GroupMessagingComponent implements OnInit {
     return width < 769;
   }
 
-  public selectedGroup: any;
-  openGroupChat(data, index) : void {
+  public delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  }
+
+  public selectedGroup: any;  
+  public prevGroup: any;
+  async openGroupChat(data, index) : Promise<void> {
+    console.log('PREV ROOM: ', this.prevGroup?.groupid_fld)
+    if(this.prevGroup) {
+      // await this.socket.disconnectToChat()
+      await this.socket.disconnectToChat()
+      this.prevGroup = null
+    }
+
+    console.log('OLD ROOM: ', this.prevGroup?.groupid_fld)
+    console.log('NEW ROOM: ', data?.groupid_fld)
+    
     this.selectedGroup = data
+    this.prevGroup = this.selectedGroup
+    console.log('PREV ROOM: ', this.prevGroup?.groupid_fld)
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;

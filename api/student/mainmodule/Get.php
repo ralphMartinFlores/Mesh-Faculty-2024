@@ -604,7 +604,7 @@ class Get
 	public function getGroupMessages($receivedPayload)
 	{
 		$gid = $receivedPayload->gid;
-		$sql = "SELECT sender_fld, sendername_fld, content_fld, datetime_fld FROM groupmessage_tbl WHERE groupid_fld = '$gid'";
+		$sql = "SELECT groupid_fld, sender_fld, sendername_fld, content_fld, datetime_fld FROM groupmessage_tbl WHERE groupid_fld = '$gid'";
 		$res = $this->gm->executeQuery($sql);
 		return $this->isSuccessQuery($res, 'group messages');
 	}

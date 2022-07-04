@@ -24,11 +24,14 @@ export class SocketService {
   }
 
   public joinRoom(roomId: string, userId: string, name: string, id: string): void {
-    const peerId = null;
-    this.socket.emit('join-room', roomId, peerId, name, id);
+    this.socket.emit('join-room', roomId, userId, name, id);
   }
 
   public disconnectToMeeting() {
+    this.socket.disconnect()
+  }
+
+  public disconnectToChat() {
     this.socket.emit('leave-room')
   }
 
@@ -49,6 +52,14 @@ export class SocketService {
     })
   }
 
+  private peers: any = {}
+  public handleUserDisconnect(data): void {
+    this.socket.on('user-disconnected', userId => {
+      console.log('USER DISCONNECTED: ', userId)
+      if (this.peers[userId]) this.peers[userId].close()
+    })
+  }
+
   public hanleUserConnect(): void {
     this.socket.on('user-connected', (name: any, userId: any, id: any) => {
       let userInfo = {userId: userId, name: name, id: id};
@@ -57,6 +68,7 @@ export class SocketService {
     })
 
     this.socket.on('user-disconnected', userId => {
+      console.log('SOMEONE IS DICONNECTED: ', userId)
       this.leavedId.next(userId);
     })
   }

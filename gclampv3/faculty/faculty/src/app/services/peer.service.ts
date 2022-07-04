@@ -60,16 +60,17 @@ export class PeerService {
   public call(anotherPeerId: string, stream: MediaStream): void {
     var call = this.peer.call(anotherPeerId, stream, {sdpTransform:(sdp) => {
       sdp = this.transformSdp(sdp)
-      console.log(sdp)
+      // console.log(sdp)
       return sdp
     }});
+    // console.log(call)
     this.lazyStream = stream;
     this.handelCall(call, anotherPeerId);
   }
 
   private transformSdp = (sdp): any => {
     const parsed = transform.parse(sdp)
-    console.log(parsed)
+    // console.log(parsed)
 
     parsed.media.forEach(media => {
       if (media.type === 'audio') {

@@ -218,7 +218,7 @@ export class GroupMessagingComponent implements OnInit {
 
   
   private joinRoom(roomId: string): void {
-    this.socket.disconnectToMeeting()
+    this.socket.disconnectToChat()
     let name:string = this.user.getFullname()
     let id:string = this.user.getUserID()
     this.socket.joinRoom(roomId, null, name, id)

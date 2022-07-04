@@ -76,11 +76,11 @@
         margin: 0 auto;
       }
       .groupmessages__back-button {
-        // display: none;
-        font-size: 0.5rem;
-        cursor: pointer;
-        display: inline-grid;
-        align-content: center;
+        display: none;
+        // font-size: 0.5rem;
+        // cursor: pointer;
+        // display: inline-grid;
+        // align-content: center;
       }
       .main__container--header {
         text-align: center;
@@ -112,7 +112,7 @@
           var(--clr-primary),
           #01477d
         );
-        padding: 0 1.2rem;
+        padding: 1.2rem;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         width: 100%;
@@ -219,16 +219,18 @@
               margin-top: 0.5rem !important;
               font-size: 0.9rem;
               padding-bottom: 0.2rem;
+
+              .chat__datetime {
+                font-size: 0.75em;
+              }
               
               span:first-of-type {
                 color: #363636;
                 font-weight: 800;
-                font-size: 14px;
               }
   
               span:last-of-type {
                 color: #7b7b7b;
-                font-size: 14px;
               }
             }
   
@@ -341,16 +343,18 @@
 
               .chat__datetime {
                 font-size: 0.75em;
+                line-height: normal;
+                color: #7b7b7b;
               }
   
               span:first-of-type {
-                color: #363636;
+                // color: #363636;
                 font-weight: 800;
               }
   
-              span:last-of-type {
-                color: #7b7b7b;
-              }
+              // span:last-of-type {
+              //   color: #7b7b7b;
+              // }
             }
           }
         }
@@ -486,8 +490,6 @@
         display: none;
         .groupmessages__back-button {
           display: flex;
-          padding: 15px;
-          cursor: pointer;
         }
       }
       .main__container--header {

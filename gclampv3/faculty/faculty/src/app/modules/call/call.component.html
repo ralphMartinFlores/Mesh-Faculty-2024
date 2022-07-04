@@ -29,16 +29,16 @@
         </div>
     </div>
     <div class="buttons__container">
-        <button mat-icon-button>
+        <button matTooltip="Turn on/off microphone" mat-icon-button>
             <mat-icon>mic</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button matTooltip="Turn on/off camera" mat-icon-button>
             <mat-icon>videocam</mat-icon>
         </button>
-        <button mat-icon-button class="danger--btn">
+        <button matTooltip="End call" mat-icon-button class="danger--btn">
             <mat-icon>call_end</mat-icon>
         </button>
-        <button mat-icon-button (click)="callSettingsDialog()">
+        <button matTooltip="Settings" mat-icon-button (click)="callSettingsDialog()">
             <mat-icon>settings</mat-icon>
         </button>
     </div>

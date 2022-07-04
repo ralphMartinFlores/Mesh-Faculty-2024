@@ -417,23 +417,22 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   }
 
 
-  async onBackToGroupButton(){
+  // async onBackToGroupButton(){
 
-    if(await this.isMobile()){
-      const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
-      const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
-      x.style.display = "none";
-      y.style.display = "block";
-      this.emptyContainerElementRef.style.display = 'none'
-      this.groupNameisActive = {}
-
-    } else {
-      this.selectedGroup = ''
-      this.selectedRoom = ''
-      this.noSelectedConversationElementRef.style.display = 'block';
-      this.groupNameisActive = {}
-    }   
-  }
+  //   if(await this.isMobile()){
+  //     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
+  //     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
+  //     x.style.display = "none";
+  //     y.style.display = "block";
+  //     this.emptyContainerElementRef.style.display = 'none'
+  //     this.groupNameisActive = {}
+  //   } else {
+  //     this.selectedGroup = ''
+  //     this.selectedRoom = ''
+  //     this.noSelectedConversationElementRef.style.display = 'block';
+  //     this.groupNameisActive = {}
+  //   }   
+  // }
 
   splitEmail(email) {
     const arr = email.split('@')

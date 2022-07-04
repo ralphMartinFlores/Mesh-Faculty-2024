@@ -24,17 +24,20 @@ export class SocketService {
   }
 
   public joinRoom(roomId: string, userId: string, name: string, id: string): void {
-    const peerId = null;
-    this.socket.emit('join-room', roomId, peerId, name, id);
+    this.socket.emit('join-room', roomId, userId, name, id);
   }
 
   public disconnectToMeeting() {
+    this.socket.disconnect()
+  }
+
+  public disconnectToChat() {
     this.socket.emit('leave-room')
   }
 
-  public chat(content: string, sender, sendername_fld: string, time: Date): void {
-    console.log('OUTGOING: ', content, sendername_fld)
-    this.socket.emit('chat', content, sender, sendername_fld, time);
+  public chat(groupId: any, content: string, sender, sendername_fld: string, time: Date): void {
+    console.log('OUTGOING: ',groupId, content, sendername_fld)
+    this.socket.emit('chat' ,groupId, content, sender, sendername_fld, time);
   }
 
   public participants(participants: any): void {
@@ -42,10 +45,18 @@ export class SocketService {
   }
 
   private handleNewMessage(): void {
-    this.socket.on('new-message', (content, sender, sendername_fld, time) => {
-      let message = {content_fld: content, sender_fld: sender, sendername_fld, datetime_fld: time}
+    this.socket.on('new-message', (groupId, content, sender, sendername_fld, time) => {
+      let message = {groupid_fld: groupId, content_fld: content, sender_fld: sender, sendername_fld, datetime_fld: time}
       console.log('NEW MESSAGE: ', message)
       this.newMessage.next(message);
+    })
+  }
+
+  private peers: any = {}
+  public handleUserDisconnect(data): void {
+    this.socket.on('user-disconnected', userId => {
+      console.log('USER DISCONNECTED: ', userId)
+      if (this.peers[userId]) this.peers[userId].close()
     })
   }
 
@@ -57,6 +68,7 @@ export class SocketService {
     })
 
     this.socket.on('user-disconnected', userId => {
+      console.log('SOMEONE IS DICONNECTED: ', userId)
       this.leavedId.next(userId);
     })
   }

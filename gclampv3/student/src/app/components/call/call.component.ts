@@ -87,8 +87,6 @@ export class CallComponent implements OnInit {
     this.videoTilesElementContainerRef = this.videoTilesElementContainer.nativeElement;
     this.shareAndMembersContainerRef = this.shareAndMembersContainer.nativeElement;
     this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;
-    console.log(this.shareAndMembersContainerRef);
-    console.log(this.participantTilesElementContainerRef);
 
     await this.listenNewUser();
     await this.participantsList();
@@ -237,6 +235,7 @@ export class CallComponent implements OnInit {
   private openPeer(localStream: MediaStream): void {
     this.peerService.openPeer(localStream).then((myPeerId) => {
       this.myPeerId = myPeerId;
+      console.log('MY PEER ID: ', myPeerId)
       this.joinRoom(this.roomId, myPeerId);
     })
   }
@@ -269,13 +268,13 @@ export class CallComponent implements OnInit {
 
   student_info : any = {};
   public endCall = (): void => {
-    
+    const classcode = this.user.getSelectedClass().classcode_fld
     this.socketService.disconnectToMeeting()
 
     const listToRemove: string[] = ['recno_fld', 'Devices', 'checkHost', 'hostControls', 'pref', 'meetLink', 'sharerPeerId'];
     listToRemove.forEach(item => sessionStorage.removeItem(item));
 
-    this.router.navigate(['/home']).then(() => {
+    this.router.navigate([`/main/classes/${classcode}`]).then(() => {
       window.location.reload();
     })
 

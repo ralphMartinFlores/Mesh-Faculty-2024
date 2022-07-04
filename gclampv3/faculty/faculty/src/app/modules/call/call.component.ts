@@ -108,6 +108,7 @@ export class CallComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.user.getUserData())
     this.observer
       .observe(['(max-width: 1200px)'])
       .pipe(delay(1))
@@ -278,13 +279,13 @@ export class CallComponent implements OnInit {
 
   student_info : any = {};
   public endCall = (): void => {
-    
+    const classcode = this.user.getClassroomInfo().classcode_fld
     this.socketService.disconnectToMeeting()
 
     const listToRemove: string[] = ['recno_fld', 'Devices', 'checkHost', 'hostControls', 'pref', 'meetLink', 'sharerPeerId'];
     listToRemove.forEach(item => sessionStorage.removeItem(item));
 
-    this.router.navigate(['/home']).then(() => {
+    this.router.navigate([`/main/classes/${classcode}`]).then(() => {
       window.location.reload();
     })
 

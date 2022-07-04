@@ -23,8 +23,9 @@ export class SocketService {
   }
 
   public joinRoom(roomId: string, userId: string, name: string, id: string): void {
-    const peerId = null;
-    this.socket.emit('join-room', roomId, peerId, name, id);
+    console.log(roomId, userId, name, id)
+    this.socket.emit('join-room', roomId, userId, name, id);
+
   }
 
   public disconnectToMeeting() {
@@ -45,6 +46,18 @@ export class SocketService {
       let message = {content_fld: content, sender_fld: sender, sendername_fld, datetime_fld: time}
       console.log('NEW MESSAGE: ', message)
       this.newMessage.next(message);
+    })
+  }
+
+  public hanleUserConnect(): void {
+    this.socket.on('user-connected', (name: any, userId: any, id: any) => {
+      let userInfo = {userId: userId, name: name, id: id};
+      this.joinedId.next(userInfo);
+      // console.log('joinedId ',this.joinedId)
+    })
+
+    this.socket.on('user-disconnected', userId => {
+      this.leavedId.next(userId);
     })
   }
 }

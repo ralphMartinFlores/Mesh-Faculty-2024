@@ -47,11 +47,11 @@
     </div>
     <div class="groupmessages__container">
       <div class="groupmessages__container--content" #greetingsElement>
-        <span class="groupmessages__back-button" (click)="onBackButton()"
+        <!-- <span class="groupmessages__back-button" (click)="onBackButton()"
           ><mat-icon>keyboard_backspace</mat-icon></span
-        >
+        > -->
         <ng-container *ngIf="grouparray && selectedRoom == ''">
-          <div class="illustration__container">
+          <!-- <div class="illustration__container">
             <img
               src="assets/images/group-illustration-flat.svg"
               alt="Flat group illustration"
@@ -65,10 +65,20 @@
               It seems that you have not yet created a group for your class, get
               started by clicking on the button below.
             </p>
+          </div> -->
+          <div class="noselectedconversation__container" #noSelectedConversationElement>
+            <div class="illustration__container">
+              <img
+                src="assets/images/select-conversation-illustration.svg"
+                alt="No selected conversation illustration"
+                loading="lazy"
+              />
+            </div>
+            <p>Select a conversation in your group's list from the left to see messages in that group or Send the first message yourself.</p>
           </div>
         </ng-container>
       </div>
-      <div class="noselectedconversation__container" #noSelectedConversationElement>
+      <!-- <div class="noselectedconversation__container" #noSelectedConversationElement>
         <div class="illustration__container">
           <img
             src="assets/images/select-conversation-illustration.svg"
@@ -77,9 +87,12 @@
           />
         </div>
         <p>Select a conversation in your group's list from the left to see messages in that group or Send the first message yourself.</p>
-      </div>
+      </div> -->
       <ng-container *ngIf="selectedRoom != ''">
         <header class="chat__container--header">
+          <button mat-icon-button (click)="onBackButton()" class="groupmessages__back-button">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
           <strong>{{ selectedRoom['groupname_fld'] }}</strong>
           <span class="spacer"></span>
           <button matTooltip="Start a voice call" mat-icon-button (click)="call()">
@@ -125,7 +138,7 @@
                   <!-- <img [src]="group.src" alt="" /> -->
                 </div>
                 <div class="groupmember__details">
-                  <span>{{student.lname_fld}}, {{student.mname_fld}} </span>
+                  <span>{{student.lname_fld}}, {{student.fname_fld}} </span>
                   <div class="groupmember__studid">
                     <span>{{student.studnum_fld}}@gordoncollege.edu.ph</span>
                   </div>
@@ -157,7 +170,7 @@
                   <div class="chatcontent__container">
                     <div class="personsname__container">
                       <span>{{ chat.sendername_fld }}</span>
-                      <span> {{ chat.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </span>
+                      <span class="chat__datetime"> {{ chat.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </span>
                     </div>
                     <div class="chatDiv">
                       <p>{{ chat.content_fld }}</p>
@@ -169,8 +182,8 @@
               <div class="imageAvatarRight" *ngIf="chat.sender_fld === myId">
                 <div class="chatcontent__container">
                   <div class="personsname__container1">
-                    <span>You</span> <br>
-                    <span class="chat__datetime"> {{ chat.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </span>
+                    <span>You</span>
+                    <p class="chat__datetime"> {{ chat.datetime_fld | date: 'MMM dd, yyyy h:mm a' }} </p>
                   </div>
                   <div class="chatDivReply">
                     <p>{{ chat.content_fld }}</p>

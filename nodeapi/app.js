@@ -50,6 +50,7 @@ io.on('connection', socket => {
     // console.log('user with ', socket, 'connected');
        // When someone attempts to join the room
     socket.on('join-room', (roomId, peerId, name, id) => {
+        console.log(roomId)
         socket.join(roomId);  // Join the room
         socket.broadcast.to(roomId).emit('user-connected', name, peerId, id); // Tell everyone else in the room that we joined
         

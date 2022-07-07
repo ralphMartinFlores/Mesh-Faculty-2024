@@ -10,8 +10,14 @@
     </div>
 </div> -->
 
+
+
+
+
+
+<!-- mobile -->
 <div class="main__container">
-    <div class="groups__container">
+    <div class="groups__container" #groupsContainer>
       <div class="groups__container--header">
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Search for a group...</mat-label>
@@ -56,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div class="groupmessages__container">
+    <div class="groupmessages__container" #groupmessagesContainer>
       <div class="groupmessages__container--content" #greetingsElement>
         <ng-container *ngIf="grouparray && selectedRoom == ''">
           <div class="illustration__container">

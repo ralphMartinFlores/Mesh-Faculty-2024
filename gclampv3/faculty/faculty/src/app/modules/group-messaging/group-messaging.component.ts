@@ -39,11 +39,17 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   @ViewChild('emptySearchContainerElement') emptySearchContainerElement?: ElementRef;
   @ViewChild('noSelectedConversationElement') noSelectedConversationElement?: ElementRef;
   @ViewChild('greetingsElement') greetingsElement?: ElementRef;
-
+  @ViewChild('groupsContainer') groupsContainer?: ElementRef;
+  @ViewChild('groupmessagesContainer') groupmessagesContainer?: ElementRef;
+  
   public emptyContainerElementRef: any;
   public emptySearchContainerElementRef: any
   public noSelectedConversationElementRef: any;
   public greetingsElementRef: any;
+  public groupsContainerRef: any;
+  public groupmessagesContainerRef: any;
+
+
   
   // Sample Data from the backend .. 
   public grouparray = [];
@@ -200,6 +206,7 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+
     this.initializeComponents();
     this.handleNewMessage()
     this.groupMessage = this._fb.group({
@@ -214,10 +221,14 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.emptyContainerElementRef = this.emptyContainerElement.nativeElement;
     this.emptySearchContainerElementRef = this.emptySearchContainerElement.nativeElement;
+    this.groupmessagesContainerRef = this.groupmessagesContainer.nativeElement;
+    this.groupsContainerRef = this.groupsContainer.nativeElement;
+
 
     this.noSelectedConversationElementRef = this.noSelectedConversationElement.nativeElement;
     this.greetingsElementRef = this.greetingsElement.nativeElement;
     this.emptySearchContainerElementRef.style.display = 'none'
+
   }
 
   initializeComponents = () => {
@@ -417,13 +428,9 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;
     this.chatBody(data, index);
-    if(this.isMobile()){
-      x.style.display = "block";
-      y.style.display = "none";
-    }else{
-      //group chat in desktop mode 
-      
-    }
+    this.groupsContainerRef.style.display = 'none';
+   
+    this.groupmessagesContainerRef.style.display = 'block';
     this.noSelectedConversationElementRef.style.display = 'none'
 
     

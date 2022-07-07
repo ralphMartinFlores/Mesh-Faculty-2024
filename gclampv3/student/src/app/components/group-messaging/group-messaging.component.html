@@ -11,7 +11,7 @@
 </div> -->
 
 <div class="main__container">
-    <div class="groups__container">
+    <div class="groups__container" #groupsContainer>
       <div class="groups__container--header">
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Search for a group...</mat-label>
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="groupmessages__container">
+    <div class="groupmessages__container" #groupmessagesContainer>
       <div class="groupmessages__container--content" #greetingsElement>
         <!-- <span class="groupmessages__back-button" (click)="onBackButton()"
           ><mat-icon>keyboard_backspace</mat-icon></span
@@ -121,7 +121,7 @@
         <ng-container *ngIf="showGroupMembers === true">
           <div class="maingroupmembers__container">
             <div class="groupmembers__container">
-              
+
               <div class="groupmembers__container--body" *ngFor="let person of instructor">
                 <div class="groupmemberimage__container" >
                   <!-- <img [src]="group.src" alt="" /> -->
@@ -145,11 +145,11 @@
                 </div>
               </div>
 
-              
+
             </div>
           </div>
         </ng-container>
-  
+
         <ng-container *ngIf="!showGroupMembers">
           <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
           <div class="mainmessage__container" #scrollTarget>
@@ -178,7 +178,7 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="imageAvatarRight" *ngIf="chat.sender_fld === myId && chat.groupid_fld === selectedGroup.groupid_fld">
                 <div class="chatcontent__container">
                   <div class="personsname__container1">
@@ -192,12 +192,12 @@
               </div>
             </div>
           </div>
-  
+
           <form [formGroup]="groupMessage">
             <div class="yourmessage__container">
-                
+
               <input formControlName="messageContent" matInput type="text" placeholder="Send a message..." />
-          
+
               <button type="submit" matSuffix mat-icon-button matTooltip="Send" (keyup.enter)="addMessage(groupMessage.value.messageContent)" (click)="addMessage(groupMessage.value.messageContent)">
                 <mat-icon>send</mat-icon>
               </button>
@@ -208,7 +208,7 @@
 
             </div>
             <!-- <div class="yourmessage__box">
-              
+
             </div> -->
           </form>
         </ng-container>

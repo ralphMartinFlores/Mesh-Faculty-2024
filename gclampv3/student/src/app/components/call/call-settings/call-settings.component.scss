@@ -72,3 +72,10 @@ form {
         color: var(--clr-primary);
     }
 }
+@media screen and (min-width: 1025px) {
+    .illustration__container {
+        img {
+            max-width: 50%;
+        }
+    }
+}

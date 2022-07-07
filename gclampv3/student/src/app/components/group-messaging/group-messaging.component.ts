@@ -34,10 +34,16 @@ export class GroupMessagingComponent implements OnInit {
   @ViewChild('emptyContainerElement') emptyContainerElement?: ElementRef;
   @ViewChild('noSelectedConversationElement') noSelectedConversationElement?: ElementRef;
   @ViewChild('greetingsElement') greetingsElement?: ElementRef;
+  @ViewChild('groupsContainer') groupsContainer?: ElementRef;
+  @ViewChild('groupmessagesContainer') groupmessagesContainer?: ElementRef;
 
   public emptyContainerElementRef: any;
   public noSelectedConversationElementRef: any;
   public greetingsElementRef: any;
+
+  // Sample Data from the backend ..
+  public groupsContainerRef: any;
+  public groupmessagesContainerRef: any;
 
   // Sample Data from the backend ..
   public grouparray = [];
@@ -194,6 +200,9 @@ export class GroupMessagingComponent implements OnInit {
     this.emptyContainerElementRef = this.emptyContainerElement.nativeElement;
     this.noSelectedConversationElementRef = this.noSelectedConversationElement.nativeElement;
     this.greetingsElementRef = this.greetingsElement.nativeElement;
+    this.groupmessagesContainerRef = this.groupmessagesContainer.nativeElement;
+    this.groupsContainerRef = this.groupsContainer.nativeElement;
+
   }
 
 
@@ -368,6 +377,13 @@ export class GroupMessagingComponent implements OnInit {
     return width < 769;
   }
 
+  public chooseDevicesDialog(): void {
+    let dialogRef = this._dialog.open(CallSettingsComponent, {
+      maxHeight: "85vh",
+      maxWidth: "90vw"
+    });
+  }
+
   public delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
   }
@@ -392,6 +408,7 @@ export class GroupMessagingComponent implements OnInit {
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')
     this.showGroupMembers = false;
     this.chatBody(data, index);
+
     if(this.isMobile()){
       x.style.display = "block";
       y.style.display = "none";
@@ -400,6 +417,8 @@ export class GroupMessagingComponent implements OnInit {
 
     }
 
+    this.groupsContainerRef.style.display = 'none';
+    this.groupmessagesContainerRef.style.display = 'block';
   }
 
   onBackButton(){

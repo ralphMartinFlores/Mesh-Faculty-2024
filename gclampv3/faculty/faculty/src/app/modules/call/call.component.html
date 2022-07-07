@@ -1,32 +1,17 @@
 <div class="main__container">
-    <div #shareAndMembersContainer class="shareandmembers__container">
-        <div #videoElementContainer class="sharescreen__container">
-            <video #videoElement muted></video>
-        </div>
-        <div #videoTilesElementContainer class="chat-members">
-            <div class="participant-tile">
-                <div #participantTilesElementContainer class="participant-tile__video">
-                <app-video-player
-                    *ngIf="localStream"
-                    [mode]="'owner'"
-                    [stream]="localStream"
-                    [userPeerId]="null">
-                </app-video-player>
-                <app-video-player
-                    *ngFor="let user of joinedUsers"
-                    [stream]="user.stream"
-                    [userPeerId]="user.peerId"
-                    [participants]="participants">
-                </app-video-player>
-                <!-- <app-video-player
-                    *ngFor="let user of joinedUsers | paginate: { itemsPerPage: itp, currentPage: p }"
-                    [stream]="user.stream"
-                    [userPeerId]="user.peerId"
-                    [participants]="participants">
-                </app-video-player> -->
-                </div>
-            </div>
-        </div>
+    <div class="videotiles__container">
+        <app-video-player
+            *ngIf="localStream"
+            [mode]="'owner'"
+            [stream]="localStream"
+            [userPeerId]="null">
+        </app-video-player>
+        <app-video-player
+            *ngFor="let user of joinedUsers"
+            [stream]="user.stream"
+            [userPeerId]="user.peerId"
+            [participants]="participants">
+        </app-video-player>
     </div>
     <div class="buttons__container">
         <button matTooltip="Turn on/off microphone" mat-icon-button>

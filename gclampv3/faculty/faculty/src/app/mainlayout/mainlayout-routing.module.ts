@@ -19,11 +19,9 @@ import { EvaluationComponent } from '../modules/evaluation/evaluation.component'
 import { QuestionnaireComponent } from '../modules/questionnaire/questionnaire.component';
 import { SchedMeetingComponent } from '../modules/classes/sched-meeting/sched-meeting/sched-meeting.component';
 import { CallComponent } from '../modules/call/call.component';
-import { VideoPlayerComponent } from '../modules/call/video-player/video-player.component';
 
 const routes: Routes = [
   { path: 'call', component: CallComponent },
-  // { path: 'call/video', component: VideoPlayerComponent },
   { path: 'classes', component: ClassesComponent },
   { path: 'classes/:id', component: ClassroomComponent },
   { path: 'classes/:id/:view', component: ViewActivitiesComponent },

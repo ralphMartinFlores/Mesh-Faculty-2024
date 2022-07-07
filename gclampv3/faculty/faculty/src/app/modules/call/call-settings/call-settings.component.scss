@@ -13,8 +13,7 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            width: 40px;
-            height: 40px;
+            padding: 10px;
             border-radius: 50%;
             background-color: #b5f1d5;
             color: #118650;
@@ -46,6 +45,14 @@ form {
         height: auto;
         aspect-ratio: 4 / 3;
     }
+    .info__banner {
+        padding: 27px 27px 0 27px;
+        p {
+            border-left: 4px solid var(--clr-primary);
+            padding: 0 1rem;
+            font-size: clamp(12px, 2.5vw, 16px);
+        }
+    }
 }
 .buttongroup__container {
     padding: 0 27px 27px 27px;
@@ -65,12 +72,3 @@ form {
         color: var(--clr-primary);
     }
 }
-// @media screen and (min-width: 1025px) {
-//     .illustration__container {
-//         img {
-//             max-width: 75%;
-//             height: auto;
-//             margin: 0 auto;
-//         }
-//     }
-// }

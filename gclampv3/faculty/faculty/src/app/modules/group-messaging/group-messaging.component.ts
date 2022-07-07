@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { CallSettingsComponent } from '../call/call-settings/call-settings.component';
 
 @Component({
   selector: 'app-group-messaging',
@@ -392,6 +393,14 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
     });
 
   }
+
+  public chooseDevicesDialog(): void {
+    let dialogRef = this._dialog.open(CallSettingsComponent, {
+      maxHeight: "85vh",
+      maxWidth: "90vw"
+    });
+  }
+
   public delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
   }

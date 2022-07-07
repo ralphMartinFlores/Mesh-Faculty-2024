@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { CallSettingsComponent } from '../call/call-settings/call-settings.component';
 
 @Component({
   selector: 'app-group-messaging',
@@ -37,8 +38,8 @@ export class GroupMessagingComponent implements OnInit {
   public emptyContainerElementRef: any;
   public noSelectedConversationElementRef: any;
   public greetingsElementRef: any;
-  
-  // Sample Data from the backend .. 
+
+  // Sample Data from the backend ..
   public grouparray = [];
 
   public chats =  []
@@ -171,8 +172,8 @@ export class GroupMessagingComponent implements OnInit {
   // End
 
   constructor(
-    public ds: DataService, 
-    public user: UserService, 
+    public ds: DataService,
+    public user: UserService,
     private route: Router,
     private _fb: FormBuilder,
     private _dialog: MatDialog,
@@ -216,7 +217,7 @@ export class GroupMessagingComponent implements OnInit {
     this.joinRoom(data.groupid_fld, this.user.getUserID())
   }
 
-  
+
   private joinRoom(roomId: string, userId: any): void {
     let name:string = this.user.getFullname()
     let id:string = this.user.getUserID()
@@ -235,7 +236,12 @@ export class GroupMessagingComponent implements OnInit {
 
   videocall(): void{
     window.sessionStorage.setItem('roomId', this.selectedRoom.roomid_fld)
-    this.router.navigate(['/main/call'])  
+    let dialogRef = this._dialog.open(CallSettingsComponent, {
+      panelClass: 'dialogpadding',
+      maxHeight: "85vh",
+      maxWidth: "90vw"
+    });
+    // this.router.navigate(['/main/call'])
   }
 
   call(): void{
@@ -248,11 +254,11 @@ export class GroupMessagingComponent implements OnInit {
 
     // document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
 
-    // CHORE: Revamp DOM Manipulations for animationDelay .. 
+    // CHORE: Revamp DOM Manipulations for animationDelay ..
     // const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
     // element.style.animationDelay = "--delay: 0s"
 
-    if (message === "") return false; 
+    if (message === "") return false;
     const sender = this.splitEmail(this.user.getEmail())
     const date = new Date()
     const sender_name = this.user.getFullname()
@@ -310,12 +316,12 @@ export class GroupMessagingComponent implements OnInit {
 
   backupGroupArray: any[] = [];
   getGroups() {
-    const load = { 
+    const load = {
       data: {
-        cc: this.classcode, 
-        id: this.splitEmail(this.user.getUserID()) 
-      } 
-    } 
+        cc: this.classcode,
+        id: this.splitEmail(this.user.getUserID())
+      }
+    }
 
     this.ds._httpRequest('getgroups/', load, 1).subscribe((dt: any) => {
       dt = dt
@@ -366,7 +372,7 @@ export class GroupMessagingComponent implements OnInit {
     return new Promise(resolve => setTimeout(resolve, time));
   }
 
-  public selectedGroup: any;  
+  public selectedGroup: any;
   public prevGroup: any;
   async openGroupChat(data, index) : Promise<void> {
     console.log('PREV ROOM: ', this.prevGroup?.groupid_fld)
@@ -378,7 +384,7 @@ export class GroupMessagingComponent implements OnInit {
 
     console.log('OLD ROOM: ', this.prevGroup?.groupid_fld)
     console.log('NEW ROOM: ', data?.groupid_fld)
-    
+
     this.selectedGroup = data
     this.prevGroup = this.selectedGroup
     console.log('PREV ROOM: ', this.prevGroup?.groupid_fld)
@@ -390,8 +396,8 @@ export class GroupMessagingComponent implements OnInit {
       x.style.display = "block";
       y.style.display = "none";
     }else{
-      //Open group chat in desktop mode 
-      
+      //Open group chat in desktop mode
+
     }
 
   }
@@ -410,7 +416,7 @@ export class GroupMessagingComponent implements OnInit {
 
   searchInput: string = '';
   timer: any;              // Timer identifier
-  waitTime: number = 500;   // Wait time in milliseconds 
+  waitTime: number = 500;   // Wait time in milliseconds
 
   public search(){
     if (this.searchInput === ''){
@@ -427,7 +433,7 @@ export class GroupMessagingComponent implements OnInit {
 
   public searchGroups(searchInput: string){
     this.grouparray = this.grouparray.filter(item => {
-        return (item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase())); 
+        return (item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase()));
     })
   }
 }

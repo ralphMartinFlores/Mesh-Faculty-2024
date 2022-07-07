@@ -1,1 +1,43 @@
-<p>call-settings works!</p>
+<div class="main_container">
+    <header class="resources">
+        <div class="resources__header">
+            <div class="resources__header--icon">
+                <mat-icon>settings</mat-icon>
+            </div>
+            <h5>Choose your Devices</h5>
+        </div>
+        <button mat-icon-button aria-label="Close button" mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </header>
+    <div class="illustration__container">
+        <img src="assets/images/Video call-bro.svg" alt="Video call illustration" loading="lazy">
+        <div class="info__banner">
+            <p>Before you can start your video call, you should choose your desired microphone and camera.</p>
+        </div>
+    </div>
+    <form action="">
+        <p>Audio</p>
+        <mat-form-field appearance="fill">
+            <mat-label>Microphone</mat-label>
+            <mat-select>
+              <mat-option>Microphone 1</mat-option>
+              <mat-option>Microphone 2</mat-option>
+              <mat-option>Microphone 3</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p>Video</p>
+        <mat-form-field appearance="fill">
+            <mat-label>Camera</mat-label>
+            <mat-select>
+              <mat-option>Camera 1</mat-option>
+              <mat-option>Camera 2</mat-option>
+              <mat-option>Camera 3</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div class="buttongroup__container">
+        <button mat-stroked-button mat-dialog-close>Cancel</button>
+        <button type="submit" mat-flat-button>Save</button>
+    </div>
+</div>

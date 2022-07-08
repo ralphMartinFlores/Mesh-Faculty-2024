@@ -221,6 +221,7 @@ export class GroupMessagingComponent implements OnInit {
   async chatBody(data, index): Promise<any> {
     this.getSavedMessages(data.groupid_fld);
     this.selectedRoom = await data
+    window.sessionStorage.setItem('roomId', this.selectedRoom.roomid_fld)
     this.groupNameisActive = await data
     this.scrollToNewMessage();
     this.joinRoom(data.groupid_fld, this.user.getUserID())

@@ -1,5 +1,5 @@
 <div class="main__container">
-    <div class="videotiles__container">
+    <div #videoTilesElementContainer class="videotiles__container">
         <app-video-player
             *ngIf="localStream"
             [mode]="'owner'"
@@ -28,3 +28,4 @@
         </button>
     </div>
 </div>
+

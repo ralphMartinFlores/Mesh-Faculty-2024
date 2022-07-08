@@ -20,24 +20,16 @@
         <p>Audio</p>
         <mat-form-field appearance="fill">
             <mat-label>Microphone</mat-label>
-            <mat-select>
-              <mat-option>Microphone 1</mat-option>
-              <mat-option>Microphone 2</mat-option>
-              <mat-option>Microphone 3</mat-option>
-            </mat-select>
+            <select matNativeControl  #micSelectElement></select>
         </mat-form-field>
         <p>Video</p>
         <mat-form-field appearance="fill">
             <mat-label>Camera</mat-label>
-            <mat-select>
-              <mat-option>Camera 1</mat-option>
-              <mat-option>Camera 2</mat-option>
-              <mat-option>Camera 3</mat-option>
-            </mat-select>
+            <select matNativeControl  #cameraSelectElement></select>
         </mat-form-field>
     </form>
     <div class="buttongroup__container">
         <button mat-stroked-button mat-dialog-close>Cancel</button>
-        <button type="submit" mat-flat-button>Save</button>
+        <button type="submit" mat-flat-button (click)="joinCall()">Join Call</button>
     </div>
 </div>

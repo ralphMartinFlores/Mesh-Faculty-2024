@@ -81,14 +81,12 @@ export class CallComponent implements OnInit {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    this.videoElementContainerRef = this.videoElementContainer.nativeElement;
-    this.videoElementRef = this.videoElement.nativeElement;
+    // this.videoElementContainerRef = this.videoElementContainer.nativeElement;
+    // this.videoElementRef = this.videoElement.nativeElement;
     // this.buttonElementRef = this.buttonElement.nativeElement;
     this.videoTilesElementContainerRef = this.videoTilesElementContainer.nativeElement;
-    this.shareAndMembersContainerRef = this.shareAndMembersContainer.nativeElement;
-    this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;
-    console.log(this.shareAndMembersContainerRef);
-    console.log(this.participantTilesElementContainerRef);
+    // this.shareAndMembersContainerRef = this.shareAndMembersContainer.nativeElement;
+    // this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;
 
     await this.listenNewUser();
     await this.participantsList();
@@ -99,16 +97,15 @@ export class CallComponent implements OnInit {
     this.detectScreenWith();
     // this.listenMediaControlChanges();
 
-    let pref = JSON.parse(window.sessionStorage.getItem('pref'))
-    if (pref){
-     if (!pref.video.deviceId && !pref.video.deviceId){
-      this.router.navigate(['/settings']);
-      }
-    }
+    // let pref = JSON.parse(window.sessionStorage.getItem('pref'))
+    // if (pref){
+    //  if (!pref.video.deviceId && !pref.video.deviceId){
+    //   this.router.navigate(['/settings']);
+    //   }
+    // }
   }
 
   ngOnInit(): void {
-    console.log(this.user.getUserData())
     this.observer
       .observe(['(max-width: 1200px)'])
       .pipe(delay(1))
@@ -126,7 +123,8 @@ export class CallComponent implements OnInit {
     this.webCamIconSrc = this.mediaService.getWebcamSrc();
     this.roomId = window.sessionStorage.getItem('roomId');
 
-    Utils.getMediaStream({ video: true, audio: true }).then(stream => {
+    let pref = JSON.parse(window.sessionStorage.getItem('pref'))
+    Utils.getMediaStream({ video: pref.video, audio: pref.audio }).then(stream => {
       this.localStream = stream;
       this.mediaService.stream = this.localStream;
       this.openPeer(this.localStream);

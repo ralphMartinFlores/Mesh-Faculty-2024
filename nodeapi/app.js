@@ -50,24 +50,17 @@ io.on('connection', socket => {
     // console.log('user with ', socket, 'connected');
        // When someone attempts to join the room
     socket.on('join-room', (roomId, peerId, name, id) => {
-        console.log('ROOM_ID: ', roomId)
-        console.log('PEER_ID: ', peerId)
-        socket.join(roomId);  // Join the room
-        socket.broadcast.to(roomId).emit('user-connected', name, peerId, id); // Tell everyone else in the room that we joined
+        const rooms = socket.rooms;
+        if (!rooms.has(roomId)) {
+            socket.join(roomId);  // Join the room
+            socket.broadcast.to(roomId).emit('user-connected', name, peerId, id); // Tell everyone else in the room that we joined
+        }
         
         // Communicate the disconnection
         // To listen for a client's disconnection from server and intimate other clients about the same
         socket.on('disconnect', () => {
-            console.log('USER DISCONNECTED: ', peerId)
+            // console.log('USER DISCONNECTED: ', peerId)
             socket.broadcast.to(roomId).emit('user-disconnected', peerId);
-        })
-
-        socket.on('leave-room', () => {
-            socket.leave(roomId);
-        })
-        // when someone has to chat from the chat box
-        socket.on('chat', (groupId, content, sender, time, username) => {
-            socket.broadcast.to(roomId).emit('new-message',groupId, content, sender, time, username); 
         })
         socket.on('share-screen', (userId) => {
             socket.broadcast.to(roomId).emit('user-sharescreen', userId);
@@ -79,6 +72,11 @@ io.on('connection', socket => {
         socket.on('participants', (participants) => {
             socket.broadcast.to(roomId).emit('participants', participants);
         })
+    })
+    
+    // when someone has to chat from the chat box
+    socket.on('chat', (groupId, content, sender, time, username) => {
+        socket.broadcast.to(groupId).emit('new-message', groupId, content, sender, time, username);
     })
     
 

@@ -256,7 +256,7 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
 
   handleNewMessage(): void {
     this.socket.newMessage.subscribe(message => {
-      if (message) {
+      if (message && message.groupid_fld === this.selectedGroup?.groupid_fld) {
         this.chats.push(message)
         this.scrollToNewMessage();
       }
@@ -291,8 +291,7 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
 
     this.socket.chat(groupId, message, sender, sender_name, date)
     this.chats.push({ groupid_fld: groupId, content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date})
-    console.log(this.chats)
-    this.scrollToNewMessage()
+    // console.log(this.chats)
     this.scrollToNewMessage()
     this.saveMessage(message, time)
     this.groupMessage.reset()
@@ -378,7 +377,7 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
     this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = this.user._decrypt(dt.a)
       this.chats = dt.payload;
-      console.log(this.chats)
+      // console.log(this.chats)
       
     }, (er) =>{
       console.log(false)
@@ -417,21 +416,8 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   }
 
   public selectedGroup: any;
-  public prevGroup: any;
   async openGroupChat(data, index) : Promise<void> {
-    console.log('PREV ROOM: ', this.prevGroup?.groupid_fld)
-    if(this.prevGroup) {
-      // await this.socket.disconnectToChat()
-      await this.socket.disconnectToChat()
-      this.prevGroup = null
-    }
-    
-    console.log('OLD ROOM: ', this.prevGroup?.groupid_fld)
-    console.log('NEW ROOM: ', data?.groupid_fld)
-    
     this.selectedGroup = data
-    this.prevGroup = this.selectedGroup
-    console.log('PREV ROOM: ', this.prevGroup?.groupid_fld)
     this.show = false;
     const x = document.getElementsByClassName("groupmessages__container")[0] as HTMLElement; //('')
     const y = document.getElementsByClassName("groups__container")[0] as HTMLElement; //('')

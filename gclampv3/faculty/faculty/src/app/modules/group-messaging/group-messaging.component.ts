@@ -276,20 +276,19 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   }
 
   addMessage(message: string): any {
-
     // document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
 
     // CHORE: Revamp DOM Manipulations for animationDelay .. 
     // const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
     // element.style.animationDelay = "--delay: 0s"
 
-    if (message === "") return; 
+    if (!message) return false;
+
     const sender = this.splitEmail(this.user.getUserEmail())
     const time = new Date()
     const date = new Date()
     const sender_name = this.user.getUserData().fullname
     const groupId = this.selectedGroup?.groupid_fld
-
     this.socket.chat(groupId, message, sender, sender_name, date)
     this.chats.push({ groupid_fld: groupId, content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date})
     // console.log(this.chats)
@@ -299,6 +298,7 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   }
 
   public saveMessage(message: string, dateTime: any): void {
+
     const senderName = this.user.getUserFullname()
     const load = {
         groupid_fld: this.selectedRoom.groupid_fld,
@@ -480,19 +480,8 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
   }
 
   public searchGroups(searchInput: string){
-    const groupNameTile = document.getElementsByClassName("groups__container--group")[0] as HTMLElement; //('')
-    if (searchInput === ''){
-      groupNameTile.style.display = 'block'
-    } 
-
     this.grouparray = this.grouparray.filter(item => {
-        if ((item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase()))){
-          this.emptySearchContainerElementRef.style.display = 'none'
-        } else {
-          groupNameTile.style.display = 'none'
-          this.emptySearchContainerElementRef.style.display = 'block'
-        }
-        return this.grouparray;
+        return (item.groupname_fld.toUpperCase().includes(searchInput.toString().toUpperCase()));
     })
   }
 }

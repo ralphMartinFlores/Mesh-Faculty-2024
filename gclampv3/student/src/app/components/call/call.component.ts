@@ -10,7 +10,7 @@ import { CallUser, PeerService } from 'src/app/services/peer.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { UserService } from 'src/app/services/user.service';
 import Utils from 'src/app/shared/utils/utils';
-import { CallSettingsComponent } from './call-settings/call-settings.component';
+import { ParticipantsDialogComponent } from './participants-dialog/participants-dialog/participants-dialog.component';
 
 @Component({
   selector: 'app-call',
@@ -73,12 +73,6 @@ export class CallComponent implements OnInit {
     private observer: BreakpointObserver,
     private user: UserService) { }
 
-  public callSettingsDialog (): void {
-    let dialogRef = this._dialog.open(CallSettingsComponent, {
-      maxHeight: "85vh",
-      maxWidth: "90vw"
-    });
-  }
 
   async ngAfterViewInit(): Promise<void> {
     // this.videoElementContainerRef = this.videoElementContainer.nativeElement;
@@ -106,24 +100,13 @@ export class CallComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.observer
-      .observe(['(max-width: 1200px)'])
-      .pipe(delay(1))
-      .subscribe((res) => {
-        if (res.matches) {
-          this.drawer.mode = 'over';
-          this.drawer.close();
-        } else {
-          this.drawer.mode = 'side';
-          this.drawer.open();
-        }
-      });
 
     this.micIconSrc = this.mediaService.getMicSrc();
     this.webCamIconSrc = this.mediaService.getWebcamSrc();
     this.roomId = window.sessionStorage.getItem('roomId');
 
     let pref = JSON.parse(window.sessionStorage.getItem('pref'))
+    
     Utils.getMediaStream({ video: pref.video, audio: pref.audio }).then(stream => {
       this.localStream = stream;
       this.mediaService.stream = this.localStream;
@@ -188,7 +171,7 @@ export class CallComponent implements OnInit {
   remoteUsers: any  [] = [];
 
   numberOfParticipants: number =  1;
-
+  hidden: boolean = false;
   private listenNewUserJoinRoom(): void {
     this.socketService.joinedId.subscribe(async newUserId => {
       if (newUserId) {
@@ -203,18 +186,31 @@ export class CallComponent implements OnInit {
 
          this.participants = this.getUniqueListBy(this.participants, `peerId`)
          this.numberOfParticipants = this.participants.length;
-
+         console.log('participants',this.numberOfParticipants);
         this.socketService.participants(this.participants);
       }
     })
   }
 
+
   private participantsList  = async () => {
     this.socketService.participantsList.subscribe(async participant => {
       if (participant) {
+        console.log('padasd',participant);
        this.participants = await participant;
        this.numberOfParticipants = this.participants.length;
-       console.log('participants', this.participants);
+      }
+    })
+
+    this.socketService.leavedId.subscribe(userId => {
+      if (userId) {
+
+        this.participants.forEach((item , index) => {
+          if (item.peerId === userId){
+              this.participants.splice(index, 1);
+              this.numberOfParticipants = this.participants.length;
+          }
+        })
       }
     })
   }
@@ -236,7 +232,14 @@ export class CallComponent implements OnInit {
   private openPeer(localStream: MediaStream): void {
     this.peerService.openPeer(localStream).then((myPeerId) => {
       this.myPeerId = myPeerId;
-      console.log('MY PEER ID: ', myPeerId)
+
+      this.participants.push( {
+        name: this.user.getFullname(),
+        peerId: myPeerId,
+        userId: this.user.getUserID()
+       } );
+       this.hidden = this.numberOfParticipants > 0 ? false : true;
+
       this.joinRoom(this.roomId, myPeerId);
     })
   }
@@ -285,6 +288,16 @@ export class CallComponent implements OnInit {
     return this.participants.filter(item => {
       return (item.peerId.includes(myPeerId.toString()));
     })
+  }
+
+  public participantsDialog (): void {
+    let dialogRef = this._dialog.open(ParticipantsDialogComponent, {
+      data: [this.participants, this.socketService, this.myPeerId],
+      maxHeight: "75vh"
+    });
+    dialogRef.afterClosed().subscribe(participant => {
+      console.log('closed');
+  });
   }
 
 }

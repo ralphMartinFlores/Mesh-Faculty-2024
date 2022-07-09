@@ -83,6 +83,7 @@ import { GroupMessagingComponent } from "../components/group-messaging/group-mes
 import { CallComponent } from "../components/call/call.component";
 import { VideoPlayerComponent } from "../components/call/video-player/video-player.component";
 import { CallSettingsComponent } from "../components/call/call-settings/call-settings.component";
+import { ParticipantsDialogComponent } from "../components/call/participants-dialog/participants-dialog/participants-dialog.component";
 
 
 @NgModule({
@@ -165,6 +166,7 @@ import { CallSettingsComponent } from "../components/call/call-settings/call-set
     CallComponent,
     VideoPlayerComponent,
     CallSettingsComponent,
+    ParticipantsDialogComponent
     // FileDownloadsComponent
   ],
   providers: [DatePipe],

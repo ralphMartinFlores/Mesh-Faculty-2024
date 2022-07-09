@@ -11,6 +11,7 @@ import { SocketService } from 'src/app/services/socket.service';
 import { UserService } from 'src/app/services/user.service';
 import Utils from 'src/app/shared/utils/utils';
 import { CallSettingsComponent } from './call-settings/call-settings.component';
+import { ParticipantsDialogComponent } from './participants-dialog/participants-dialog.component';
 
 @Component({
   selector: 'app-call',
@@ -30,6 +31,8 @@ export class CallComponent implements OnInit {
   p: number = 1;
   itp: number;
   public videoarray = [1,1,1,1,1,1,1,1,1,1,1,1,1];
+
+  hidden: boolean = false;
 
   public videoElementContainerRef: any;
   public videoElementRef: any;
@@ -201,7 +204,6 @@ export class CallComponent implements OnInit {
           userId: await newUserId['id']
          });
 
-         console.log(this.participants);
          this.participants = this.getUniqueListBy(this.participants, `peerId`)
          this.numberOfParticipants = this.participants.length;
 
@@ -215,6 +217,7 @@ export class CallComponent implements OnInit {
       if (participant) {
        this.participants = await participant;
        this.numberOfParticipants = this.participants.length;
+
        console.log('participants', this.participants);
       }
     })
@@ -237,14 +240,13 @@ export class CallComponent implements OnInit {
   private openPeer(localStream: MediaStream): void {
     this.peerService.openPeer(localStream).then((myPeerId) => {
       this.myPeerId = myPeerId;
-      // let sessionData = JSON.parse(window.sessionStorage.getItem('data'))
 
-      // this.participants.push( {
-      //   name: this.user.getUserFullname(),
-      //   peerId: myPeerId,
-      //   userId: sessionData.id
-      //  } );
-
+      this.participants.push( {
+        name: this.user.getUserFullname(),
+        peerId: myPeerId,
+        userId: this.user.getUserID()
+       } );
+       this.hidden = this.numberOfParticipants > 0 ? false : true 
       this.joinRoom(this.roomId, myPeerId);
     })
   }
@@ -293,6 +295,16 @@ export class CallComponent implements OnInit {
     return this.participants.filter(item => {
       return (item.peerId.includes(myPeerId.toString()));
     })
+  }
+  
+  public participantsDialog (): void {
+    let dialogRef = this._dialog.open(ParticipantsDialogComponent, {
+      data: [this.participants, this.socketService, this.myPeerId],
+      maxHeight: "75vh"
+    });
+    dialogRef.afterClosed().subscribe(participant => {
+      console.log('closed');
+  });
   }
 
 }

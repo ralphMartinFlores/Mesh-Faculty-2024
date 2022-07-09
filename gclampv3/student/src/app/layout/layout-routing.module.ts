@@ -38,9 +38,6 @@ export const MainLayoutRoutes: Routes = [
   { path: 'questionnaire', component: QuestionnaireComponent },
   { path: 'library', component: LibraryComponent },
   { path: 'call', canActivate: [AuthGuard],component: CallComponent }
-
-
-
 ]
 
 @NgModule({

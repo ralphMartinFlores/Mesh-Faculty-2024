@@ -67,18 +67,18 @@ export class CallSettingsComponent implements OnInit {
 
 
     // Observes for breakpoint changes and changes sidenav mode to be more responsive
-    this.observer
-      .observe(["(max-width: 800px)"])
-      .pipe(delay(1))
-      .subscribe((res) => {
-        if (res.matches) {
-          this.sidenav.mode = "over";
-          this.sidenav.close();
-        } else {
-          this.sidenav.mode = "side";
-          this.sidenav.open();
-        }
-      });
+    // this.observer
+    //   .observe(["(max-width: 800px)"])
+    //   .pipe(delay(1))
+    //   .subscribe((res) => {
+    //     if (res.matches) {
+    //       this.sidenav.mode = "over";
+    //       this.sidenav.close();
+    //     } else {
+    //       this.sidenav.mode = "side";
+    //       this.sidenav.open();
+    //     }
+    //   });
 
     this.selectors.forEach(select => {
       select.addEventListener('change', (event) => {
@@ -93,7 +93,7 @@ export class CallSettingsComponent implements OnInit {
     // this.camOffElementRef.style.display = 'none';
   }
 
-  gotDevices(deviceInfos) {
+  async gotDevices(deviceInfos): Promise<any> {
     // Handles being called several times to update labels. Preserve values.
     const values = this.selectors.map((select) => select.value);
     this.selectors.forEach((select) => {
@@ -164,7 +164,6 @@ export class CallSettingsComponent implements OnInit {
     };
 
     window.sessionStorage.setItem("pref", JSON.stringify(constraints));
-
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     const devices = await this.gotStream(stream);
 

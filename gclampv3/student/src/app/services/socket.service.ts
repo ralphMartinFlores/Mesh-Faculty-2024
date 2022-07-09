@@ -21,6 +21,7 @@ export class SocketService {
     this.socket = io('http://localhost:4230/', { path: '/socket' }); //https://live.datnikon.com/
     this.handleNewMessage();
     this.hanleUserConnect();
+    this.handleParticipants();
   }
 
   public joinRoom(roomId: string, userId: string, name: string, id: string): void {
@@ -42,6 +43,12 @@ export class SocketService {
 
   public participants(participants: any): void {
     this.socket.emit('participants', participants);
+  }
+
+  public handleParticipants(): void {
+    this.socket.on('participants', (participants) => {
+      this.participantsList.next(participants);
+    });
   }
 
   private handleNewMessage(): void {

@@ -95,9 +95,9 @@
           </button>
           <strong>{{ selectedRoom['groupname_fld'] }}</strong>
           <span class="spacer"></span>
-          <button matTooltip="Start a voice call" mat-icon-button (click)="call()">
+          <!-- <button matTooltip="Start a voice call" mat-icon-button (click)="call()">
             <mat-icon>call</mat-icon>
-          </button>
+          </button> -->
           <button matTooltip="Start a video call" mat-icon-button (click)="videocall()">
             <mat-icon>videocam</mat-icon>
           </button>
@@ -105,8 +105,7 @@
             matTooltip="See members"
             mat-icon-button
             (click)="seegroupMembers()"
-            *ngIf="!showGroupMembers"
-          >
+            *ngIf="!showGroupMembers">
             <mat-icon>group</mat-icon>
           </button>
           <button

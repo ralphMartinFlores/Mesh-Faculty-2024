@@ -65,21 +65,6 @@ export class CallSettingsComponent implements OnInit {
     this.micSelectElementRef = await this.micSelectElement.nativeElement;
     this.selectors = await [this.cameraSelectElementRef, this.micSelectElementRef];
 
-
-    // Observes for breakpoint changes and changes sidenav mode to be more responsive
-    this.observer
-      .observe(["(max-width: 800px)"])
-      .pipe(delay(1))
-      .subscribe((res) => {
-        if (res.matches) {
-          this.sidenav.mode = "over";
-          this.sidenav.close();
-        } else {
-          this.sidenav.mode = "side";
-          this.sidenav.open();
-        }
-      });
-
     this.selectors.forEach(select => {
       select.addEventListener('change', (event) => {
         this.detectDevices();
@@ -130,6 +115,7 @@ export class CallSettingsComponent implements OnInit {
     // this.previewVideoElementRef.srcObject = stream;
     // Refresh button list in case labels have become available
     return navigator.mediaDevices.enumerateDevices();
+
   }
 
   detectDevices() {

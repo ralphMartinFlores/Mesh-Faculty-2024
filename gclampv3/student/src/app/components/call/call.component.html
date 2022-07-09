@@ -23,8 +23,8 @@
         <button matTooltip="End call" mat-icon-button class="danger--btn" (click)="endCall()">
             <mat-icon>call_end</mat-icon>
         </button>
-        <button matTooltip="Settings" mat-icon-button (click)="callSettingsDialog()">
-            <mat-icon>settings</mat-icon>
+        <button matTooltip="Participants" [matBadgeHidden]="hidden" mat-icon-button matBadge="{{participants.length}}" matBadgePosition="after" matBadgeColor="accent" (click)="participantsDialog()">
+            <mat-icon>people</mat-icon>
         </button>
     </div>
 </div>

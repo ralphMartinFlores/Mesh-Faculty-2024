@@ -1,0 +1,31 @@
+<div class="main__container">
+    <div class="heading">
+        <h1>Participants</h1>
+        <button mat-icon-button (click) = 'dialogClose()'>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-form-field appearance="outline">
+        <input [(ngModel)]="searchInput" (keyup)="search()" matInput placeholder="Search participant">
+        <button mat-icon-button matSuffix>
+            <mat-icon>search</mat-icon>
+       </button>
+    </mat-form-field>
+    <p class="subheader">Who's inside?</p>
+    <div class="participant__grid">
+        <div class="participant__container" *ngFor="let participant of participants">
+            <div class="participant__name">
+                <p><b>{{ participant.name }} {{ participant.peerId === myPeerId ? "(You)" : "" }} </b></p>
+                <p>{{ participant.id }}</p>
+            </div>
+            <!-- <div class="mutecontrols__container">
+                <button mat-icon-button  *ngIf="participant.peerId !== myPeerId" (click)="unmuteParticipant(participant.peerId)" matTooltip="Unmute Participant">
+                    <mat-icon>mic</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="participant.peerId !== myPeerId" (click)="muteParticipant(participant.peerId)" matTooltip="Mute Participant">
+                    <mat-icon>mic_off</mat-icon>
+                </button>
+            </div> -->
+        </div>
+    </div>
+</div>

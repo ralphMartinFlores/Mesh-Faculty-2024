@@ -33,7 +33,6 @@ export class VideoPlayerComponent implements AfterViewInit, OnInit {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    this.mediaService.stream = this.stream;
     this.videoElementRef = await this.videoElement.nativeElement;
     if (this.mode === 'owner') {
       this.displayName = 'You';

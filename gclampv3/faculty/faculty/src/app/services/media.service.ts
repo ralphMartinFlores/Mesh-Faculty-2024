@@ -13,19 +13,15 @@ export class MediaService {
 
   public muteOrUnMute(isMute): void {
     if (this.stream) {
-      // console.log(this.stream.getVideoTracks()[0].enabled)
       this.isMute.next(!this.isMute.getValue());
       this.stream.getAudioTracks()[0].enabled = isMute;
-      // console.log(this.stream.getVideoTracks()[0].enabled)
     }
   }
   
   public turnVideoOnOrOff(isCameraOff): void {
     if (this.stream) {
-      // console.log(this.stream.getVideoTracks()[0].enabled)
       this.isCameraOff.next(!this.isCameraOff.getValue());
       this.stream.getVideoTracks()[0].enabled = isCameraOff;
-      // console.log(this.stream.getVideoTracks()[0].enabled)
     }
   }
 

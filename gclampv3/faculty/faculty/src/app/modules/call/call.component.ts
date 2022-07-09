@@ -141,10 +141,9 @@ export class CallComponent implements OnInit {
     this.mediaService.muteOrUnMute(this.showMicrophone);
   }
 
-  public async turnVideoOnOrOff(): Promise<void> {
+  public turnVideoOnOrOff(): void {
     this.showCamera = !this.showCamera;
-    // console.log('SHOW CAMERA ', this.showCamera)
-    await this.mediaService.turnVideoOnOrOff(this.showCamera);
+    this.mediaService.turnVideoOnOrOff(this.showCamera);
   }
 
   hideOrUnhideChat(): void {
@@ -243,11 +242,12 @@ export class CallComponent implements OnInit {
 
       this.participants.push( {
         name: this.user.getUserFullname(),
-        peerId: myPeerId,
+        peerId: this.myPeerId,
         userId: this.user.getUserID()
        } );
-       this.hidden = this.numberOfParticipants > 0 ? false : true 
-      this.joinRoom(this.roomId, myPeerId);
+      
+      this.hidden = this.numberOfParticipants > 0 ? false : true 
+      this.joinRoom(this.roomId, this.myPeerId);
     })
   }
 

@@ -14,21 +14,21 @@
         </app-video-player>
     </div>
     <div class="buttons__container">
-        <button matTooltip="Turn on/off microphone" mat-icon-button>
-            <mat-icon>mic</mat-icon>
+
+        <button mat-icon-button (click)="muteOrUnMute();" matTooltip="{{showMicrophone ? 'Turn off microphone' : 'Turn on microphone' }}">
+            <mat-icon>{{showMicrophone ? 'mic' : 'mic_off' }}</mat-icon>
         </button>
-        <button matTooltip="Turn on/off camera" mat-icon-button>
-            <mat-icon>videocam</mat-icon>
+
+        <button mat-icon-button (click)="turnVideoOnOrOff();" matTooltip="{{showCamera ? 'Turn off camera' : 'Turn on camera' }}">
+            <mat-icon>{{showCamera ? 'videocam' : 'videocam_off' }}</mat-icon>
         </button>
+
         <button matTooltip="End call" mat-icon-button class="danger--btn" (click)="endCall()">
             <mat-icon>call_end</mat-icon>
         </button>
-        <button matTooltip="Participants" [matBadgeHidden]="hidden" mat-icon-button matBadge="{{participants.length}}" matBadgePosition="after" matBadgeColor="accent">
+        <button matTooltip="Participants" [matBadgeHidden]="hidden" mat-icon-button matBadge="{{participants.length}}" matBadgePosition="after" matBadgeColor="accent" (click)="participantsDialog()">
             <mat-icon>people</mat-icon>
         </button>
-        <!-- <button matTooltip="Settings" mat-icon-button (click)="callSettingsDialog()">
-            <mat-icon>settings</mat-icon>
-        </button> -->
     </div>
 </div>
 

@@ -47,14 +47,10 @@ app.get('/', (req, res)=>{
 })
 
 io.on('connection', socket => {
-    // console.log('user with ', socket, 'connected');
        // When someone attempts to join the room
     socket.on('join-room', (roomId, peerId, name, id) => {
-        const rooms = socket.rooms;
-        if (!rooms.has(roomId)) {
-            socket.join(roomId);  // Join the room
-            socket.broadcast.to(roomId).emit('user-connected', name, peerId, id); // Tell everyone else in the room that we joined
-        }
+        socket.join(roomId);  // Join the room
+        socket.broadcast.to(roomId).emit('user-connected', name, peerId, id); // Tell everyone else in the room that we joined
         
         // Communicate the disconnection
         // To listen for a client's disconnection from server and intimate other clients about the same

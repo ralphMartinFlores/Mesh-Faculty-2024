@@ -268,7 +268,7 @@ export class GroupMessagingComponent implements OnInit {
     // const element = document.getElementsByClassName("chatDivReply")[0] as HTMLElement;
     // element.style.animationDelay = "--delay: 0s"
 
-    if (message === "") return false;
+    if (!message) return false;
     const sender = this.splitEmail(this.user.getEmail())
     const date = new Date()
     const sender_name = this.user.getFullname()

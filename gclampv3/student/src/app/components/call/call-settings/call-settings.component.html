@@ -11,7 +11,13 @@
         </button>
     </header>
     <div class="illustration__container">
-        <img src="assets/images/Video call-bro.svg" alt="Video call illustration" loading="lazy">
+        <!-- <img src="assets/images/Video call-bro.svg" alt="Video call illustration" loading="lazy"> -->
+        <div class="video-container">
+            <video #previewVideoElement playsinline autoplay></video>
+            <div class="previewtext__container">
+                <p>Preview</p>
+            </div>
+        </div>
         <div class="info__banner">
             <p>Before you can start your video call, you should choose your desired microphone and camera.</p>
         </div>

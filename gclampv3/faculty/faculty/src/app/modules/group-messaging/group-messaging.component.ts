@@ -220,6 +220,7 @@ export class GroupMessagingComponent implements OnInit, AfterViewInit {
     return width < 769;
   }
   ngAfterViewInit() {
+    this.getGroups();
     this.emptyContainerElementRef = this.emptyContainerElement.nativeElement;
     this.emptySearchContainerElementRef = this.emptySearchContainerElement.nativeElement;
     this.groupmessagesContainerRef = this.groupmessagesContainer.nativeElement;

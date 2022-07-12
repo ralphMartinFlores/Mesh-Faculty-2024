@@ -197,6 +197,7 @@ export class GroupMessagingComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.getGroups();
     this.emptyContainerElementRef = this.emptyContainerElement.nativeElement;
     this.noSelectedConversationElementRef = this.noSelectedConversationElement.nativeElement;
     this.greetingsElementRef = this.greetingsElement.nativeElement;

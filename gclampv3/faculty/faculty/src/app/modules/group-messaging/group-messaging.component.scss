@@ -284,6 +284,7 @@
 							color: #474747;
 							margin: 0;
 							font-size: 12px;
+							max-width: 50ch;
 						}
 					}
 				}
@@ -351,12 +352,13 @@
 							color: #000;
 							margin: 0;
 							font-size: 12px;
+							max-width: 50ch;
 						}
 					}
 
-					.chatcontent__container {
-						max-width: 50%;
-					}
+					// .chatcontent__container {
+					// 	max-width: 50%;
+					// }
 
 					.personsname__container1 {
 						flex-direction: row;

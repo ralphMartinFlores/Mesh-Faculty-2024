@@ -21,6 +21,9 @@ export class CallSettingsComponent implements OnInit {
   public cameraSelectElementRef: any;
   @ViewChild('micSelectElement') micSelectElement?: ElementRef;
 
+  @ViewChild('previewVideoElement') previewVideoElement?: ElementRef;
+  public previewVideoElementRef: any;
+
   public micSelectElementRef: any;
   public globalstream: any;
   public videoElement: any;
@@ -63,7 +66,8 @@ export class CallSettingsComponent implements OnInit {
 
     this.cameraSelectElementRef = await this.cameraSelectElement.nativeElement;
     this.micSelectElementRef = await this.micSelectElement.nativeElement;
-    this.selectors = await [this.cameraSelectElementRef, this.micSelectElementRef];
+    this.previewVideoElementRef = await this.previewVideoElement.nativeElement;
+    this.selectors = await [this.cameraSelectElementRef, this.micSelectElementRef, this.previewVideoElementRef];
 
     this.selectors.forEach(select => {
       select.addEventListener('change', (event) => {
@@ -112,7 +116,7 @@ export class CallSettingsComponent implements OnInit {
 
   gotStream(stream) {
     this.globalstream = stream; // make stream available to console
-    // this.previewVideoElementRef.srcObject = stream;
+    this.previewVideoElementRef.srcObject = stream;
     // Refresh button list in case labels have become available
     return navigator.mediaDevices.enumerateDevices();
 

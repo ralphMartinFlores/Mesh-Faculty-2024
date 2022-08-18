@@ -47,7 +47,7 @@ export function getConfig(cs: ConfigService){
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MainLayoutModule,
+    // MainLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

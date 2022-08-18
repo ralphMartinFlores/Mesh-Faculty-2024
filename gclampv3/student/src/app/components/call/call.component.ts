@@ -83,7 +83,7 @@ export class CallComponent implements OnInit {
     // this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;
 
     await this.listenNewUser();
-    await this.participantsList();
+    // await this.participantsList();
     await this.listenMuteUmuteUsers();
 
 

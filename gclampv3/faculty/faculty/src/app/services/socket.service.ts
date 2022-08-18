@@ -17,8 +17,8 @@ export class SocketService {
   public participantsList = new BehaviorSubject(null);
 
   constructor(private _user: UserService) {
-    // this.socket = io('https://gordoncollegeccs.edu.ph:4233/', { path: '/socket' }); //https://live.datnikon.com/
-    this.socket = io('http://localhost:4230/', { path: '/socket' }); //https://live.datnikon.com/
+    this.socket = io('https://gordoncollegeccs.edu.ph:4230/', { path: '/socket' }); //https://live.datnikon.com/
+    // this.socket = io('http://localhost:4230/', { path: '/socket' }); //https://live.datnikon.com/
     this.handleNewMessage();
     this.hanleUserConnect();
     this.handleParticipants();

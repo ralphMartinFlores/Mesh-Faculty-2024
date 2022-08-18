@@ -19,15 +19,12 @@ export class DataService {
 
   // Development Testing:
   public prefix: string  = 'GC'
-  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/' // PHP
-  public nodeBaseURL: string = 'http://localhost:4230/api/' // NODE
-  
-  public downloadURL: string = 'http://localhost/GC-LAMP-Faculty/api/'
-  public imageURL: string= 'http://localhost/GC-LAMP-Faculty/requests/'
+  public baseURL: string = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/faculty/';
+  public nodeBaseURL: string = 'gordoncollegeccs.edu.ph:4230/nodeapi/' // NODE
+  // baseURL: string = "http://gordoncollegeccs.edu.ph:4230/api/"
 
-  // public baseURL: string = 'https://gordoncollegeccs.edu.ph/lampapi/faculty/';
-  // public downloadURL: string = 'https://gordoncollegeccs.edu.ph/lampapi/';
-  // public imageURL: string = 'https://gordoncollegeccs.edu.ph/requests/';
+  public downloadURL: string = 'https://gordoncollegeccs.edu.ph/lampapi/';
+  public imageURL: string = 'https://gordoncollegeccs.edu.ph/requests/';
   
   
   _httpRequest(api: string, load: any, sw: number) {

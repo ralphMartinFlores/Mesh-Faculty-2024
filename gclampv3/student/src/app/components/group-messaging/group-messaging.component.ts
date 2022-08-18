@@ -20,8 +20,7 @@ export class GroupMessagingComponent implements OnInit {
   classcode = this.url[3];
   groups: any[] = []
 
-  myId: string = 'Austin Ray Aranda';
-  myid: any = '';
+  myId: any;
   selectedRoom: any = [];
   groupNameisActive = {};
   groupMessage: FormGroup;
@@ -185,15 +184,19 @@ export class GroupMessagingComponent implements OnInit {
     private _dialog: MatDialog,
     public socket: SocketService,
     private router: Router
-  ) { }
+  ) { 
+    this.groupMessage = this._fb.group({
+      messageContent: ["", Validators.required]
+    });
+  }
 
 
   ngOnInit(): void {
     this.initializeComponents();
     this.handleNewMessage()
-    this.groupMessage = this._fb.group({
-      messageContent: ['', Validators.required],
-    });
+
+    this.myId =  this.splitEmail( this.user.getEmail())
+
   }
 
   ngAfterViewInit() {
@@ -204,17 +207,18 @@ export class GroupMessagingComponent implements OnInit {
     this.groupmessagesContainerRef = this.groupmessagesContainer.nativeElement;
     this.groupsContainerRef = this.groupsContainer.nativeElement;
 
+    
   }
 
 
-  initializeComponents = () => {
+   initializeComponents = async() => {
     this.instructor = this.user.getTeachers();
     let students = this.user.getStudents();
     this.pageslice = students.slice(0, 18);
 
     // console.log('CLASS MEMBERS: ', this.instructor, this.pageslice)
 
-    this.myId = this.splitEmail(this.user.getEmail())
+
     this.getGroups();
     this.students = this.allStudents;
   }
@@ -261,8 +265,11 @@ export class GroupMessagingComponent implements OnInit {
   }
 
 
-  addMessage(message: string): any {
-
+  addMessage(message: any): any {
+    console.log('test');
+    
+    console.log(message);
+    
     // document.getElementsByClassName("groupmessages__container")[0] as HTMLElement
 
     // CHORE: Revamp DOM Manipulations for animationDelay ..
@@ -270,13 +277,17 @@ export class GroupMessagingComponent implements OnInit {
     // element.style.animationDelay = "--delay: 0s"
 
     if (!message) return false;
+
     const sender = this.splitEmail(this.user.getEmail())
     const date = new Date()
     const sender_name = this.user.getFullname()
     const groupId = this.selectedGroup?.groupid_fld
 
     this.socket.chat(groupId, message, sender, sender_name, date)
-    this.chats.push({ groupid_fld: groupId, content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date})
+    this.chats.push(
+      { groupid_fld: groupId, content_fld: message, sender_fld: sender, sendername_fld: sender_name, datetime_fld: date}
+      )
+      console.log(this.chats);
     // console.log(this.chats)
     this.scrollToNewMessage()
     this.saveMessage(message, date)
@@ -366,6 +377,7 @@ export class GroupMessagingComponent implements OnInit {
   getSavedMessages(groupid_fld) {
     this.ds._httpRequest("getgroupmessages/", {data: {gid: groupid_fld}}, 1).subscribe(dt => {
       dt = dt
+      console.log('dt', dt.payload);
       this.chats = dt.payload
       // console.log(this.chats)
     }, (er) =>{

@@ -123,7 +123,7 @@
               class="messagecontent__container"
               *ngFor="let chat of chats; index as i"
               [id]="i"
-              [ngClass]="chat.sender_fld === myid ? 'my-message' : 'cor-message'"
+              [ngClass]="chat.sender_fld === myId ? 'my-message' : 'cor-message'"
               id="scrollDemo"
             >
               <div class="imageAvatarLeft" *ngIf="chat.sender_fld !== myId && chat.groupid_fld === selectedGroup.groupid_fld">

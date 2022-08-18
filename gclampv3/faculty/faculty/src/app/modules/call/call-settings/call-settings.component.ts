@@ -151,6 +151,7 @@ export class CallSettingsComponent implements OnInit {
   }
 
   async start() {
+    
     this.cameraColorToggle = true;
     this.micColorToggle = true;
     const audioSource = this.micSelectElementRef.value;

@@ -9,9 +9,9 @@ import { UserService } from './user.service';
 export class DataService {
 
 
-  public prefix: string = 'GC'; 
-  public baseURL: string = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/student/';
-  public nodeBaseURL: string = 'gordoncollegeccs.edu.ph:4230/nodeapi/' // NODE
+  public prefix: string  = 'GC';
+  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/';
+  public nodeBaseURL: string = 'http://localhost:4230/nodeapi/' // NODE
   public fileUrl: string = 'https://gordoncollegeccs.edu.ph:4230/api';
   public imageURL: string = 'http://localhost/GC-LAMP-Faculty/requests/';
   // public booksURL: string = 'http://localhost/LAMP/documents/books/'
@@ -47,11 +47,11 @@ export class DataService {
           param8: this._user.getProgram()
         };
         result = this._http.post(this.baseURL + api, JSON.stringify(dt));
-        console.log(result)
+        // console.log(result)
         break;
       case 2:
         result = this._http.post(this.baseURL + api, JSON.stringify(load));
-        console.log(this.baseURL + api)
+        // console.log(this.baseURL + api)
 
         break;
       case 3:
@@ -68,18 +68,18 @@ export class DataService {
 
         load.append('auth', JSON.stringify(d));
         result = this._http.post(this.baseURL + api, load);
-        console.log(result)
+        // console.log(result)
 
         break;
       case 4:
         result = this._http.post(this.baseURL + api, (JSON.stringify(load)));
-        console.log(result)
+        // console.log(result)
 
         break;
       // Papalitan ni louds
       case 5:
         result = this._http.post(this.fileUrl + api, unescape(encodeURIComponent(JSON.stringify(load))));
-        console.log(result)
+        // console.log(result)
 
         break;
       default: break;

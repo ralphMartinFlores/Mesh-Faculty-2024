@@ -14,7 +14,7 @@
 	// $dotenv->load();
 
 	define("SERVER", "localhost");
-	define("DBASE", "chedro_lamp");
+	define("DBASE", "chedro_lamp_db");
 	define("USER", "root");
 	define("PASSWORD", "");
 	define("ENCRYPT_KEY", "gc_Developers_2020");

@@ -83,7 +83,7 @@ export class CallComponent implements OnInit {
     // this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;
 
     await this.listenNewUser();
-    // await this.participantsList();
+    await this.participantsList();
     await this.listenMuteUmuteUsers();
 
 
@@ -153,7 +153,7 @@ export class CallComponent implements OnInit {
   isForceMute: boolean = false;
   private listenMuteUmuteUsers  = async () =>{
     this.socketService.forceMuteUnmuteAction.subscribe( async muteHandler => {
-      console.log('muteHandler', muteHandler);
+      // console.log('muteHandler', muteHandler);
       if (muteHandler) {
 
         if (muteHandler.peerId == this.myPeerId){
@@ -174,9 +174,13 @@ export class CallComponent implements OnInit {
   hidden: boolean = false;
   private listenNewUserJoinRoom(): void {
     this.socketService.joinedId.subscribe(async newUserId => {
+      console.log('student newUserId', newUserId);
       if (newUserId) {
         const { name, userId, id } = newUserId
         this.makeCall(userId, this.localStream);
+
+
+        // console.log('student localStream', this.localStream);
 
         this.participants.push({
           name: await newUserId['name'],
@@ -186,7 +190,7 @@ export class CallComponent implements OnInit {
 
          this.participants = this.getUniqueListBy(this.participants, `peerId`)
          this.numberOfParticipants = this.participants.length;
-         console.log('participants',this.numberOfParticipants);
+        //  console.log('participants',this.numberOfParticipants);
         this.socketService.participants(this.participants);
       }
     })
@@ -196,7 +200,7 @@ export class CallComponent implements OnInit {
   private participantsList  = async () => {
     this.socketService.participantsList.subscribe(async participant => {
       if (participant) {
-        console.log('padasd',participant);
+        // console.log('participants in a call -> ',participant);
        this.participants = await participant;
        this.numberOfParticipants = this.participants.length;
       }
@@ -221,17 +225,22 @@ export class CallComponent implements OnInit {
 
   private listenNewUserStream(): void {
     this.peerService.joinUser.subscribe(user => {
+      // console.log('listenNewUserStream', user);
+
       if (user) {
         if (this.joinedUsers.findIndex(u => u.peerId === user.peerId) < 0) {
           this.joinedUsers.push(user);
         }
       }
+
+      // console.log('joinedUsers', this.joinedUsers);
     })
   }
 
   private openPeer(localStream: MediaStream): void {
     this.peerService.openPeer(localStream).then((myPeerId) => {
       this.myPeerId = myPeerId;
+      console.log('myPeerId : ', this.myPeerId);
 
       this.participants.push( {
         name: this.user.getFullname(),
@@ -245,12 +254,14 @@ export class CallComponent implements OnInit {
   }
 
   private makeCall(anotherPeerId: string, localStream: MediaStream): void {
+    // console.log('makeCall => ', anotherPeerId, localStream)
     this.peerService.call(anotherPeerId, localStream);
   }
 
   private joinRoom(roomId: string, userPeerId: string): void {
     let name:string = this.user.getFullname()
     let id:string = this.user.getUserID()
+    
     this.socketService.joinRoom(roomId, userPeerId, name, id);
   }
 
@@ -296,7 +307,7 @@ export class CallComponent implements OnInit {
       maxHeight: "75vh"
     });
     dialogRef.afterClosed().subscribe(participant => {
-      console.log('closed');
+      // console.log('closed');
   });
   }
 

@@ -18,9 +18,11 @@ export class DataService {
   }
 
   // Development Testing:
-  public prefix: string  = 'GC'
-  public baseURL: string = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/faculty/';
-  public nodeBaseURL: string = 'gordoncollegeccs.edu.ph:4230/nodeapi/' // NODE
+  public prefix: string  = 'GC';
+  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/';
+  public nodeBaseURL: string = 'http://localhost:4230/nodeapi/' // NODE
+  // public baseURL: string = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/faculty/';
+  // public nodeBaseURL: string = 'gordoncollegeccs.edu.ph:4230/nodeapi/' // NODE
   // baseURL: string = "http://gordoncollegeccs.edu.ph:4230/api/"
 
   public downloadURL: string = 'https://gordoncollegeccs.edu.ph/lampapi/';

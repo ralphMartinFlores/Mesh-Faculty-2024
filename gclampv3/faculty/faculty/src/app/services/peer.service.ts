@@ -58,11 +58,7 @@ export class PeerService {
   }
 
   public call(anotherPeerId: string, stream: MediaStream): void {
-    var call = this.peer.call(anotherPeerId, stream, {sdpTransform:(sdp) => {
-      sdp = this.transformSdp(sdp)
-      // console.log(sdp)
-      return sdp
-    }});
+    var call = this.peer.call(anotherPeerId, stream);
     // console.log(call)
     this.lazyStream = stream;
     this.handelCall(call, anotherPeerId);
@@ -164,10 +160,7 @@ export class PeerService {
   private handleInComingCall(stream: MediaStream): void {
     this.peer.on('call', call => {
       this.lazyStream = stream
-      call.answer(stream, {sdpTransform:(sdp) => {
-        sdp = this.transformSdp(sdp)
-        return sdp
-      }});
+      call.answer(stream);
       call.on('stream', (anotherStream: any) => {
         this.joinUser.next({ peerId: call.peer, stream: anotherStream});
         if (!this.peerList.includes(call.peer)) {
@@ -180,8 +173,8 @@ export class PeerService {
 
   private initPeer(config: any): void {
     // this.peer = new Peer(this.myPeerId, {
-    //   host: 'localhost',
-    //   port: 3001,
+    //    host: 'gordoncollegeccs.edu.ph',
+    //    port: '4234',
     //   secure: true,
     //   config: {
     //     "iceServers": [
@@ -234,6 +227,22 @@ export class PeerService {
         ]
       }
     });
+
   }
 
+
+  // things to test ... 
+
+  // wag iadd lahat students -> magkakaiba ng participants -> sa isang group chat ibang participants... 
+  // student to student na chat ... 
+
+  // end call
+
+  // actual video call
+  // pag create ng group chat .. 
+
+
+  // participants list pacheck ... 
+
+  
 }

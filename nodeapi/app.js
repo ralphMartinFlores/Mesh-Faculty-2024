@@ -49,6 +49,7 @@ app.get('/', (req, res)=>{
 io.on('connection', socket => {
        // When someone attempts to join the room
     socket.on('join-room', (roomId, peerId, name, id) => {
+        console.log(roomId, peerId, name, id);
         socket.join(roomId);  // Join the room
         socket.broadcast.to(roomId).emit('user-connected', name, peerId, id); // Tell everyone else in the room that we joined
         

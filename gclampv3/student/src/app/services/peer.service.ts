@@ -58,19 +58,15 @@ export class PeerService {
   }
 
   public call(anotherPeerId: string, stream: MediaStream): void {
-    var call = this.peer.call(anotherPeerId, stream, {sdpTransform:(sdp) => {
-      sdp = this.transformSdp(sdp)
-      // console.log(sdp)
-      return sdp
-    }});
-    // console.log(call)
+    console.log('anotherPeerId : ',anotherPeerId, stream);
+    let call = this.peer.call(anotherPeerId, stream);
     this.lazyStream = stream;
     this.handelCall(call, anotherPeerId);
   }
 
   private transformSdp = (sdp): any => {
     const parsed = transform.parse(sdp)
-    // console.log(parsed)
+    console.log('parsed => ', parsed)
 
     parsed.media.forEach(media => {
       if (media.type === 'audio') {
@@ -146,7 +142,9 @@ export class PeerService {
 
   peers: any = {};
   public handelCall(call: any, anotherPeerId: string): void {
+
     call.on('stream', (anotherStream: any) => {
+      console.log('anotherStream', anotherStream);
       if (!this.peerList.includes(call.peer)) {
         this.currentPeer.push(call.peerConnection);
         this.peerList.push(call.peer);
@@ -155,7 +153,7 @@ export class PeerService {
       call.on('close', () => {
         call.close();
       })
-
+      console.log('object', { peerId: anotherPeerId, stream: anotherStream});
       this.joinUser.next({ peerId: anotherPeerId, stream: anotherStream});
     })
     
@@ -163,12 +161,11 @@ export class PeerService {
 
   private handleInComingCall(stream: MediaStream): void {
     this.peer.on('call', call => {
+      console.log('call');
       this.lazyStream = stream
-      call.answer(stream, {sdpTransform:(sdp) => {
-        sdp = this.transformSdp(sdp)
-        return sdp
-      }});
+      call.answer(stream);
       call.on('stream', (anotherStream: any) => {
+        console.log('call.peer => ' , call.peer)
         this.joinUser.next({ peerId: call.peer, stream: anotherStream});
         if (!this.peerList.includes(call.peer)) {
           this.currentPeer.push(call.peerConnection);
@@ -180,8 +177,8 @@ export class PeerService {
 
   private initPeer(config: any): void {
     // this.peer = new Peer(this.myPeerId, {
-    //   host: 'localhost',
-    //   port: 3001,
+    //    host: 'gordoncollegeccs.edu.ph',
+    //    port: '4234',
     //   secure: true,
     //   config: {
     //     "iceServers": [

@@ -92,7 +92,7 @@ export class CallComponent implements OnInit {
     // this.participantTilesElementContainerRef = this.participantTilesElementContainer.nativeElement;
 
     await this.listenNewUser();
-    // await this.participantsList();
+    await this.participantsList();
     await this.listenMuteUmuteUsers();
 
 
@@ -193,10 +193,11 @@ export class CallComponent implements OnInit {
 
   private listenNewUserJoinRoom(): void {
     this.socketService.joinedId.subscribe(async newUserId => {
+      console.log('faculty newUserId -> ', newUserId);
       if (newUserId) {
         const { name, userId, id } = newUserId
         this.makeCall(userId, this.localStream);
-
+        console.log('faculty localStream -> ', this.localStream);
         this.participants.push({
           name: await newUserId['name'],
           peerId: await newUserId['userId'],
@@ -228,6 +229,8 @@ export class CallComponent implements OnInit {
 
   private listenNewUserStream(): void {
     this.peerService.joinUser.subscribe(user => {
+
+    console.log('faculty listenNewUserStream', user);
       if (user) {
         if (this.joinedUsers.findIndex(u => u.peerId === user.peerId) < 0) {
           this.joinedUsers.push(user);

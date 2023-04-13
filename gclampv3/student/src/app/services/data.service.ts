@@ -10,7 +10,7 @@ export class DataService {
 
 
   public prefix: string  = 'GC';
-  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/';
+  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/student/';
   public nodeBaseURL: string = 'http://localhost:4230/nodeapi/' // NODE
   public fileUrl: string = 'https://gordoncollegeccs.edu.ph:4230/api';
   public imageURL: string = 'http://localhost/GC-LAMP-Faculty/requests/';
@@ -29,7 +29,8 @@ export class DataService {
    }
 
   _httpRequest(api: string, load: any, sw: number) {
-     this.baseURL = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/student/';
+    //  this.baseURL = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/student/';
+    this.baseURL = 'http://localhost/GC-LAMP-Faculty/api/student/';
     let userDevice: string = this._user.isMobile() ? 'Web Access using Mobile phone' : 'Web Access using Desktop/Laptop';
 
     let result: any;

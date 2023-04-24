@@ -257,57 +257,26 @@ class Get
 		$cc = $receivedPayload->classcode;
 		$ay = $receivedPayload->acadyear;
 		$sem = $receivedPayload->semester;
-		// $sql = "SELECT (SELECT socketid_fld FROM accounts_tbl WHERE studnum_fld = enrolledsubj_tbl.studnum_fld) AS socketid_fld, studnum_fld, fname_fld, lname_fld, mname_fld, email_fld, extname_fld, sex_fld, dept_fld, program_fld, contactnum_fld, profilepic_fld 
-		// FROM enrolledsubj_tbl LEFT JOIN students_tbl USING(studnum_fld) LEFT JOIN accounts_tbl USING(studnum_fld)
-		// WHERE classcode_fld='$cc' AND enrolledsubj_tbl.ay_fld='$ay' AND enrolledsubj_tbl.sem_fld='$sem' AND isenrolled_fld = 2 ORDER BY lname_fld";
+		$sql = "SELECT  (SELECT learningtype_fld FROM accounts_tbl WHERE studnum_fld = students_tbl.studnum_fld) as learningtype_fld, (SELECT block_fld FROM accounts_tbl WHERE studnum_fld = students_tbl.studnum_fld) as block_fld, studnum_fld, fname_fld, lname_fld, mname_fld, email_fld, extname_fld, sex_fld, dept_fld, program_fld, contactnum_fld, profilepic_fld  
+		FROM enrolledsubj_tbl LEFT JOIN students_tbl USING (studnum_fld) LEFT JOIN accounts_tbl USING(studnum_fld) 
+		WHERE classcode_fld='$cc' AND enrolledsubj_tbl.ay_fld='$ay' AND enrolledsubj_tbl.sem_fld='$sem' AND isenrolled_fld = 2 ORDER BY lname_fld";
 
-		// $sql = "SELECT accounts_tbl.learningtype_fld, enrollstatus_tbl.block_fld, students_tbl.studnum_fld, students_tbl.fname_fld, students_tbl.lname_fld, students_tbl.mname_fld, students_tbl.email_fld, students_tbl.extname_fld, students_tbl.sex_fld, students_tbl.dept_fld, students_tbl.program_fld, students_tbl.contactnum_fld, students_tbl.profilepic_fld FROM enrolledsubj_tbl LEFT JOIN students_tbl USING (studnum_fld) LEFT JOIN accounts_tbl USING (studnum_fld) LEFT JOIN enrollstatus_tbl ON enrollstatus_tbl.studnum_fld=enrolledsubj_tbl.studnum_fld AND enrolledsubj_tbl.ay_fld='$ay' AND enrolledsubj_tbl.sem_fld=$sem WHERE classcode_fld='$cc' AND enrollstatus_tbl.acadyear_fld='$ay' AND enrollstatus_tbl.sem_fld=$sem AND enrollstatus_tbl.isenrolled_fld=4 ORDER BY lname_fld";
-
-		$sql = "SELECT 
-		(SELECT learningtype_fld FROM accounts_tbl WHERE accounts_tbl.studnum_fld = students_tbl.studnum_fld LIMIT 1) AS learningtype_fld, 
-		enrollstatus_tbl.block_fld, 
-		students_tbl.studnum_fld, 
-		students_tbl.fname_fld, 
-		students_tbl.lname_fld, 
-		students_tbl.mname_fld, 
-		students_tbl.email_fld, 
-		students_tbl.extname_fld, 
-		students_tbl.sex_fld, 
-		students_tbl.dept_fld, 
-		students_tbl.program_fld, 
-		students_tbl.contactnum_fld, 
-		students_tbl.profilepic_fld 
-		FROM enrolledsubj_tbl 
-	    INNER JOIN students_tbl 
-		USING (studnum_fld) 
-		INNER JOIN enrollstatus_tbl 
-		ON enrollstatus_tbl.studnum_fld=enrolledsubj_tbl.studnum_fld 
-		AND enrolledsubj_tbl.ay_fld='$ay' 
-		AND enrolledsubj_tbl.sem_fld=$sem
-		WHERE classcode_fld='$cc' 
-		AND enrollstatus_tbl.acadyear_fld='$ay' 
-		AND enrollstatus_tbl.sem_fld='$sem' 
-		AND enrollstatus_tbl.isenrolled_fld=4 
-		ORDER BY lname_fld";
-
-
-
-		$sql2 = "SELECT socketid_fld, empcode_fld, fname_fld, lname_fld, mname_fld, extname_fld, email_fld, personnel_tbl.dept_fld, image_fld,  email_fld 
+		$sql2 = "SELECT empcode_fld, fname_fld, lname_fld, mname_fld, extname_fld, email_fld, personnel_tbl.dept_fld, image_fld,  email_fld 
 		FROM classes_tbl LEFT JOIN personnel_tbl USING(email_fld) WHERE classcode_fld='$cc' AND ay_fld='$ay' AND sem_fld='$sem' LIMIT 1";
 		$res = $this->gm->executeQuery($sql);
-
+		$res2 = $this->gm->executeQuery($sql2);
 		if ($res['code'] == 200) {
 			$code = 200;
 			$remarks = "success";
 			$message = "Successfully retrieved all records requested";
-			$student = $res['data'];
-			$res2 = $this->gm->executeQuery($sql2);
-
-			if ($res2['code'] == 200) {
-				$instructor = $res2['data'];
-			}
-			$payload = array("instructor" => $instructor, "student" => $student);
+			$student = $res['data'];			
 		}
+		
+		if ($res2['code'] == 200) {
+			$instructor = $res2['data'];
+		}
+
+		$payload = array("instructor" => $instructor, "student" => $student);
 		return $this->gm->sendPayload($payload, $remarks, $message, $code);
 	}
 	# End of Get Enrolled Class members

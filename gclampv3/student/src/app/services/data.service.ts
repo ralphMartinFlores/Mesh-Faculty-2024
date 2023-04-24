@@ -9,27 +9,28 @@ import { UserService } from './user.service';
 export class DataService {
 
 
-  public prefix: string  = 'GC';
-  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/';
-  public nodeBaseURL: string = 'http://localhost:4230/nodeapi/' // NODE
-  public fileUrl: string = 'https://gordoncollegeccs.edu.ph:4230/api';
-  public imageURL: string = 'http://localhost/GC-LAMP-Faculty/requests/';
-  // public booksURL: string = 'http://localhost/LAMP/documents/books/'
-  // Staging
-  // public prefix: string; 
-  public booksURL: string = "https://gordoncollegeccs.edu.ph/downloads/books/"
- 
-
-
-  constructor(private _http: HttpClient, private _user: UserService, cfg: AppConfig) {
-    this.baseURL = cfg.baseURL
-    this.fileUrl = cfg.fileUrl
-    this.prefix = cfg.prefix
-    this.imageURL = cfg.imgURL
-   }
-
-  _httpRequest(api: string, load: any, sw: number) {
-     this.baseURL = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/student/';
+    public prefix: string  = 'GC';
+    public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/student/';
+    public nodeBaseURL: string = 'http://localhost:4230/nodeapi/' // NODE
+    public fileUrl: string = 'https://gordoncollegeccs.edu.ph:4230/api';
+    public imageURL: string = 'http://localhost/GC-LAMP-Faculty/requests/';
+    // public booksURL: string = 'http://localhost/LAMP/documents/books/'
+    // Staging
+    // public prefix: string; 
+    public booksURL: string = "https://gordoncollegeccs.edu.ph/downloads/books/"
+   
+  
+  
+    constructor(private _http: HttpClient, private _user: UserService, cfg: AppConfig) {
+      this.baseURL = cfg.baseURL
+      this.fileUrl = cfg.fileUrl
+      this.prefix = cfg.prefix
+      this.imageURL = cfg.imgURL
+     }
+  
+    _httpRequest(api: string, load: any, sw: number) {
+      //  this.baseURL = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/student/';
+      this.baseURL = 'http://localhost/GC-LAMP-Faculty/api/student/';
     let userDevice: string = this._user.isMobile() ? 'Web Access using Mobile phone' : 'Web Access using Desktop/Laptop';
 
     let result: any;

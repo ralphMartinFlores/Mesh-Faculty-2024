@@ -198,6 +198,7 @@ export class CallComponent implements OnInit {
         const { name, userId, id } = newUserId
         this.makeCall(userId, this.localStream);
         console.log('faculty localStream -> ', this.localStream);
+   
         this.participants.push({
           name: await newUserId['name'],
           peerId: await newUserId['userId'],
@@ -205,11 +206,24 @@ export class CallComponent implements OnInit {
          });
 
          this.participants = this.getUniqueListBy(this.participants, `peerId`)
+         console.log('line 208 : ', this.participants);
          this.numberOfParticipants = this.participants.length;
 
         this.socketService.participants(this.participants);
       }
     })
+
+    // this.socketService.leavedId.subscribe(userId => {
+    //   if (userId) {
+
+    //     this.participants.forEach((item , index) => {
+    //       if (item.peerId === userId){
+    //           this.participants.splice(index, 1);
+    //           this.numberOfParticipants = this.participants.length;
+    //       }
+    //     })
+    //   }
+    // })
   }
 
   private participantsList  = async () => {
@@ -219,6 +233,18 @@ export class CallComponent implements OnInit {
        this.numberOfParticipants = this.participants.length;
 
        console.log('participants', this.participants);
+      }
+    })
+
+    this.socketService.leavedId.subscribe(userId => {
+      if (userId) {
+
+        this.participants.forEach((item , index) => {
+          if (item.peerId === userId){
+              this.participants.splice(index, 1);
+              this.numberOfParticipants = this.participants.length;
+          }
+        })
       }
     })
   }

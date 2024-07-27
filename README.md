@@ -23,7 +23,8 @@ Real time messaging system module of GCLamp made with </> by Flash Coders
 
     Run the Application:
     
-    ng serve --open
+    Go to faculty folder: ng serve --open
+    Go to student folder: ng serve --open
 
     Navigate to http://localhost:4200/ to view the app.
 

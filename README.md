@@ -48,6 +48,9 @@ Real time messaging system module of GCLamp made with </> by Flash Coders
 
     npm install -g @angular/cli
 
+    Note:
+    To Run the Faculty, Use NodeJS Version 14.20.0
+
 ### Run Docker Containers:
 
     Ensure Docker is running.
@@ -55,11 +58,18 @@ Real time messaging system module of GCLamp made with </> by Flash Coders
     In your terminal, go to /api folder where docker-compose.yml located
     And run docker-compose up -b
 
+    Install PDO Extensio in your docker
+    https://hub.docker.com/_/php
+    Find Install more PHP Extensions
 ### Import database on your dockerized environment
     Make sure your docker is running
     Go to http://localhost:8087
     Login as root as username and "password" as password
     After successfully logging-in, Import your database in gclamp database
+  
+    `docker build -t php_apache .`
+    `docker -build -t php_apache`
+    
 ## Features
 
 ### Real-Time Messaging

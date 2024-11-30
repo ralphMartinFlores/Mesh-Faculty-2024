@@ -13,14 +13,10 @@
 	// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 	// $dotenv->load();
 
-	define("SERVER", "localhost");
+	define("SERVER", "mariadb");
 	define("DBASE", "chedro_lamp_db");
-	define("USER", "root");
-	define("PASSWORD", "");
-	define("ENCRYPT_KEY", "gc_Developers_2020");
-	define("TOKEN_KEY", "9f0124bf5124b4e1140b70f070806120d2e8e44d43f926f88681db3f2aa98d59");
-	define("HAYSTACK", "AvengersRockzWithZontheRocks");
-	define("SECRET", base64_encode("www.gordoncollege.edu.ph"));
+	define("USER", "user");
+	define("PASSWORD", "userpassword");
 
 	// define("SERVER", "localhost");
 	// define("DBASE", "gordoncollegeccs_central");

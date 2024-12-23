@@ -15,8 +15,8 @@
 
 	define("SERVER", "mariadb");
 	define("DBASE", "chedro_lamp_db");
-	define("USER", "user");
-	define("PASSWORD", "userpassword");
+	define("USER", "root");
+	define("PASSWORD", "gc_Developers_2020");
 
 	// define("SERVER", "localhost");
 	// define("DBASE", "gordoncollegeccs_central");

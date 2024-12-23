@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: .  # Correct indentation here
+      dockerfile: Dockerfile  # This too
+    image: php:8.1-cli
+    container_name: php-container
+    volumes:
+      - ./api:/var/www/html
+    ports:
+      - "8000:8000"
+    command: php -S 0.0.0.0:8000 -t /var/www/html
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb:10.5
+    container_name: mariadb-container
+    environment:
+      MYSQL_ROOT_PASSWORD: gc_Developers_2020
+      MYSQL_DATABASE: chedro_lamp_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_USER: user
+      PMA_PASSWORD: userpassword
+      PMA_ABSOLUTE_URI: http://phpmyadmin:8080
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb-data:
+    driver: local

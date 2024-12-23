@@ -19,7 +19,7 @@ export class DataService {
 
   // Development Testing:
   public prefix: string  = 'GC';
-  public baseURL: string = 'http://localhost/GC-LAMP-Faculty/api/faculty/';
+  public baseURL: string = 'http://localhost:8000/faculty/';
   public nodeBaseURL: string = 'http://localhost:4230/nodeapi/' // NODE
   // public baseURL: string = 'https://gordoncollegeccs.edu.ph/projects/gcflash/api/faculty/';
   // public nodeBaseURL: string = 'gordoncollegeccs.edu.ph:4230/nodeapi/' // NODE

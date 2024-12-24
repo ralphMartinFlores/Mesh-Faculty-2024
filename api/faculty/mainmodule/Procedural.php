@@ -13,7 +13,7 @@
 	function returnData($param) {
 		$string = json_encode($param);
 		// return $string;
-		$key = HAYSTACK;
+		$key = "AvengersRockzWithZontheRocks";
 		$number = filter_var('AES-256-CBC', FILTER_SANITIZE_NUMBER_INT);
 		$number = intval(abs(256));
 		$ivLength = openssl_cipher_iv_length('AES-256-CBC');

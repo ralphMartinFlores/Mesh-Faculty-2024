@@ -25,8 +25,8 @@ if (isset($_REQUEST['request'])) {
 switch($_SERVER['REQUEST_METHOD']) {
 
 	case 'POST':
-		$d = receivedData(file_get_contents("php://input"));
-		// $d = json_decode(file_get_contents("php://input"));
+		// $d = receivedData(file_get_contents("php://input"));
+		$d = json_decode(file_get_contents("php://input"));
 
 		switch ($req[0]) {
 

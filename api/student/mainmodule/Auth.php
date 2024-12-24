@@ -52,7 +52,7 @@
 		{
 			$header = $this->generateHeader();
 			$payload = $this->generatePayload($usercode, $useremail, $fullname);
-			$signature = hash_hmac('sha256', "$header.$payload", TOKEN_KEY);
+			$signature = hash_hmac('sha256', "$header.$payload", 'TOKEN_KEY');
 			return "$header.$payload." . base64_encode($signature);
 		} #end of generateToken
 
@@ -60,7 +60,7 @@
 
 		protected function checkPassword($pword, $existingHash)
 		{
-			return $pword;
+			// return $pword;
 			$hash = crypt($pword, $existingHash);
 			if ($hash === $existingHash) {
 				return true;
@@ -128,7 +128,7 @@
 				break;
 		}
 
-		$sql = "SELECT students_tbl.studnum_fld, students_tbl.fname_fld, students_tbl.lname_fld, students_tbl.email_fld, students_tbl.dept_fld, students_tbl.program_fld, students_tbl.profilepic_fld, accounts_tbl.ispwordreset_fld, accounts_tbl.role_fld,accounts_tbl.forumrole_fld, accounts_tbl.pword_fld, accounts_tbl.iscovax_fld, accounts_tbl.covaxtype_fld, accounts_tbl.nocovaxreason_fld, accounts_tbl.issurvey_fld, accounts_tbl.lasthc_fld FROM students_tbl INNER JOIN accounts_tbl USING(studnum_fld) LEFT JOIN enrollstatus_tbl ON enrollstatus_tbl.studnum_fld=accounts_tbl.studnum_fld AND enrollstatus_tbl.acadyear_fld='2021-2022' AND enrollstatus_tbl.sem_fld=2 WHERE students_tbl.email_fld=?";
+		$sql = "SELECT students_tbl.studnum_fld, students_tbl.fname_fld, students_tbl.lname_fld, students_tbl.email_fld, students_tbl.dept_fld, students_tbl.program_fld, students_tbl.profilepic_fld, accounts_tbl.ispwordreset_fld, accounts_tbl.role_fld,accounts_tbl.forumrole_fld, accounts_tbl.pword_fld, accounts_tbl.iscovax_fld, accounts_tbl.covaxtype_fld, accounts_tbl.nocovaxreason_fld, accounts_tbl.issurvey_fld, accounts_tbl.lasthc_fld FROM students_tbl INNER JOIN accounts_tbl USING(studnum_fld) LEFT JOIN enrollstatus_tbl ON enrollstatus_tbl.studnum_fld=accounts_tbl.studnum_fld AND enrollstatus_tbl.acadyear_fld='2024-2025' AND enrollstatus_tbl.sem_fld=2 WHERE students_tbl.email_fld=?";
 
 		if($panel==1) {
 			$sql.=" AND enrollstatus_tbl.isenrolled_fld=4";

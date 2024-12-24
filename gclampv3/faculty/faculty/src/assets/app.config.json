@@ -1,6 +1,6 @@
 {
   "prefix":"GC",
-  "baseURL":"https://gordoncollegeccs.edu.ph/lampapi/faculty/",
+  "baseURL":"http://localhost:8000/faculty/",
   "downloadURL":"https://gordoncollegeccs.edu.ph/lampapi/",
   "imgURL":"https://gordoncollegeccs.edu.ph/requests/"
 }

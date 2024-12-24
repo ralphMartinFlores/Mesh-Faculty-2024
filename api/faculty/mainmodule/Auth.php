@@ -52,7 +52,7 @@
 		{
 			$header = $this->generateHeader();
 			$payload = $this->generatePayload($usercode, $useremail, $fullname);
-			$signature = hash_hmac('sha256', "$header.$payload", TOKEN_KEY);
+			$signature = hash_hmac('sha256', "$header.$payload", "TOKEN_KEY");
 			return "$header.$payload." . base64_encode($signature);
 		} #end of generateToken
 

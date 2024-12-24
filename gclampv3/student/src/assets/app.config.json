@@ -1,6 +1,6 @@
 {
     "prefix":"GC",
-    "baseURL":"http://localhost/GC-LAMP-Faculty/api/student/",
+    "baseURL":"http://localhost:8000/student/",
     "fileUrl":"http://localhost/GC-LAMP-Faculty/api/",
     "imgURL":"http://localhost/GC-LAMP-Faculty/requests/"
 }
